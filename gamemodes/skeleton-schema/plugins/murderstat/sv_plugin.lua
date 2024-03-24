@@ -1,0 +1,5 @@
+-- function PLUGIN:PlayerDeath(attacker)
+	-- if IsValid(attacker) and attacker:IsPlayer() then
+		-- attacker:SetLocalSyncVar(SYNC_KILLS, (SYNC_KILLS + 1)) -- add plus 1 to the murder stat
+	-- end
+-- end

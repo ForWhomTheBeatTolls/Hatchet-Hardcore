@@ -1,0 +1,297 @@
+-- Framework related
+impulse.Config.SchemaName = "hatchet-hl2rpg"
+impulse.Config.SchemaVersion = 053
+
+impulse.Config.SchemaCredits = [[Developers
+<font=Impulse-Elements23>Developer1NameHere</font>
+<font=Impulse-Elements23>Developer2NameHere</font>
+<font=Impulse-Elements23>Developer3NameHere</font>
+<font=Impulse-Elements23>Developer4NameHere</font>
+<font=Impulse-Elements23>Developer5NameHere</font>]]
+
+impulse.Config.MainColour = Color(81, 189, 143)
+impulse.Config.InteractColour = Color(251, 197, 49)
+
+impulse.Config.UserSlots = 999 -- how many slots to give to users, you may want to leave this at 999 as its kind of broken
+impulse.Config.IntroMusic = "music/hl1_song20.mp3" -- song to play when character is made for first time players
+
+impulse.Config.SignalsUpdateTime = 2
+
+impulse.Config.WalkSpeed = 100
+impulse.Config.JogSpeed = 200
+impulse.Config.SlowWalkRatio = 0.6
+impulse.Config.SideWalkRatio = 0.6
+
+impulse.Config.TalkDistance = 300
+impulse.Config.WhisperDistance = 90
+impulse.Config.YellDistance = 550
+impulse.Config.VoiceDistance = 950
+
+impulse.Config.OOCLimit = 500
+impulse.Config.OOCLimitVIP = 280
+
+impulse.Config.PropLimit = 90
+impulse.Config.PropLimitDonator = 170
+
+impulse.Config.BuyableSpawnLimit = 6
+impulse.Config.DroppedItemsLimit = 40
+impulse.Config.DroppedMoneyLimit = 10
+impulse.Config.ChairsLimit = 3
+
+impulse.Config.StartingMoney = 50
+impulse.Config.StartingBankMoney = 450
+impulse.Config.CurrencyPrefix = "£"
+impulse.Config.CurrencyName = "pounds"
+impulse.Config.ATMModel = "models/props_combine/combine_intwallunit.mdl"
+
+impulse.Config.XPTime = 100
+impulse.Config.XPGet = 5
+impulse.Config.XPGetVIP = 10
+
+impulse.Config.AFKTime = 360 -- 6 mins
+impulse.Config.AFKKickRatio = 0.95
+
+impulse.Config.TeamChangeTime = 40
+impulse.Config.TeamChangeTimeDonator = 15
+
+impulse.Config.ClassChangeTime = 60
+impulse.Config.QuizWaitTime = 20 -- in mins
+
+impulse.Config.RespawnTime = 10
+impulse.Config.RespawnTimeDonator = 1
+
+impulse.Config.BodyDeSpawnTime = 360 -- 6 mins
+
+impulse.Config.BrokenLegsHealTime = 300 -- 5 mins
+
+impulse.Config.PropPrice = 25
+impulse.Config.PropPriceDonator = 2
+
+impulse.Config.RPNameChangePrice = 60
+
+impulse.Config.CosmeticGenderPrice = 600
+impulse.Config.CosmeticModelSkinPrice = 120
+
+impulse.Config.MaxLetters = 0
+
+impulse.Config.HungerTime = 60
+impulse.Config.HungerHealTime = 25
+
+impulse.Config.InventoryMaxWeight = 25 -- in kg
+impulse.Config.OSInventoryMaxWeight = 125
+impulse.Config.InventoryStorageMaxWeight = 100
+impulse.Config.InventoryStorageMaxWeightVIP = 100
+impulse.Config.InventoryItemDeSpawnTime = 21474836
+impulse.Config.InventoryStorageModel = "models/props/cs_militia/footlocker01_closed.mdl"
+impulse.Config.InventoryStoragePublicModel = "models/props/cs_militia/footlocker01_closed.mdl"
+
+impulse.Config.CitizenWage = 25
+
+impulse.Config.GroupMakeCost = 10000
+impulse.Config.GroupXPRequirement = 1500
+impulse.Config.GroupMaxMembers = 20
+impulse.Config.GroupMaxMembersVIP = 100
+impulse.Config.GroupMaxRanks = 13
+impulse.Config.GroupMaxRanksVIP = 20
+
+impulse.Config.DiscordLeadModRoleID = ""
+impulse.Config.AutoModCooldown = 130
+impulse.Config.AutoModMaxRisk = 15
+
+impulse.Config.CommunityURL = ""
+impulse.Config.IACGuidelinesURL = ""
+impulse.Config.PanelURL = ""
+impulse.Config.DonateURL = ""
+impulse.Config.DiscordURL = ""
+impulse.Config.SupportURL = "" -- this can just be the forum url
+impulse.Config.DiscordRelayURL = "" -- not required
+impulse.Config.RulesURL = ""
+impulse.Config.TutorialURL = ""
+
+impulse.Config.CameraRepairTime = 60
+impulse.Config.DefaultBOLTime = 60
+
+impulse.Config.BoxTime = 15
+impulse.Config.RationTime = 1800
+
+impulse.Config.OSArea = Vector(1571, -1574, 191)
+
+impulse.Config.PassiveMusic = {
+{"music/hl1_song26.mp3", 69},
+{"music/hl2_song13.mp3", 53},
+{"music/hl2_song17.mp3", 61},
+{"music/hl2_song23_suitsong3.mp3", 43},
+{"music/hl2_song30.mp3", 104}
+}
+
+impulse.Config.CombatMusic = {
+{"aj_song27.wav", 220},
+{"music/hl2_song29.mp3", 135},
+{"music/hl2_song26_trainstation1.mp3", 90}
+}
+
+
+impulse.Config.BeepSounds = {
+	[TEAM_CP] = {
+		on = {
+			"npc/overwatch/radiovoice/on1.wav",
+			"npc/overwatch/radiovoice/on3.wav",
+			"npc/metropolice/vo/on2.wav"
+		},
+		off = {
+			"npc/metropolice/vo/off1.wav",
+			"npc/metropolice/vo/off2.wav",
+			"npc/metropolice/vo/off3.wav",
+			"npc/metropolice/vo/off4.wav",
+			"npc/overwatch/radiovoice/off2.wav",
+			"npc/overwatch/radiovoice/off2.wav"
+		}
+	},
+
+	[TEAM_OTA] = {
+		on = {
+			"npc/combine_soldier/vo/on1.wav",
+			"npc/combine_soldier/vo/on2.wav"
+		},
+		off = {
+			"npc/combine_soldier/vo/off1.wav",
+			"npc/combine_soldier/vo/off2.wav",
+			"npc/combine_soldier/vo/off3.wav"
+		}
+	}
+}
+
+-- Optional, if you don't have it delete the line below. Used for newsfeed. Requires: https://wordpress.org/plugins/better-rest-api-featured-images/
+ impulse.Config.WordPressURL = ""
+ impulse.Config.DefaultWordPressImage = ""
+
+impulse.Config.DisabledPlugins = {
+	["badplugin"] = true -- the bad plugin is disabled, remove this line to enable it
+}
+
+impulse.Config.DoorPrice = 10
+impulse.Config.DoorGroups = {
+	[1] = "CMB:CP",
+	[2] = "CMB",
+	[3] = " "
+}
+
+impulse.Config.RankColours = {
+	["superadmin"] = Color(201, 15, 12),
+	["communitymanager"] = Color(84, 204, 5),
+	["leadadmin"] = Color(128, 0, 128),
+	["admin"] = Color(34, 88, 216),
+	["moderator"] = Color(34, 88, 216),
+	["donator"] = Color(212, 185, 9)
+}
+
+impulse.Config.SaveableAmmo = { -- these ammo types will be saved on player disconnect
+	["Pistol"] = true,
+	["SMG1"] = true,
+	["357"] = true,
+	["Buckshot"] = true,
+	["AR2"] = true,
+	["Rifle"] = true
+}
+
+impulse.Config.Achievements = {
+	["ach_plugincommand"] = {
+		Name = "Plugin Command",
+		Desc = "You entered the test plugin command",
+		Icon = Material("impulse/icons/warning-36-128.png")
+	},
+	["ach_kill"] = {
+		Name = "Kill Someone",
+		Desc = "uhhhh you killed someone i guess",
+		Icon = Material("impulse/icons/check-mark-128.png")
+	}
+}
+
+impulse.Config.ModQuickReplies = {
+	"I am a quick report reply! Add more in sh_config.lua in your schema."
+}
+
+impulse.Config.AutoModDict = {
+	{
+		Terms = {"HI DALE", "HELLO DALE", "DALE", "WHAT IS DALE", "WHO IS DALE"},
+		Specific = true,
+		IgnorePunc = true,
+		RequestClose = true,
+		Reply = "Hi! I'm Dale, the >>automated<< chipmunk moderator! I'll try to answer your questions before you speak to a staff member to solve your issue!"
+	},
+	{
+		Terms = {"HELP", "JUST HELP", "HELP ME", "ADMIN HELP", "ADMIN", "COME HERE", "COME", "NEED STAFF", "NEED ADMIN", "ADMIN COME HERE", "ADMIN TO ME", "I NEED A ADMIN", "I NEED ADMIN", "TO ME", "MINGE", "HEY"},
+		Specific = true,
+		IgnorePunc = true,
+		Reply = "Hi! I've noticed your report doesn't contain much detail about the situation. We'd really appricate it if you could provide some more information for us by updating the report! Thanks!"
+	}
+}
+
+impulse.Config.DefaultTeam = TEAM_CITIZEN
+
+impulse.Config.DefaultMaleModels = {
+	Model("models/player/impulse_zelpa/male_01.mdl"),
+	Model("models/player/impulse_zelpa/male_02.mdl"),
+	Model("models/player/impulse_zelpa/male_03.mdl"),
+	Model("models/player/impulse_zelpa/male_04.mdl"),
+	Model("models/player/impulse_zelpa/male_05.mdl"),
+	Model("models/player/impulse_zelpa/male_06.mdl"),
+	Model("models/player/impulse_zelpa/male_07.mdl"),
+	Model("models/player/impulse_zelpa/male_08.mdl"),
+	Model("models/player/impulse_zelpa/male_09.mdl"),
+	Model("models/player/impulse_zelpa/male_10.mdl"),
+	Model("models/player/impulse_zelpa/male_11.mdl")
+}
+
+impulse.Config.DefaultFemaleModels = {
+	Model("models/player/impulse_zelpa/female_01.mdl"),
+	Model("models/player/impulse_zelpa/female_02.mdl"),
+	Model("models/player/impulse_zelpa/female_03.mdl"),
+	Model("models/player/impulse_zelpa/female_04.mdl"),
+	Model("models/player/impulse_zelpa/female_06.mdl"),
+	Model("models/player/impulse_zelpa/female_07.mdl")
+}
+
+impulse.Config.DefaultSkinBlacklist = {
+	["models/player/impulse_zelpa/male_02.mdl"] = {14, 22, 6} -- bloody eye skins banned
+}
+
+impulse.Config.LootPools = {
+    ["good"] = {
+        Items = {
+            ["wep_axe"] = {Rarity = 900},
+            ["util_scrapmetal"] = {Rarity = 300},
+			["wep_crowbar"] = {Rarity = 900},
+			["util_electronics"] = {Rarity = 900},
+			["ammo_pistol"] = {Rarity = 900},
+			["ammo_smg"] = {Rarity = 900},
+			["ammo_revolver"] = {Rarity = 900},
+        },
+        MaxItems = 2,
+        MinItems = 1,
+		MaxWait = 120,
+		MinWait = 60
+    },
+	["lootbox"] = {
+		Items = {
+			["wep_axe"] = {Rarity = 877},
+			["util_scrapmetal"] = {Rarity = 600},
+			["wep_crowbar"] = {Rarity = 877},
+			["util_electronics"] = {Rarity = 800},
+			["wep_revolver"] = {Rarity = 986},
+			["ammo_revolver"] = {Rarity = 800},
+			["ammo_pistol"] = {Rarity = 800},
+			["ammo_smg"] = {Rarity = 800}
+			}
+		}
+	}
+impulse.Config.NPCDrops = {
+	["cp"] = {
+		Items = {
+			["wep_pistol"] = {Rarity = 400},
+			["ammo_pistol"] = {Rarity = 300},
+			},
+			MaxItems = 3,
+			MinItems = 1
+			}
+			}

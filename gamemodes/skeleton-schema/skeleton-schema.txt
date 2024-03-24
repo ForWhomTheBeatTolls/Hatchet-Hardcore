@@ -1,0 +1,7 @@
+"skeleton-schema"
+{
+	"base"		"impulse"
+	"title"		"impulse: Skeleton Schema"
+	"author"	"vin"
+	"menusystem"	"1"
+}

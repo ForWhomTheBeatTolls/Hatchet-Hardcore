@@ -1,0 +1,2 @@
+-- SYNC_KILLS = impulse.Sync.RegisterVar(SYNC_INT)
+-- print("successfully added SYNC_KILLS")

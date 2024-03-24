@@ -1,0 +1,27 @@
+local ITEM = {}
+
+ITEM.UniqueID = "wep_crowbar"
+ITEM.Name = "Crowbar"
+ITEM.Desc =  "A metal utility crowbar. Perfect for prying things open, or bashing skulls in."
+ITEM.Category = "Weapons"
+ITEM.Model = Model("models/weapons/w_crowbar.mdl")
+ITEM.FOV = 24.190544412607
+ITEM.CamPos = Vector(-16.045845031738, 17.191976547241, 3.4383955001831)
+ITEM.NoCenter = true
+ITEM.Weight = 2.5
+
+ITEM.Droppable = true
+ITEM.DropOnDeath = true
+
+ITEM.DropIfRestricted = false
+ITEM.DropOnDeathIfRestricted = true
+ITEM.CraftIfRestricted = false
+
+ITEM.Illegal = true
+ITEM.Equipable = true
+ITEM.EquipGroup = "melee"
+ITEM.CanStack = false
+
+ITEM.WeaponClass = "ls_crowbar"
+
+impulse.RegisterItem(ITEM)
