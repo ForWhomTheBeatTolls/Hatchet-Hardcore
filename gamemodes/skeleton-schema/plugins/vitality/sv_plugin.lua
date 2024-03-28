@@ -40,5 +40,5 @@ hook.Add( "Think", "THE_CUM_LAGNATOR", function()
 	if CurTime() < delay then return end	
     VitalSytem()
 	delay = CurTime() + 4 -- Makes every 4 secs run the code
-    print(Entity(1):GetSkillXP("vital"))
+    --print(Entity(1):GetSkillXP("vital"))
 end)
