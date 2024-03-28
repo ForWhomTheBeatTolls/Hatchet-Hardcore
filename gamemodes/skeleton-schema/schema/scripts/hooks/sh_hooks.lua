@@ -182,16 +182,16 @@ local rebel = TEAM_RESISTANCE
 local cp = TEAM_CP
 local over = TEAM_OTA
 
-	if iscitizen or isrebel then
-	mvData:SetMaxClientSpeed( 194.40 )
-	mvData:SetMaxSpeed( 194.40 )
-	elseif iscp then
-	mvData:SetMaxClientSpeed( 206.20 )
-	mvData:SetMaxSpeed( 206.20 )
-	elseif isover then
-	mvData:SetMaxClientSpeed( 184.20 )
-	mvData:SetMaxSpeed( 184.20 )
-	end
+	--if iscitizen or isrebel then
+	--mvData:SetMaxClientSpeed( 194.40 )
+	--mvData:SetMaxSpeed( 194.40 )
+	--elseif iscp then
+	--mvData:SetMaxClientSpeed( 206.20 )
+	--mvData:SetMaxSpeed( 206.20 )
+	--elseif isover then
+	--mvData:SetMaxClientSpeed( 184.20 )
+	--mvData:SetMaxSpeed( 184.20 )
+	--end
 	if mvData:KeyDown(IN_MOVERIGHT) then
 	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / 2.5 )
 	end
