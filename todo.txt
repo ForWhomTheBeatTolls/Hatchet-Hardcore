@@ -8,9 +8,7 @@ TO-DO LIST:
 -Add CW & its classes
 -Add resistance and similar skills
 -Add the Resistance faction and its classes
--Make a Vitality statistic
 -Make foods give vitality
--Make Vitality a constantly decreasing skill
 -Fix Lockshockers
 -Animation menu using NET functions
 -NPC implementation, headcrabs dropping meat, etc
@@ -22,3 +20,8 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Add a new entity instead of a vendor for giving CP gear
 -Bunch of other shit I can't remember
+
+DONE LIST:
+---------------------
+-Make a Vitality statistic
+-Make Vitality a constantly decreasing skill [Technically??]
