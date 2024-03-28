@@ -29,7 +29,7 @@ function VitalSytem()
             v:SetRunSpeed(impulse.Config.JogSpeed * 1.08)
             --v:Say("4500")
         end
-        // timer for vitality to decrease every 4 secs, very simple thingmabob
+	--timer for vitality to decrease every 4 secs, very simple thingmabob
         v:AddSkillXP("vital", -2)
     end
 end
