@@ -29,16 +29,23 @@ function VitalSytem()
             v:SetRunSpeed(impulse.Config.JogSpeed * 1.08)
             --v:Say("4500")
         end
-	--timer for vitality to decrease every 4 secs, very simple thingmabob
-        v:AddSkillXP("vital", -2)
     end
 end
-
 
 local delay = 0
 hook.Add( "Think", "THE_CUM_LAGNATOR", function()
 	if CurTime() < delay then return end	
     VitalSytem()
-	delay = CurTime() + 4 -- Makes every 4 secs run the code
+	delay = CurTime() + 0.4 -- Makes every 4 secs run the code
+    --print(Entity(1):GetSkillXP("vital"))
+end)
+
+local delay2 = 0
+hook.Add( "Think", "THE_CUM_LAGNATOR2", function()
+	if CurTime() < delay2 then return end	
+    for k, v in pairs(player.GetAll()) do
+        v:AddSkillXP("vital", -1)
+    end
+	delay2 = CurTime() + 240 -- Makes every 4 secs run the code
     --print(Entity(1):GetSkillXP("vital"))
 end)
