@@ -29,6 +29,7 @@ WILLMASTER CODING SIDE:
 ------------------------
 -Pickup animations, drop animations, etc
 -Overhead chat
+- Check for Indoors (This will take a long time...)
 
 MUHAMMED CODING SIDE:
 ------------------------
