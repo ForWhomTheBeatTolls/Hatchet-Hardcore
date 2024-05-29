@@ -13,8 +13,6 @@ TO-DO LIST:
 -Animation menu using NET functions
 -NPC implementation, headcrabs dropping meat, etc
 -NPC respawn once every 10 minutes or so?
--Pickup animations, drop animations, etc
--Overhead chat
 -Make weapons easier to control if you're a Citizen with high resistance / a Cop with high Rankpoints
 -Add workforce entities
 -Brainstorm ideas for Workforce entities
@@ -23,5 +21,14 @@ TO-DO LIST:
 
 DONE LIST:
 ---------------------
+- Ambience Color and make it toggleable
 -Make a Vitality statistic
 -Make Vitality a constantly decreasing skill [Technically??]
+
+WILLMASTER CODING SIDE:
+------------------------
+-Pickup animations, drop animations, etc
+-Overhead chat
+
+MUHAMMED CODING SIDE:
+------------------------
