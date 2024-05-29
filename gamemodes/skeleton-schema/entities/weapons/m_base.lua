@@ -146,6 +146,8 @@ function SWEP:CanPrimaryAttack()
 end
 
 function SWEP:PrimaryAttack()
+
+--if self.Owner:GetSkillXP() 
  
 if ( !self:CanPrimaryAttack() ) then return end
 local dmginfo = DamageInfo()
@@ -153,12 +155,29 @@ dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
 local bullet = {} 
 bullet.Num = self.Primary.NumberofShots 
 bullet.Src = self.Owner:GetShootPos() 
-bullet.Dir = self.Owner:GetAimVector() 
-if self.Owner:Crouching() then
-bullet.Spread = Vector( self.Primary.Spread * 0.06 , self.Primary.Spread * 0.06, 0)
-else
-bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
+bullet.Dir = self.Owner:GetAimVector()
+
+--local skillaccuracy = self.Owner:GetSkillXP("shooting") / 80000 SWEP.Primary.Spread
+if self.Owner:GetSkillXP("shooting") <= 20 then
+	skillaccuracyunr = 0
+	else
+	skillaccuracyunr = self.Primary.Spread * (self.Owner:GetSkillXP("shooting") / 20000)
 end
+if self.Owner:Team() == TEAM_RESISTANCE or self.Owner:Team() == TEAM_CP then
+	skillaccuracy = skillaccuracyunr
+	else
+	skillaccuracy = skillaccuracyunr / 2
+end
+
+--print(skillaccuracy)
+ 
+if self.Owner:Crouching() then
+bullet.Spread = Vector( self.Primary.Spread * (0.06 - skillaccuracy)  , self.Primary.Spread * (0.06 - skillaccuracy), 0)
+else
+bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - skillaccuracy )  , self.Primary.Spread * ( 0.1 - skillaccuracy ), 0)
+print(bullet.Spread)
+end
+
 bullet.Tracer = 1
 bullet.Force = self.Primary.Force 
 bullet.Damage = self.Primary.Damage 
@@ -186,8 +205,10 @@ else
 self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
 end
 self:ViewPunch()
-self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
- 
+self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+if SERVER then
+self.Owner:AddSkillXP("shooting", math.random(1,5))
+end
 self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
 end 
 
