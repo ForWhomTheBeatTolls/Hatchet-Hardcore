@@ -30,7 +30,7 @@ SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 30  -- How much bullets are in the mag
 SWEP.Primary.Ammo = "12mmRound" --The ammo type will it use
 SWEP.Primary.DefaultClip = 0 -- How much bullets preloaded when spawned
-SWEP.Primary.Spread = 0.09 -- The spread when shot
+SWEP.Primary.Spread = 0.3 -- The spread when shot
 SWEP.Primary.NumberofShots = 1 -- Number of bullets when shot
 SWEP.Primary.Automatic = true -- Is it automatic
 SWEP.Primary.Recoil = 2 -- it no go BOOM
@@ -98,7 +98,7 @@ SWEP.CSMuzzleFlashes = true
 
 sound.Add({
 	name = "Weapon_iAK47.Single",
-	sound = "weapons/ak47/akbang.wav",
+	sound = "weapons/cw_ak74/fire.wav",
 	channel = CHAN_WEAPON,
 	level = SNDLVL_150dB,
 	pitch = {90, 105}
