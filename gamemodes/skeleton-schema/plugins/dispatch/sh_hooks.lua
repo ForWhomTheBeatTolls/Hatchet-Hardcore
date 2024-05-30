@@ -1,4 +1,3 @@
-
 local deathcount = deathcount or 0
 local deathcountclear = CurTime()
 local citycode = civil
@@ -66,16 +65,36 @@ elseif GetGlobalInt("CityCode") == 4 then
 end
 	end)
 	
-	NextAJAmbienceThink = CurTime() + 100
+	local randomambiencenum = math.random(1,5)
+	NextAJAmbienceThink = CurTime()
 hook.Add("Think", "CCAmbient", function()
 if GetGlobalInt("CityCode") != 4 then return end
-	if NextAJAmbienceThink > CurTime() then
+	if NextAJAmbienceThink < CurTime() then
 	for k,v in pairs (player.GetAll()) do
-		local mysound = CreateSound( v, "music/hl2_song26_trainstation1.mp3" )
+		local mysound = "music/hl2_song26_trainstation1.mp3" 
+		local mysound2 = "ambient/alarms/apc_alarm_pass1.wav" 
+		local mysound3 = "ambient/alarms/citadel_alert_loop2.wav" 
+		local mysound4 = "ambient/levels/streetwar/strider_distant3.wav"
+		local mysound5 = "ambient/alarms/manhack_alert_pass1.wav"
+		
 		--if not mysound:IsPlaying() then
-			mysound:PlayEx(0.05, 100)
+		if randomambiencenum == 1 then
+			Entity(0):EmitSound(mysound, 0, 100, 0.1, CHAN_STATIC)
+		elseif randomambiencenum == 2 then
+			Entity(0):EmitSound(mysound2, 0, 100, 0.1, CHAN_STATIC)
+		elseif randomambiencenum == 3 then
+			Entity(0):EmitSound("null.wav", 0, 100, 0.1, CHAN_STATIC)
+		elseif randomambiencenum == 4 then
+			Entity(0):EmitSound(mysound4, 0, 100, 0.1, CHAN_STATIC)
+		elseif randomambiencenum == 5 then
+			Entity(0):EmitSound(mysound5, 0, 100, 0.1, CHAN_STATIC)
+		end
+		
+		
+		
+		
 		--end
 	end
-	NextAJAmbienceThink = CurTime() + 100
+	NextAJAmbienceThink = CurTime() + 120
 	end
 end)
