@@ -61,15 +61,61 @@ hook.Add( "Think", "EYEVIEW_Think", EYEVIEW_Think )
 if ( CLIENT ) then
 
 function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
+	if impulse.GetSetting("view_thirdperson") then return end
 	
 	if ply:Alive() and ply:GetActiveWeapon():IsValid() then
 
 	if ( ply:IsValid() && ply:Alive() && ply:GetMoveType() != MOVETYPE_NOCLIP && (ply:GetActiveWeapon():GetClass() != "gmod_tool") && (ply:GetActiveWeapon():GetClass() != "weapon_physgun") && ply:Ping() < 240 ) then
-	
+		
+		---------------------###CHECKS START###---------------------
+		local headcheck = {}
+		headcheck.start =  LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1"))
+		headcheck.endpos = headcheck.start + Vector(0,0,5)
+		--headcheck.endpos = headcheck.start - Vector(0,0,5)
+		headcheck.filter = function(ent)
+			return ( ent:GetClass() == "prop_physics" )
+		end
+		local hc = util.TraceLine(headcheck)
+		hpos = hc.HitPos
+		hent = hc.Entity
+		hit = hc.Hit
+		
+		local headcheck2 = {}
+		headcheck2.start =  LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1"))
+		headcheck2.endpos = headcheck2.start - Vector(0,0,25)
+		--headcheck.endpos = headcheck.start - Vector(0,0,5)
+		headcheck2.filter = function(ent)
+			return ( ent:GetClass() == "prop_physics" )
+		end
+		local hc2 = util.TraceLine(headcheck2)
+		hpos2 = hc2.HitPos
+		hent2 = hc2.Entity
+		hit2 = hc2.Hit
+		
+		local clipcheck = util.TraceHull( {
+	start = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-3)	,
+	endpos = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-3) ,
+	filter = LocalPlayer()	,
+	mins = Vector( -7.5, -7.5, -7.5 ),
+	maxs = Vector( 7.5, 7.5, 7.5 ),
+	mask = LocalPlayer()
+} )
+		local clipcheckhit = clipcheck.Hit
+		
+		---------------------###CHECKS END###---------------------
+		
 		local eyeview = {}
 		if ( ply:LookupAttachment( "eyes" ) ) then
 		
-			eyeview.origin = ply:GetAttachment( ply:LookupAttachment( "eyes" ) ).Pos
+		if hit then
+			eyeview.origin = hpos - Vector(0,0,5)
+		elseif hit2 then
+			eyeview.origin = hpos2 - Vector(0,0,15)
+		elseif clipcheckhit then
+			LocalPlayer():ScreenFade( SCREENFADE.IN, Color(0,0,80,255), 0.1, 0 )
+		else
+			eyeview.origin = LocalPlayer():GetAttachment( LocalPlayer():LookupAttachment("eyes") ).Pos
+		end
 		
 		else
 		
@@ -84,7 +130,7 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 		
 		if impulse.GetSetting("view_thirdperson") then
 		eyeview_enabled = false
-        LocalPlayer():ManipulateBoneScale( LocalPlayer():LookupBone( "ValveBiped.Bip01_Head1" ), Vector( 1, 1, 1 ) )
+        --LocalPlayer():ManipulateBoneScale( LocalPlayer():LookupBone( "ValveBiped.Bip01_Head1" ), Vector( 1, 1, 1 ) )
 		--print(eyeview_enabled)
 		local angles = LocalPlayer():GetAimVector():Angle()
 		local targetpos = Vector(0, 0, 60)
@@ -107,7 +153,7 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 		offset.y = 20
 		offset.z = 5
 		angles.yaw = angles.yaw + 3
-
+		
 		local t = {}
 
 		t.start = LocalPlayer():GetPos() + pos
@@ -141,8 +187,8 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 		if wep and IsValid(wep) and wep.GetIronsights and not wep.NoThirdpersonIronsights then
 			fov = Lerp(FrameTime() * 15, wep.FOVMultiplier, wep:GetIronsights() and wep.IronsightsFOV or 1) * fov
 		end
-
-		local delta = LocalPlayer():EyePos() - origin
+		
+		local delta = LocalPlayer():EyePos() - origin + Vector(0,0,0)
 		
 		--LocalPlayer():ManipulateBoneScale( LocalPlayer():LookupBone( "ValveBiped.Bip01_Head1" ), Vector( 1, 1, 1 ) )
 		
