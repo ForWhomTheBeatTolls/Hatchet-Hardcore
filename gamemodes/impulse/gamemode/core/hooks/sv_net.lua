@@ -682,6 +682,15 @@ net.Receive("impulseInvDoDrop", function(len, ply)
 
 	local canUse = hook.Run("CanUseInventory", ply)
 
+
+	if ply:GetMoveType() == MOVETYPE_NOCLIP then
+		return
+	else
+		ply:DoCustomAnimEvent(PLAYERANIMEVENT_CANCEL, 1)
+	end
+	
+	ply:EmitSound("physics/body/body_medium_impact_soft2.wav", 80)
+
 	if canUse != nil and canUse == false then
 		return
 	end
