@@ -111,9 +111,19 @@ if SERVER then
 				
 				--activator:Notify("You have picked up a "..self.Item.Name..".") grammatical problems + not really needed
 
+
+				--activator:Notify("You have picked up a "..self.Item.Name..".")
+				--activator:ForceSequence("pickup", nil, 1, true)
+				if activator:GetMoveType() == MOVETYPE_NOCLIP then
+					return
+				else
+					activator:ForceSequence("pickup", nil, 1, true)
+				end
+				activator:EmitSound("physics/body/body_medium_impact_soft2.wav", 80)
+
 				hook.Run("PlayerPickupItem", activator, self.Item.UniqueID)
                 
-               -- ply:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, ply:LookupSequence("grenthrow") )
+                --activator:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, activator:LookupSequence("grenthrow") )
 			else
 				activator:Notify("This item is too heavy to pick up.")
 			end
