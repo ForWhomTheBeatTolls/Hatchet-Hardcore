@@ -19,10 +19,10 @@ hook.Add( "PostDrawTranslucentRenderables", "trace_visualize", function()
 	function IsIndoors()
 		local night = CreateSound(LocalPlayer(), "ambient/forest_night.wav")
 		if outdoorscheck.HitSky == true then
-			--print("true")
-			night:PlayEx(0.1, 100)
+			print("true")
+			night:PlayEx(0.17, 60)
 		else
-			--print("false")
+			print("false")
 			night:Stop()
 		end
 	end
@@ -36,5 +36,5 @@ local delay = 0
 hook.Add("Think", "AmbienceOutside", function()
 	if CurTime() < delay then return end	
     IsIndoors()
-	delay = CurTime() + 3 -- Makes every 4 secs run the code
+	delay = CurTime() + 0.1 -- Makes every 4 secs run the code
 end)
