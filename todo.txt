@@ -4,16 +4,13 @@ TO-DO LIST:
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it
 -Add mixtures for all armors
 -Implement a temporary OS solution
--Implement AJ & JW sounds
 -Add CW & its classes
 -Add resistance and similar skills
 -Add the Resistance faction and its classes
--Make foods give vitality
 -Fix Lockshockers
 -Animation menu using NET functions
 -NPC implementation, headcrabs dropping meat, etc
 -NPC respawn once every 10 minutes or so?
--Make weapons easier to control if you're a Citizen with high resistance / a Cop with high Rankpoints
 -Add workforce entities
 -Brainstorm ideas for Workforce entities
 -Add a new entity instead of a vendor for giving CP gear
@@ -21,16 +18,20 @@ TO-DO LIST:
 
 DONE LIST:
 ---------------------
-- Ambience Color and make it toggleable
+-Ambience Color and make it toggleable
 -Make a Vitality statistic
 -Make Vitality a constantly decreasing skill [Technically??]
 -Pickup animations, drop animations, etc (idk what u mean by etc)
+-Make weapons easier to control if you're a Citizen with high resistance / a Cop with high Rankpoints (Instead of resistance/rankpoints, they both use Weapon Skill)
+-Check for Indoors
+-Make foods give vitality
+-Implement AJ & JW sounds (Kinda done?)
+
 
 WILLMASTER CODING SIDE:
 ------------------------
 
 - Overhead chat
-- Check for Indoors (This will take a long time...)
 
 MUHAMMED CODING SIDE:
 ------------------------
