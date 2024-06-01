@@ -13,8 +13,6 @@ hook.Add( "PostDrawTranslucentRenderables", "trace_visualize", function()
 
 	-- Show that the traceline is a line, not a hull
 	--render.DrawWireframeBox( outdoorscheck.HitPos, Angle( 0, 0, 0 ), mins, maxs, color_red, true )
-	-- listen here GLUA, if you dont fucking play how i want it to i will rape your wife and make you suffer by adding 500 hook.add(thinks)
-	-- do you understand what im saying you faggot?
 
 	function IsIndoors()
 		local night = CreateSound(LocalPlayer(), "ambient/forest_night.wav")
