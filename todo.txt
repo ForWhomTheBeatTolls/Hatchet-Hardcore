@@ -9,16 +9,14 @@ TO-DO LIST:
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it
 -Add mixtures for all armors
 -Implement a temporary OS solution
--Add CW & its classes
+
 -Add resistance and similar skills
 -Add the Resistance faction and its classes
 -Fix Lockshockers
 -Animation menu using NET functions
--NPC implementation, headcrabs dropping meat, etc
--NPC respawn once every 10 minutes or so?
 -Add workforce entities
 -Brainstorm ideas for Workforce entities
--Add a new entity instead of a vendor for giving CP gear
+
 -Bunch of other shit I can't remember
 
 DONE LIST:
@@ -35,8 +33,10 @@ DONE LIST:
 
 WILLMASTER CODING SIDE:
 ------------------------
-
-
+-NPC implementation, headcrabs dropping meat, etc
+-NPC respawn once every 10 minutes or so?
+-Add a new entity instead of a vendor for giving CP gear
+-Add CW & its classes
 
 MUHAMMED CODING SIDE:
 ------------------------
