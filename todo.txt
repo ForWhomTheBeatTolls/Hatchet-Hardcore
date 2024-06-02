@@ -1,3 +1,8 @@
+LEAVE IT FOR NOW:
+- Overhead chat (I think i can get this to work by using Net's, but for now its not our top priority)
+--------------------------
+
+
 TO-DO LIST:
 -----------------------------------------------------
 
@@ -31,7 +36,7 @@ DONE LIST:
 WILLMASTER CODING SIDE:
 ------------------------
 
-- Overhead chat
+
 
 MUHAMMED CODING SIDE:
 ------------------------
