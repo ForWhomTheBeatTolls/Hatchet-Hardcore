@@ -869,6 +869,18 @@ function SCHEMA:DoAnimationEvent(ply, event, data)
 				ply:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD, ply:LookupSequence("melee_gunhit"), 0, true)
 				return ACT_INVALID
+			elseif data == ply:LookupSequence("gesture_item_drop") then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("gesture_item_drop"), 0, true)
+				return ACT_INVALID
+			elseif data == ply:LookupSequence("g_palm_out_r") then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_palm_out_r"), 0, true)
+				return ACT_INVALID
+			elseif data == 1706 then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, 1706, 0, true)
+				return ACT_INVALID
 			end
             end
         end
