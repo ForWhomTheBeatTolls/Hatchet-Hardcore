@@ -17,10 +17,10 @@ hook.Add( "PostDrawTranslucentRenderables", "trace_visualize", function()
 	function IsIndoors()
 		local night = CreateSound(LocalPlayer(), "ambient/forest_night.wav")
 		if outdoorscheck.HitSky == true then
-			print("true")
+			--print("true")
 			night:PlayEx(0.17, 60)
 		else
-			print("false")
+			--print("false")
 			night:Stop()
 		end
 	end
