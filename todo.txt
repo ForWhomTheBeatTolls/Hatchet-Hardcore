@@ -9,7 +9,6 @@ TO-DO LIST:
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it
 -Add mixtures for all armors
 -Implement a temporary OS solution
-
 -Add resistance and similar skills
 -Add the Resistance faction and its classes
 -Fix Lockshockers
@@ -29,6 +28,7 @@ DONE LIST:
 -Check for Indoors
 -Make foods give vitality
 -Implement AJ & JW sounds (Kinda done?)
+-NPC respawn once every 10 minutes or so? (Done but it's strange)
 
 
 WILLMASTER CODING SIDE:
@@ -39,4 +39,3 @@ WILLMASTER CODING SIDE:
 
 MUHAMMED CODING SIDE:
 ------------------------
--NPC respawn once every 10 minutes or so? (Done but kind of broken)
