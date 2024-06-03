@@ -34,5 +34,5 @@ local delay = 0
 hook.Add("Think", "AmbienceOutside", function()
 	if CurTime() < delay then return end	
     IsIndoors()
-	delay = CurTime() + 0.1 -- Makes every 4 secs run the code
+	delay = CurTime() + 2 -- Makes every 4 secs run the code
 end)
