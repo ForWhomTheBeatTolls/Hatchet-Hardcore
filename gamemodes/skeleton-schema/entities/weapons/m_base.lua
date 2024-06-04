@@ -175,7 +175,7 @@ if self.Owner:Crouching() then
 bullet.Spread = Vector( self.Primary.Spread * (0.06 - skillaccuracy)  , self.Primary.Spread * (0.06 - skillaccuracy), 0)
 else
 bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - skillaccuracy )  , self.Primary.Spread * ( 0.1 - skillaccuracy ), 0)
-print(bullet.Spread)
+--print(bullet.Spread)
 end
 
 bullet.Tracer = 1
@@ -207,7 +207,7 @@ end
 self:ViewPunch()
 self:TakePrimaryAmmo(self.Primary.TakeAmmo)
 if SERVER then
-self.Owner:AddSkillXP("shooting", math.random(1,5))
+self.Owner:AddSkillXP("shooting", math.random(1,3))
 end
 self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
 end 
@@ -286,6 +286,7 @@ function SWEP:Reload()
 			return
 		elseif(!has and hasSpare ) then
 			ply:SetAmmo(amountSpare, self.Primary.Ammo)
+			ply:DoReloadEvent()
 			for i = 1, amountSpare do
 				ply:TakeInventoryItemClass(self.RelAmmo2)
 				amountSpare = amountSpare - 1
@@ -305,14 +306,17 @@ function SWEP:Reload()
 			if(amountSpare == nil) then amountSpare = 1 else amountSpare = amountSpare + 1 end
 		end
 		if(hasSpare and amountSpare >= self.Primary.ClipSize) then
+		ply:DoReloadEvent()
 			for i = 1, self.Primary.ClipSize do
 				ply:TakeInventoryItemClass(self.RelAmmo2)
 				amountSpare = amountSpare - 1
 			end
 			if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
 				ply:GiveInventoryItem(self.RelAmmo, 1, true)
+				ply:DoReloadEvent()
 			else
 				ply:GiveInventoryItem(self.RelAmmo)
+				ply:DoReloadEvent()
 			end
 		end	
 	end
@@ -320,7 +324,7 @@ function SWEP:Reload()
 			self:SetHoldType( self.HoldType )
 			self.Weapon:DefaultReload(ACT_VM_RELOAD);
 			ply:EmitSound(self.Primary.ReloadSound, 80, 100, 0.5)
-			ply:DoCustomAnimEvent(PLAYERANIMEVENT_RELOAD, 1)
+			ply:DoReloadEvent()
 		else
 			self:SetHoldType( self.HoldType )
 		end
