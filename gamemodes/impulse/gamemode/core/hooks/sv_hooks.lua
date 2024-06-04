@@ -23,6 +23,7 @@ function GM:PlayerInitialSpawn(ply)
 	query:Select("rpgrouprank")
 	query:Select("xp")
 	query:Select("kills")
+	query:Select("rankpoints")
 	query:Select("money")
 	query:Select("bankmoney")
 	query:Select("model")
@@ -292,6 +293,7 @@ function impulse.SetupPlayer(ply, dbData)
 	ply:SetSyncVar(SYNC_RPNAME, dbData.rpname, true)
 	ply:SetSyncVar(SYNC_XP, dbData.xp, true)
 	ply:SetSyncVar(SYNC_KILLS, dbData.kills, true)
+	ply:SetSyncVar(SYNC_RANKPOINTS, dbData.rankpoints, true)
 
 	ply:SetLocalSyncVar(SYNC_MONEY, dbData.money)
 	ply:SetLocalSyncVar(SYNC_BANKMONEY, dbData.bankmoney)
@@ -358,6 +360,7 @@ function impulse.SetupPlayer(ply, dbData)
 	ply.defaultSkin = dbData.skin
 	ply.defaultRPName = dbData.rpname
 	ply.defaultKills = dbData.kills
+	ply.defaultrankpoints = dbData.rankpoints
 	ply:UpdateDefaultModelSkin()
 	
 	--ply:SetFOV(100, 0)
