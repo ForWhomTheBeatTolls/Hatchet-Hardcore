@@ -1,3 +1,4 @@
+if engine.ActiveGamemode() == "sandbox" then return end
 util.AddNetworkString("BD.DeathCam")
 RunConsoleCommand("ai_serverragdolls", 1)
 
@@ -217,7 +218,7 @@ local function choose_bd_anims(type, data)
     elseif type == "explosion" then
         anim = "DeathExplosion_0"..math.random(1,8)
     elseif type == "club" then
-        anim = table.Random(bdtab["club"])
+        anim = table.Random(bdtab["dying"])
     elseif type == "crawling" then
         anim = "crawling"..math.random(6,7)
     elseif type == "moving" then
@@ -269,9 +270,9 @@ local function play_anim_on_rag(rag, an, scale)
     if an == "crawling" then
         anm:SetAngles(rag:GetAngles()+Angle(0,math.random(-45,45),0))
         if FaceExp:GetBool() then
-            rag:SetFlexScale( math.random( -2 , 2 ) )
+            rag:SetFlexScale( math.random( -0.6 , 1.1 ) )
             for i = 1, 32 do	
-                rag:SetFlexWeight( i , math.Rand( 0 , 1 ) )
+                rag:SetFlexWeight( i , math.Rand( 0 , .5 ) )
             end
         end
     end
@@ -312,18 +313,18 @@ local function make_death_anim(ent, rag, type)
     anm.FinishFunc = function()
         if !IsValid(rag) then return end
         if FaceExp:GetBool() then
-            rag:SetFlexScale( math.random( -2 , 2 ) )
+            rag:SetFlexScale( math.random( -0.6 , 1.1 ) )
             for i = 1, 32 do	
-                rag:SetFlexWeight( i , math.Rand( 0 , 1 ) )
+                rag:SetFlexWeight( i , math.Rand( 0 , .5 ) )
             end
         end
     end
     local dur = select(2, anm:LookupSequence(anim))
 
     if FaceExp:GetBool() then
-        rag:SetFlexScale( math.random( -2 , 2 ) )	
+        rag:SetFlexScale( math.random( -0.6 , 1.1 ) )	
         for i = 1, 32 do
-            rag:SetFlexWeight( i , math.Rand( 0 , 1 ) )
+            rag:SetFlexWeight( i , math.Rand( 0 , .5 ) )
         end
     end
 
@@ -338,7 +339,7 @@ local function make_death_anim(ent, rag, type)
     end
     rag.IsDeathRagdoll = true
     rag.NPCClass = ent.GetNPCClass and ent:GetNPCClass() or ent.Classify and ent:Classify() or CLASS_BULLSEYE
-    rag.RagHealth = ent:GetMaxHealth()*LifeScale:GetFloat()
+    rag.RagHealth = 20
     rag.MaxRagHealth = rag.RagHealth
     rag.AnimModule = anm
     local physcount = rag:GetPhysicsObjectCount()
@@ -388,7 +389,7 @@ hook.Add("EntityTakeDamage", "DeathAnimsBrutal", function(ent, dmg)
         elseif ent:IsOnGround() and (ent:IsPlayer() and ent:GetVelocity():Length() > ent:GetWalkSpeed() + 20 or ent:IsNPC() and ent:GetIdealMoveSpeed() > 200) then
             ent.DeathAnimType = "moving"
         elseif dmg:IsBulletDamage() then
-			dmg:SetDamageForce(dmgforce / 150)
+			--dmg:SetDamageForce(dmgforce / 150)
             ent.DeathAnimType = "bullet"
         elseif (dmg:GetDamageType() == DMG_CLUB or dmg:GetDamageType() == DMG_CRUSH) and !ClubAsDefault:GetBool() then
             ent.DeathAnimType = "club"
@@ -426,6 +427,9 @@ hook.Add("OnNPCKilled", "DeathAnimsBrutal", function(ent, att)
 end)
 
 hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
+	local rtd = math.random(1, 100)
+	
+	if rtd > 20 and rag:GetOwner():GetVelocity():Length() <  700 then
 
 	local ragCount = #ents.FindByClass("prop_ragdoll")
 
@@ -435,24 +439,11 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 		rag:Remove()
 	else
 	local vel = ent:GetVelocity()
-	
-    if ent:IsPlayer() then
-        if !EnablePlayers:GetBool() then 
-            ent:Remove() 
-            return
-        end
-        net.Start("BD.DeathCam")
-        net.WriteInt(rag:EntIndex(), 32)
-        net.Send(ent)
-    end
     if ent:IsNPC() and !EnableNPCs:GetBool() then return end
     if ent.DeathAnimType then
         local physcount = rag:GetPhysicsObjectCount()
         for i = 0, physcount - 1 do
             local physObj = rag:GetPhysicsObjectNum(i)
-            timer.Simple(0.1, function()
-                        physObj:SetVelocity(physObj:GetVelocity() / 2)
-                    	rag:SetVelocity(rag:GetVelocity() / 4) end)
 			
 			if ent.DeathAnimType == "explosion" then
 				timer.Simple(0.1, function()
@@ -468,13 +459,33 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
             end
         end
         make_death_anim(ent, rag, ent.DeathAnimType)
-    end
+    end	
+	end
 	
-		timer.Simple(impulse.Config.BodyDeSpawnTime, function()
-		if rag and IsValid(rag) then
+	elseif rtd < 20 and ent.DeathAnimType != "explosion" then
+	ent:Remove()
+	local physcount = rag:GetPhysicsObjectCount()
+	local playervel = rag:GetOwner():GetVelocity()
+	for i = 0, physcount - 1 do
+	local physObj = rag:GetPhysicsObjectNum(i)
+	physObj:SetVelocity(Vector(0,0,0))
+	end
+	
+	elseif ent.DeathAnimType == "explosion" then
+		ent:Remove()
+		
+		local physcount = rag:GetPhysicsObjectCount()
+	for i = 0, physcount - 1 do
+	physObj:SetVelocity(Vector(0,0,0))
+	end
+	
+	end
+	
+	timer.Simple(impulse.Config.BodyDeSpawnTime, function()
+		if IsValid(rag) then
 			rag:Fire("FadeAndRemove", 7)
 
-			timer.Simple(10, function()
+			timer.Simple(impulse.Config.BodyDeSpawnTime + 5, function()
 				if IsValid(rag) then
 					rag:Remove() -- just in case
 				end
@@ -483,34 +494,24 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 	end)
 	
 	timer.Simple(0.1, function()
-		if IsValid(rag) and IsValid(ent) and rag:GetOwner():IsPlayer() then
+		if IsValid(ent) and rag:GetOwner():IsPlayer() then
 			net.Start("impulseRagdollLink")
 			net.WriteEntity(rag)
 			net.Send(ent)
-            --rag:SetOwner(nil)
-            --print(rag:GetOwner())
 		end
 	end)
 	
-	end
+	if ent:IsPlayer() then
+        net.Start("BD.DeathCam")
+        net.WriteInt(rag:EntIndex(), 32)
+        net.Send(ent)
+    end
 	
-	-- elseif rtd < 20 and ent.DeathAnimType != "explosion" then
-	-- ent:Remove()
-	-- local physcount = rag:GetPhysicsObjectCount()
-	-- for i = 0, physcount - 1 do
-	-- local physObj = rag:GetPhysicsObjectNum(i)
-	-- physObj:SetVelocity(rag:GetOwner():GetVelocity() * math.random(0.05, 0.1))
-	-- end
-	
-	-- elseif ent.DeathAnimType == "explosion" then
-		-- ent:Remove()
-		
-		local physcount = rag:GetPhysicsObjectCount()
+	local physcount = rag:GetPhysicsObjectCount()
 	for i = 0, physcount - 1 do
 	local physObj = rag:GetPhysicsObjectNum(i)
-	physObj:SetVelocity(rag:GetOwner():GetVelocity() * math.random(0.6, 1))
+	local physvel = physObj:GetVelocity()
+	physObj:SetVelocity(Vector((physvel.x - physvel.x / 1.1), (physvel.y - physvel.y / 1.1), (physvel.z - physvel.z / 1.1)))
 	end
-	
-	
 	rag:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 end)
