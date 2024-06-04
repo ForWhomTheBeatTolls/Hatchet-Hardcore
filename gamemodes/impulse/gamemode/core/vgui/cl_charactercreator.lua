@@ -21,9 +21,20 @@ function PANEL:Init()
 		local msg = Derma_Message
 
 		local skinBlacklist = impulse.Config.DefaultSkinBlacklist[characterModel]
+		local nameBlacklist = impulse.Config.DefaultNameBlacklist
 
 		if skinBlacklist and table.HasValue(skinBlacklist, characterSkin) then
 			return msg("The skin you selected was on the blacklist.\nPlease select another skin or change the model.", "impulse", "OK")
+		end
+		
+		if nameBlacklist  then
+			for k,v in pairs(impulse.Config.DefaultNameBlacklist) do
+				if table.HasValue(string.Explode( " ", characterName:lower() ), v ) then
+				return msg("Your name had unacceptable language. Please try again.", "impulse", "OK")
+				elseif string.find(characterName:lower(), v) then
+				return msg("Your name had unacceptable language. Please try again.", "impulse", "OK")
+				end
+			end
 		end
 		
 		local name, rejectReason = impulse.CanUseName(characterName)
