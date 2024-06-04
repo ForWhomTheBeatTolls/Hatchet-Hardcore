@@ -271,11 +271,8 @@ function GM:HUDPaint(mvData)
 
 		local wait = math.ceil(deathWait - CurTime())
 
-		if wait > 0 then
-			draw.SimpleText("You will respawn in "..wait.." "..(wait == 1 and "second" or "seconds")..".", "Impulse-Elements23", scrW/2, (scrH/2)+30, textCol, TEXT_ALIGN_CENTER)
-			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW/2, (scrH/2)+70, textCol, TEXT_ALIGN_CENTER)
-
-			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW/2, scrH-20, textCol, TEXT_ALIGN_CENTER)
+		if wait > 1 and wait < 10 then
+			draw.SimpleText("You have died", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
 		end
 
 		if IsValid(PlayerIcon) then
@@ -291,7 +288,7 @@ function GM:HUDPaint(mvData)
 			local ft = FrameTime()
 			deathEndingFade = math.Clamp((deathEndingFade or 0) + ft * .15, 0, 1)
 
-			local val = 255 - math.ceil(deathEndingFade * 255)
+			local val = 25 - math.ceil(deathEndingFade * 25)
 
 			if deathEndingFade != 1 then
 				surface.SetDrawColor(0, 0, 0, val)
