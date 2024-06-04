@@ -1,6 +1,6 @@
 -- Framework related
 impulse.Config.SchemaName = "hatchet-hl2rpg"
-impulse.Config.SchemaVersion = 053
+impulse.Config.SchemaVersion = 91
 
 impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>Developer1NameHere</font>
@@ -18,7 +18,7 @@ impulse.Config.IntroMusic = "music/hl1_song20.mp3" -- song to play when characte
 impulse.Config.SignalsUpdateTime = 2
 
 impulse.Config.WalkSpeed = 100
-impulse.Config.JogSpeed = 200
+impulse.Config.JogSpeed = 194
 impulse.Config.SlowWalkRatio = 0.6
 impulse.Config.SideWalkRatio = 0.6
 
@@ -40,6 +40,8 @@ impulse.Config.ChairsLimit = 3
 
 impulse.Config.StartingMoney = 50
 impulse.Config.StartingBankMoney = 450
+impulse.Config.StartingKills = 0
+impulse.Config.StartingRankPoints = 0
 impulse.Config.CurrencyPrefix = "£"
 impulse.Config.CurrencyName = "pounds"
 impulse.Config.ATMModel = "models/props_combine/combine_intwallunit.mdl"
@@ -58,7 +60,7 @@ impulse.Config.ClassChangeTime = 60
 impulse.Config.QuizWaitTime = 20 -- in mins
 
 impulse.Config.RespawnTime = 10
-impulse.Config.RespawnTimeDonator = 1
+impulse.Config.RespawnTimeDonator = 10
 
 impulse.Config.BodyDeSpawnTime = 360 -- 6 mins
 
@@ -200,11 +202,32 @@ impulse.Config.Achievements = {
 		Desc = "You entered the test plugin command",
 		Icon = Material("impulse/icons/warning-36-128.png")
 	},
-	["ach_kill"] = {
-		Name = "Kill Someone",
-		Desc = "uhhhh you killed someone i guess",
+	["ach_akill"] = {
+		Name = "Giver of Death",
+		Desc = "'In a past life, I killed hundreds. And in the life before that, I played trumpets.'",
 		Icon = Material("impulse/icons/check-mark-128.png")
+	},
+	["ach_adie"] = {
+		Name = "Taker of Death",
+		Desc = "There's a billion ways to die.",
+		Icon = Material("impulse/icons/toxic-256.png")
+	},
+	["ach_6feet"] = {
+		Name = "6 Feet Deep",
+		Desc = "I keep falling, but never falling six feet deep.",
+		Icon = Material("icon16/keyboard.png")
+	},
+	["ach_combine1"] = {
+		Name = "Killed a Civil Protection officer.",
+		Desc = "For what the combine fear most...",
+		Icon = Material("decals/lambdaspray_1a")
+	},
+	["ach_combine2"] = {
+		Name = "Killed an Overwatch Soldier.",
+		Desc = "...is not any tangible human weapon.",
+		Icon = Material("decals/lambdaspray_2a")
 	}
+		
 }
 
 impulse.Config.ModQuickReplies = {
@@ -256,16 +279,35 @@ impulse.Config.DefaultSkinBlacklist = {
 	["models/player/impulse_zelpa/male_02.mdl"] = {14, 22, 6} -- bloody eye skins banned
 }
 
+impulse.Config.DefaultNameBlacklist = {
+	"nigger",
+	"nigga",
+	"faggot",
+	"bitch",
+	"negro",
+	"niggers",
+	"niggas",
+	"faggots",
+	"bitches",
+	"negros",
+	"bitchs"
+}
+
 impulse.Config.LootPools = {
     ["good"] = {
         Items = {
             ["wep_axe"] = {Rarity = 900},
             ["util_scrapmetal"] = {Rarity = 300},
 			["wep_crowbar"] = {Rarity = 900},
+			["wep_pipe"] = {Rarity = 900}, 
+			["wep_shovel"] = {Rarity = 900},
+			["wep_cleaver"] = {Rarity = 900},
 			["util_electronics"] = {Rarity = 900},
 			["ammo_pistol"] = {Rarity = 900},
 			["ammo_smg"] = {Rarity = 900},
 			["ammo_revolver"] = {Rarity = 900},
+			["ammo_rifle"] = {Rarity = 900},
+			["ammo_shotgun"] = {Rarity = 900},
         },
         MaxItems = 2,
         MinItems = 1,
