@@ -9,7 +9,8 @@ function GM:DatabaseConnected()
         sqlQuery:Create("rpgroup", "int(11) unsigned NOT NULL") -- rpgroup
         sqlQuery:Create("rpgrouprank", "varchar(255) NOT NULL") -- rpgroup rank string
         sqlQuery:Create("xp", "int(11) unsigned DEFAULT NULL") -- xp
-		sqlQuery:Create("kills", "int(11) unsigned DEFAULT NULL") -- kills
+	sqlQuery:Create("kills", "int(11) unsigned DEFAULT NULL") -- kills
+	sqlQuery:Create("rankpoints", "int(11) unsigned DEFAULT NULL") -- rankpoints
         sqlQuery:Create("money", "int(11) unsigned DEFAULT NULL") -- money
         sqlQuery:Create("bankmoney", "int(11) unsigned DEFAULT NULL") -- banked money
         sqlQuery:Create("skills", "longtext") -- json skill data seperated from data to avoid corrruption
