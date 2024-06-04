@@ -2,7 +2,8 @@ include("shared.lua")
 AddCSLuaFile("shared.lua")
 function ENT:Initialize()
     self:SetModel("models/player/breen.mdl")
-    self:SetPlaybackRate(math.Rand(0.6,2))
+	self:DrawShadow(false)
+    self:SetPlaybackRate(2)
     self:SetMaterial("null")
     self.Delta = 0
     self.LerpScale = 0.2
@@ -12,7 +13,8 @@ function ENT:Initialize()
     cub:SetPos(self:GetPos())
     cub:SetAngles(self:GetAngles())
     cub:SetNoDraw(true)
-    cub:Spawn()
+    cub:DrawShadow(false)
+	cub:Spawn()
     self.HeightCube = cub
     self:DeleteOnRemove(cub)
 end
@@ -69,13 +71,13 @@ function ENT:Think()
         if isstring(self.AnimString) and string.match(self.AnimString, "crawling") and (not self.BleedTime or self.BleedTime < CurTime()) then
             local ransound = math.random(1,20)
 			self.BleedTime = CurTime()+8
-			if string.match(rag:GetModel(), "^models/player/impulse_zelpa/male") then
+			if string.match(rag:GetModel(), "^models/player/pandafishizens/male") then
 				if ransound > 1 then
 			self:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 80)
 				else
 			self:EmitSound("vo/episode_1/npc/male01/cit_evac_casualty08.wav")
 				end
-			elseif string.match(rag:GetModel(), "^models/player/impulse_zelpa/female") then
+			elseif string.match(rag:GetModel(), "^models/player/pandafishizens/female") then
 				if ransound > 1 then
 			self:EmitSound("vo/npc/female01/moan0"..math.random(1,5)..".wav", 90)
 				else
