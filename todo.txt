@@ -27,6 +27,7 @@ DONE LIST:
 -Make foods give vitality
 -Implement AJ & JW sounds (Kinda done?)
 -NPC respawn once every 10 minutes or so? (Done but it's strange)
+-Add Rankpoints as a SYNC VARIABLE and then eventually implement it (Added Rankpoints)
 
 
 WILLMASTER CODING SIDE:
@@ -36,6 +37,5 @@ WILLMASTER CODING SIDE:
 
 MUHAMMED CODING SIDE:
 ------------------------
--Add Rankpoints as a SYNC VARIABLE and then eventually implement it
 -Fix Lockshockers
 -Rework Civil Protection
