@@ -420,7 +420,7 @@ end)
 
 local enabletime = true
 hook.Add("OnNPCKilled", "DeathAnimsBrutal", function(ent, att)
-    if ent:IsNPC() and EnableNPCs:GetBool() and !GetConVar("ai_serverragdolls"):GetBool() and att:IsPlayer() and enabletime then
+    if ent:IsNPC() and !GetConVar("ai_serverragdolls"):GetBool() and att:IsPlayer() and enabletime then
         att:ChatPrint("BETTER ENABLE KEEP CORPSES TO GET BEST WORKING ON NPC DEATH ANIMS")
         enabletime = false
     end
