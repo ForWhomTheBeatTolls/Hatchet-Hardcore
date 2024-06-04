@@ -18,18 +18,6 @@ function GM:HUDShouldDraw(element)
 	return true
 end
 
-local ambience = {
-	["$pp_colour_addr"] = 0,
-	["$pp_colour_addg"] = 0,
-	["$pp_colour_addb"] = 0,
-	["$pp_colour_brightness"] = -0.04,
-	["$pp_colour_contrast"] = 1.4,
-	["$pp_colour_colour"] = 0.8,
-	["$pp_colour_mulr"] = 0,
-	["$pp_colour_mulg"] = 0,
-	["$pp_colour_mulb"] = 0
-}
-
 local blur = Material("pp/blurscreen")
 local cheapBlur = Color(0,0,0,205)
 -- local function BlurRect(x, y, w, h)
@@ -351,16 +339,6 @@ function GM:HUDPaint(mvData)
 	-- end
 
 	-- HUD
-
-	if impulse.GetSetting("hud_ambience") then
-		hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function()
-			DrawColorModify( ambience )
-		end )
-	end
-
-		if not impulse.GetSetting("hud_ambience") then
-		hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor")
-	end
 
 	y = scrH-hudHeight-8-10
 	--BlurRect(10, y, hudWidth, hudHeight)
