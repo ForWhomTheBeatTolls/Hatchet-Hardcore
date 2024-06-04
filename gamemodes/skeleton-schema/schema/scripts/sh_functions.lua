@@ -50,8 +50,8 @@ local unallowedWeps = {
 	["ls_axe"] = true,
 	["ls_crowbar"] = true,
 	["ls_pipe"] = true,
-	["ls_shovel"] = true
-	
+	["ls_shovel"] = true,
+	["ls_cleaver"] = true
 }
 
 local strsub = string.sub
