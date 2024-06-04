@@ -224,6 +224,7 @@ SYNC_CRAFTLEVEL = impulse.Sync.RegisterVar(SYNC_INT)
 SYNC_TROPHYPOINTS = impulse.Sync.RegisterVar(SYNC_BIGINT)
 SYNC_INCOGNITO = impulse.Sync.RegisterVar(SYNC_BOOL)
 SYNC_KILLS = impulse.Sync.RegisterVar(SYNC_HUGEINT)
+SYNC_RANKPOINTS = impulse.Sync.RegisterVar(SYNC_HUGEINT)
 
 SYNC_GROUP_NAME = impulse.Sync.RegisterVar(SYNC_STRING)
 SYNC_GROUP_RANK = impulse.Sync.RegisterVar(SYNC_STRING)
