@@ -18,12 +18,31 @@ function PANEL:Init()
 	self.core:SetPos(0, 0)
 	self.core:SetSize(ScrW(), ScrH())
 
-	local bodyCol = Color(30, 30, 30, 190)
+	local menumusic = CreateSound(LocalPlayer(), "music/hl1_song3.mp3")
+	menumusic:Play()
+	menumusic:ChangePitch(90, 0.1)
+	menumusic:ChangeVolume(1)
+
+
+	local bodyCol = Color(36, 36, 36)
 	function self.core:Paint(w, h)
+		local gradient = surface.GetTextureID("vgui/gradient-d")
+		local gradientUp = surface.GetTextureID("vgui/gradient-u")
+		local gradientLeft = surface.GetTextureID("vgui/gradient-l")
+		local vignette = Material("impulse/vignette.png")
+
+
 		surface.SetDrawColor(bodyCol) -- menu body
-		surface.DrawRect(70,0,400,h) -- left body
-		surface.DrawRect(w-540,0,520,380)-- news body
-		impulse.render.glowgo(100,50,337,91)
+		surface.SetTexture(gradientLeft)
+		--surface.DrawRect(0,0,300,h)
+		surface.DrawTexturedRect(0,0,900,h)
+		surface.SetMaterial(vignette)
+		surface.SetDrawColor(Color(0, 0, 0))
+		surface.DrawTexturedRect(0,0,w,h)
+
+
+--		surface.DrawRect(w-540,0,520,380)-- news body
+		--impulse.render.glowgo(100,50,337,91)
 
 		local isPreview = GetConVar("impulse_ispreview"):GetBool()
 
@@ -65,13 +84,16 @@ function PANEL:Init()
 				impulse.hudEnabled = true
 				FORCE_FADESPAWN = true
 			end)
+			menumusic:FadeOut(2)
+			timer.Simple(3, function() menumusic:Stop() end)
 		else
 			selfPanel:Remove()
 			impulse.hudEnabled = true
+			menumusic:FadeOut(2)
+			timer.Simple(3, function() menumusic:Stop() end)
 		end
 
 		CRASHSCREEN_ALLOW = true
-		LocalPlayer():ConCommand("fov_desired 90") -- weird fix for fovs?
 	end
 
 	local button = vgui.Create("DButton", self.core)
@@ -258,13 +280,14 @@ function PANEL:Init()
 	local year = os.date("%Y", os.time())
 	local copyrightLabel = vgui.Create("DLabel", self.core)
 	copyrightLabel:SetFont("Impulse-Elements14")
-	copyrightLabel:SetText("Powered by impulse\nCopyright 2i.games "..year.."\nimpulse version: "..impulse.Version)
+	copyrightLabel:SetText("A Project made by SteveB, Inspired by Roots\nProject Lead: WillMaster, SteveB.\nCreative Lead: Steve B.\nMap Design: Jokey\nLead Development: WillMaster, Steve B.\nJunior Development: Thrumbo\nCommunity Contributors: TehRedd, Jokey, GhostfacedKillah\nPowered by impulse\nCopyright 2i.games "..year.."\nimpulse version: "..impulse.Version)
 	copyrightLabel:SizeToContents()
 	copyrightLabel:SetPos(ScrW()-copyrightLabel:GetWide(), ScrH()-copyrightLabel:GetTall()-5)
 
 	local schemaLabel = vgui.Create("DLabel", self.core)
+	schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b))
 	schemaLabel:SetFont("Impulse-Elements32")
-	schemaLabel:SetText(impulse.Config.SchemaName)
+	schemaLabel:SetText("HATCHET: HL2 HARDCORE")
 	--schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)) not sure if i like this
 	schemaLabel:SizeToContents()
 	schemaLabel:SetPos(100,140)
@@ -273,11 +296,11 @@ function PANEL:Init()
 		schemaLabel:SetFont("Impulse-Elements27")
 	end
 
-	local newsLabel = vgui.Create("DLabel", self.core)
-	newsLabel:SetFont("Impulse-Elements32")
-	newsLabel:SetText("News")
-	newsLabel:SizeToContents()
-	newsLabel:SetPos(self:GetWide()-530, 60)
+	--local newsLabel = vgui.Create("DLabel", self.core)
+	--newsLabel:SetFont("Impulse-Elements32")
+	--newsLabel:SetText("News")
+	--newsLabel:SizeToContents()
+	--newsLabel:SetPos(self:GetWide()-530, 60)
 
 	local newsfeed = vgui.Create("impulseNewsfeed", self.core)
 	newsfeed:SetSize(500,270)
@@ -350,8 +373,9 @@ function PANEL:OnChildAdded(child)
 	self.openElement = child
 end
 
+
 function PANEL:Paint(w,h)
-	Derma_DrawBackgroundBlur(self)
+
 end
 
 vgui.Register("impulseMainMenu", PANEL, "DPanel")
