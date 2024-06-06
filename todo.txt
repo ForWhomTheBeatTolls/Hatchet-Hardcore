@@ -16,7 +16,7 @@ TO-DO LIST:
 -Implement a temporary OS solution
 -Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 -Animation menu using NET functions
--Add workforce entities
+
 -Brainstorm ideas for Workforce entities
 
 -Bunch of other shit I can't remember
@@ -39,6 +39,7 @@ DONE LIST:
 WILLMASTER CODING SIDE:
 ------------------------
 -NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
+-Add workforce entities
 -Add CW & its classes
 
 MUHAMMED CODING SIDE:
