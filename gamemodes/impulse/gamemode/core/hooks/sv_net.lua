@@ -684,25 +684,41 @@ net.Receive("impulseInvDoDrop", function(len, ply)
 
 
 	if ply:GetMoveType() == MOVETYPE_NOCLIP then
-		return
+
+		if canUse != nil and canUse == false then
+			return
+		end
+	
+		local invid = net.ReadUInt(16)
+	
+		local hasItem, item = ply:HasInventoryItemSpecific(invid)
+	
+		if hasItem then
+			ply:DropInventoryItem(invid)
+			hook.Run("PlayerDropItem", ply, item, invid)
+		end
 	else
 		ply:DoCustomAnimEvent(PLAYERANIMEVENT_CANCEL, 1)
+
+		ply:EmitSound("physics/body/body_medium_impact_soft2.wav", 80)
+
+		if canUse != nil and canUse == false then
+			return
+		end
+	
+		local invid = net.ReadUInt(16)
+	
+		local hasItem, item = ply:HasInventoryItemSpecific(invid)
+	
+		if hasItem then
+			ply:DropInventoryItem(invid)
+			hook.Run("PlayerDropItem", ply, item, invid)
+		end
 	end
 	
-	ply:EmitSound("physics/body/body_medium_impact_soft2.wav", 80)
+	
 
-	if canUse != nil and canUse == false then
-		return
-	end
 
-	local invid = net.ReadUInt(16)
-
-	local hasItem, item = ply:HasInventoryItemSpecific(invid)
-
-	if hasItem then
-		ply:DropInventoryItem(invid)
-		hook.Run("PlayerDropItem", ply, item, invid)
-	end
 end)
 
 net.Receive("impulseInvDoUse", function(len, ply)
