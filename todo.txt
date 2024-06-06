@@ -2,14 +2,19 @@ LEAVE IT FOR NOW:
 - Overhead chat (I think i can get this to work by using Net's, but for now its not our top priority)
 --------------------------
 
+SCRAPPED / NEEDS REWORK:
+
+-Add resistance and similar skills (Resistance skill is scrapped)
+
+---------------------------------------------------------------------
+
 
 TO-DO LIST:
 -----------------------------------------------------
 
 -Add mixtures for all armors
 -Implement a temporary OS solution
--Add resistance and similar skills
--Add the Resistance faction and its classes
+-Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 -Animation menu using NET functions
 -Add workforce entities
 -Brainstorm ideas for Workforce entities
@@ -39,3 +44,5 @@ WILLMASTER CODING SIDE:
 MUHAMMED CODING SIDE:
 ------------------------
 -Fix Lockshockers
+-Improve Death Animations to include Weapons in the hand of the ragdoll
+-Damage slowdown
