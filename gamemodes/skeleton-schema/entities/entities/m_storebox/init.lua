@@ -186,7 +186,7 @@ if SERVER then
 	caller:Say("/me looted "..looteditemtable.." item from the box.")
 	NextLoot = CurTime() + 300
 	self:RemoveEffects(EF_ITEM_BLINK)
-	timer.Create(self:EntIndex().."StartBlink", NextLoot, 1, function() self:AddEffects(EF_ITEM_BLINK) end )
+	timer.Create(self:EntIndex().."StartBlink", NextLoot, 1, function() if IsValid(self) then self:AddEffects(EF_ITEM_BLINK) end end )
 	elseif caller:IsCP() then
 	caller:Notify("You need to be a Citizen to interact with this entity.")
 	elseif NextLoot > CurTime() then
