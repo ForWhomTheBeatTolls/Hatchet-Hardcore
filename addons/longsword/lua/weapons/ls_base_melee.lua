@@ -11,6 +11,7 @@ SWEP.Primary.Sound = Sound("WeaponFrag.Roll")
 SWEP.Primary.ImpactSound = Sound("Canister.ImpactHard")
 
 function SWEP:PrimaryAttack()
+	local boxSize = self.Primary.HullSize
 	if self.PrePrimaryAttack then
 		self.PrePrimaryAttack(self)
 	end
@@ -18,13 +19,125 @@ function SWEP:PrimaryAttack()
 	if self.Primary.HitDelay then
 		timer.Simple(self.Primary.HitDelay, function()
 			if IsValid(self) and IsValid(self.Owner) then
-				self:ClubAttack()
-				self:ViewPunch()
+				if SERVER then
+				local bullet = {}
+				bullet.Num    = 1
+				bullet.AmmoType = "Snark"
+				bullet.Src    = self.Owner:GetShootPos()
+				bullet.Dir    = self.Owner:GetAimVector()
+				bullet.Spread = Vector(0, 0, 0)
+				bullet.Tracer = 0
+				bullet.Force  = 0
+				bullet.Hullsize = self.Primary.HullSize
+				bullet.Distance = self.Primary.Range
+				bullet.Damage = self.Primary.Damage
+				bullet.Callback = function(attacker, tr, dmginfo)
+					if tr.Hit then
+					
+					--debugoverlay.Cross(tr.HitPos, 2, 3, Color(255, 0, 0), true)
+					--debugoverlay.Cross(tr.Entity:GetBonePosition(6), 2, 3, Color(0, 255, 0), true)
+					--debugoverlay.Cross(tr.Entity:GetBonePosition(6) - Vector(math.random(-17, 17),math.random(-17, 17),math.random(0, 60)), 2, 3, Color(0, 0, 255), true)
+					
+			if self.Primary.ImpactSound then
+				self.Owner:EmitSound(self.Primary.ImpactSound)
 			end
-		end)
+
+		-- if self.Primary.ImpactEffect then
+			-- local effect = EffectData()
+			-- effect:SetStart(tr.HitPos)
+			-- effect:SetNormal(tr.HitNormal)
+			-- effect:SetOrigin(tr.HitPos)
+
+			-- util.Effect(self.Primary.ImpactEffect, effect, true, true)
+		-- end
+
+		local ent = tr.Entity
+
+			if ent:IsPlayer() then
+				util.Decal("Blood", ent:GetBonePosition(6), ent:GetBonePosition(6) -Vector(math.random(-10, 10),math.random(-10, 10),math.random(0, 60)))
+				if self.Primary.FlashTime then
+					ent:ScreenFade(SCREENFADE.IN, self.Primary.FlashColour or color_white, self.Primary.FlashTime, 0)
+					ent.StunTime = CurTime() + self.Primary.FlashTime
+					ent.StunStartTime = CurTime()
+				elseif self.Primary.StunTime then
+					ent.StunTime = CurTime() + self.Primary.StunTime
+					ent.StunStartTime = CurTime()
+				end
+			end
+
+			if tr.MatType == MAT_FLESH then
+				ent:EmitSound("Flesh.ImpactHard")
+
+			elseif tr.MatType == MAT_WOOD then
+				ent:EmitSound("Wood.ImpactHard")
+			elseif tr.MatType == MAT_CONCRETE then
+				ent:EmitSound("Concrete.ImpactHard")
+			end
+		end
+			end
+		self.Owner:FireBullets(bullet)
+	--self:ClubAttack()
+	self:ViewPunch()
+		end
+	end
+end)
+		
 	else
-		self:ClubAttack()
+		if SERVER then
+		local bullet = {}
+		bullet.Num    = 1
+		bullet.AmmoType = "Snark"
+		bullet.Src    = self.Owner:GetShootPos()
+		bullet.Dir    = self.Owner:GetAimVector()
+		bullet.Spread = Vector(0, 0, 0)
+		bullet.Tracer = 0
+		bullet.Force  = 0
+		bullet.Hullsize = self.Primary.HullSize
+		bullet.Distance = self.Primary.Range
+		bullet.Damage = self.Primary.Damage
+		bullet.Callback = function(attacker, tr, dmginfo)
+					if tr.Hit then
+					
+			if self.Primary.ImpactSound then
+				self.Owner:EmitSound(self.Primary.ImpactSound)
+			end
+
+		if self.Primary.ImpactEffect then
+			local effect = EffectData()
+			effect:SetStart(tr.HitPos)
+			effect:SetNormal(tr.HitNormal)
+			effect:SetOrigin(tr.HitPos)
+
+			util.Effect(self.Primary.ImpactEffect, effect, true, true)
+		end
+
+		local ent = tr.Entity
+
+			if ent:IsPlayer() then
+				util.Decal("Blood", ent:GetBonePosition(6), ent:GetBonePosition(6) -Vector(math.random(-10, 10),math.random(-10, 10),math.random(0, 60)))
+				if self.Primary.FlashTime then
+					ent:ScreenFade(SCREENFADE.IN, self.Primary.FlashColour or color_white, self.Primary.FlashTime, 0)
+					ent.StunTime = CurTime() + self.Primary.FlashTime
+					ent.StunStartTime = CurTime()
+				elseif self.Primary.StunTime then
+					ent.StunTime = CurTime() + self.Primary.StunTime
+					ent.StunStartTime = CurTime()
+				end
+			end
+
+			if tr.MatType == MAT_FLESH then
+				ent:EmitSound("Flesh.ImpactHard")
+			elseif tr.MatType == MAT_WOOD then
+				ent:EmitSound("Wood.ImpactHard")
+			elseif tr.MatType == MAT_CONCRETE then
+				ent:EmitSound("Concrete.ImpactHard")
+			end
+		end
+			end	
+		self.Owner:FireBullets(bullet)
+		--self:ClubAttack()
 		self:ViewPunch()
+	end
 	end
 
 	self:EmitSound(self.Primary.Sound)
@@ -51,7 +164,7 @@ end
 function SWEP:ClubAttack()
 	local trace = {}
 	trace.start = self.Owner:GetShootPos()
-	trace.endpos = trace.start + self.Owner:GetAimVector() * (self.Primary.Range or 85) + (self.Owner:GetVelocity() / 8)
+	trace.endpos = trace.start + self.Owner:GetAimVector() * (self.Primary.Range - 7)
 	trace.filter = self.Owner
 	trace.mask = MASK_SHOT_HULL
 
@@ -70,11 +183,13 @@ function SWEP:ClubAttack()
 	end
 
 	if SERVER and tr.Hit then
-		hook.Run("LongswordMeleeHit", self.Owner)
-
-		if self.Primary.ImpactSound and not self.Primary.ImpactSoundWorldOnly then
-			self.Owner:EmitSound(self.Primary.ImpactSound)
-		end
+		--hook.Run("LongswordMeleeHit", self.Owner)
+		
+		--if tr.Entity:GetClass() != "player" then
+			if self.Primary.ImpactSound then
+				self.Owner:EmitSound(self.Primary.ImpactSound)
+			end
+		--end
 
 		if self.Primary.ImpactEffect then
 			local effect = EffectData()
@@ -87,22 +202,11 @@ function SWEP:ClubAttack()
 
 		local ent = tr.Entity
 
-		if IsValid(ent) then
-			local newdmg = hook.Run("LongswordCalculateMeleeDamage", self.Owner, self.Primary.Damage, ent)
-			hook.Run("LongswordHitEntity", self.Owner, ent)
+			--if ent:GetClass() != "prop_ragdoll" then
+				--dmg:SetDamageForce(self.Owner:GetAimVector() * 10000)
+			--end
 
-			local dmg = DamageInfo()
-			dmg:SetAttacker(self.Owner)
-			dmg:SetInflictor(self)
-			dmg:SetDamage(newdmg or self.Primary.Damage)
-			dmg:SetDamageType(DMG_CLUB)
-			dmg:SetDamagePosition(tr.HitPos)
-
-			if ent:GetClass() != "prop_ragdoll" then
-				dmg:SetDamageForce(self.Owner:GetAimVector() * 10000)
-			end
-
-			ent:DispatchTraceAttack(dmg, trace.start, trace.endpos)
+			--ent:DispatchTraceAttack(dmg, trace.start, trace.endpos)
 
 			if SERVER and ent:IsPlayer() then
 				if self.Primary.FlashTime then
@@ -118,23 +222,16 @@ function SWEP:ClubAttack()
 			if tr.MatType == MAT_FLESH then
 				ent:EmitSound("Flesh.ImpactHard")
 
-				local effect = EffectData()
-				effect:SetStart(tr.HitPos)
-				effect:SetNormal(tr.HitNormal)
-				effect:SetOrigin(tr.HitPos)
+				-- local effect = EffectData()
+				-- effect:SetStart(tr.HitPos)
+				-- effect:SetNormal(tr.HitNormal)
+				-- effect:SetOrigin(tr.HitPos)
 
-				util.Effect("BloodImpact", effect, true, true)
+				-- util.Effect("BloodImpact", effect, true, true)
 			elseif tr.MatType == MAT_WOOD then
 				ent:EmitSound("Wood.ImpactHard")
 			elseif tr.MatType == MAT_CONCRETE then
 				ent:EmitSound("Concrete.ImpactHard")
-			elseif self.Primary.ImpactSoundWorldOnly then
-				self.Owner:EmitSound(self.Primary.ImpactSound)
 			end
-		elseif self.MeleeHitFallback and self.MeleeHitFallback(self, tr) then
-			return
-		elseif self.Primary.ImpactSoundWorldOnly then
-			self.Owner:EmitSound(self.Primary.ImpactSound)
 		end
 	end
-end
