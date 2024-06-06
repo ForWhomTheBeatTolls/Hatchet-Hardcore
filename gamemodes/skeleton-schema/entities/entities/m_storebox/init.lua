@@ -2,12 +2,12 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
 if SERVER then
-	function ENT:Initialize()
-		self:PhysicsInit(SOLID_VPHYSICS)  
-		self:SetMoveType(SOLID_VPHYSICS)  
-		self:SetSolid(SOLID_VPHYSICS)   
+	function ENT:Initialize() 
 		self:SetUseType(SIMPLE_USE)
 		self:SetModel("models/props/CS_militia/footlocker01_open.mdl")
+		self:PhysicsInit(SOLID_VPHYSICS)  
+		self:SetMoveType(SOLID_VPHYSICS)  
+		self:SetSolid(SOLID_VPHYSICS)  
 		self.Loot = "lootbox"
 		self:AddEffects(EF_ITEM_BLINK)
 
@@ -184,13 +184,13 @@ if SERVER then
 	local lootitem = caller:GiveInventoryItem(looteditem, 1, false)
 	caller:Notify("You looted " ..niceitemnames[looteditem].. " from the box.")
 	caller:Say("/me looted "..looteditemtable.." item from the box.")
-	NextLoot = CurTime() + 60
+	NextLoot = CurTime() + 300
 	self:RemoveEffects(EF_ITEM_BLINK)
-	timer.Create(self:EntIndex().."StartBlink", 60, 1, function() self:AddEffects(EF_ITEM_BLINK) end )
+	timer.Create(self:EntIndex().."StartBlink", NextLoot, 1, function() self:AddEffects(EF_ITEM_BLINK) end )
 	elseif caller:IsCP() then
 	caller:Notify("You need to be a Citizen to interact with this entity.")
 	elseif NextLoot > CurTime() then
-	caller:Notify("You can't loot the box. "..math.ceil(NextLoot - CurTime()).." seconds remaining.")
+	caller:Notify("It's empty.")
 	end
 end
 
