@@ -3,11 +3,11 @@ include('shared.lua')
 --include("gamemodes/impulse/gamemode/core/hooks/sv_net.lua" )
 if SERVER then
 	function ENT:Initialize()
+		self:SetModel("models/props_combine/breenconsole.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)  
 		self:SetMoveType(SOLID_VPHYSICS)  
 		self:SetSolid(SOLID_VPHYSICS)   
 		self:SetUseType(SIMPLE_USE)
-		self:SetModel("models/props_combine/breenconsole.mdl")
 
 
     	local physObj = self:GetPhysicsObject()
