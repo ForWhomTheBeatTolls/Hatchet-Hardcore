@@ -1,19 +1,5 @@
 -- put shared hooks here, format the same as sv_hooks.lua
 
--- hook.Add( "PlayerSay", "OverheadMSG", function( ply, text )
-		-- hook.Add( "HUDPaint", "OverheadMSGKid", function()
-		-- local pos = ply:EyePos()
-
-		-- pos.z = pos.z + 5
-		-- pos = pos:ToScreen()
-		-- pos.y = pos.y - 50
-		-- surface.SetFont( "Default" )
-		-- surface.SetTextColor( 255, 255, 255 )
-		-- surface.SetTextPos( pos.x, pos.y ) 
-		-- surface.DrawText( txt )
--- end )
--- end )
-
 hook.Add( "PlayerSay", "SpeechAnimations", function( ply, text )
 	--local animtime = ply:SequenceDuration(randomtalking)
 	--local lastplayed = 0
@@ -64,34 +50,6 @@ hook.Add("PlayerEndVoice", "SpeechIcon", function(ply)
 	end
 end)
 
-hook.Add( "PlayerSay", "GeorgeOrwellSponsorship", function( ply, text )
-	if string.find( text, "nigger" ) then
-		return string.gsub(text, "nigger", "racialslur")
-	elseif string.find( text, "nigga" ) then
-			return string.gsub(text, "nigga", "racialslur")
-	elseif string.find( text, "n1gger" ) then
-			return string.gsub(text, "n1gger", "racialslur")
-	elseif string.find( text, "n1gga" ) then
-			return string.gsub(text, "n1gga", "racialslur")
-	elseif string.find( text, "faggot" ) then
-			return string.gsub(text, "faggot", "racialslur")
-	elseif string.find( text, "negro" ) then
-			return string.gsub(text, "negro", "racialslur")
-	elseif string.find( text, "NIGGER" ) then
-			return string.gsub(text, "NIGGER", "racialslur")
-	elseif string.find( text, "NIGGA" ) then
-			return string.gsub(text, "NIGGA", "racialslur")
-	elseif string.find( text, "N1GGER" ) then
-			return string.gsub(text, "N1GGER", "racialslur")
-	elseif string.find( text, "N1GGA" ) then
-			return string.gsub(text, "N1GGA", "racialslur")
-	elseif string.find( text, "FAGGOT" ) then
-			return string.gsub(text, "FAGGOT", "racialslur")
-	elseif string.find( text, "NEGRO" ) then
-			return string.gsub(text, "NEGRO", "racialslur")
-	end
-end )
-
 hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, volume, rf )
 		--if ply:KeyDown(IN_SPEED) then
 		if ply:Team() == TEAM_CP and !ply:KeyDown(IN_SPEED) then
@@ -115,11 +73,12 @@ hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, v
 			end
 		if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_RESISTANCE then
 		return false
-		end-- Don't allow default footsteps, or other addon footsteps
+		end
 end)
 	
 
-hook.Add("PlayerHurt","dmgsounds",function(victim)
+hook.Add("PlayerHurt","hatchetdamagefunctions",function(victim)
+	
     if ( victim:Team() == TEAM_CP ) and (victim:Health() > 1) then
         victim:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 70)
 	elseif ( victim:Team() == TEAM_OTA ) and (victim:Health() > 1) then
@@ -127,6 +86,7 @@ hook.Add("PlayerHurt","dmgsounds",function(victim)
 	elseif ( victim:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (victim:Health() > 1) then
 		victim:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
     end
+	
 end)
 
 	local deathsounds = {
@@ -145,30 +105,22 @@ end)
 hook.Add( "PlayerDeathSound", "CustomPlayerDeath", function( ply )
 	if (ply:Team() == TEAM_CP) then
 	ply:EmitSound("npc/metropolice/die"..math.random(1,4)..".wav", 70)
-	--return true -- we don't want the default sound!
 	end
 	if (ply:Team() == TEAM_OTA) then
 	ply:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 70)
-	--return true -- we don't want the default sound!
 	end
 	if (ply:Team() == TEAM_CITIZEN) then
 	ply:EmitSound(table.Random(deathsounds), 100)
-	--return true -- we don't want the default sound!
 	end
 	if (ply:Team() == TEAM_RESISTANCE) then
 	ply:EmitSound(table.Random(deathsounds), 100)
-	--return true -- we don't want the default sound!
 	end
 	return true
 end )
 
 hook.Add( "PlayerSwitchFlashlight", "BlockFlashLight", function( ply, enabled )
-	return (ply:Team() != TEAM_OTA and ply:HasInventoryItem("tool_flashlight") or ply:Team() == TEAM_CP) and ply:GetMoveType() != MOVETYPE_NOCLIP  -- Allow the player to use their flashlight if they aren't OTA or have the Item for it
+	return (ply:Team() != TEAM_OTA and ply:HasInventoryItem("tool_flashlight") or ply:Team() == TEAM_CP) and ply:GetMoveType() != MOVETYPE_NOCLIP
 end )
-
-hook.Add( "PlayerDeath", "ESPhackyfix", function( victim )
-	victim:Give("gmod_tool")
-	end)
 
 
 hook.Add("SetupMove","CustomSpeeds", function( ply, mvData )
@@ -192,6 +144,7 @@ local over = TEAM_OTA
 	--mvData:SetMaxClientSpeed( 184.20 )
 	--mvData:SetMaxSpeed( 184.20 )
 	--end
+	
 	if mvData:KeyDown(IN_MOVERIGHT) then
 	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / 2.5 )
 	end
@@ -224,7 +177,7 @@ hook.Add( "OnPlayerHitGround", "HopperPunishment", function( player, inWater, on
 
 	if speed > 10 and not onFloater then --inWater or onFloater then
 	--print(player:GetVelocity())
-	player:SetVelocity( Vector( -( vel.x / 3.8 ), -( vel.y / 3.8 ), -( vel.z / -3.5 ) ) )
+	player:SetVelocity( Vector( -( vel.x / 3.8 ), -( vel.y / 3.8 ), -0 ) )
 	end
 
 end)
