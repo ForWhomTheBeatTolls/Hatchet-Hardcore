@@ -45,6 +45,10 @@ impulse.Config.Zones = {
 
 impulse.Config.Buttons = {}
 
+local function MapRunCodeOnStart()
+	RunConsoleCommand("sv_skyname", "gcs_summerday")
+end
+
 local ran = math.random(1,10)
 impulse.Config.LoadScript = function()
 	for k,v in pairs(ents.FindByClass("npc_combine_camera")) do
@@ -57,3 +61,5 @@ impulse.Config.LoadScript = function()
 		end
 	end
 end
+
+MapRunCodeOnStart()
