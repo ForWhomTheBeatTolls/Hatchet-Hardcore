@@ -45,6 +45,15 @@ impulse.Config.Zones = {
 
 impulse.Config.Buttons = {}
 
+local ran = math.random(1,10)
 impulse.Config.LoadScript = function()
-	-- code here is ran on load
+	for k,v in pairs(ents.FindByClass("npc_combine_camera")) do
+		v;SetHealth(-100)
+	end
+	
+	for k,v in pairs(ents.FindByClass("prop_physics")) do
+		if ran > 7 then
+			v:Remove()
+		end
+	end
 end
