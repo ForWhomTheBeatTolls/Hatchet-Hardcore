@@ -18,22 +18,6 @@ function GM:HUDShouldDraw(element)
 	return true
 end
 
-
-local ambience = {
-	["$pp_colour_addr"] = 0,
-	["$pp_colour_addg"] = 0,
-	["$pp_colour_addb"] = 0,
-	["$pp_colour_brightness"] = -0.04,
-	["$pp_colour_contrast"] = 1.5,
-	["$pp_colour_colour"] = 0.8,
-	["$pp_colour_mulr"] = 0,
-	["$pp_colour_mulg"] = 0,
-	["$pp_colour_mulb"] = 0
-}
-
-
-
-
 local blur = Material("pp/blurscreen")
 local cheapBlur = Color(0,0,0,205)
 -- local function BlurRect(x, y, w, h)
@@ -266,7 +250,7 @@ function GM:HUDPaint(mvData)
 		fde = math.Clamp(fde + ft * .2, 0, 1)
 		painFde = 0.7
 
-		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 2550))
+		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 25))
 		surface.DrawRect(-1, -1, ScrW() +2, ScrH() +2)
 
 		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
@@ -275,11 +259,8 @@ function GM:HUDPaint(mvData)
 
 		local wait = math.ceil(deathWait - CurTime())
 
-		if wait > 0 then
-			draw.SimpleText("You will respawn in "..wait.." "..(wait == 1 and "second" or "seconds")..".", "Impulse-Elements23", scrW/2, (scrH/2)+30, textCol, TEXT_ALIGN_CENTER)
-			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW/2, (scrH/2)+70, textCol, TEXT_ALIGN_CENTER)
-
-			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW/2, scrH-20, textCol, TEXT_ALIGN_CENTER)
+		if wait > 1 and wait < 10 then
+			draw.SimpleText("You have died.", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
 		end
 
 		if IsValid(PlayerIcon) then
