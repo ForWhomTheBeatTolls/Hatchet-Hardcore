@@ -3,13 +3,17 @@ impulse.Config.SchemaName = "hatchet-hl2rpg"
 impulse.Config.SchemaVersion = 91
 
 impulse.Config.SchemaCredits = [[Developers
-<font=Impulse-Elements23>Developer1NameHere</font>
-<font=Impulse-Elements23>Developer2NameHere</font>
-<font=Impulse-Elements23>Developer3NameHere</font>
-<font=Impulse-Elements23>Developer4NameHere</font>
-<font=Impulse-Elements23>Developer5NameHere</font>]]
+<font=Impulse-Elements23>Project Lead: WillMaster, Steve B.</font>
+<font=Impulse-Elements23>Creative Lead: Steve B.</font>
+<font=Impulse-Elements23>Map Design: Jokey</font>
+<font=Impulse-Elements23>Lead Development: WillMaster, Steve B.</font>
+<font=Impulse-Elements23>Junior Development: Thrumbo</font>
+<font=Impulse-Elements23>Community Contributors:</font>
+<font=Impulse-Elements23>TehRedd</font>
+<font=Impulse-Elements23>Jokey</font>
+<font=Impulse-Elements23>GhostfacedKillah</font>]]
 
-impulse.Config.MainColour = Color(81, 189, 143)
+impulse.Config.MainColour = Color(196, 108, 26)
 impulse.Config.InteractColour = Color(251, 197, 49)
 
 impulse.Config.UserSlots = 999 -- how many slots to give to users, you may want to leave this at 999 as its kind of broken
@@ -296,18 +300,18 @@ impulse.Config.DefaultNameBlacklist = {
 impulse.Config.LootPools = {
     ["good"] = {
         Items = {
-        	["wep_axe"] = {Rarity = 900},
-        	["util_scrapmetal"] = {Rarity = 300},
-		["wep_crowbar"] = {Rarity = 900},
-		["wep_pipe"] = {Rarity = 900}, 
-		["wep_shovel"] = {Rarity = 900},
-		["wep_cleaver"] = {Rarity = 900},
-		["util_electronics"] = {Rarity = 900},
-		["ammo_pistol"] = {Rarity = 900},
-		["ammo_smg"] = {Rarity = 900},
-		["ammo_revolver"] = {Rarity = 900},
-		["ammo_rifle"] = {Rarity = 900},
-		["ammo_shotgun"] = {Rarity = 900},
+            ["wep_axe"] = {Rarity = 900},
+            ["util_scrapmetal"] = {Rarity = 300},
+			["wep_crowbar"] = {Rarity = 900},
+			["wep_pipe"] = {Rarity = 900}, 
+			["wep_shovel"] = {Rarity = 900},
+			["wep_cleaver"] = {Rarity = 900},
+			["util_electronics"] = {Rarity = 900},
+			["ammo_pistol"] = {Rarity = 900},
+			["ammo_smg"] = {Rarity = 900},
+			["ammo_revolver"] = {Rarity = 900},
+			["ammo_rifle"] = {Rarity = 900},
+			["ammo_shotgun"] = {Rarity = 900},
         },
         MaxItems = 2,
         MinItems = 1,
