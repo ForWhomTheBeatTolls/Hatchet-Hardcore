@@ -698,7 +698,7 @@ net.Receive("impulseInvDoDrop", function(len, ply)
 			hook.Run("PlayerDropItem", ply, item, invid)
 		end
 	else
-		ply:DoCustomAnimEvent(PLAYERANIMEVENT_CANCEL, 1)
+		ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE, ply:LookupSequence("gesture_item_drop"))
 
 		ply:EmitSound("physics/body/body_medium_impact_soft2.wav", 80)
 
