@@ -64,7 +64,7 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 	
 	if ply:Alive() and ply:GetActiveWeapon():IsValid() then
 
-	if ( ply:IsValid() && ply:Alive() && ply:GetMoveType() != MOVETYPE_NOCLIP && (ply:GetActiveWeapon():GetClass() != "gmod_tool") && (ply:GetActiveWeapon():GetClass() != "weapon_physgun") && ply:Ping() < 240 ) then
+	if ( ply:IsValid() && ply:Alive() && ply:GetMoveType() != MOVETYPE_NOCLIP && (ply:GetActiveWeapon():GetClass() != "gmod_tool") && ( IsValid(impulse.MainMenu) and not impulse.MainMenu:IsVisible() ) && (ply:GetActiveWeapon():GetClass() != "weapon_physgun") && ply:Ping() < 240 ) then
 		
 		---------------------###CHECKS START###---------------------
 		local headcheck = {}
@@ -219,7 +219,7 @@ function EYEVIEW_ShouldDrawLocalPlayer( ply )
 	
 	if ply:GetActiveWeapon():IsValid() then
 
-	if ( ply:IsValid() && ply:Alive() && ply:GetMoveType() != MOVETYPE_NOCLIP && (ply:GetActiveWeapon():GetClass() != "gmod_tool") && (ply:GetActiveWeapon():GetClass() != "weapon_physgun") && ply:Ping() < 240 ) then
+	if ( ply:IsValid() && ply:Alive() && ply:GetMoveType() != MOVETYPE_NOCLIP && (ply:GetActiveWeapon():GetClass() != "gmod_tool") && ( IsValid(impulse.MainMenu) and not impulse.MainMenu:IsVisible() ) && (ply:GetActiveWeapon():GetClass() != "weapon_physgun") && ply:Ping() < 240 ) then
 	
 		return true
 	
