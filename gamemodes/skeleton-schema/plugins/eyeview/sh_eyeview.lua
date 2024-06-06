@@ -229,7 +229,6 @@ end
 end
 hook.Add( "ShouldDrawLocalPlayer", "EYEVIEW_ShouldDrawLocalPlayer", EYEVIEW_ShouldDrawLocalPlayer )
 
-/*
 function EYEVIEW_HUDPaint()
 
     if LocalPlayer():IsValid() && LocalPlayer():Alive() then
@@ -250,7 +249,4 @@ function EYEVIEW_HUDPaint()
 end
 --hook.Add( "HUDPaint", "EYEVIEW_HUDPaint", EYEVIEW_HUDPaint )
 
-
-
-*/
 end
