@@ -397,6 +397,8 @@ hook.Add("EntityTakeDamage", "DeathAnimsBrutal", function(ent, dmg)
             ent.DeathAnimType = "slash"
         elseif OtherAsDefault:GetBool() then
             ent.DeathAnimType = "bullet"
+	else
+	    ent.DeathAnimType = "club"		
         end
     end
 end)
