@@ -1,5 +1,5 @@
 -- Eye View is a addon that sets the player's view to any attachment on the playermodel.
-impulse.DefineSetting("crosshair_radius", {name="Crosshair Radius", category="HUD", type="slider", default=8, minValue=1, maxValue=40})
+
 impulse.DefineSetting("eyeview_fov", {name="Firstperson FOV", category="View", type="slider", default=90, minValue=70, maxValue=100})
 function EYEVIEW_Initialize()
 
@@ -17,7 +17,6 @@ end
 local crossr = GetConVarNumber( "eyeview_crossr" )
 local crossg = GetConVarNumber( "eyeview_crossg" )
 local crossb = GetConVarNumber( "eyeview_crossb" )
-local radius = impulse.GetSetting("crosshair_radius")
 local fov = impulse.GetSetting("eyeview_fov")
 
 hook.Add( "Initialize", "EYEVIEW_Initialize", EYEVIEW_Initialize )
@@ -225,6 +224,7 @@ end
 end
 hook.Add( "ShouldDrawLocalPlayer", "EYEVIEW_ShouldDrawLocalPlayer", EYEVIEW_ShouldDrawLocalPlayer )
 
+/*
 function EYEVIEW_HUDPaint()
 
     if LocalPlayer():IsValid() && LocalPlayer():Alive() then
@@ -237,10 +237,15 @@ function EYEVIEW_HUDPaint()
 	local crosshairGap = 2
 	local crosshairLength = crosshairGap + 2
 	local radius = impulse.GetSetting("crosshair_radius")
-	surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, 246, 163, 67, 200)
-
+	surface.SetDrawColor(255, 255, 255)
+	--surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, 246, 163, 67, 200)
+	surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 2, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 2, 4, 4)
     end
 
 end
-hook.Add( "HUDPaint", "EYEVIEW_HUDPaint", EYEVIEW_HUDPaint )
+--hook.Add( "HUDPaint", "EYEVIEW_HUDPaint", EYEVIEW_HUDPaint )
+
+
+
+*/
 end
