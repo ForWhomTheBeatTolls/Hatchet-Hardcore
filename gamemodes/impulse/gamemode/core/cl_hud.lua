@@ -18,6 +18,22 @@ function GM:HUDShouldDraw(element)
 	return true
 end
 
+
+local ambience = {
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,
+	["$pp_colour_addb"] = 0,
+	["$pp_colour_brightness"] = -0.04,
+	["$pp_colour_contrast"] = 1.5,
+	["$pp_colour_colour"] = 0.8,
+	["$pp_colour_mulr"] = 0,
+	["$pp_colour_mulg"] = 0,
+	["$pp_colour_mulb"] = 0
+}
+
+
+
+
 local blur = Material("pp/blurscreen")
 local cheapBlur = Color(0,0,0,205)
 -- local function BlurRect(x, y, w, h)
@@ -259,8 +275,11 @@ function GM:HUDPaint(mvData)
 
 		local wait = math.ceil(deathWait - CurTime())
 
-		if wait > 1 and wait < 10 then
-			draw.SimpleText("You have died", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
+		if wait > 0 then
+			draw.SimpleText("You will respawn in "..wait.." "..(wait == 1 and "second" or "seconds")..".", "Impulse-Elements23", scrW/2, (scrH/2)+30, textCol, TEXT_ALIGN_CENTER)
+			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW/2, (scrH/2)+70, textCol, TEXT_ALIGN_CENTER)
+
+			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW/2, scrH-20, textCol, TEXT_ALIGN_CENTER)
 		end
 
 		if IsValid(PlayerIcon) then
@@ -276,7 +295,7 @@ function GM:HUDPaint(mvData)
 			local ft = FrameTime()
 			deathEndingFade = math.Clamp((deathEndingFade or 0) + ft * .15, 0, 1)
 
-			local val = 25 - math.ceil(deathEndingFade * 25)
+			local val = 255 - math.ceil(deathEndingFade * 255)
 
 			if deathEndingFade != 1 then
 				surface.SetDrawColor(0, 0, 0, val)
@@ -340,16 +359,18 @@ function GM:HUDPaint(mvData)
 
 	-- HUD
 
-	y = scrH-hudHeight-8-10
-	--BlurRect(10, y, hudWidth, hudHeight)
-	surface.SetDrawColor(darkCol)
-	if impulse.GetSetting("hud_jim") then
-	surface.DrawRect(10, y, hudWidth, hudHeight)
-	elseif !impulse.GetSetting("hud_hunger") and !impulse.GetSetting("hud_jim") then
-	surface.DrawRect(10, y + 145, hudWidth, hudHeight - 145)
-	else
-	surface.DrawRect(10, y + 112, hudWidth, hudHeight - 112)
+	if impulse.GetSetting("hud_ambience") then
+		hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function()
+			DrawColorModify( ambience )
+		end )
 	end
+	
+	if not impulse.GetSetting("hud_ambience") then
+		hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor")
+	end
+
+
+	y = scrH-hudHeight-8-10
 	-- surface.SetMaterial(gradient)
 	-- if impulse.GetSetting("hud_jim") then
 	-- surface.DrawTexturedRect(10, y, hudWidth, hudHeight)   --####COMMENTED OUT BECAUSE I CAN'T FIX THIS SHITTY GRADIENT/CANT BE BOTHERED.####
@@ -359,27 +380,7 @@ function GM:HUDPaint(mvData)
 	
 	-- ### HEALTHBAR ###
 	
-	surface.SetDrawColor(140, 0, 0, 100)
-	surface.DrawRect(10, y + 145, hudWidth * (health / maxhealth), hudHeight - 145)
-	--surface.SetMaterial(gradient)
-	--surface.DrawTexturedRect(10, y, hudWidth, hudHeight)
-	surface.SetFont("Impulse-Elements19")
-	surface.SetTextColor(20, 20, 20, 200)
-	surface.SetTextPos(140, y+155)
-	surface.DrawText(LocalPlayer():Health())
-	
-	-- ### HUNGERBAR ###
-	
-	if impulse.GetSetting("hud_hunger") then
-	
-	surface.SetDrawColor(183, 139, 67, 100)
-	surface.DrawRect(10, y + 112, hudWidth * (hunger / maxhunger), hudHeight - 145)
-	surface.SetFont("Impulse-Elements19")
-	surface.SetTextColor(83, 39, 7, 200)
-	surface.SetTextPos(142, y+122)
-	surface.DrawText(hunger)
-	
-	end
+
 
 	--surface.SetFont("Impulse-Elements23")
 	--surface.SetTextColor(color_white)
@@ -450,30 +451,6 @@ function GM:HUDPaint(mvData)
 	end
 
 	surface.SetDrawColor(color_white)
-
-
-	local weapon = LocalPlayer():GetActiveWeapon()
-	if IsValid(weapon) then
-		if weapon:GetMaxClip1() != -1 then
-			surface.SetDrawColor(25, 25, 25, 100)
-			surface.DrawRect(scrW-70, scrH-45, 70, 30)
-			surface.SetTextPos(scrW-50, scrH-40)
-			surface.SetTextColor(5, 5, 5, 200)
-			surface.DrawText(weapon:Clip1().."/"..LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()))
-		elseif weapon:GetClass() == "weapon_physgun" or weapon:GetClass() == "gmod_tool" then
-			draw.DrawText("Don't have this weapon out in RP.", "Impulse-Elements16", scrW-10, scrH-20, color_white, TEXT_ALIGN_RIGHT)
-			surface.SetMaterial(warningIcon)
-			surface.DrawTexturedRect(scrW-250, scrH-20, 18, 18)
-			aboveHUDUsed = true
-
-			surface.SetDrawColor(darkCol)
-			surface.DrawRect(scrW-140, scrH-55, 140, 30)
-
-			surface.SetFont("Impulse-Elements18-Shadow")
-			surface.SetTextPos(scrW-130, scrH-50)
-			surface.DrawText("Props: "..LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0).."/"..((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
-		end
-	end
 
 	if not aboveHUDUsed then
 		if impulse.ShowZone then
