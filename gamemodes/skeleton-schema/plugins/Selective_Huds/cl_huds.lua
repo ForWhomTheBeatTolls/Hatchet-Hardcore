@@ -6,6 +6,10 @@ function InitializeHuds()
             return
         end
 
+		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
+			return
+		end
+
 
 		local scrW = ScrW()
 		local scrH = ScrH()
@@ -81,6 +85,14 @@ function InitializeHuds()
 		if impulse.GetSetting("hud_selection") != "Hatchet" then
             return
         end
+
+		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
+			return
+		end
+
+		if IsValid(impulse.SplashScreen) then
+			return
+		end
 	
 		local scrW = ScrW()
 		local scrH = ScrH()
@@ -137,6 +149,10 @@ function InitializeHuds()
 		if impulse.GetSetting("crosshair_selection") != "Default" then
 			return
 		end
+
+		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
+			return
+		end
 	
 		if LocalPlayer():IsValid() && LocalPlayer():Alive() then
 			local x, y = 0,0
@@ -150,6 +166,10 @@ function InitializeHuds()
 	hook.Add("HUDPaint", "HatchetCrosshair", function()
 	
 		if impulse.GetSetting("crosshair_selection") != "Hatchet Legacy" then
+			return
+		end
+
+		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
 			return
 		end
 	
@@ -166,6 +186,10 @@ function InitializeHuds()
 	hook.Add("HUDPaint", "HalfLifeTwoCrosshair", function()
 
 		if impulse.GetSetting("crosshair_selection") != "Half-Life 2" then
+			return
+		end
+
+		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
 			return
 		end
 	
