@@ -18,6 +18,18 @@ function GM:HUDShouldDraw(element)
 	return true
 end
 
+local ambience = {
+	["$pp_colour_addr"] = 0,
+	["$pp_colour_addg"] = 0,
+	["$pp_colour_addb"] = 0,
+	["$pp_colour_brightness"] = -0.04,
+	["$pp_colour_contrast"] = 1.5,
+	["$pp_colour_colour"] = 0.8,
+	["$pp_colour_mulr"] = 0,
+	["$pp_colour_mulg"] = 0,
+	["$pp_colour_mulb"] = 0
+}
+
 local blur = Material("pp/blurscreen")
 local cheapBlur = Color(0,0,0,205)
 -- local function BlurRect(x, y, w, h)
