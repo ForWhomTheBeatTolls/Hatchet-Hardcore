@@ -1,10 +1,14 @@
 --impulse.Config.MapWorkshopID = "99999999" commented out cause gm_construct has no workshop file, if your map does, put it here and all clients will download it!
 
-impulse.Config.MenuCamPos = Vector(-202.16909790039, 968.25067138672, 165.60955810547)
-impulse.Config.MenuCamAng = Angle(4.2976760864258, -46.718040466309, 0)
+impulse.Config.MenuCamPos = Vector(-3531.849365, -2581.553955, 117.032791)
+impulse.Config.MenuCamAng = Angle(-21.510452, 131.078705, 0.000000)
 
-impulse.Config.SpawnPos1 = Vector(-7273, -2595, -43)
-impulse.Config.SpawnPos2 = Vector(-5036, -1508, 560)
+impulse.Config.SpawnPos1 = Vector(-6970.562012, -1981.045776, 65.752151)
+impulse.Config.SpawnPos2 = Vector(-6803.397461, -2117.691406, 67.050522)
+impulse.Config.SpawnPos3 = Vector(-6317.864258, -1975.392334, 66.888390)
+impulse.Config.SpawnPos4 = Vector(-6342.052246, -2101.275391, 66.742241)
+impulse.Config.SpawnPos5 = Vector(-6063.499512, -2099.411133, 66.672424)
+impulse.Config.SpawnPos6 = Vector(-6020.071777, -1989.494995, 66.784615)
 
 impulse.Config.BlacklistEnts = {
 	["game_text"] = true,
