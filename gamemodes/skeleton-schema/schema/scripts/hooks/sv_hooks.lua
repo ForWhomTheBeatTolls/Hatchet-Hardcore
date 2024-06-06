@@ -1,4 +1,9 @@
---reloadmarker, make changes here then save to lua refresh
+--reloadmarker, make changes here then save to lua refre
+
+function SCHEMA:PlayerSpawn(ply)
+	ply.IsInASequence = false
+	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
+end
 
 function SCHEMA:ChatClassMessageSend(classID, message, sender)
 	if not impulse.Voice.ChatTypes[classID] then
@@ -43,9 +48,16 @@ function SCHEMA:ChatClassMessageSend(classID, message, sender)
 end
 
 function SCHEMA:OnPlayerChangedTeam(ply)
- if ply:Team() != TEAM_CP or TEAM_OTA then
- ply:SetRPName(ply:GetSavedRPName())
- end
+
+	if ply:Team() != TEAM_CP or TEAM_OTA then
+		ply:SetRPName(ply:GetSavedRPName())
+	end
+	
+	if ply:GetSyncVar(SYNC_RANKPOINTS, 0) == nil then
+		ply:SetSyncVar(SYNC_RANKPOINTS, 0)
+	end
+	
+	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
  end
 
 function SCHEMA:PlayerShouldGetHungry(ply)
@@ -54,6 +66,15 @@ function SCHEMA:PlayerShouldGetHungry(ply)
 end
 
 function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
+	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
+	--ply:DoCustomAnimEvent(PLAYERANIMEVENT_FLINCH_CHEST, 1)
+	
+	if dmginfo:GetAmmoType() == game.GetAmmoID("Snark") then
+		if hitgroup == HITGROUP_HEAD then
+			dmginfo:ScaleDamage(0.7)
+		end
+	end
+	 
 	if ply:Team(ply) == TEAM_CP then
 		dmginfo:ScaleDamage(0.7)
 		end
@@ -108,15 +129,7 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) then
 	dmginfo:ScaleDamage(0.7)
 	end
-	-- if (ply.WeldingMask == true) and (hitgroup == HITGROUP_HEAD) then
-	-- dmginfo:ScaleDamage(0.4)
-	-- ply:EmitSound("player/bhit_helmet-1.wav", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-	-- end
-	--elseif ply.HasHelmet and hitgroup == HITGROUP_HEAD then
-	--	dmginfo:ScaleDamage(0.7)
-	--	ply:EmitSound("player/bhit_helmet-1.wav", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-		--return false
-		
+	
 	end
 	
 hook.Add( "PlayerHurt", "HurtEffect", function(ply)
@@ -173,12 +186,15 @@ function SCHEMA:ChatStateChanged(ply, oldState, newState)
 	end
 end
 
-
 function SCHEMA:PlayerDeath(ply, attacker)
+
 	ply.lastDeath = CurTime()
+	ply.IsInASequence = false
+	
 	if ply:GetSyncVar(SYNC_DISPATCH_BOL, nil) then
 		ply:RemoveDispatchBOL()
 	end
+	
 	if IsValid(attacker) and attacker:IsPlayer() then
 		if attacker:GetSyncVar(SYNC_KILLS) == nil or not attacker:GetSyncVar(SYNC_KILLS)  then
 		attacker:SetSyncVar(SYNC_KILLS, 1, true)
@@ -190,6 +206,35 @@ function SCHEMA:PlayerDeath(ply, attacker)
 		query:Execute()
 		end
 		attacker:PrintMessage( HUD_PRINTCONSOLE, "Kills: "..attacker:GetSyncVar(SYNC_KILLS) )
+	end
+	
+	if ply:Team() == TEAM_CITIZEN then rpgainamount = 50
+	elseif ply:Team() == TEAM_RESISTANCE then rpgainamount = 100
+	elseif ply:Team() == TEAM_OTA then rpgainamount = -200
+	elseif ply:Team() == TEAM_CP then rpgainamount = -100
+	end
+	
+	
+	if IsValid(attacker) and attacker:IsPlayer() then
+		if IsValid(ply) and attacker != ply then
+			if (attacker:Team() == TEAM_CP or attacker:Team() == TEAM_OTA) then
+				if attacker:GetSyncVar(SYNC_RANKPOINTS) == nil or not attacker:GetSyncVar(SYNC_RANKPOINTS) then
+					attacker:SetSyncVar(SYNC_RANKPOINTS, rpgainamount, true)
+					local query = mysql:Update("impulse_players")
+					query:Update("rankpoints", attacker:GetSyncVar(SYNC_RANKPOINTS))
+					query:Where("steamid", attacker:SteamID())
+					query:Execute()
+				else
+					attacker:SetSyncVar(SYNC_RANKPOINTS, attacker:GetSyncVar(SYNC_RANKPOINTS) + rpgainamount, true)
+					local query = mysql:Update("impulse_players")
+					query:Update("rankpoints", attacker:GetSyncVar(SYNC_RANKPOINTS))
+					query:Where("steamid", attacker:SteamID())
+					query:Execute()
+				end
+			end
+		end
+	elseif (ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA) then
+		ply:SetSyncVar(SYNC_RANKPOINTS, ply:GetSyncVar(SYNC_RANKPOINTS) - 80)
 	end
 end
 
