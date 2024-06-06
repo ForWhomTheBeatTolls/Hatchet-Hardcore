@@ -18,6 +18,7 @@ function GM:HUDShouldDraw(element)
 	return true
 end
 
+
 local ambience = {
 	["$pp_colour_addr"] = 0,
 	["$pp_colour_addg"] = 0,
@@ -29,6 +30,9 @@ local ambience = {
 	["$pp_colour_mulg"] = 0,
 	["$pp_colour_mulb"] = 0
 }
+
+
+
 
 local blur = Material("pp/blurscreen")
 local cheapBlur = Color(0,0,0,205)
@@ -218,6 +222,8 @@ end
 local deathEndingFade
 local deathEnding
 function GM:HUDPaint(mvData)
+	--local audio = GetConVar("volume")
+	--local audionum = audio:GetFloat()
 	local health = LocalPlayer():Health()
 	local maxhealth = LocalPlayer():GetMaxHealth()
 	local hunger = LocalPlayer():GetSyncVar(SYNC_HUNGER, 100)
@@ -248,7 +254,7 @@ function GM:HUDPaint(mvData)
 
 		if not deathRegistered then
 			local deathSound = hook.Run("GetDeathSound") or "music/stingers/industrial_suspense1.wav"
-			surface.PlaySound(deathSound)
+			--surface.PlaySound(deathSound)
 
 			deathWait = CurTime() + impulse.Config.RespawnTime
 			if lp:IsDonator() then
@@ -262,18 +268,18 @@ function GM:HUDPaint(mvData)
 		fde = math.Clamp(fde + ft * .2, 0, 1)
 		painFde = 0.7
 
-		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 25))
+		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 255))
 		surface.DrawRect(-1, -1, ScrW() +2, ScrH() +2)
 
 		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
-
-		draw.SimpleText("You have died", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
-
 		local wait = math.ceil(deathWait - CurTime())
 
 		if wait > 1 and wait < 10 then
 			draw.SimpleText("You have died.", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
+			lp:ConCommand("stopsound")
+		elseif wait > 5 and wait < 10 then
 		end
+		
 
 		if IsValid(PlayerIcon) then
 			PlayerIcon:Remove()
