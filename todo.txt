@@ -28,6 +28,7 @@ DONE LIST:
 -Implement AJ & JW sounds (Kinda done?)
 -NPC respawn once every 10 minutes or so? (Done but it's strange)
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it (Added Rankpoints)
+-Rework Civil Protection (A little bit more left, need to implement a Name Entry terminal)
 
 
 WILLMASTER CODING SIDE:
@@ -38,4 +39,3 @@ WILLMASTER CODING SIDE:
 MUHAMMED CODING SIDE:
 ------------------------
 -Fix Lockshockers
--Rework Civil Protection
