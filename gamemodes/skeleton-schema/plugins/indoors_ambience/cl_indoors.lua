@@ -39,9 +39,7 @@ hook.Add("Think", "AmbienceInDoors", function()
 		--print(tobool(IsIndoors()))
 		if impulse.GetSetting("hud_ambience") then
 			if IsIndoors() == false then
-				day:Play()
-				day:ChangeVolume(1, 1)
-				day:ChangePitch(60, 0)
+				day:PlayEx(0.17, 60)
 				hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function()
 					DrawColorModify( ambience )
 				end )
