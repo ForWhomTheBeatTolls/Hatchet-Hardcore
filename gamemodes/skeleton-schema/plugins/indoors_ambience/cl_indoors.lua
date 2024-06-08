@@ -1,5 +1,5 @@
 function IsIndoors()
-	local day = CreateSound(LocalPlayer(), "ambient/forest_day.wav")
+	
 	local eyePos = LocalPlayer():GetPos()
 	local outdoorscheck = util.TraceLine( {
 	start = eyePos,
@@ -8,40 +8,48 @@ function IsIndoors()
 } )
 	if outdoorscheck.HitSky then
 		--print("true")
-		day:PlayEx(0.17, 60)
 		return false
 	else
 		--print("false")
-		day:Stop()
+		
 		return true
 	end
 end
 
 
+local day = CreateSound(LocalPlayer(), "ambient/forest_day.wav")
+
 local delay = CurTime()
 hook.Add("Think", "AmbienceInDoors", function()
 	
 	local ambience = {
-	["$pp_colour_addr"] = 0,
-	["$pp_colour_addg"] = 0,
-	["$pp_colour_addb"] = 0,
-	["$pp_colour_brightness"] = -0.04,
-	["$pp_colour_contrast"] = 1.4,
-	["$pp_colour_colour"] = 0.8,
-	["$pp_colour_mulr"] = 0,
-	["$pp_colour_mulg"] = 0,
-	["$pp_colour_mulb"] = 0
-	}
+		["$pp_colour_addr"] = 0,
+		["$pp_colour_addg"] = 0,
+		["$pp_colour_addb"] = 0,
+		["$pp_colour_brightness"] = -0.04,
+		["$pp_colour_contrast"] = 1.4,
+		["$pp_colour_colour"] = 0.8,
+		["$pp_colour_mulr"] = 0,
+		["$pp_colour_mulg"] = 0,
+		["$pp_colour_mulb"] = 0
+		}
 
 	if CurTime() > delay then 
 		IsIndoors()
 		--print(tobool(IsIndoors()))
 		if impulse.GetSetting("hud_ambience") then
 			if IsIndoors() == false then
+				day:Play()
+				day:ChangeVolume(1, 1)
+				day:ChangePitch(60, 0)
 				hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function()
 					DrawColorModify( ambience )
 				end )
+				--print("Outside!")
 			else
+				--print("Inside!")
+				day:FadeOut(1)
+				timer.Simple(6,function() day:Stop() end)
 				hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor")
 			end
 		end
@@ -49,7 +57,13 @@ hook.Add("Think", "AmbienceInDoors", function()
 		if not impulse.GetSetting("hud_ambience") then
 			hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor")
 		end
+
+		if IsIndoors() == false then
+			return
+		else
+			return
+		end
 		
-		delay = CurTime() + 1
+		delay = CurTime() + 3
 	end
 end)
