@@ -31,7 +31,7 @@ function DaMachine()
 	IsIndoors()
 
 	if indoor then
-		day:PlayEx(1, 60)
+		day:PlayEx(0.17, 60)
 		if not doneItOnce then
 			doneItOnce = true
 			if impulse.GetSetting("hud_ambience") then
