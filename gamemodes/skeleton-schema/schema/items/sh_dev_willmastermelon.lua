@@ -1,6 +1,6 @@
 local ITEM = {}
 
-ITEM.UniqueID = "item_masterglasses"
+ITEM.UniqueID = "devitem_willmastermelon"
 ITEM.Name = "Willmaster's Precious Melon"
 ITEM.Desc =  "Very precious..."
 ITEM.Model = Model("models/foodnhouseholditems/watermelon_unbreakable.mdl")
