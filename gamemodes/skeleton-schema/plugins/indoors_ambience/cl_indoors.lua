@@ -17,11 +17,12 @@ function IsIndoors()
 end
 
 
-local day = CreateSound(LocalPlayer(), "ambient/forest_day.wav")
+
 
 local delay = CurTime()
 hook.Add("Think", "AmbienceInDoors", function()
-	
+
+	local day = CreateSound(LocalPlayer(), "ambient/forest_day.wav")
 	local ambience = {
 		["$pp_colour_addr"] = 0,
 		["$pp_colour_addg"] = 0,
