@@ -16,9 +16,8 @@ TO-DO LIST:
 -Implement a temporary OS solution
 -Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 -Animation menu using NET functions
-
+-Remove female option from character creation & character edit menu until female animations are added
 -Brainstorm ideas for Workforce entities
-
 -Bunch of other shit I can't remember
 
 DONE LIST:
