@@ -1,6 +1,8 @@
 LEAVE IT FOR NOW:
+
 - Overhead chat (I think i can get this to work by using Net's, but for now its not our top priority)
 - Damage slowdown (How the fuck do you do this shit :sob:)
+
 --------------------------
 
 SCRAPPED / NEEDS REWORK:
@@ -27,6 +29,7 @@ TO-DO LIST:
 
 DONE LIST:
 ---------------------
+
 -Ambience Color and make it toggleable
 -Make a Vitality statistic
 -Make Vitality a constantly decreasing skill [Technically??]
@@ -43,10 +46,12 @@ DONE LIST:
 
 WILLMASTER CODING SIDE:
 ------------------------
+
 -Add workforce entities
 -Add CW & its classes
 
 MUHAMMED CODING SIDE:
 ------------------------
+
 -Fix Lockshockers
 -Improve Death Animations to include Weapons in the hand of the ragdoll
