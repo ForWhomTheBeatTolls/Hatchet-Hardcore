@@ -1,3 +1,5 @@
+impulse.Skills.Define("shooting", "Weapon Skill")
+
 delay2 = CurTime()
 hook.Add( "Think", "shootskilldelay2", function()
 	if CurTime() < delay2 then return end	
