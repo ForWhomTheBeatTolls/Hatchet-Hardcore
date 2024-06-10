@@ -19,6 +19,7 @@ TO-DO LIST:
 -Remove female option from character creation & character edit menu until female animations are added
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
+-Add terminals for CP (Gear selection, Credential terminal)
 
 DONE LIST:
 ---------------------
