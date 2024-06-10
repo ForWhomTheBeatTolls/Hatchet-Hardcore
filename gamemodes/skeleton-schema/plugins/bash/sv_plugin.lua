@@ -26,22 +26,24 @@ local bashcommand = {
         end
 		
 		if CurTime() < ply.NextBashTimer then
-			ply:Notify("You need to wait "..math.ceil(ply.NextBashTimer - CurTime()).." seconds before bashing again.")
+			--ply:Notify("You need to wait "..math.ceil(ply.NextBashTimer - CurTime()).." seconds before bashing again.")
 		return
 		end
 		
 		local dmgi = DamageInfo()
 		dmgi:SetDamageType( DMG_CLUB )
 		dmgi:SetDamage( damageAmount )
-		dmgi:SetDamageForce( ply:GetAimVector() * 80000 )
+		dmgi:SetDamageForce( ply:GetAimVector() * 100 )
 
         ply:DoCustomAnimEvent(PLAYERANIMEVENT_ATTACK_GRENADE, ply:LookupSequence("melee_gunhit"))
         ply:EmitSound("npc/combine_soldier/gear1.wav")
 
 		timer.Simple(0.4, function()
-        local trace = util.TraceLine({
+        local trace = util.TraceHull({
             start = ply:GetShootPos(),
             endpos = ply:GetShootPos() + ply:GetAimVector() * 60,
+			mins = Vector( -6, -6, -6 ),
+			maxs = Vector( 6, 6, 6 ),
             filter = ply
         })
 		
@@ -49,21 +51,36 @@ local bashcommand = {
             if trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_OTA then
             trace.Entity:TakeDamageInfo(dmgi)
 			trace.Entity:EmitSound(table.Random(bashkillsfx), 70, 90, 1, CHAN_BODY)
-		local trace2 = util.TraceLine({
+		local trace2 = util.TraceHull({
             start = ply:GetShootPos(),
             endpos = ply:GetShootPos() + ply:GetAimVector() * 60,
+			mins = Vector( -6, -6, -6 ),
+			maxs = Vector( 6, 6, 6 ),
             filter = ply
 			})
 			
 		timer.Simple(0.05, function()
-			local ragdoll = trace2.Entity
-			if IsValid(ragdoll) then
-				for i = 0, ragdoll:GetPhysicsObjectCount() - 1 do
-				local physObj = ragdoll:GetPhysicsObjectNum(i)
-				physObj:SetVelocity(ply:GetAimVector() * 500)
+			local ent2 = trace2.Entity
+			if IsValid(ent2) then
+				if ent2:IsRagdoll() then
+					for i = 0, ent2:GetPhysicsObjectCount() - 1 do
+						local physObj = ent2:GetPhysicsObjectNum(i)
+						physObj:SetVelocity(ply:GetAimVector() * 500)
+					end
+				else
+					for i = 0, ent2:GetPhysicsObjectCount() - 1 do
+						local physObj = ent2:GetPhysicsObjectNum(i)
+						physObj:SetVelocity(ply:GetAimVector() * 100)
+					end
 				end
+					
 			end
 			end)
+			
+			elseif not trace.Entity:IsPlayer() then
+			
+			trace.Entity:TakeDamageInfo(dmgi)
+			trace.Entity:EmitSound("physics/body/body_medium_impact_hard6.wav", 70, 90, 1, CHAN_BODY)
 			
 
                 end
