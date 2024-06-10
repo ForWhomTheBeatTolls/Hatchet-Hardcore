@@ -28,6 +28,7 @@ SWEP.Primary.Recoil = 1.4 -- base recoil value, SWEP.Spread mods can change this
 SWEP.Primary.Damage = 25 -- not used in this swep
 SWEP.Primary.NumShots = 1
 SWEP.Primary.HitDelay = 0.3
+SWEP.Primary.HullSize = 12
 SWEP.Primary.Delay = 1
 SWEP.Primary.Range = 80
 SWEP.Primary.StunTime = 0.3
