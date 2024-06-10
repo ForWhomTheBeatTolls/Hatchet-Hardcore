@@ -23,6 +23,7 @@ TO-DO LIST:
 -Add terminals for CP (Gear selection, Credential terminal)
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
 -Rework weapon recoil
+-Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
 
 DONE LIST:
 ---------------------
