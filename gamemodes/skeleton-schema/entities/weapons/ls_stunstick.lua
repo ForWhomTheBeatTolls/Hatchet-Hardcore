@@ -29,31 +29,8 @@ SWEP.Primary.Recoil = 1.2 -- base recoil value, SWEP.Spread mods can change this
 SWEP.Primary.Damage = 12 -- not used in this swep
 SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.7
+SWEP.Primary.HullSize = 12
 SWEP.Primary.Range = 75
-
-SWEP.Attachments = {
-	riot_shield = {
-		Cosmetic = {
-			Model = "models/bshields/rshield.mdl",
-			PlayerParent = true,
-			Bone = "ValveBiped.Bip01_L_Hand",
-			Pos = Vector(-14.3, -2, 20),
-			Ang = Angle(80, 0, 0),
-			Scale = 0.85,
-			Skin = 0,
-			World = {
-				Bone = "ValveBiped.Bip01_L_Hand",
-				Pos = Vector(-3, 2, 0),
-				Ang = Angle(-25, 90, 0),
-				Scale = 0.85
-			}
-		},
-		ModSetup = function(e)
-		end,
-		ModCleanup = function(e)
-		end
-	}
-}
 
 sound.Add({
 	name = "lsStunstickBuzz",
