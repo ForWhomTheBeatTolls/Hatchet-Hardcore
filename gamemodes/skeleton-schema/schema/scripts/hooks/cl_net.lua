@@ -35,6 +35,10 @@ net.Receive("impulseHL2RPTerminal", function()
 	terminal:SetupUI()
 end)
 
+net.Receive("impulseHL2RPWorkforceRankUse", function()
+	vgui.Create("impulseWorkforceRankMenu")
+end)
+
 net.Receive("impulseHL2RPTerminalConvict", function()
 	local terminal = vgui.Create("impulseTerminalMenu")
 	local arrestedPly = net.ReadUInt(8)
