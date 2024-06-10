@@ -1,22 +1,5 @@
+local nextbeltthink = CurTime()
 local beltData = {
-	["ls_grenade"] = {
-		Bone = "ValveBiped.Bip01_Pelvis",
-		Data = {
-			model = "models/items/grenadeammo.mdl",
-			pos = Vector(-2, 7, 3),
-			ang = Angle(-90, 0, -30),
-			scale = 1
-		}
-	},
-	["ls_molotov"] = {
-		Bone = "ValveBiped.Bip01_Pelvis",
-		Data = {
-			model = "models/props_junk/glassbottle01a.mdl",
-			pos = Vector(-2, 5, 3),
-			ang = Angle(-90, 0, -30),
-			scale = 0.75
-		}
-	},
 	["m_usp"] = {
 		Bone = "ValveBiped.Bip01_Pelvis",
 		Data = {
@@ -41,15 +24,6 @@ local beltData = {
 			model = "models/weapons/w_smg1.mdl",
 			pos = Vector(2.5, 10, 1),
 			ang = Angle(195, 0, 150),
-			scale = 0.88
-		}
-	},
-	["ls_combinesniper"] = {
-		Bone = "ValveBiped.Bip01_Spine1",
-		Data = {
-			model = "models/tnb/weapons/w_cisr.mdl",
-			pos = Vector(4.8, 12, -6),
-			ang = Angle(195, -5, 150),
 			scale = 0.88
 		}
 	},
@@ -124,24 +98,6 @@ local beltData = {
 			ang = Angle(0, 10, -390),
 			scale = 0.88
 		}
-	},
-	["ls_doublebarrel"] = {
-		Bone = "ValveBiped.Bip01_Spine1",
-		Data = {
-			model = "models/weapons/w_tfa_dbbl_classic_hd.mdl",
-			pos = Vector(5, 0, 2.5),
-			ang = Angle(0, 10, -390),
-			scale = 0.88
-		}
-	},
-	["ls_m60"] = {
-		Bone = "ValveBiped.Bip01_Spine1",
-		Data = {
-			model = "models/kali/weapons/m60.mdl",
-			pos = Vector(4, 10, 1),
-			ang = Angle(195, 0, 150),
-			scale = 0.88
-		}
 	}
 }
 
@@ -188,7 +144,8 @@ local function beltCheck(ent, isPanel)
 end
 
 function PLUGIN:PostPlayerDraw(ply)
-	if not ply.Alive(ply) then 
+if nextbeltthink < CurTime() then
+	if not ply.Alive(ply) or ply == LocalPlayer() then 
 		if ply.BeltCos then
 			for v,k in pairs(ply.BeltCos) do
 				RemoveCosmetic(ply, ply, "belt_"..v)
@@ -201,4 +158,6 @@ function PLUGIN:PostPlayerDraw(ply)
 	end
 
 	beltCheck(ply)
+	nextbeltthink = CurTime() + 1
+end
 end
