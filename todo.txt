@@ -21,8 +21,6 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
--Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
--Rework weapon recoil
 
 
 DONE LIST:
@@ -58,4 +56,5 @@ MUHAMMED CODING SIDE:
 -Fix Lockshockers
 -Improve Death Animations to include Weapons in the hand of the ragdoll
 -Add workforce entities (This is mainly about the minigame system)
-
+-Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
+-Rework weapon recoil
