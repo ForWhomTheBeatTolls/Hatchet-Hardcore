@@ -41,7 +41,7 @@ local bashcommand = {
 		timer.Simple(0.4, function()
         local trace = util.TraceHull({
             start = ply:GetShootPos(),
-            endpos = ply:GetShootPos() + ply:GetAimVector() * 60,
+            endpos = ply:GetShootPos() + ply:GetAimVector() * 80,
 			mins = Vector( -6, -6, -6 ),
 			maxs = Vector( 6, 6, 6 ),
             filter = ply
