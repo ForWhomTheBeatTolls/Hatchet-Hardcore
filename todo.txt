@@ -21,6 +21,8 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
+-Vending machines that dispense boring ass water
+-CP rations
 
 
 DONE LIST:
