@@ -30,7 +30,7 @@ function PANEL:Init()
 		local gradientUp = surface.GetTextureID("vgui/gradient-u")
 		local gradientLeft = surface.GetTextureID("vgui/gradient-l")
 		local vignette = Material("impulse/vignette.png")
-
+		local hatcheticon = Material("impulse/hatchet2.png")
 
 		surface.SetDrawColor(bodyCol) -- menu body
 		surface.SetTexture(gradientLeft)
@@ -40,9 +40,9 @@ function PANEL:Init()
 		surface.SetDrawColor(Color(0, 0, 0))
 		surface.DrawTexturedRect(0,0,w,h)
 
-
---		surface.DrawRect(w-540,0,520,380)-- news body
-		--impulse.render.glowgo(100,50,337,91)
+		surface.SetMaterial(hatcheticon)
+		surface.SetDrawColor(Color(255,255,255))
+		surface.DrawTexturedRect(160, 40, 100,100)
 
 		local isPreview = GetConVar("impulse_ispreview"):GetBool()
 
