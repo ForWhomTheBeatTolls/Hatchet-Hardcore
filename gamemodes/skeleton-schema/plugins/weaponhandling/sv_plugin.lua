@@ -1,6 +1,4 @@
-impulse.Skills.Define("shooting", "Weapon Skill")
-
-delay2 = CurTime()
+local delay2 = CurTime()
 hook.Add( "Think", "shootskilldelay2", function()
 	if CurTime() < delay2 then return end	
     for k, v in pairs(player.GetAll()) do
