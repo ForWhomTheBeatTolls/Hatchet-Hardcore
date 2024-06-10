@@ -16,6 +16,7 @@ util.AddNetworkString("impulseHL2RPVortessenceStart")
 util.AddNetworkString("impulseHL2RPTheatreControls")
 util.AddNetworkString("impulseHL2RPTheatreAction")
 util.AddNetworkString("impulseHL2RPRadioInDb")
+util.AddNetworkString("impulseHL2RPWorkforceRankUse")
 -- util.AddNetworkString("doWearClothing")
 
 net.Receive("impulseHL2RPTerminalLeave", function(len, ply)
@@ -71,6 +72,8 @@ net.Receive("impulseHL2RPRankBecome", function(len, ply) -- needs more validatio
 			if ply:Team() == TEAM_OTA and rank == RANK_OWC and div != CLASS_ECHO then
 				return ply:Notify("To become OWC please select ECHO as your division.")
 			end
+
+
 
 			ply:SetSkin(0)
 			ply:SetBodyGroups("00000000000000000")
@@ -143,18 +146,21 @@ net.Receive("impulseHL2RPRankBecome", function(len, ply) -- needs more validatio
 				net.Start("impulseHL2RPCombineOverlayBoot")
 				net.Send(ply)
 			end
-		elseif (ply:Team() == TEAM_CWU) then
+		elseif (ply:Team() == TEAM_WRKFORCE) then
 			local classData = impulse.Teams.Data[ply:Team()].classes
 			local rankData = impulse.Teams.Data[ply:Team()].ranks
 
-			if ply:CanBecomeTeamClass(div, true) and ply:CanBecomeTeamRank(rank, true) then
+			if ply:GetTeamClass() == div and ply:GetTeamRank() != rank and ply:CanBecomeTeamRank(rank, true) then
+				ply:SetTeamRank(rank)
+				set = true
+				ply:Notify("You started the job as a "..rankData[rank].name.."! Go to the locker room to grab your outfit.")
+			elseif ply:CanBecomeTeamClass(div, true) and ply:CanBecomeTeamRank(rank, true) then
 				ply:SetTeamClass(div, true) -- the second argument skips the loadout, as rank will set it up. it can be kinda stressful on the server if you remove this
 				ply:SetTeamRank(rank)
-
-				ply:Notify("You have set your job to "..classData[div].name.." and title to "..rankData[rank].name..".")
-
 				set = true
+				ply:Notify("You started the job as a "..rankData[rank].name.."! Go to the locker room to grab your outfit.")
 			end
+
 		end
 	end
 end)
