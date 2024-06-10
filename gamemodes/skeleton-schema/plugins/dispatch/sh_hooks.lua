@@ -1,3 +1,4 @@
+
 local deathcount = deathcount or 0
 local deathcountclear = CurTime()
 local citycode = civil
@@ -11,7 +12,26 @@ local ajsfx = sound.Add( {
 	sound = "music/hl2_song26_trainstation1.mp3"
 } )
 
-
+local rankpointsdelay = CurTime() + 300
+hook.Add("Think", "RankPoints", function()
+	if rankpointsdelay < CurTime() then
+		if SERVER then
+			for k,v in pairs(player.GetAll()) do
+				if v:Team() == TEAM_CP or v:Team() == TEAM_OTA then
+					if not v:GetSyncVar(SYNC_RANKPOINTS) then
+						v:SetSyncVar(SYNC_RANKPOINTS, 0)
+					end
+					v:SetSyncVar(SYNC_RANKPOINTS, v:GetSyncVar(SYNC_RANKPOINTS) + math.random(7, 28))
+					if v:GetSyncVar(SYNC_RANKPOINTS) > 1000 then
+						v:SetSyncVar(SYNC_RANKPOINTS, 1000)
+					end
+				end
+			end
+			rankpointsdelay = CurTime() + 300
+		end
+	end
+end)
+	
 
 -- local filter = RecipientFilter()
 -- filter:AddAllPlayers()
@@ -29,7 +49,7 @@ hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
 	-- deathcountclear = CurTime()
 	-- print("cleared count."..deathcount.."/"..deathcountclear)
 	-- end
-	if deathcount > 5 and ply:IsCP() then
+	if deathcount == 6 and ply:IsCP() then
 	SetGlobalInt("CityCode", 4)
 	for k,v in pairs(player.GetAll()) do
 		--local mysound = CreateSound( v, "music/hl2_song26_trainstation1.mp3" )
