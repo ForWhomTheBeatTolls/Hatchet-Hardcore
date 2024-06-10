@@ -15,17 +15,15 @@ SCRAPPED / NEEDS REWORK:
 TO-DO LIST:
 -----------------------------------------------------
 
--Add mixtures for all armors
--Implement a temporary OS solution
+
 -Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 -Animation menu using NET functions
--Remove female option from character creation & character edit menu until female animations are added
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
 -Rework weapon recoil
--Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
+
 
 DONE LIST:
 ---------------------
@@ -42,16 +40,22 @@ DONE LIST:
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it (Added Rankpoints)
 -Rework Civil Protection (A little bit more left, need to implement a Name Entry terminal)
 -NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
+-Add CW & its classes
 
 
 WILLMASTER CODING SIDE:
 ------------------------
 
--Add workforce entities
--Add CW & its classes
+
+-Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
+-Add female animations support
+-Add mixtures for all armors
+-Implement a temporary OS solution
 
 MUHAMMED CODING SIDE:
 ------------------------
 
 -Fix Lockshockers
 -Improve Death Animations to include Weapons in the hand of the ragdoll
+-Add workforce entities (This is mainly about the minigame system)
+
