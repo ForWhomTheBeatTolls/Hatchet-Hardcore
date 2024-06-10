@@ -28,9 +28,9 @@ SWEP.Primary.NumShots = 1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Delay = 0.56
 SWEP.Primary.HitDelay = 0.03
+SWEP.Primary.HullSize = 12
 SWEP.Primary.Range = 80
 SWEP.Primary.StunTime = 1.5
-SWEP.Primary.HullSize = 7
 
 function SWEP:PrePrimaryAttack()
 	local vm = self.Owner:GetViewModel()
