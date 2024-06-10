@@ -34,11 +34,11 @@ DONE LIST:
 -NPC respawn once every 10 minutes or so? (Done but it's strange)
 -Add Rankpoints as a SYNC VARIABLE and then eventually implement it (Added Rankpoints)
 -Rework Civil Protection (A little bit more left, need to implement a Name Entry terminal)
+-NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
 
 
 WILLMASTER CODING SIDE:
 ------------------------
--NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
 -Add workforce entities
 -Add CW & its classes
 
