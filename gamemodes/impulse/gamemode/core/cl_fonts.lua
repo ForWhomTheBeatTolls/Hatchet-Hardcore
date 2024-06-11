@@ -274,4 +274,13 @@ surface.CreateFont("Impulse-SpecialFont", {
 	shadow = true
 })
 
+surface.CreateFont("Hatchet-HudFont", {
+	font = "Arial",
+	size = 50,
+	weight = 30,
+	scanlines = 3,
+	antialias = true,
+	shadow = true
+})
+
 hook.Run("PostLoadFonts")
