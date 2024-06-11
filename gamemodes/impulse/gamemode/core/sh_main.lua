@@ -119,11 +119,11 @@ impulse.notices = impulse.notices or {}
 
 local function OrganizeNotices(i)
     local scrW = ScrW()
-    local lastHeight = ScrH() - 100
+    local lastHeight = ScrH() + 1
 
     for k, v in ipairs(impulse.notices) do
-        local height = lastHeight - v:GetTall() - 10
-        v:MoveTo(scrW - (v:GetWide()), height, 0.15, (k / #impulse.notices) * 0.25, nil)
+        local height = lastHeight - v:GetTall() - 1
+        v:MoveTo(scrW - (v:GetWide()), height, 0.4, (k / #impulse.notices) * 0.4, nil)
         lastHeight = height
     end
 end
@@ -138,14 +138,25 @@ function meta:Notify(message)
         end
 
         local notice = vgui.Create("impulseNotify")
+        local hatchetnotice = vgui.Create("HatchetNotify")
         local i = table.insert(impulse.notices, notice)
 
+
         notice:SetMessage(message)
-        notice:SetPos(ScrW(), ScrH() - (i - 1) * (notice:GetTall() + 4) + 4) -- needs to be recoded to support variable heights
-        notice:MoveToFront() 
+        notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 3) * (notice:GetTall() + 4) + 4) -- needs to be recoded to support variable heights
+        notice:MoveToFront()
+        notice:AlphaTo(255, 4, 0)
+        hatchetnotice:AlphaTo(180, 1, 0)
         OrganizeNotices(i)
 
         timer.Simple(7.5, function()
+            if IsValid(hatchetnotice) then
+                hatchetnotice:AlphaTo(0, 1, 0, function() 
+                    hatchetnotice:Remove()
+
+                end)
+            end
+
             if IsValid(notice) then
                 notice:AlphaTo(0, 1, 0, function() 
                     notice:Remove()
