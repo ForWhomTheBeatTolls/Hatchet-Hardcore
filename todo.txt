@@ -1,6 +1,6 @@
 LEAVE IT FOR NOW:
 
-
+- Damage slowdown (I give up.)
 
 --------------------------
 
@@ -52,7 +52,6 @@ WILLMASTER CODING SIDE:
 - Vending machines that dispense boring ass water
 - CP rations
 - Overhead chat
-- Damage slowdown
 
 MUHAMMED CODING SIDE:
 ------------------------
