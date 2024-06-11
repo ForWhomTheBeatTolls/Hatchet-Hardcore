@@ -337,3 +337,17 @@ hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
 	
 	//print(npc:GetClass().." Died while having a "..npc:GetActiveWeapon():GetClass())
 end)
+
+gameevent.Listen( "player_connect" )
+hook.Add("player_connect", "AnnounceConnection", function( data )
+	for i, ply in pairs( player.GetAll() ) do
+		ply:SendChatClassMessage(17, data.name.." Has connected to the server.", ply)
+	end
+end)
+
+gameevent.Listen( "player_disconnect" )
+hook.Add( "player_disconnect", "player_disconnect_example", function( data )
+	for i, ply in pairs( player.GetAll() ) do
+		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
+	end
+end )
