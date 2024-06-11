@@ -48,21 +48,16 @@ local kickCommand = {
         local name = arg[1]
         local plyTarget = impulse.FindPlayer(name)
 
-        local reason = ""
-
-        for v,k in pairs(arg) do
-            if v != 1 then
-                reason = reason.." "..k
-            end
-        end
-
-        reason = string.Trim(reason)
-
         if reason == "" then reason = nil end
+
+        local backuptext = "Unknown"
 
         if plyTarget and ply != plyTarget then
             ply:Notify("You have kicked "..plyTarget:Name().." from the server.")
             plyTarget:Kick(reason or "Kicked by a game moderator.")
+            for i, v in pairs( player.GetAll() ) do
+                v:SendChatClassMessage(19, ply:Name().." has kicked "..plyTarget:Name().." from the server.", v)
+            end
         else
             return ply:Notify("Could not find player: "..tostring(name))
         end
