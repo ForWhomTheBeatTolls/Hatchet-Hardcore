@@ -94,32 +94,29 @@ function InitializeHuds()
 			return
 		end
 	
-		local scrW = ScrW()
-		local scrH = ScrH()
-		local hudWidth, hudHeight = 300, 178
-		local y = scrH-hudHeight-350-550
+		local y = ScrW()
+		local w = ScrH()
+		local hudWidth, hudHeight = 500, 14
 		local health = LocalPlayer():Health()
 		local hunger = LocalPlayer():GetSyncVar(SYNC_HUNGER, 100)
-	
-		surface.SetDrawColor(133, 133, 133, 224)
-		surface.DrawRect(4, y, hudWidth * 2.035, hudHeight - 164)
-		surface.DrawRect(4, y + 17, hudWidth * 2.035, hudHeight - 164)
-	
-		surface.SetDrawColor(2, 2, 2, 150)
-		surface.DrawOutlinedRect(4, y, hudWidth * 2.035, hudHeight - 164, 2)
-		surface.DrawOutlinedRect(4, y + 17, hudWidth * 2.035, hudHeight - 164, 2)
-	
-		surface.SetDrawColor(161, 27, 27)
-		surface.DrawRect(9, y + 3, health * 6, hudHeight - 170)
-		surface.SetDrawColor(218, 112, 14)
-		surface.DrawRect(9, y + 20, hunger * 6, hudHeight - 170)
-		surface.SetTextColor(255, 255, 255)
-		surface.SetFont("Impulse-Elements18-Shadow")
-		surface.SetTextPos(9, y + 32)
-		surface.DrawText("Tokens on you: "..LocalPlayer():GetSyncVar(SYNC_MONEY, 100))
-		surface.SetFont("Impulse-Elements14-Shadow")
-		draw.SimpleText(LocalPlayer():Health(), "Impulse-Elements14-Shadow", 314, y, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER)
-		draw.SimpleText(LocalPlayer():GetSyncVar(SYNC_HUNGER, 100), "Impulse-Elements14-Shadow", 314, y + 17, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER)
+		local money = LocalPlayer():GetSyncVar(SYNC_MONEY, 100)
+
+		local background = Color(146, 146, 146)
+		local outline = Color(0, 0, 0, 230)
+
+		surface.SetDrawColor(background)
+		surface.DrawRect(w * .01, y * .005, hudWidth, hudHeight)
+		surface.DrawRect(w * .01, y * .015, hudWidth, hudHeight)
+		surface.SetDrawColor(Color(145, 12, 12))
+		surface.DrawRect(w * .01, y * .005, health * 5, hudHeight)
+		surface.SetDrawColor(Color(223, 138, 28))
+		surface.DrawRect(w * .01, y * .015, hunger * 5, hudHeight)
+		surface.SetDrawColor(outline)
+		surface.DrawOutlinedRect(w * .01, y * .005, hudWidth, hudHeight, 2)
+		surface.DrawOutlinedRect(w * .01, y * .015, hudWidth, hudHeight, 2)
+
+		draw.DrawText("Money on you: "..money..impulse.Config.CurrencyPrefix, "Impulse-Elements18-Shadow", w * .01, y * .025, Color(255, 255, 255), TEXT_ALIGN_LEFT)
+
 
 		local weapon = LocalPlayer():GetActiveWeapon()
 		if IsValid(weapon) then
