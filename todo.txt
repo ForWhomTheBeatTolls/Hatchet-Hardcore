@@ -11,6 +11,8 @@ SCRAPPED / NEEDS REWORK:
 
 ---------------------------------------------------------------------
 
+NEED TWEAKING IN DESIGN:
+- CWU Ranks and entities
 
 TO-DO LIST:
 -----------------------------------------------------
@@ -41,6 +43,7 @@ DONE LIST:
 -Rework Civil Protection (A little bit more left, need to implement a Name Entry terminal)
 -NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
 -Add CW & its classes
+-Add female animations support
 
 
 WILLMASTER CODING SIDE:
@@ -48,7 +51,6 @@ WILLMASTER CODING SIDE:
 
 
 -Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
--Add female animations support
 -Add mixtures for all armors
 -Implement a temporary OS solution
 
