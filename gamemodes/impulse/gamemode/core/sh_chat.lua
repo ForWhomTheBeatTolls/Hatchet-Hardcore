@@ -478,6 +478,23 @@ local eventCommand = {
 
 impulse.RegisterChatCommand("/event", eventCommand)
 
+local announcementCommand = {
+	description = "Sends a global chat message to all players. Only for use in events.",
+	leadAdminOnly = true,
+	requiresArg = true,
+	onRun = function(ply, arg, rawText)
+		if ply:GetUserGroup() == "leadadmin" then
+			return
+		end
+		
+		for v,k in pairs(player.GetAll()) do
+			k:SendChatClassMessage(19, rawText, ply)
+		end
+	end
+}
+
+impulse.RegisterChatCommand("/announcement", announcementCommand)
+
 local groupChatCommand = {
 	description = "Sends a message to members of your group.",
 	requiresArg = true,
@@ -648,4 +665,16 @@ if CLIENT then
 		impulse.customChatFont = "Impulse-ChatRadio" 
 		chat.AddText(dispCol, "DISPATCH: ", message)
 	end)
+
+		impulse.RegisterChatClass(17, function(message, speaker)
+		chat.AddText(Color(36, 89, 139), "[+] ", message)
+	end) // connect
+
+	impulse.RegisterChatClass(18, function(message, speaker)
+		chat.AddText(Color(223, 50, 50), "[-] ", message)
+	end) // disconnect 
+
+	impulse.RegisterChatClass(19, function(message, speaker)
+		chat.AddText(Color(187, 255, 0), "[!] ", message)
+	end) // punishment and announcement (kick, ban, mute)
 end
