@@ -1,7 +1,6 @@
 LEAVE IT FOR NOW:
 
-- Overhead chat (I think i can get this to work by using Net's, but for now its not our top priority)
-- Damage slowdown (How the fuck do you do this shit :sob:)
+
 
 --------------------------
 
@@ -23,8 +22,6 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
--Vending machines that dispense boring ass water
--CP rations
 
 
 DONE LIST:
@@ -44,15 +41,18 @@ DONE LIST:
 -NPC implementation (NPC Drops that change dependant on the class, weapon held by the NPC)
 -Add CW & its classes
 -Add female animations support
+-Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
 
 
 WILLMASTER CODING SIDE:
 ------------------------
 
-
--Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
--Add mixtures for all armors
--Implement a temporary OS solution
+- Add mixtures for all armors
+- Implement a temporary OS solution
+- Vending machines that dispense boring ass water
+- CP rations
+- Overhead chat
+- Damage slowdown
 
 MUHAMMED CODING SIDE:
 ------------------------
