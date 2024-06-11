@@ -1,12 +1,13 @@
 local PANEL = {}
 
-local baseSizeW, baseSizeH = 300, 20
+local baseSizeW, baseSizeH = ScrW(), 40
 
 function PANEL:Init()
 	self.message = markup.Parse("")
 	self:SetSize(baseSizeW, baseSizeH)
 	self.startTime = CurTime()
 	self.endTime = CurTime() + 7.5
+	self:SetAlpha(0)
 end
 
 function PANEL:SetMessage(...)
@@ -26,36 +27,37 @@ function PANEL:SetMessage(...)
 	msg = msg.."</font>"
 
 	-- parse
-	self.message = markup.Parse(msg, baseSizeW-20)
+	self.message = markup.Parse(msg, baseSizeW - 140)
 
 	-- set frame position and height to suit the markup
 	local shiftHeight = self.message:GetHeight()
 	self:SetHeight(shiftHeight+baseSizeH)
-	surface.PlaySound("buttons/lightswitch2.wav")
+	local notifysound = CreateSound(LocalPlayer(), "physics/body/body_medium_impact_soft4.wav")
+	notifysound:PlayEx(0.9, 30)
 end
 
-local gradient = Material("vgui/gradient-r")
-local darkCol = Color(30, 30, 30, 190)
+local gradient = Material("vgui/gradient_up")
+local darkCol = Color(0, 0, 0)
 local lightCol = Color(20,20,20,80)
 local hudBlackGrad = Color(40,40,40,120)
 local lifetime = 10
 
 function PANEL:Paint(w,h)
 	-- draw frame
-	impulse.blur(self, 10, 20, 255)
-	surface.SetDrawColor(darkCol)
-	surface.DrawRect(0,0,w,h)
-	surface.SetDrawColor(darkCol)
-	surface.SetMaterial(gradient)
-	surface.DrawTexturedRect(0,0,w,h)
+	//impulse.blur(self, 10, 20, 255)
+	//surface.SetDrawColor(darkCol)
+	//surface.DrawRect(0,0,w,h)
+	//surface.SetDrawColor(darkCol)
+	//surface.SetMaterial(gradient)
+	//surface.DrawTexturedRect(0,0,w,h)
 
 	-- draw message
-	self.message:Draw(10,10, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
+	self.message:Draw(ScrW() * .5, 20, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 
 	-- draw timebar
-	local w2 = math.TimeFraction(self.startTime, self.endTime, CurTime()) * w
-	surface.SetDrawColor(Color(255,255,255))
-	surface.DrawRect(w2, h-2, w - w2, 2)
+	//local w2 = math.TimeFraction(self.startTime, self.endTime, CurTime()) * w
+	//surface.SetDrawColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b))
+	//surface.DrawRect(w2, h-2, w - w2, 4)
 end
 
 vgui.Register("impulseNotify", PANEL, "DPanel")
