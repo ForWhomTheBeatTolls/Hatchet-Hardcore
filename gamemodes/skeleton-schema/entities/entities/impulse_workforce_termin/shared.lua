@@ -1,7 +1,7 @@
 ENT.Type = "anim"
 ENT.PrintName = "Workforce Rank Terminal"
 ENT.Author = "mario & muhammed & willmasterr"
-ENT.Category = "impulse"
+ENT.Category = "Hatchet"
 ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.Base = "base_gmodentity"
