@@ -87,6 +87,12 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 				else
 					draw.SimpleText(k:Name(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, TEXT_ALIGN_CENTER)
 				end
+
+				if LocalPlayer():IsAdmin() and impulse.GetSetting("admin_esp_halo") then
+					hook.Add( "PreDrawHalos", "HaloESP", function()
+						halo.Add( ents.FindByClass( "player*" ), col, 1, 1, 2, true, true)
+					end )
+				end
                     
                 
 				draw.SimpleText("HP: "..k:Health(), "Impulse-Elements19", pos.x + -30, pos.y + 30, Color(255, 0, 0), TEXT_ALIGN_RIGHT)
