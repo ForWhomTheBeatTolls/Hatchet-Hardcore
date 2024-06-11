@@ -7,8 +7,8 @@ local nextclickdecay = CurTime() + 5
 local endtime
 function PANEL:Init()
 
-	// Looking to steal this clientside code? It would have been munch simpler to ask. FUCK YOU!
-	// dont be like Kazotoa :-)
+	// Looking to steal this clientside code?
+	// dont be like Kazootoa :-)
 
 	if impulse.PuzzleWorkforce1 and IsValid(impulse.PuzzleWorkforce1) then
 		impulse.PuzzleWorkforce1:Remove()
@@ -63,11 +63,11 @@ function PANEL:OnMousePressed(MOUSE_LEFT)
 		clickamount = clickamount + 1
 		nextclickdecay = CurTime() + 1
 		--pzlwrkfc1_clickometer:SetSize( x, 100 )
-		print(x)
-		print(clickamount)
+		--print(x)
+		--print(clickamount)
 	else
 		success = true
-		print(success)
+		--print(success)
 		LocalPlayer():Notify("You did it! CPS: "..math.Truncate(clickamount / (CurTime() - pzlwrkfc1_starttime), 1))
 		nextclickdecay = CurTime() + 1
 		clickamount = 0
@@ -88,7 +88,7 @@ function PANEL:Think()
 			x = 0
 			LocalPlayer():Notify("You have failed.")
 			success = false
-			print(success)
+			--print(success)
 			self:Close()
 		end
 		
@@ -104,14 +104,5 @@ function PANEL:OnRemove()
 		success = false
 	end
 end
-
-
-
-
-
-
-
-
-
 
 vgui.Register("impulseWorkforcePuzzle1", PANEL, "DFrame")
