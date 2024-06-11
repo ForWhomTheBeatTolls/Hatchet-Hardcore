@@ -3,8 +3,8 @@ function InitializeHuds()
 	hook.Add("HUDPaint", "LegacyHatchetHUD", function()
 
 		if impulse.GetSetting("hud_selection") != "Hatchet Legacy" then
-            return
-        end
+            		return
+        	end
 
 		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
 			return
