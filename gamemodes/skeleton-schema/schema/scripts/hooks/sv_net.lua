@@ -146,7 +146,7 @@ net.Receive("impulseHL2RPRankBecome", function(len, ply) -- needs more validatio
 				net.Start("impulseHL2RPCombineOverlayBoot")
 				net.Send(ply)
 			end
-		elseif (ply:Team() == TEAM_WRKFORCE) then
+		elseif (ply:Team() == TEAM_WORKFORCE) then
 			local classData = impulse.Teams.Data[ply:Team()].classes
 			local rankData = impulse.Teams.Data[ply:Team()].ranks
 
