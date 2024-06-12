@@ -208,3 +208,36 @@ end)
 	-- ############################################################## --
 	-- ### Cakeinator! Adjust values accordingly for April Fools. ### --
 	-- ############################################################## --
+
+// SUK ME OFF LIKE A BANANA YOU LUA HOOKER!!!! !! !!
+
+
+hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
+	local msg
+	local font = "BubbleChat-Talk"
+	local teamcol = team.GetColor(sender:Team())
+	local color = teamcol
+	
+	if string.StartsWith(text, "/me") then
+		msg = string.Replace(text, "/me", "")
+		color = Color(224, 166, 57)
+		font = "BubbleChat-Me"
+	elseif string.StartsWith(text, "/y") then
+		msg = string.Replace(text, "/y", "")
+		color = Color(255, 38, 0)
+		font = "BubbleChat-Yell"
+	elseif string.StartsWith(text, "/w") then
+		msg = string.Replace(text, "/w", "")
+		color = Color(64, 201, 255)
+		font = "BubbleChat-Whisper"
+	else
+		msg = text
+	end
+
+    net.Start("HatchetBubbleChatCall")
+    net.WriteString(msg)
+	net.WriteColor(color)
+	net.WriteString(font)
+    net.WritePlayer(sender)
+	net.Broadcast()
+end)
