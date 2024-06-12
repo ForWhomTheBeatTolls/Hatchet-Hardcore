@@ -61,7 +61,7 @@ hook.Add("Think", "ToggleNightVision", function()
     local button = KEY_F
     local currentFState = input.IsKeyDown(button)
 
-    if ply:Team() == TEAM_OTA and currentFState and not prevFState and not ply:IsTyping() then
+    if (ply:Team() == TEAM_OTA) and (!ply:IsTyping() and ply:GetMoveType() != MOVETYPE_NOCLIP) and currentFState and not prevFState then
         ToggleNightVision()
     end
 
