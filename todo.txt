@@ -49,15 +49,17 @@ WILLMASTER CODING SIDE:
 
 - Add mixtures for all armors
 - Implement a temporary OS solution
-- Vending machines that dispense boring ass water
 - CP rations
-- Overhead chat
+- Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
+
 
 MUHAMMED CODING SIDE:
 ------------------------
 
 -Fix Lockshockers
+- Vending machines that dispense boring ass water
 -Improve Death Animations to include Weapons in the hand of the ragdoll
 -Add workforce entities (This is mainly about the minigame system)
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
+- Overhead chat (Add dist and make bubble chat not appear if its /pm,/ooc, /look, etc.)
 -Rework weapon recoil
