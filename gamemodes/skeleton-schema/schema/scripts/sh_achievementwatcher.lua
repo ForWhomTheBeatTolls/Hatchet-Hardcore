@@ -1,6 +1,7 @@
 if SERVER then
 	hook.Add("PlayerDeath", "impulseAchDeath", function(ply, inflictor, attacker)
 	if SERVER then
+		if not attacker:IsPlayer() then return end
 		if not ply:Alive() then
 			ply:AchievementGive("ach_adie")
 		end
