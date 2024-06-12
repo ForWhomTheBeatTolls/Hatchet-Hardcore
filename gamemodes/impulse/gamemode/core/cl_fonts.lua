@@ -283,4 +283,43 @@ surface.CreateFont("Hatchet-HudFont", {
 	shadow = true
 })
 
+surface.CreateFont("BubbleChat-Talk", {
+	font = "Arial",
+	size = 32,
+	weight = 200,
+	blursize = 1,
+	scanlines = 3,
+	antialias = true
+} )
+
+surface.CreateFont("BubbleChat-Yell", {
+	font = "Arial",
+	size = 42,
+	weight = 200,
+	blursize = 1,
+	scanlines = 3,
+	antialias = true
+} )
+
+surface.CreateFont("BubbleChat-Me", {
+	font = "Arial",
+	size = 32,
+	weight = 200,
+	blursize = 1,
+	italic = true,
+	scanlines = 3,
+	antialias = true
+} )
+
+surface.CreateFont("BubbleChat-Whisper", {
+	font = "Arial",
+	size = 20,
+	weight = 200,
+	blursize = 0.2,
+	italic = true,
+	scanlines = 3,
+	antialias = true
+} )
+
+
 hook.Run("PostLoadFonts")
