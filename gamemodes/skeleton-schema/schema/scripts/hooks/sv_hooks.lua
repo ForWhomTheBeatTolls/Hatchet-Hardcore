@@ -351,3 +351,23 @@ hook.Add( "player_disconnect", "player_disconnect_example", function( data )
 		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
 	end
 end )
+
+/*
+function GM:PlayerHurt(victim, attacker)
+	local Damagecounter = Damagecounter or 0
+	local DamagecounterClear = CurTime()
+
+	//print("Victim: "..victim:EntIndex())
+	//print("Attacker: "..attacker:EntIndex())
+
+	if victim:Alive() then
+		Damagecounter = Damagecounter + 1
+		DamagecounterClear = CurTime() + 600
+		//print("CurTime = "..CurTime())
+		//print("DCClear = "..DamagecounterClear)
+		print(Damagecounter)
+	end
+
+	//victim:SetRunSpeed(impulse.Config.JogSpeed - 140)
+end
+*/
