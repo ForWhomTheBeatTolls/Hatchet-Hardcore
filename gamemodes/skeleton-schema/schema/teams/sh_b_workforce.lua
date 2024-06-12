@@ -1,4 +1,4 @@
-TEAM_WRKFORCE = impulse.Teams.Define({
+TEAM_WORKFORCE = impulse.Teams.Define({
 	name = "Workforce",
 	color = Color(51, 214, 125),
 	description = [[The workers.]],
