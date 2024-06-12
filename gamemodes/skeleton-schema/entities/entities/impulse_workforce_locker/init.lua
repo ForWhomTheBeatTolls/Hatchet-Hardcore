@@ -39,7 +39,7 @@ function ENT:SpawnFunction(ply, trace, class)
 end
 
 function ENT:Use(activator, caller)
-	if activator:IsPlayer() and activator:Alive() and activator:Team() == TEAM_WRKFORCE then
+	if activator:IsPlayer() and activator:Alive() and activator:Team() == TEAM_WORKFORCE then
 		if activator:GetTeamRank() == RANK_MEDICAL then
 			activator:GiveInventoryItem("clothing_medicalshirt", 1, true )
 		elseif activator:GetTeamRank() == RANK_INDUSTRIAL then
