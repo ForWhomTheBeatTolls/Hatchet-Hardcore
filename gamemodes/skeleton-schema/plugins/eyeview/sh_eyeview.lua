@@ -1,6 +1,7 @@
 -- Eye View is a addon that sets the player's view to any attachment on the playermodel.
-
+if CLIENT then
 impulse.DefineSetting("eyeview_fov", {name="Firstperson FOV", category="View", type="slider", default=90, minValue=70, maxValue=100})
+end
 function EYEVIEW_Initialize()
 
 	if ( CLIENT ) then
@@ -14,10 +15,14 @@ function EYEVIEW_Initialize()
 
 end
 
+if CLIENT then
+
 local crossr = GetConVarNumber( "eyeview_crossr" )
 local crossg = GetConVarNumber( "eyeview_crossg" )
 local crossb = GetConVarNumber( "eyeview_crossb" )
 local fov = impulse.GetSetting("eyeview_fov")
+
+end
 
 hook.Add( "Initialize", "EYEVIEW_Initialize", EYEVIEW_Initialize )
 
