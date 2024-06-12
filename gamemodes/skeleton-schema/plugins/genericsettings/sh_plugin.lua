@@ -3,4 +3,6 @@ impulse.DefineSetting("hud_jim", {name="Movement Indicator", category="HUD", typ
 impulse.DefineSetting("hud_hunger", {name="Hunger Bar", category="HUD", type="tickbox", default=true})
 impulse.DefineSetting("hud_ambience", {name="Ambience Color", category="HUD", type="tickbox", default=true})
 impulse.DefineSetting("admin_dispatch", {name="Dispatch", category="ops", type="tickbox", default=false})
+impulse.DefineSetting("ambience_sounds", {name="Ambience Sounds (WIP)", category="Misc", type="tickbox", default=true})
+impulse.DefineSetting("hud_ambienceindoors", {name="Automatically disable Ambience Color while indoors (WIP)", category="HUD", type="tickbox", default=false})
 end
