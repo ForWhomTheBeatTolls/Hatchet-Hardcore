@@ -1,4 +1,3 @@
-
 local deathcount = deathcount or 0
 local deathcountclear = CurTime()
 local citycode = civil
@@ -37,7 +36,7 @@ end)
 -- filter:AddAllPlayers()
 --local ajsfxalt = CreateSound(Entity(0), "music/hl2_song26_trainstation1.mp3", filter)
 hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
-	if ply:IsCP() then
+	if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
 	deathcount = deathcount + 1
 	deathcountclear = CurTime() + 600
 	print("CurTime = "..CurTime())
@@ -49,7 +48,7 @@ hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
 	-- deathcountclear = CurTime()
 	-- print("cleared count."..deathcount.."/"..deathcountclear)
 	-- end
-	if deathcount == 6 and ply:IsCP() then
+	if deathcount == 6 and (ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA) then
 	SetGlobalInt("CityCode", 4)
 	for k,v in pairs(player.GetAll()) do
 		--local mysound = CreateSound( v, "music/hl2_song26_trainstation1.mp3" )
