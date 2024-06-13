@@ -21,7 +21,7 @@ SWEP.Primary.ShitClipSize = 5
 SWEP.Primary.Ammo = "buckshot" --The ammo type will it use
 SWEP.Primary.DefaultClip = 0 -- How much bullets preloaded when spawned
 SWEP.Primary.Spread = 0.8 -- The spread when shot
-SWEP.Primary.NumberofShots = 6 -- Number of bullets when shot
+SWEP.Primary.NumberofShots = 10 -- Number of bullets when shot
 SWEP.Primary.Automatic = false -- Is it automatic
 SWEP.Primary.Recoil = 4 -- it no go BOOM
 SWEP.Primary.Delay = 1 -- Delay before the next shot
@@ -138,6 +138,54 @@ SWEP.CSMuzzleFlashes = true
 		-- end
 -- end
 -- end
+
+function SWEP:PrimaryAttack()
+
+--if self.Owner:GetSkillXP() 
+ 
+if ( !self:CanPrimaryAttack() ) then return end
+local dmginfo = DamageInfo()
+dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
+local bullet = {} 
+bullet.Num = self.Primary.NumberofShots 
+bullet.Src = self.Owner:GetShootPos() 
+bullet.Dir = self.Owner:GetAimVector()
+bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - 0 )  , self.Primary.Spread * ( 0.1 - 0 ), 0)
+--print(bullet.Spread)
+
+bullet.Tracer = 1
+bullet.Force = self.Primary.Force 
+bullet.Damage = self.Primary.Damage 
+bullet.AmmoType = self.Primary.Ammo 
+ 
+local rnda = self.Primary.Recoil * -.025
+local rndb = self.Primary.Recoil * math.random(-.025, .025) 
+
+local rndc = self.Primary.Spread * -.025
+local rndd = self.Primary.Spread * math.random(-.025, .025)
+
+local rnda2 = self.Primary.Recoil * -.01
+local rndb2 = self.Primary.Recoil * math.random(-.01, .01) 
+
+local rndc2 = self.Primary.Spread * -.025
+local rndd2 = self.Primary.Spread * math.random(-.025, .025)
+ 
+self:ShootEffects()
+ 
+self.Owner:FireBullets( bullet ) 
+self:EmitSound(self.Primary.Sound)
+if self.Owner:Crouching() then
+self.Owner:ViewPunch( Angle( rnda2,rndb2,rnda2 ) ) 
+else
+self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
+end
+self:ViewPunch()
+self:TakePrimaryAmmo(self.Primary.TakeAmmo)
+if SERVER then
+self.Owner:AddSkillXP("shooting", math.random(1,3))
+end
+self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
+end 
 
 function SWEP:Reload()
 	local ply = self.Owner
