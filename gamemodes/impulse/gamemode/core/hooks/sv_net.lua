@@ -89,6 +89,7 @@ util.AddNetworkString("impulseGroupDoSetColor")
 util.AddNetworkString("impulseGroupDoSetInfo")
 util.AddNetworkString("impulseGetButtons")
 util.AddNetworkString("impulseCLChatCommand")
+util.AddNetworkString("HatchetBubbleChatCall")
 
 local AUTH_FAILURE = "Invalid argument (rejoin to continue)"
 
