@@ -183,17 +183,17 @@ bullet.Force = self.Primary.Force
 bullet.Damage = self.Primary.Damage 
 bullet.AmmoType = self.Primary.Ammo 
  
-local rnda = self.Primary.Recoil * -.5
-local rndb = self.Primary.Recoil * math.random(-.5, .5) 
+local rnda = self.Primary.Recoil * -.025
+local rndb = self.Primary.Recoil * math.random(-.025, .025) 
 
-local rndc = self.Primary.Spread * -.5
-local rndd = self.Primary.Spread * math.random(-.5, .5)
+local rndc = self.Primary.Spread * -.025
+local rndd = self.Primary.Spread * math.random(-.025, .025)
 
-local rnda2 = self.Primary.Recoil * -.2
-local rndb2 = self.Primary.Recoil * math.random(-.2, .2) 
+local rnda2 = self.Primary.Recoil * -.01
+local rndb2 = self.Primary.Recoil * math.random(-.01, .01) 
 
-local rndc2 = self.Primary.Spread * -.5
-local rndd2 = self.Primary.Spread * math.random(-.5, .5)
+local rndc2 = self.Primary.Spread * -.025
+local rndd2 = self.Primary.Spread * math.random(-.025, .025)
  
 self:ShootEffects()
  
@@ -214,8 +214,15 @@ end
 
 function SWEP:ViewPunch()
 	local punch = Angle()
-
 	local mul = 1
+	local cmod = 0.7
+	
+	if self.Owner:Crouching() then
+		cmod = 0.4
+	else
+		cmod = 0.7
+	end
+	
 	punch.p = util.SharedRandom( "ViewPunch", -0.5, 0.5 ) * self.Primary.Recoil * mul
 	punch.y = util.SharedRandom( "ViewPunch", -0.5, 0.5 ) * self.Primary.Recoil * mul
 	punch.r = 0
@@ -224,7 +231,7 @@ function SWEP:ViewPunch()
 
 	if IsFirstTimePredicted() and ( CLIENT or game.SinglePlayer() ) then
 		self.Owner:SetEyeAngles( self.Owner:EyeAngles() -
-			Angle( self.Primary.Recoil * .7, 0, 0 ) )
+			Angle( self.Primary.Recoil * cmod, 0, 0 ) )
 	end
 end
 
