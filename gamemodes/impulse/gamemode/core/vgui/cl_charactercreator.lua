@@ -7,6 +7,8 @@ function PANEL:Init()
 	self:MakePopup()
 	self:SetBackgroundBlur(true)
 
+	impulse.hudEnabled = false
+
 	self.nextButton = vgui.Create("DButton", self)
 	self.nextButton:SetPos(530,370)
 	self.nextButton:SetSize(60,20)
@@ -49,11 +51,23 @@ function PANEL:Init()
 			net.WriteUInt(characterSkin, 8)
 			net.SendToServer()
 
-    		LocalPlayer():ScreenFade(SCREENFADE.IN, color_black, 4, 0.3)
+    		//LocalPlayer():ScreenFade(SCREENFADE.IN, color_black, 4, 0.3)
+
+			vgui.Create("HatchetCutsceneTrainstation")
+
+			LocalPlayer():ConCommand("stopsound")
+
+			hook.Add("HUDPaint", "Blackblock_"..LocalPlayer():SteamID(), function()
+				draw.RoundedBox(0, 0, 0, ScrW(), ScrH(), color_black)
+			end)
+
+			timer.Create("RemvThatHuuk_"..LocalPlayer():SteamID(), 6, 1, function()
+				hook.Remove("HUDPaint", "Blackblock_"..LocalPlayer():SteamID())
+			end)
+
     		self:Remove()
     		self:GetParent():Remove()
-			impulse.hudEnabled = true
-			FORCE_FADESPAWN = true
+			FORCE_FADESPAWN = false
 			impulse_isNewPlayer = false
 
 			if CHAR_MUSIC and CHAR_MUSIC:IsPlaying() then
