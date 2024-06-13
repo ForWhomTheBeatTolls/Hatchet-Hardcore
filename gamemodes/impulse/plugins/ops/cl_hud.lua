@@ -85,7 +85,7 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 				if k:IsAdmin() and k:GetMoveType() == MOVETYPE_NOCLIP and k:GetNoDraw() then
 					draw.SimpleText("** In Observer Mode **", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(255, 0, 0), TEXT_ALIGN_CENTER)
 				else
-					draw.SimpleText(k:Name(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, TEXT_ALIGN_CENTER)
+					draw.SimpleText(k:Name(), "Impulse-Elements18-Shadow", pos.x + 30, pos.y + 8, col, TEXT_ALIGN_LEFT)
 				end
 
 				if LocalPlayer():IsAdmin() and impulse.GetSetting("admin_esp_halo") then
@@ -93,17 +93,16 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 						halo.Add( ents.FindByClass( "player*" ), col, 1, 1, 2, true, true)
 					end )
 				end
-                    
-                
-				draw.SimpleText("HP: "..k:Health(), "Impulse-Elements19", pos.x + -30, pos.y + 30, Color(255, 0, 0), TEXT_ALIGN_RIGHT)
 
-				draw.SimpleText("Armor: "..k:Armor(), "Impulse-Elements19", pos.x + 30, pos.y + 30, Color(0, 0, 255), TEXT_ALIGN_LEFT)
+				draw.SimpleText("HP: "..k:Health(), "Impulse-Elements18-Shadow", pos.x + 30, pos.y + 26, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_LEFT)
 
-				draw.SimpleText(k:SteamName(), "Impulse-Elements16-Shadow", pos.x, pos.y + 15, impulse.Config.InteractColour, TEXT_ALIGN_CENTER)
+				draw.SimpleText("Armor: "..k:Armor(), "Impulse-Elements18-Shadow", pos.x + 30, pos.y + 40, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_LEFT)
+
+				draw.SimpleText(k:SteamName(), "Impulse-Elements16-Shadow", pos.x + 30, pos.y + 56, impulse.Config.InteractColour, TEXT_ALIGN_LEFT)
 				if k:Alive() and k:GetActiveWeapon() != nil then
-				draw.SimpleText(k:GetActiveWeapon(), "Impulse-Elements19", pos.x + 0, pos.y + 50, Color(255, 10, 0), TEXT_ALIGN_CENTER)
+				draw.SimpleText(k:GetActiveWeapon(), "Impulse-Elements18-Shadow", pos.x + 30, pos.y + 70, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_LEFT)
 				else
-				draw.SimpleText("Player has died.", "Impulse-Elements19", pos.x + 0, pos.y + 50, Color(255, 10, 0), TEXT_ALIGN_CENTER)
+				draw.SimpleText("Player has died.", "Impulse-Elements18-Shadow", pos.x + 30, pos.y + 70, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_LEFT)
 				end
 			end
 		end
@@ -145,5 +144,7 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 
 			draw.SimpleText(symb.." LIVE (CURRENT SEQUENCE: "..impulse.Ops.EventManager.GetSequence()..")", "Impulse-Elements18-Shadow", ScrW() - 20, 20, red, TEXT_ALIGN_RIGHT)
 		end
+	else
+		hook.Remove("PreDrawHalos", "HaloESP")
 	end
 end)
