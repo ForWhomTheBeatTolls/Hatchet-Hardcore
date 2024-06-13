@@ -97,31 +97,31 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	dmginfo:ScaleDamage(2.8)
 	end
 	if ply:Team(ply) == TEAM_OTA then
-	dmginfo:ScaleDamage(0.15)
+		dmginfo:ScaleDamage(0.25)
 	end
 	if ply:Team(ply) == TEAM_OTA and ply:GetTeamClass() == 3 then
-	dmginfo:ScaleDamage(0.1)
+		dmginfo:ScaleDamage(0.8)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) then
-	dmginfo:ScaleDamage(2.5)
+		dmginfo:ScaleDamage(2.5)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) then
-	dmginfo:ScaleDamage(2.4)
+		dmginfo:ScaleDamage(2.4)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("AR2")) then
-	dmginfo:ScaleDamage(2.6)
+		dmginfo:ScaleDamage(2.6)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot")) then
-	dmginfo:ScaleDamage(0.8)
+		dmginfo:ScaleDamage(1)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) and (hitgroup == HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(2.5)
+		dmginfo:ScaleDamage(2.5)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) and (hitgroup == HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(3)
+		dmginfo:ScaleDamage(3)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot")) and (hitgroup == HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(2.4)
+		dmginfo:ScaleDamage(2.4)
 	end
 	if ply:Team(ply) == TEAM_CP and (hitgroup == HITGROUP_HEAD) then
 	dmginfo:ScaleDamage(1.1)
@@ -129,8 +129,12 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) then
 	dmginfo:ScaleDamage(0.7)
 	end
-	
+	if (ply.WeldingMask == true) and (hitgroup == HITGROUP_HEAD) then
+	dmginfo:ScaleDamage(0.55)
 	end
+	
+end
+	
 	
 hook.Add( "PlayerHurt", "HurtEffect", function(ply)
 	ply:ScreenFade( SCREENFADE.IN, Color( 215, 0, 0, 128 ), 0.3, 0 )
@@ -351,23 +355,3 @@ hook.Add( "player_disconnect", "player_disconnect_example", function( data )
 		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
 	end
 end )
-
-/*
-function GM:PlayerHurt(victim, attacker)
-	local Damagecounter = Damagecounter or 0
-	local DamagecounterClear = CurTime()
-
-	//print("Victim: "..victim:EntIndex())
-	//print("Attacker: "..attacker:EntIndex())
-
-	if victim:Alive() then
-		Damagecounter = Damagecounter + 1
-		DamagecounterClear = CurTime() + 600
-		//print("CurTime = "..CurTime())
-		//print("DCClear = "..DamagecounterClear)
-		print(Damagecounter)
-	end
-
-	//victim:SetRunSpeed(impulse.Config.JogSpeed - 140)
-end
-*/
