@@ -58,7 +58,7 @@ end
 
 
 function ITEM:UnEquip(ply)
-    ply.WeldingMask = true
+    ply.WeldingMask = false
 	ply:SetSyncVar(SYNC_COS_HEAD, nil, true)
 	ply.HasFaceCover = false
 end
