@@ -52,7 +52,7 @@ end
 local ran = math.random(1,10)
 impulse.Config.LoadScript = function()
 	for k,v in pairs(ents.FindByClass("npc_combine_camera")) do
-		v;SetHealth(-100)
+		v:SetHealth(-100)
 	end
 	
 	for k,v in pairs(ents.FindByClass("prop_physics")) do
