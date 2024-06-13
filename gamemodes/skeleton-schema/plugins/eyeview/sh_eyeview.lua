@@ -1,7 +1,6 @@
 -- Eye View is a addon that sets the player's view to any attachment on the playermodel.
-if CLIENT then
+
 impulse.DefineSetting("eyeview_fov", {name="Firstperson FOV", category="View", type="slider", default=90, minValue=70, maxValue=100})
-end
 function EYEVIEW_Initialize()
 
 	if ( CLIENT ) then
@@ -15,14 +14,10 @@ function EYEVIEW_Initialize()
 
 end
 
-if CLIENT then
-
 local crossr = GetConVarNumber( "eyeview_crossr" )
 local crossg = GetConVarNumber( "eyeview_crossg" )
 local crossb = GetConVarNumber( "eyeview_crossb" )
 local fov = impulse.GetSetting("eyeview_fov")
-
-end
 
 hook.Add( "Initialize", "EYEVIEW_Initialize", EYEVIEW_Initialize )
 
@@ -96,20 +91,15 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 		hent2 = hc2.Entity
 		hit2 = hc2.Hit
 		
-		local clipcheck = {}
-	clipcheck.start = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-6)
-	clipcheck.endpos = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-1)
-	clipcheck.filter = function(ent)
-		if ( ent:GetClass() == "player" ) then
-			return false
-		end
-	end
-	clipcheck.mins = Vector( -7.5, -7.5, -7.5 )
-	clipcheck.maxs = Vector( 7.5, 7.5, 7.5 )
-	clipcheck.mask = LocalPlayer()
-	
-		local cccheck = util.TraceHull(clipcheck)
-		local clipcheckhit = cccheck.Hit
+		local clipcheck = util.TraceHull( {
+	start = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-3)	,
+	endpos = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_Head1")) + Vector(1,0,-3) ,
+	filter = LocalPlayer()	,
+	mins = Vector( -7.5, -7.5, -7.5 ),
+	maxs = Vector( 7.5, 7.5, 7.5 ),
+	mask = LocalPlayer()
+} )
+		local clipcheckhit = clipcheck.Hit
 		
 		---------------------###CHECKS END###---------------------
 		
@@ -234,6 +224,7 @@ end
 end
 hook.Add( "ShouldDrawLocalPlayer", "EYEVIEW_ShouldDrawLocalPlayer", EYEVIEW_ShouldDrawLocalPlayer )
 
+/*
 function EYEVIEW_HUDPaint()
 
     if LocalPlayer():IsValid() && LocalPlayer():Alive() then
@@ -254,4 +245,7 @@ function EYEVIEW_HUDPaint()
 end
 --hook.Add( "HUDPaint", "EYEVIEW_HUDPaint", EYEVIEW_HUDPaint )
 
+
+
+*/
 end
