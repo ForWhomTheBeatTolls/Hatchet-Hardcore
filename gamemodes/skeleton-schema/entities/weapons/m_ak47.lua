@@ -1,16 +1,4 @@
-	SWEP.PrintName = "AK47" -- The name of the weapon
-    
-	-- hook.Add("Initialize", "roohammedRifleAmmo", function()
-	-- game.AddAmmoType({
-		-- name = "Rifle",
-		-- dmgtype = DMG_BULLET,
-		-- tracer = TRACER_LINE_AND_WHIZ,
-		-- force = 5000,
-		-- minsplash = 10,
-		-- maxsplash = 100
-	-- })
--- end)
-
+SWEP.PrintName = "AK47" -- The name of the weapon
 SWEP.Author = "your name"
 SWEP.Contact = "your email adress"--Optional
 SWEP.Purpose = "add your purpose here"
@@ -34,7 +22,7 @@ SWEP.Primary.Spread = 0.3 -- The spread when shot
 SWEP.Primary.NumberofShots = 1 -- Number of bullets when shot
 SWEP.Primary.Automatic = true -- Is it automatic
 SWEP.Primary.Recoil = 2 -- it no go BOOM
-SWEP.Primary.Delay = 0.2 -- Delay before the next shot
+SWEP.Primary.Delay = 0.18 -- Delay before the next shot
 SWEP.Primary.Force = 1
 SWEP.RelAmmo = "ammo_rifle"
 SWEP.RelAmmo2 = "ammo_sparerifle"
