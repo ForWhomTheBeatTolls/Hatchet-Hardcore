@@ -29,7 +29,7 @@ function ENT:Initialize()
 	
 	phys = self:GetPhysicsObject()
 	
-	local npclist = {
+	self.npclist = {
 		"npc_fastzombie",
 		"npc_zombie"
 	}
@@ -64,7 +64,7 @@ if SERVER then
 		end
 	end
 		if npcexists == false then
-			local npcspawned = ents.Create( npclist[ math.random( #npclist ) ] )
+			local npcspawned = ents.Create( self.npclist[ math.random( #self.npclist ) ] )
 			npcspawned:SetPos(self:GetPos())
 			npcspawned:Spawn()
 			npcspawned:SetName(self:GetName().."_"..npcspawned:GetClass())
