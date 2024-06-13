@@ -47,7 +47,6 @@ function meta:GetSkillLevel(name)
 	return 10
 end
 
-impulse.Skills.Define("vital", "Vitality")
 impulse.Skills.Define("craft", "Crafting")
 --impulse.Skills.Define("medicine", "Medicine")
 impulse.Skills.Define("strength", "Strength")
