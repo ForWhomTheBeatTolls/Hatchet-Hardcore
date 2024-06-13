@@ -25,9 +25,9 @@ SWEP.Primary.DefaultClip = 0 -- How much bullets preloaded when spawned
 SWEP.Primary.Spread = .12 -- The spread when shot
 SWEP.Primary.NumberofShots = 1 -- Number of bullets when shot
 SWEP.Primary.Automatic = true -- Is it automatic
-SWEP.Primary.Delay = 0.19 -- Delay before the next shot
+SWEP.Primary.Delay = 0.16 -- Delay before the next shot
 SWEP.Primary.RelDelay = 2.7 -- Delay before allowing you to shoot after reloading
-SWEP.Primary.Recoil = 1.4 -- The amount of recoil
+SWEP.Primary.Recoil = 1.6 -- The amount of recoil
 SWEP.Primary.Force = .5
 SWEP.RelAmmo = "ammo_ar2"
 SWEP.RelAmmo2 = "ammo_sparear2"
@@ -112,37 +112,37 @@ end
 
 -- end
 
-function SWEP:PrimaryAttack()
+-- function SWEP:PrimaryAttack()
  
-if ( !self:CanPrimaryAttack() ) then return end
-local dmginfo = DamageInfo()
-dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
-local bullet = {} 
-bullet.Num = self.Primary.NumberofShots 
-bullet.Src = self.Owner:GetShootPos() 
-bullet.Dir = self.Owner:GetAimVector() 
-bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
-bullet.Tracer = 1
-bullet.Force = self.Primary.Force 
-bullet.Damage = self.Primary.Damage 
-bullet.AmmoType = self.Primary.Ammo 
+-- if ( !self:CanPrimaryAttack() ) then return end
+-- local dmginfo = DamageInfo()
+-- dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
+-- local bullet = {} 
+-- bullet.Num = self.Primary.NumberofShots 
+-- bullet.Src = self.Owner:GetShootPos() 
+-- bullet.Dir = self.Owner:GetAimVector() 
+-- bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
+-- bullet.Tracer = 1
+-- bullet.Force = self.Primary.Force 
+-- bullet.Damage = self.Primary.Damage 
+-- bullet.AmmoType = self.Primary.Ammo 
  
-local rnda = self.Primary.Recoil * -.5
-local rndb = self.Primary.Recoil * math.random(-.5, .5) 
+-- local rnda = self.Primary.Recoil * -.5
+-- local rndb = self.Primary.Recoil * math.random(-.5, .5) 
 
-local rndc = self.Primary.Spread * -.5
-local rndd = self.Primary.Spread * math.random(-.5, .5)
+-- local rndc = self.Primary.Spread * -.5
+-- local rndd = self.Primary.Spread * math.random(-.5, .5)
  
-self:ShootEffects()
+-- self:ShootEffects()
  
-self.Owner:FireBullets( bullet ) 
-self:EmitSound(self.Primary.Sound)
-self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
-self:ViewPunch()
-self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
+-- self.Owner:FireBullets( bullet ) 
+-- self:EmitSound(self.Primary.Sound)
+-- self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
+-- self:ViewPunch()
+-- self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
  
-self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
-end 
+-- self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
+-- end 
 
 -- function SWEP:SecondaryAttack()
 	-- local ply = self:GetOwner()
