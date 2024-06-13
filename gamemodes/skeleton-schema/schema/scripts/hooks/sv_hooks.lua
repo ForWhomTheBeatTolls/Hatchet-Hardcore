@@ -115,10 +115,10 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 		dmginfo:ScaleDamage(1)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(2.5)
+		dmginfo:ScaleDamage(0.6)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(3)
+		dmginfo:ScaleDamage(0.6)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot")) and (hitgroup == HITGROUP_HEAD) then
 		dmginfo:ScaleDamage(2.4)
