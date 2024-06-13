@@ -29,12 +29,12 @@ end
 
 function ITEM:OnEquip(ply)
     ply:SetBodygroup(1,8)
-    ply.Vest = true
+    ply.HasVest = true
 end
 
 function ITEM:UnEquip(ply)
     ply:SetBodygroup(1,0)
-    ply.Vest = false
+    ply.HasVest = false
 end
 
 impulse.RegisterItem(ITEM)
