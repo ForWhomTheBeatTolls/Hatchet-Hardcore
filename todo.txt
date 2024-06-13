@@ -22,6 +22,7 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
+-Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 
 
 DONE LIST:
@@ -42,6 +43,9 @@ DONE LIST:
 -Add CW & its classes
 -Add female animations support
 -Rework notifications, add new types: Symbol Notifications (symbols that appear on the side/bottom and have aniamtions, can be configured in the settings) // Small Notifications // Normal Notifications // Big Notifications
+-Vending machines that dispense boring ass water
+-Rework weapon recoil
+-Rebalance SMG, AK-47, AR2 (increase firerate & recoil
 
 
 WILLMASTER CODING SIDE:
@@ -57,9 +61,6 @@ MUHAMMED CODING SIDE:
 ------------------------
 
 -Fix Lockshockers
-- Vending machines that dispense boring ass water
 -Improve Death Animations to include Weapons in the hand of the ragdoll
 -Add workforce entities (This is mainly about the minigame system)
--Rebalance SMG, AK-47, AR2 (increase firerate & recoil)
 - Overhead chat (Add dist and make bubble chat not appear if its /pm,/ooc, /look, etc.)
--Rework weapon recoil
