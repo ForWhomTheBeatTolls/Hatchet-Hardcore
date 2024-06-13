@@ -49,38 +49,25 @@ function PANEL:Init()
             surface.PlaySound(SoundClick)
             text = "The combine invaded earth and took over within 3 hours.\nYou find yourself in a trainstation unsure still on where fate will bring you.\nYou see a figure named Dr.Breen in a giant television of sort giving speeches\nIt gives you chills, but its probably better to ignore it."
             mat1 = Material("gamepadui/chapter1")
-            print(counter)
-            print(text)
-            print(mat1)
         elseif counter == 2 then
             surface.PlaySound(SoundClick)
             text = "Caption1"
             mat1 = Material("gamepadui/chapter2")
-            print(counter)
-            print(text)
-            print(mat1)
         elseif counter == 3 then
             surface.PlaySound(SoundClick)
             text = "Caption2"
             mat1 = Material("gamepadui/chapter3")
-            print(counter)
-            print(text)
-            print(mat1)
         elseif counter == 4 then
             surface.PlaySound(SoundClick)
             text = "Caption3"
             mat1 = Material("gamepadui/chapter4")
-            print(counter)
-            print(text)
-            print(mat1)
-
         elseif counter == 5 then
             surface.PlaySound(SoundClick)
             panel:AlphaTo(0, 4, 0)
             timer.Simple(5, function()
                 panel:Remove()
             end)
-            
+
             LocalPlayer():ScreenFade(SCREENFADE.IN, Color(0, 0, 0), 7, 11)
             timer.Create("StupidFuckingShitCode_"..LocalPlayer():SteamID(), 18, 1, function()
                 impulse.hudEnabled = true
@@ -92,17 +79,6 @@ function PANEL:Init()
 end
 
 function PANEL:Paint(w, h)
-
-    //local d = CurTime()
-    //local x = 0.4
-    //local q = 255
-    //local sin = q * math.sin(d * x)
-    //local clamp = math.Clamp(sin, 0, 255)
-    //if sin <= 0 then
-    //    print("Fucker")
-    //end
-    //print("Road1: "..clamp)
-
     local vignette = Material("impulse/vignette.png")
     local Gradient = Material("vgui/gradient-d")
 
