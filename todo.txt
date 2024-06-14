@@ -10,6 +10,9 @@ SCRAPPED / NEEDS REWORK:
 -Add resistance and similar skills (Resistance skill is scrapped)
 
 ---------------------------------------------------------------------
+NEED TWEAKING IN CODING:
+- Overhead chat (Please improve the command check inside the bubblechat code (Sh_net), its bad)
+
 
 NEED TWEAKING IN DESIGN:
 - CWU Ranks and entities
@@ -47,6 +50,7 @@ DONE LIST:
 -Vending machines that dispense boring ass water
 -Rework weapon recoil
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil
+- Add mixtures for all armors (I literally got no response on what did he mean by this)
 -CP rations
 
 
@@ -55,7 +59,6 @@ WILLMASTER CODING SIDE:
 
 - Implement a temporary OS solution
 - Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
-- Add mixtures for all armors (I literally got no response on what did he mean by this)
 
 MUHAMMED CODING SIDE:
 ------------------------
@@ -63,4 +66,3 @@ MUHAMMED CODING SIDE:
 -Fix Lockshockers
 -Improve Death Animations to include Weapons in the hand of the ragdoll
 -Add workforce entities (This is mainly about the minigame system)
-- Overhead chat (Add dist and make bubble chat not appear if its /pm,/ooc, /look, etc, also make it so the bubble chat makes the first letter of the message Capital and add a "." at the end of the message where it checks if a "." already exists or there's a ? or ! and etc)
