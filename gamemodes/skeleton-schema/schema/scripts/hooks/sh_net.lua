@@ -7,7 +7,7 @@ net.Receive("HatchetBubbleChatCall", function()
     local ply = net.ReadPlayer()
     local sender = Entity(ply:EntIndex())
 
-    local textt = msg.."."
+    local textt = msg
 
     local textappear = true
 
