@@ -371,3 +371,28 @@ hook.Add( "player_disconnect", "player_disconnect_example", function( data )
 		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
 	end
 end )
+
+function DeployOS()
+	local posselector = math.random(1,3)
+	for k,v in ipairs(player.GetAll()) do
+		if ( v:Team() == TEAM_OTA ) and (v:GetTeamClass() == 1 or v:GetTeamClass() == 2 or v:GetTeamClass() == 3) and v:Alive() and v:IsValid() then
+			for i=1,2 do
+				local pos = Vector(-10059.227539, -5831.410645, 0.031250)
+				local pos2 = Vector(-6860.460938, -7233.070312, 64.031250)
+				local pos3 = Vector(-1853.559692, -735.352173, 92.386597)
+				local trace = { start = v:GetPos(), endpos = v:GetPos(), filter = v }
+				local tr = util.TraceEntity( trace, v )
+				if posselector == 1 then
+					v:SetPos(pos)
+				elseif posselector == 2 then
+					v:SetPos(pos2)
+				elseif posselector == 3 then
+					v:SetPos(pos3)
+				end
+				if ( tr.Hit ) then
+					v:SetPos(impulse.FindEmptyPos(v:GetPos(), {v}, 600, 30, Vector(16, 16, 64)))
+				end
+			end
+		end
+	end
+end
