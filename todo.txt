@@ -13,16 +13,13 @@ SCRAPPED / NEEDS REWORK:
 NEED TWEAKING IN CODING:
 - Overhead chat (Please improve the command check inside the bubblechat code (Sh_net), its bad)
 
-
 NEED TWEAKING IN DESIGN:
-- CWU Ranks and entities
+- CWU Ranks, entities, and VGUI Design
+- Implement a temporary OS solution
 
 TO-DO LIST:
 -----------------------------------------------------
 
-
--Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
--Animation menu using NET functions
 -Brainstorm ideas for Workforce entities
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
@@ -56,9 +53,9 @@ DONE LIST:
 
 WILLMASTER CODING SIDE:
 ------------------------
-
-- Implement a temporary OS solution
 - Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
+- Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
+- Animation menu using NET functions
 
 MUHAMMED CODING SIDE:
 ------------------------
