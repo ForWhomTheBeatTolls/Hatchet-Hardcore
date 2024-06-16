@@ -1,5 +1,3 @@
-
-
 net.Receive("HatchetBubbleChatCall", function()
     local msg = net.ReadString()
     local clr = net.ReadColor()
@@ -16,29 +14,7 @@ net.Receive("HatchetBubbleChatCall", function()
 
     // I hope there will be a better way
 
-    if string.StartsWith(msg, "/ac") then
-        msg = ""
-    elseif string.StartsWith(msg, "/ooc") then
-        msg = ""
-    elseif string.StartsWith(msg, "/looc") then
-        msg = ""
-    elseif string.StartsWith(msg, "//.") then
-        msg = ""
-    elseif string.StartsWith(msg, "//") then
-        msg = ""
-    elseif string.StartsWith(msg, "/event") then
-        msg = ""
-    elseif string.StartsWith(msg, "/itemspawner") then
-        msg = ""
-    elseif string.StartsWith(msg, "/bring") then
-        msg = ""
-    elseif string.StartsWith(msg, "/goto") then
-        msg = ""
-    elseif string.StartsWith(msg, "/giveitem") then
-        msg = ""
-    elseif string.StartsWith(msg, "/kick") then
-        msg = ""
-    elseif string.StartsWith(msg, "/ban") then
+	if string.StartsWith(msg, "/") then
         msg = ""
     end
 
@@ -55,11 +31,16 @@ net.Receive("HatchetBubbleChatCall", function()
             end
         end
     end)
-
-    timer.Create("RemoveTheHook", 4, 1, function()
+	
+    timer.Create(ply:SteamID().."_RemoveOverheadChat", 4, 1, function()
         //print("Removed: "..ply:SteamID())
-        textt = ""
+        hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
     end)
+
+
+
+    //print(ply:SteamID().."_OverheadChatHUD")
+end)
 
 
 
