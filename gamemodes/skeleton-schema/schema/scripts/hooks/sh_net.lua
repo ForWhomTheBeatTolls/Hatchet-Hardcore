@@ -4,23 +4,15 @@ net.Receive("HatchetBubbleChatCall", function()
     local font = net.ReadString()
     local ply = net.ReadPlayer()
     local sender = Entity(ply:EntIndex())
+    local grabthatname = ply:SteamID().."_OverheadChatHUD"
 
     local textappear = true
-
-    // This is fucking 100% cancerous dude, i swear this is like the devil of all coding.
-    // If you're a code stealer and want to steal this code, Please dont, not that its because we worked hard on it, but its more that
-    // we hope you will not follow this method of coding.
-    // (also fuck you if ur gonna use this by stealing)
-
-    // I hope there will be a better way
 
 	if string.StartsWith(msg, "/") then
         msg = ""
     end
 
-    //i want to kill myself with a shotgun.
-
-    hook.Add("HUDPaint", ply:SteamID().."_OverheadChatHUD", function()
+    hook.Add("HUDPaint", grabthatname, function()
         if ( sender:IsValid() and sender:Alive() and sender:GetMoveType() != MOVETYPE_NOCLIP and sender:IsEffectActive(EF_NODRAW) != true ) then
             local pos = (sender:GetBonePosition(sender:LookupBone("ValveBiped.Bip01_Spine1")) + sender:OBBCenter()):ToScreen()
             local posdist = sender:GetPos()
@@ -32,17 +24,16 @@ net.Receive("HatchetBubbleChatCall", function()
         end
     end)
 	
-    timer.Create(ply:SteamID().."_RemoveOverheadChat", 4, 1, function()
+    local HookTbl = hook.GetTable()
+
+    timer.Create("RemoveTheHook", 4, 1, function()
         //print("Removed: "..ply:SteamID())
-        hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
+        if HookTbl["HUDPaint"][grabthatname] then
+            hook.Remove("HUDPaint", grabthatname)
+            textt = ""
+        else
+            return
+            print("Avoided!")
+        end
     end)
-
-
-
-    //print(ply:SteamID().."_OverheadChatHUD")
-end)
-
-
-
-    //print(ply:SteamID().."_OverheadChatHUD")
 end)
