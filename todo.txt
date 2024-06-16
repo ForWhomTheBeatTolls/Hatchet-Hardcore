@@ -1,6 +1,7 @@
 LEAVE IT FOR NOW:
 
 - Damage slowdown (I give up.)
+-Improve Death Animations to include Weapons in the hand of the ragdoll
 
 
 --------------------------
@@ -63,5 +64,4 @@ MUHAMMED CODING SIDE:
 ------------------------
 
 -Fix Lockshockers
--Improve Death Animations to include Weapons in the hand of the ragdoll
 -Add workforce entities (This is mainly about the minigame system)
