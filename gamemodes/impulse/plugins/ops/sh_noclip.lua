@@ -26,3 +26,10 @@ hook.Add("PlayerNoClip", "opsNoclip", function(ply, state)
 
 	return false
 end)
+hook.Add("PlayerEnteredVehicle", "opsVehicleDamageFix", function(ply, veh, role)
+	ply:GodDisable()
+	ply:SetNoTarget(false)
+	ply:AllowFlashlight(true)
+	impulse.Ops.Uncloak(ply)
+	ply.InSeat = true
+end)
