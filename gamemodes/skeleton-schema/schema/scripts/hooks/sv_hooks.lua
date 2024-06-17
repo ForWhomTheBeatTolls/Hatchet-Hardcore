@@ -1,398 +1,246 @@
---reloadmarker, make changes here then save to lua refre
+-- put shared hooks here, format the same as sv_hooks.lua
 
-function SCHEMA:PlayerSpawn(ply)
-	ply.IsInASequence = false
-	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
-end
-
-function SCHEMA:ChatClassMessageSend(classID, message, sender)
-	if not impulse.Voice.ChatTypes[classID] then
-		return
-	end
+hook.Add( "PlayerSay", "SpeechAnimations", function( ply, text )
+	--local animtime = ply:SequenceDuration(randomtalking)
+	--local lastplayed = 0
+	if not (timer.Exists(ply:SteamID64().." SpeechAnimDelay")) and not string.StartsWith(text, "/") and ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_RESISTANCE then
+	ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739)
 	
-	for _, definition in ipairs(impulse.Voice.GetClass(sender)) do
-		local sounds, message = impulse.Voice.GetVoiceList(definition.class, message)
-
-		if (sounds) then
-			local volume = 70
-
-			if classID == 7 then -- whisper
-				volume = 30 
-			elseif classID == 6 then -- yell
-				volume = 100
-			end
-			
-			if (definition.onModify) then
-				if (definition.onModify(sender, sounds, classID, message) == false) then
-					continue
-				end
-			end
-
-			if (definition.isGlobal) then
-				netstream.Start(nil, "voicePlay", sounds, volume)
-			else
-				netstream.Start(nil, "voicePlay", sounds, volume, sender:EntIndex())
-
-				if classID == 8 then -- radio
-					for v,k in pairs(player.GetAll()) do
-						if k:IsCP() and k != client then
-							netstream.Start(k, "voicePlay", sounds, volume * 0.5)
-						end
-					end
-				end
-			end
-
-			return message
-		end
+	if ply:GetVelocity():LengthSqr() == 0  then
+	timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() - 6.6, 1, function() end)
+	else 
+	timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() + 3, 1, function() end)
+	--lastplayed = CurTime()
+	--print("I HATE IMPULSE!!!")
 	end
-end
-
-function SCHEMA:OnPlayerChangedTeam(ply)
-
-	if ply:Team() != TEAM_CP or TEAM_OTA then
-		ply:SetRPName(ply:GetSavedRPName())
-	end
-	
-	if ply:GetSyncVar(SYNC_RANKPOINTS, 0) == nil then
-		ply:SetSyncVar(SYNC_RANKPOINTS, 0)
-	end
-	
-	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
- end
-
-function SCHEMA:PlayerShouldGetHungry(ply)
-    -- cops will not get hungry
-    return ply:Team() != TEAM_OTA
-end
-
-function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
-	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
-	--ply:DoCustomAnimEvent(PLAYERANIMEVENT_FLINCH_CHEST, 1)
-	
-	if dmginfo:GetAmmoType() == game.GetAmmoID("Snark") then
-		if hitgroup == HITGROUP_HEAD then
-			dmginfo:ScaleDamage(0.7)
-		end
-	end
-	 
-	if ply:Team(ply) == TEAM_CP then
-		dmginfo:ScaleDamage(0.7)
-		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetDamageType() == DMG_CLUB)  then
-		dmginfo:ScaleDamage(1.5)
-		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound"))  then
-		dmginfo:ScaleDamage(1.2)
-		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("357"))  then
-		dmginfo:ScaleDamage(1.55)
-		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("AR2"))  then
-		dmginfo:ScaleDamage(1.55)
-		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot"))  then
-		dmginfo:ScaleDamage(1.55)
-		end
-	if (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG or hitgroup == HITGROUP_RIGHTARM or hitgroup == HITGROUP_LEFTARM) then
-	dmginfo:ScaleDamage(2.8)
-	end
-	if ply:Team(ply) == TEAM_OTA then
-		dmginfo:ScaleDamage(0.25)
-	end
-	if ply:Team(ply) == TEAM_OTA and ply:GetTeamClass() == 3 then
-		dmginfo:ScaleDamage(0.8)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) then
-		dmginfo:ScaleDamage(2.5)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) then
-		dmginfo:ScaleDamage(2.4)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("AR2")) then
-		dmginfo:ScaleDamage(2.6)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot")) then
-		dmginfo:ScaleDamage(1)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(0.6)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(0.6)
-	end
-	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(2.4)
-	end
-	if ply:Team(ply) == TEAM_CP and (hitgroup == HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(1.1)
-	end
-	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(0.7)
-	end
-	if (ply.WeldingMask == true) and (hitgroup == HITGROUP_HEAD) then
-	dmginfo:ScaleDamage(0.55)
-	end
-	
-end
-	
-	
-hook.Add( "PlayerHurt", "HurtEffect", function(ply)
-	ply:ScreenFade( SCREENFADE.IN, Color( 215, 0, 0, 128 ), 0.3, 0 )
-end)
-		
-
--- -- hook.Add( "PlayerShouldTakeDamage", "OSAcidImmunity", function( ply, attacker )
-	-- -- if ply:Team() == TEAM_OTA and attacker:GetName() == "worldspawn" then
-		-- -- return false -- that will block damage if attacker and ply is on the same team.
-	-- -- end
--- -- end )
--- -- function SCHEMA:OnPlayerChangedTeam(ply, newTeam)
-	-- -- local teamData = impulse.Teams.Data[newTeam]
-	
-	-- -- if newTeam = TEAM_OTA then
-	-- -- ply.InventoryWeight = impulse.Config.OSInventoryMaxWeight
-	-- -- end
-	-- -- if ply:teamData = TEAM_CITIZEN then
-	-- -- ply.InventoryWeight = impulse.Config.InventoryMaxWeight
-	-- -- end
--- -- end
-
-function SCHEMA:DoInventorySearch(searcher, searchee)
-	if searcher:Team() == TEAM_CP then
-		searcher:ForceSequence("spreadwall")
-	end
-end
-
-function SCHEMA:ChatStateChanged(ply, oldState, newState)
-		ply.CPBeepCooldown = 0
-	if (ply.CPBeepCooldown or 0) > CurTime() then
-		return
-	end
-
-	if ply:GetNoDraw() or not ply:Alive() then
-		return
-	end
-
-	if ply:Team() == TEAM_CP and ply.CPBeepCooldown < CurTime() then
-		if newState then
-			ply:EmitSound("NPC_MetroPolice.Radio.On", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-		else
-			ply:EmitSound("npc/metropolice/vo/off"..math.random(1, 4)..".wav", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-		end
-
-		ply.CPBeepCooldown = CurTime() + 2
-	elseif ply:Team() == TEAM_OTA then
-		if newState then
-			ply:EmitSound("npc/combine_soldier/vo/on"..math.random(1, 2)..".wav", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-		else
-			ply:EmitSound("npc/combine_soldier/vo/off"..math.random(1, 3)..".wav", nil, nil, 1, CHAN_AUTO, SND_NOFLAGS, 1 )
-		end
-	end
-end
-
-function SCHEMA:PlayerDeath(ply, attacker)
-
-	ply.lastDeath = CurTime()
-	ply.IsInASequence = false
-	
-	if ply:GetSyncVar(SYNC_DISPATCH_BOL, nil) then
-		ply:RemoveDispatchBOL()
-	end
-	
-	if IsValid(attacker) and attacker:IsPlayer() then
-		if attacker:GetSyncVar(SYNC_KILLS) == nil or not attacker:GetSyncVar(SYNC_KILLS)  then
-		attacker:SetSyncVar(SYNC_KILLS, 1, true)
-		else
-		attacker:SetSyncVar(SYNC_KILLS, attacker:GetSyncVar(SYNC_KILLS) + 1, true)
-		local query = mysql:Update("impulse_players")
-		query:Update("kills", attacker:GetSyncVar(SYNC_KILLS))
-		query:Where("steamid", attacker:SteamID())
-		query:Execute()
-		end
-		attacker:PrintMessage( HUD_PRINTCONSOLE, "Kills: "..attacker:GetSyncVar(SYNC_KILLS) )
-	end
-	
-	if ply:Team() == TEAM_CITIZEN then rpgainamount = 50
-	elseif ply:Team() == TEAM_RESISTANCE then rpgainamount = 100
-	elseif ply:Team() == TEAM_OTA then rpgainamount = -200
-	elseif ply:Team() == TEAM_CP then rpgainamount = -100
-	end
-	
-	
-	if IsValid(attacker) and attacker:IsPlayer() then
-		if IsValid(ply) and attacker != ply then
-			if (attacker:Team() == TEAM_CP or attacker:Team() == TEAM_OTA) then
-				if attacker:GetSyncVar(SYNC_RANKPOINTS) == nil or not attacker:GetSyncVar(SYNC_RANKPOINTS) then
-					attacker:SetSyncVar(SYNC_RANKPOINTS, rpgainamount, true)
-					local query = mysql:Update("impulse_players")
-					query:Update("rankpoints", attacker:GetSyncVar(SYNC_RANKPOINTS))
-					query:Where("steamid", attacker:SteamID())
-					query:Execute()
-				else
-					attacker:SetSyncVar(SYNC_RANKPOINTS, attacker:GetSyncVar(SYNC_RANKPOINTS) + rpgainamount, true)
-					local query = mysql:Update("impulse_players")
-					query:Update("rankpoints", attacker:GetSyncVar(SYNC_RANKPOINTS))
-					query:Where("steamid", attacker:SteamID())
-					query:Execute()
-				end
-			end
-		end
-	elseif (ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA) then
-		ply:SetSyncVar(SYNC_RANKPOINTS, ply:GetSyncVar(SYNC_RANKPOINTS) - 80)
-	end
-end
-
-function SCHEMA:PlayerUnRestrain(ply)
-	ply:GiveInventoryItem("util_ziptie")
-end
-
-function SCHEMA:Initialize()
-
-	for k, v in pairs( ents.FindByClass("impulse_item") ) do
-		--v:SetPersistent(true)
-		v:Initialize()
-		
-	end
-	
-	for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-		v:Fire("sethealth", -100)
-		--b:Activate()
-	end
-	
-	RunConsoleCommand("mp_show_voice_icons", "0")
-	
-print[[#    _    _           _                                                  _   _          __          __                                             ]]
-print[[#   | |  | |         | |                                                | | ( )         \ \        / /                                             ]]
-print[[#   | |  | |  _   _  | |__     __ _   _ __ ___    _ __ ___     ___    __| | |/   ___     \ \  /\  / /    ___    __ _   _ __     ___    _ __    ___ ]]
-print[[#   | |\/| | | | | | |  _ \   / _  | |  _   _ \  |  _   _ \   / _ \  / _  |     / __|     \ \/  \/ /    / _ \  / _  | |  _ \   / _ \  |  _ \  / __|]]
-print[[#   | |  | | | |_| | | | | | | (_| | | | | | | | | | | | | | |  __/ | (_| |     \__ \      \  /\  /    |  __/ | (_| | | |_) | | (_) | | | | | \__ \]]
-print[[#   |_|  |_|  \__,_| |_| |_|  \__,_| |_| |_| |_| |_| |_| |_|  \___|  \__,_|     |___/       \/  \/      \___|  \__,_| | .__/   \___/  |_| |_| |___/]]
-print[[#                                                                                                                     | |                          ]]
-
-end
-
-function SCHEMA:OnReloaded()
-print[[#    _    _           _                                                  _   _          __          __                                             ]]
-print[[#   | |  | |         | |                                                | | ( )         \ \        / /                                             ]]
-print[[#   | |  | |  _   _  | |__     __ _   _ __ ___    _ __ ___     ___    __| | |/   ___     \ \  /\  / /    ___    __ _   _ __     ___    _ __    ___ ]]
-print[[#   | |\/| | | | | | |  _ \   / _  | |  _   _ \  |  _   _ \   / _ \  / _  |     / __|     \ \/  \/ /    / _ \  / _  | |  _ \   / _ \  |  _ \  / __|]]
-print[[#   | |  | | | |_| | | | | | | (_| | | | | | | | | | | | | | |  __/ | (_| |     \__ \      \  /\  /     |  _/  |(_| | | |_) | | (_) | | | | | \__ \]]
-print[[#   |_|  |_|  \__,_| |_| |_|  \__,_| |_| |_| |_| |_| |_| |_|  \___|  \__,_|     |___/       \/  \/      \___|  \__,_| | .__/   \___/  |_| |_| |___/]]
-print[[#                                                                                                                     | |                          ]]
-		for k, v in pairs( ents.FindByClass("impulse_item") ) do
-		--v:SetPersistent(true)
-		v:Initialize()
-		end
-		
-		for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-			v:Fire("sethealth", -100)
-
-			--b:Activate()
-		end
-end
-
--- local blacklist = {
--- "
-
-function SCHEMA:Think()
-	for k, v in pairs( ents.FindByClass("impulse_item") ) do
-	v:SetPersistent(true)
-	--timer.Simple(15, function() v:Initialize() end )
-	
-	end
-	
-	-- for _, ply in pairs(ply.GetAll()) do
-		-- if table.HasValue(blacklist, ply:SteamID()) then
-		-- ply:Kick()
-		-- end
-	-- end
-
-end
-
-hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
-
-	local duration = nil  //How much time do the drops exist for until they dissapear (nil makes them not dissapear at all)
-	local handpos = npc:GetBonePosition(npc:LookupBone("ValveBiped.Bip01_R_Hand"))
-
-	if npc:GetClass() == "npc_headcrab" or npc:GetClass() == "npc_headcrab_black" or npc:GetClass() == "npc_headcrab_fast" then
-		impulse.Inventory.SpawnItem("item_bucket", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-	elseif npc:GetClass() == "npc_metropolice" then
-		if npc:GetActiveWeapon():GetClass() == "weapon_smg1" then
-			impulse.Inventory.SpawnItem("wep_smg", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_pistol" then
-			impulse.Inventory.SpawnItem("wep_pistol", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_pistol", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_stunstick" then
-			impulse.Inventory.SpawnItem("wep_stunstick", handpos, nil, duration)
-		end
-	elseif npc:GetClass() == "npc_combine_s" or npc:GetClass() == "CombinePrison" or npc:GetClass() == "PrisonShotgunner" or npc:GetClass() == "ShotgunSoldier" or npc:GetClass() == "CombineElite" then
-		if npc:GetActiveWeapon():GetClass() == "weapon_smg1" then
-			impulse.Inventory.SpawnItem("wep_smg", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_shotgun" then
-			impulse.Inventory.SpawnItem("wep_shotgun", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_shotgun", npc:GetPos() + Vector(0, 0, 15), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_shotgun", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_ar2" then
-			impulse.Inventory.SpawnItem("wep_ar2", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_ar2", npc:GetPos() + Vector(0, 0, 15), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_ar2", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		end
-	elseif npc:GetClass() == "npc_rollermine" or npc:GetClass() == "npc_combine_camera" or npc:GetClass() == "npc_manhack" or npc:GetClass() == "npc_turret_ceiling" or npc:GetClass() == "npc_clawscanner" or npc:GetClass() == "npc_cscanner" then
-		impulse.Inventory.SpawnItem("util_scrapmetal", npc:GetPos() + Vector(0, 0, 40), nil, duration)
-		impulse.Inventory.SpawnItem("util_scrapmetal", npc:GetPos() + Vector(0, 0, 30), nil, duration)
-		impulse.Inventory.SpawnItem("util_refmetal", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-	elseif npc:GetClass() == "npc_crow" or npc:GetClass() == "npc_pigeon" or npc:GetClass() == "npc_seagull" then
-		impulse.Inventory.SpawnItem("food_fish", npc:GetPos() + Vector(0, 0, 0), nil, duration)
-	end
-	
-	for k,v in pairs(ents.FindByClass("impulse_item")) do
-		if v:GetPos():DistToSqr(npc:GetPos()) < 600 then
-		v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		v:SetVelocity(Vector(0,0,0))
-		end
-	end
-	
-	//print(npc:GetClass().." Died while having a "..npc:GetActiveWeapon():GetClass())
-end)
-
-gameevent.Listen( "player_connect" )
-hook.Add("player_connect", "AnnounceConnection", function( data )
-	for i, ply in pairs( player.GetAll() ) do
-		ply:SendChatClassMessage(17, data.name.." Has connected to the server.", ply)
-	end
-end)
-
-gameevent.Listen( "player_disconnect" )
-hook.Add( "player_disconnect", "player_disconnect_example", function( data )
-	for i, ply in pairs( player.GetAll() ) do
-		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
 	end
 end )
 
-function DeployOS()
-	local posselector = math.random(1,3)
-	for k,v in ipairs(player.GetAll()) do
-		if ( v:Team() == TEAM_OTA ) and (v:GetTeamClass() == 1 or v:GetTeamClass() == 2 or v:GetTeamClass() == 3) and v:Alive() and v:IsValid() then
-			for i=1,2 do
-				local pos = Vector(-10059.227539, -5831.410645, 0.031250)
-				local pos2 = Vector(-6860.460938, -7233.070312, 64.031250)
-				local pos3 = Vector(-1853.559692, -735.352173, 92.386597)
-				local trace = { start = v:GetPos(), endpos = v:GetPos(), filter = v }
-				local tr = util.TraceEntity( trace, v )
-				if posselector == 1 then
-					v:SetPos(pos)
-				elseif posselector == 2 then
-					v:SetPos(pos2)
-				elseif posselector == 3 then
-					v:SetPos(pos3)
-				end
-				if ( tr.Hit ) then
-					v:SetPos(impulse.FindEmptyPos(v:GetPos(), {v}, 600, 30, Vector(16, 16, 64)))
-				end
-			end
-		end
+hook.Add("PlayerStartVoice", "SpeechAnimationsVC", function(ply)
+	
+	if not (timer.Exists(ply:SteamID64().." SpeechAnimDelayVC")) and ply:IsSpeaking()  then
+	--ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739)
+	
+	if IsValid(ply) and ply:GetVelocity():LengthSqr() == 0  then
+	timer.Create(ply:SteamID64().." SpeechAnimDelayVC", ply:SequenceDuration() - 6.6, 95, function() if IsValid(ply) and ply:IsSpeaking() then ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739) end end)
+	else 
+	timer.Create(ply:SteamID64().." SpeechAnimDelayVC", ply:SequenceDuration() + 3, 95, function() if IsValid(ply) and ply:IsSpeaking() then ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739) end end)
 	end
+	end
+	--return true
+	end)
+
+local icon = Material("icon32/unmuted.png")
+local function iconfunc()
+	surface.SetDrawColor(255,166,0)
+	surface.SetMaterial(icon)
+	surface.DrawTexturedRect(1820,996,100,100)
 end
+
+hook.Add("PlayerStartVoice", "SpeechIcon", function(ply)
+	if LocalPlayer():IsSpeaking() then
+		hook.Add("HUDPaint", "SpeechIcon", iconfunc)
+	end
+	return true
+	end)
+
+hook.Add("PlayerEndVoice", "SpeechIcon", function(ply)
+	if not LocalPlayer():IsSpeaking() then
+		hook.Remove("HUDPaint", "SpeechIcon")
+	end
+end)
+
+hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, volume, rf )
+		--if ply:KeyDown(IN_SPEED) then
+		if ply:Team() == TEAM_CP and !ply:KeyDown(IN_SPEED) then
+			--if ply == LocalPlayer() then
+			--	EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", ply:GetPos(), -1, nil, 65 / 100)
+			--else
+				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
+			--end
+		elseif ply:Team() == TEAM_CP and ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
+				
+			return true
+		end
+		if ply:Team() == TEAM_OTA and !ply:KeyDown(IN_SPEED) then
+			--if ply == LocalPlayer() then
+				--EmitSound("NPC_CombineS.FootstepLeft", ply:GetPos(), 100, 100)
+			--else
+				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 55)
+		elseif ply:Team() == TEAM_OTA and ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 75)
+			end
+		if ply:Team() == TEAM_RESISTANCE or ply:Team() == TEAM_CITIZEN and !ply:KeyDown(IN_SPEED) and !ply:GetBodygroup(1, 1) == 6 or !ply:GetBodygroup(1, 1) == 5 or !ply:GetBodygroup(1, 1) == 8 or !ply:GetBodygroup(1, 1) == 7 then
+			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
+		elseif ply:Team() == TEAM_RESISTANCE or ply:Team() == TEAM_CITIZEN and ply:KeyDown(IN_SPEED) and ply:GetBodygroup(1, 1) == 6 or ply:GetBodygroup(1, 1) == 5 or ply:GetBodygroup(1, 1) == 8 or ply:GetBodygroup(1, 1) == 7 then
+			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
+			return true
+		end
+end)
+	
+
+hook.Add("PlayerHurt","hatchetdamagefunctions",function(victim)
+	
+    if ( victim:Team() == TEAM_CP ) and (victim:Health() > 1) then
+        victim:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 70)
+	elseif ( victim:Team() == TEAM_OTA ) and (victim:Health() > 1) then
+		victim:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 70)
+	elseif ( victim:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (victim:Health() > 1) then
+		victim:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
+    end
+	
+end)
+
+	local deathsounds = {
+	"npc_citizen.die",
+	"npc_citizen.startle01",
+	"npc_citizen.startle02",
+	"ep1_citizen.cit_pain04",
+	"ep1_citizen.cit_pain06",
+	"ep1_citizen.cit_pain07",
+	"ep1_citizen.cit_shock02",
+	"ep1_citizen.cit_shock08",
+	"ep1_citizen.cit_shock11"
+	}
+	
+	
+hook.Add( "PlayerDeathSound", "CustomPlayerDeath", function( ply )
+	if (ply:Team() == TEAM_CP) then
+	ply:EmitSound("npc/metropolice/die"..math.random(1,4)..".wav", 70)
+	end
+	if (ply:Team() == TEAM_OTA) then
+	ply:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 70)
+	end
+	if (ply:Team() == TEAM_CITIZEN) then
+	ply:EmitSound(table.Random(deathsounds), 100)
+	end
+	if (ply:Team() == TEAM_RESISTANCE) then
+	ply:EmitSound(table.Random(deathsounds), 100)
+	end
+	return true
+end )
+
+hook.Add( "PlayerSwitchFlashlight", "BlockFlashLight", function( ply, enabled )
+	return (ply:Team() != TEAM_OTA and ply:HasInventoryItem("tool_flashlight") or ply:Team() == TEAM_CP) and ply:GetMoveType() != MOVETYPE_NOCLIP
+end )
+
+
+hook.Add("SetupMove","CustomSpeeds", function( ply, mvData )
+
+local iscitizen = ply:Team() == TEAM_CITIZEN
+local isrebel = ply:Team() == TEAM_RESISTANCE
+local iscp = ply:Team() == TEAM_CP
+local isover = ply:Team() == TEAM_OTA
+local citizen = TEAM_CITIZEN
+local rebel = TEAM_RESISTANCE
+local cp = TEAM_CP
+local over = TEAM_OTA
+
+	--if iscitizen or isrebel then
+	--mvData:SetMaxClientSpeed( 194.40 )
+	--mvData:SetMaxSpeed( 194.40 )
+	--elseif iscp then
+	--mvData:SetMaxClientSpeed( 206.20 )
+	--mvData:SetMaxSpeed( 206.20 )
+	--elseif isover then
+	--mvData:SetMaxClientSpeed( 184.20 )
+	--mvData:SetMaxSpeed( 184.20 )
+	--end
+	
+	if mvData:KeyDown(IN_MOVERIGHT) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / 2.5 )
+	end
+	if mvData:KeyDown(IN_MOVELEFT) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / -2.5 )
+	end
+	if mvData:KeyDown(IN_MOVERIGHT) and mvData:KeyDown(IN_FORWARD) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / 2 )
+	mvData:SetForwardSpeed( mvData:GetMaxClientSpeed() / 1.9 )
+	end
+	if mvData:KeyDown(IN_MOVELEFT) and mvData:KeyDown(IN_FORWARD) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / -2 )
+	mvData:SetForwardSpeed( mvData:GetMaxClientSpeed() / 1.9 )
+	end
+	if mvData:KeyDown(IN_MOVERIGHT) and mvData:KeyDown(IN_BACK) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / 3.5 )
+	mvData:SetForwardSpeed( mvData:GetMaxClientSpeed() / -3.9 )
+	end
+	if mvData:KeyDown(IN_MOVELEFT) and mvData:KeyDown(IN_BACK) then
+	mvData:SetSideSpeed( mvData:GetMaxClientSpeed() / -3.5 )
+	mvData:SetForwardSpeed( mvData:GetMaxClientSpeed() / -3.9 )
+	end
+	if mvData:KeyDown(IN_BACK) then
+	mvData:SetForwardSpeed( mvData:GetMaxClientSpeed() / -2.3 )
+	end
+end )
+
+hook.Add( "OnPlayerHitGround", "HopperPunishment", function( player, inWater, onFloater, speed )
+	local vel = player:GetVelocity()
+
+	if speed > 10 and not onFloater then --inWater or onFloater then
+	--print(player:GetVelocity())
+	player:SetVelocity( Vector( -( vel.x / 3.8 ), -( vel.y / 3.8 ), -0 ) )
+	end
+
+end)
+
+	for k,v in pairs(ents.FindByClass("player")) do
+	v:ManipulateBoneScale( 22, Vector( 1,1,1 ))
+	v:ManipulateBoneScale( 18, Vector( 1,1,1 ))
+	v:ManipulateBoneScale( 0,  Vector( 1,1,1 ))
+	v:ManipulateBoneJiggle( 22, 0 )
+	v:ManipulateBoneJiggle( 18, 0 )
+	v:ManipulateBoneJiggle( 0, 0 )
+	
+	end
+
+-- hook.Add( "Think", "ResolveBoneFuckery", function()
+	-- for _, ply in ipairs( player.GetAll() ) do
+	-- local i = 0
+	
+	-- while i < ply:GetBoneCount() do
+	-- if ply:GetBoneName(i) != "ValveBiped.Bip01_Head1" then
+		-- ply:ManipulateBoneScale( i, Vector(1,1,1) )
+		-- i = i + 1
+	-- end
+	-- end
+-- end
+-- end)
+	
+	-- ############################################################## --
+	-- ### Cakeinator! Adjust values accordingly for April Fools. ### --
+	-- ############################################################## --
+
+// SUK ME OFF LIKE A BANANA YOU LUA HOOKER!!!! !! !!
+
+
+hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
+	local msg
+	local font = "BubbleChat-Talk"
+	local teamcol = team.GetColor(sender:Team())
+	local color = teamcol
+	
+	if string.StartsWith(text, "/me") then
+		msg = string.Replace(text, "/me", "")
+		color = Color(224, 166, 57)
+		font = "BubbleChat-Me"
+	elseif string.StartsWith(text, "/y") then
+		msg = string.Replace(text, "/y", "")
+		color = Color(255, 38, 0)
+		font = "BubbleChat-Yell"
+	elseif string.StartsWith(text, "/w") then
+		msg = string.Replace(text, "/w", "")
+		color = Color(64, 201, 255)
+		font = "BubbleChat-Whisper"
+	else
+		msg = text
+	end
+
+    net.Start("HatchetBubbleChatCall")
+    net.WriteString(msg)
+	net.WriteColor(color)
+	net.WriteString(font)
+    net.WritePlayer(sender)
+	net.Broadcast()
+end)
