@@ -24,7 +24,7 @@ function PANEL:Init()
 
 		local settingBase = addedCategories[k.category]:Add("DPanel")
 		settingBase:Dock(TOP)
-		settingBase:DockMargin(0,0,0,5)
+		settingBase:DockMargin(0,0,0,2)
 		--settingBase:InvalidateParent(true) -- this is called to sync the new positions and sizes with the dock
 		function settingBase:Paint(w, h)
 			draw.RoundedBox(0, 0, 0, w, h, Color( 80, 80, 80, 100 ))
@@ -55,7 +55,7 @@ function PANEL:Init()
 			local numberEntry = vgui.Create("DNumberWang", settingBase)
 			numberEntry:CenterVertical()
 			numberEntry:SetPos(580, numberEntry.y)
-			numberEntry:SetSize(30,20)
+			numberEntry:SetSize(21,20)
 			numberEntry:SetValue(impulse.GetSetting(v))
 			numberEntry:SetNumeric(true)
 
