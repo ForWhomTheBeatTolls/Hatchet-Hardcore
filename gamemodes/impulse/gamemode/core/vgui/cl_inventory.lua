@@ -37,6 +37,23 @@ function PANEL:Init()
 		return view
 	end)
 
+	hook.Add( "Think", "InventoryLight", function()
+		local dlight = DynamicLight( LocalPlayer():EntIndex() )
+		local lpTeam = LocalPlayer():Team()
+		if ( dlight ) then
+			dlight.pos = LocalPlayer():GetPos() + Vector(0, 0, 50)
+			dlight.r = team.GetColor(lpTeam).r
+			dlight.g = team.GetColor(lpTeam).g
+			dlight.b = team.GetColor(lpTeam).b
+			dlight.brightness = 2
+			dlight.decay = 1000
+			dlight.size = 140
+			dlight.dietime = CurTime() + 1
+		end
+	end )
+
+	surface.PlaySound("hatchet/buttonclickrelease.wav")
+
 	hook.Add("HUDPaint", "CharacterStats", function()
 		local w, h = ScrW(), ScrH()
 		local lpTeam = LocalPlayer():Team()
@@ -130,7 +147,7 @@ function PANEL:SetupItems()
 		self.tabs:Remove()
 	end
 
-	local s = HIGH_RES(0, 400)
+	local s = HIGH_RES(0, 0) // having them set to 0 fixed it lmao
 	
  	self.tabs = vgui.Create("DPropertySheet", self)
  	self.tabs:SetPos(s, 40)
@@ -298,6 +315,8 @@ end
 function PANEL:OnRemove()
 	hook.Remove("CalcView", "PlayerPreview")
 	hook.Remove("HUDPaint", "CharacterStats")
+	hook.Remove( "Think", "InventoryLight")
+	surface.PlaySound("ui/buttonrollover.wav")
 end
 
 local grey = Color(209, 209, 209)
