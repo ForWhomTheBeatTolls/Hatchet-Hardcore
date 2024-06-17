@@ -1,5 +1,29 @@
 -- Font's are still a bit squiffy, they will all be scaled properly soon. Also - please name none specific fonts 'Impulse-Elements<description>'
 
+surface.CreateFont("HatchetFont18", {
+	font = "Consolas",
+	size = 18,
+	weight = 400,
+	antialias = true,
+	shadow = false,
+} )
+
+surface.CreateFont("HatchetFont10", {
+	font = "Consolas",
+	size = 18,
+	weight = 400,
+	antialias = true,
+	shadow = false,
+} )
+
+surface.CreateFont("HatchetFont10", {
+	font = "Consolas",
+	size = 18,
+	weight = 400,
+	antialias = true,
+	shadow = false,
+} )
+
 surface.CreateFont("Impulse-Elements18", {
 	font = "Arial",
 	size = 18,
