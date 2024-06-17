@@ -1,86 +1,118 @@
 local PANEL = {}
 
+
+
 function PANEL:Init()
-	self:SetSize(ScrW() * .58, ScrH() * .7)
+	self:SetSize(ScrW() * .2, ScrH())
 	self:Center()
-	self:CenterHorizontal()
-	self:SetTitle("")
+	self:CenterHorizontal(.9)
+	self:SetTitle("Inventory & Skills")
 	self:ShowCloseButton(false)
 	self:SetDraggable(false)
 	--self:MakePopup()
  	self:MoveToFront()
+	
+
+	-- (ScrW() * .2, ScrH())
+
 
  	local w, h = self:GetSize()
 
- 	self.infoName = vgui.Create("DLabel", self)
- 	self.infoName:SetPos(15, 40)
- 	self.infoName:SetText(LocalPlayer():Nick())
- 	self.infoName:SetFont(HIGH_RES("Impulse-Elements24-Shadow", "Impulse-Elements27-Shadow"))
- 	self.infoName:SizeToContents()
+ 	-- self.infoName = vgui.Create("DLabel", self)
+ 	-- self.infoName:SetPos(15, 40)
+ 	-- self.infoName:SetText(LocalPlayer():Nick())
+ 	-- self.infoName:SetFont(HIGH_RES("Impulse-Elements24-Shadow", "Impulse-Elements27-Shadow"))
+ 	-- self.infoName:SizeToContents()
 
- 	if self.infoName:GetWide() > 245 then
- 		self.infoName:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements24-Shadow"))
- 	end
+	hook.Add("CalcView", "PlayerPreview", function(client, origin, angles, fov)
+		local newOrigin, newAngles, newFOV, bDrawPlayer = GetOverviewInfo(origin, angles, fov)
+	
+		local view = {
+			drawviewer = bDrawPlayer,
+			fov = newFOV,
+			origin = newOrigin,
+			angles = newAngles
+		}
+		
+		return view
+	end)
 
- 	local lpTeam = LocalPlayer():Team()
-  	self.infoTeam = vgui.Create("DLabel", self)
- 	self.infoTeam:SetPos(15, 64)
- 	self.infoTeam:SetText(team.GetName(lpTeam))
- 	self.infoTeam:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements22-Shadow"))
- 	self.infoTeam:SetColor(team.GetColor(lpTeam))
- 	self.infoTeam:SizeToContents()
+	hook.Add("HUDPaint", "CharacterStats", function()
+		local w, h = ScrW(), ScrH()
+		local lpTeam = LocalPlayer():Team()
+		local TeamCol = Color(team.GetColor(lpTeam).r, team.GetColor(lpTeam).g, team.GetColor(lpTeam).b, 14)
+		local gradient = Material("gui/gradient_up")
+		draw.RoundedBox(0, w * .497, h * .065, w * .246, h * .810, Color(team.GetColor(lpTeam).r + 100, team.GetColor(lpTeam).g + 100, team.GetColor(lpTeam).b + 100, 255))
+		draw.RoundedBox(0, w * .5, h * .07, w * .24, h * .8, Color(24, 24, 24))
+		surface.SetDrawColor(TeamCol)
+		surface.SetMaterial(gradient)
+		surface.DrawTexturedRect(w * .5, h * .07, w * .24, h * .8)
+
+		draw.SimpleTextOutlined(LocalPlayer():Name(), "Impulse-Elements22-Shadow", w * .62, h * .085, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		draw.RoundedBox(45,  w * .52, h * .12, w * .2, h * .002, Color(255, 255, 255))
+		draw.SimpleTextOutlined(team.GetName(lpTeam), "Impulse-Elements22-Shadow", w * .62, h * .14, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		draw.SimpleTextOutlined(LocalPlayer():GetTeamRankName(), "Impulse-Elements22-Shadow", w * .62, h * .17, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		draw.SimpleTextOutlined(LocalPlayer():GetTeamClassName(), "Impulse-Elements22-Shadow", w * .62, h * .2, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		draw.RoundedBox(45,  w * .52, h * .24, w * .2, h * .002, Color(255, 255, 255))
+
+
+		if LocalPlayer():Health() < 10 then
+			draw.SimpleTextOutlined("Im Extremely injured!", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():Health() < 25 then
+			draw.SimpleTextOutlined("Im Seriously injured!", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():Health() < 45 then
+			draw.SimpleTextOutlined("im injured!", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():Health() < 60 then
+			draw.SimpleTextOutlined("Im Hurt!", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():Health() < 80 then
+			draw.SimpleTextOutlined("Im Bruised.", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():Health() < 101 then
+			draw.SimpleTextOutlined("Im Healthy.", "Impulse-Elements22-Shadow", w * .62, h * .25, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		end
+
+		if LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 10 then
+			draw.SimpleTextOutlined("Im Extremely starving!", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 25 then
+			draw.SimpleTextOutlined("Im Seriously Starving!", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 45 then
+			draw.SimpleTextOutlined("im Starving!", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 60 then
+			draw.SimpleTextOutlined("Im Hungry..", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 80 then
+			draw.SimpleTextOutlined("Im kind of Satisfied.", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		elseif LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) < 101 then
+			draw.SimpleTextOutlined("Im Satisfied.", "Impulse-Elements22-Shadow", w * .62, h * .28, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+		end
+
+		draw.SimpleTextOutlined("I have "..LocalPlayer():GetSyncVar(SYNC_MONEY, 100).."T In my wallet right now.", "Impulse-Elements22-Shadow", w * .62, h * .31, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
+
+		draw.RoundedBox(45,  w * .52, h * .35, w * .2, h * .002, Color(255, 255, 255))
+
+	end)
+
+ 	-- if self.infoName:GetWide() > 245 then
+ 	-- 	self.infoName:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements24-Shadow"))
+ 	-- end
+
+ 	-- local lpTeam = LocalPlayer():Team()
+  	-- self.infoTeam = vgui.Create("DLabel", self)
+ 	-- self.infoTeam:SetPos(15, 64)
+ 	-- self.infoTeam:SetText(team.GetName(lpTeam))
+ 	-- self.infoTeam:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements22-Shadow"))
+ 	-- self.infoTeam:SetColor(team.GetColor(lpTeam))
+ 	-- self.infoTeam:SizeToContents()
 
  	local className = LocalPlayer():GetTeamClassName()
  	local rankName = LocalPlayer():GetTeamRankName()
 
- 	if className != "Default" then
-	 	self.infoClassRank = vgui.Create("DLabel", self)
-	 	self.infoClassRank:SetPos(15, 80)
-	 	self.infoClassRank:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements22-Shadow"))
-	 	self.infoClassRank:SetText(className)
-	 	self.infoClassRank:SetColor(team.GetColor(lpTeam))
-	 	self.infoClassRank:SizeToContents()
-	end
-
- 	local model = LocalPlayer():GetModel()
- 	local skin = LocalPlayer():GetSkin()
-
- 	self.modelPreview = vgui.Create("impulseModelPanel", self)
-	self.modelPreview:SetPos(HIGH_RES(0, 20), 80)
-	self.modelPreview:SetSize(HIGH_RES(270, 335), h * .75)
-	self.modelPreview:SetModel(model, skin)
-	self.modelPreview:MoveToBack()
-	self.modelPreview:SetCursor("arrow")
-
-	if impulse.IsHighRes() then
-		self.modelPreview:SetFOV((324 / ScrH()) * 140) -- a incredible equation that makes the model fit onto the ui, patent by professor vin
-	else
-		self.modelPreview:SetFOV((324 / ScrH()) * 100) -- a incredible equation that makes the model fit onto the ui, patent by professor vin
-	end
-
-	function self.modelPreview:LayoutEntity(ent)
-		ent:SetAngles(Angle(-1, 45, 0))
-		ent:SetPos(Vector(0, 0, 2.5))
-		self:RunAnimation()
-
-		if not self.setup then
-			for v,k in pairs(LocalPlayer():GetBodyGroups()) do
-				ent:SetBodygroup(k.id, LocalPlayer():GetBodygroup(k.id))
-			end
-
-			for v,k in pairs(LocalPlayer():GetMaterials()) do
-				local mat = LocalPlayer():GetSubMaterial(v - 1)
-
-				if mat != k then
-					ent:SetSubMaterial(v - 1, mat)
-				end
-			end
-
-			hook.Run("SetupInventoryModel", self, ent)
-
-			self.setup = true
-		end
-	end
+ 	-- if className != "Default" then
+	--  	self.infoClassRank = vgui.Create("DLabel", self)
+	--  	self.infoClassRank:SetPos(15, 80)
+	--  	self.infoClassRank:SetFont(HIGH_RES("Impulse-Elements19-Shadow", "Impulse-Elements22-Shadow"))
+	--  	self.infoClassRank:SetText(className)
+	--  	self.infoClassRank:SetColor(team.GetColor(lpTeam))
+	--  	self.infoClassRank:SizeToContents()
+	-- end
 
  	--self.invName = vgui.Create("DLabel", self)
  	--self.invName:SetPos(270, 35)
@@ -98,12 +130,12 @@ function PANEL:SetupItems()
 		self.tabs:Remove()
 	end
 
-	local s = HIGH_RES(270, 400)
+	local s = HIGH_RES(0, 400)
 	
  	self.tabs = vgui.Create("DPropertySheet", self)
  	self.tabs:SetPos(s, 40)
- 	self.tabs:SetSize(w - s, h - 42)
- 	self.tabs.tabScroller:DockMargin(-1, 0, -1, 0)
+ 	self.tabs:SetSize(w - s, h - 0)
+ 	self.tabs.tabScroller:DockMargin(0, 0, 0, 0)
  	self.tabs.tabScroller:SetOverlap(0)
 
  	function self.tabs:Paint()
@@ -130,6 +162,8 @@ function PANEL:SetupItems()
  	local sortMethod = impulse.GetSetting("inv_sortweight", "Inventory only")
  	local invertSort = true
 
+	
+
  	for v,k in pairs(localInv) do -- fix for fucking table.sort desyncing client/server itemids!!!!!!!
  		k.realKey = v
 
@@ -150,7 +184,7 @@ function PANEL:SetupItems()
 
 	 			local item = self.invScroll:Add("impulseInventoryItem")
 				item:Dock(TOP)
-				item:DockMargin(0, 0, 15, 5)
+				item:DockMargin(0, 0, 0, 0)
 				item:SetItem(k, w)
 				item.InvID = k.realKey
 				item.InvPanel = self
@@ -171,7 +205,7 @@ function PANEL:SetupItems()
 	 		else
 	 			local item = self.invScroll:Add("impulseInventoryItem")
 				item:Dock(TOP)
-				item:DockMargin(0, 0, 15, 5)
+				item:DockMargin(0, 0, 0, 0)
 				item:SetItem(k, w)
 				item.InvID = k.realKey
 				item.InvPanel = self
@@ -195,6 +229,7 @@ function PANEL:SetupItems()
 
 	self:SetupSkills(w, h)
 end
+
 
 
 local bodyCol = Color(50, 50, 50, 210)
@@ -232,7 +267,7 @@ function PANEL:SetupSkills(w, h)
 
  		local bar = vgui.Create("DProgress", skillBg)
  		bar:SetPos(20, 30)
- 		bar:SetSize(self.skillScroll:GetWide() - 73, 40)
+ 		bar:SetSize(self.skillScroll:GetWide() + 200, 40)
 
  		if level == 10 then
  			bar:SetFraction(1)
@@ -258,6 +293,11 @@ end
 
 function PANEL:FindItemPanelByID(id)
 	return self.itemsPanels[id]
+end
+
+function PANEL:OnRemove()
+	hook.Remove("CalcView", "PlayerPreview")
+	hook.Remove("HUDPaint", "CharacterStats")
 end
 
 local grey = Color(209, 209, 209)
