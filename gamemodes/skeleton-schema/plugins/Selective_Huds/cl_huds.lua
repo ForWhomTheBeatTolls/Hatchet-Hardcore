@@ -229,7 +229,8 @@ function InitializeHuds()
 			local x, y = 0,0
 			local crosshairGap = 2
 			local crosshairLength = crosshairGap + 2
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 1, 3, 3)
+			local radius = impulse.GetSetting("crosshair_radius")
+			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 1, radius, radius)
 		end
 	end)
 	
