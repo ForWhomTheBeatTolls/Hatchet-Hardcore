@@ -28,7 +28,7 @@ function ITEM:CanEquip(ply)
 end
 
 function ITEM:OnEquip(ply)
-    ply:SetBodygroup(1,3)
+    ply:SetBodygroup(1,11)
   --ply.Vest = true
 end
 
