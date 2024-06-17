@@ -25,6 +25,7 @@ TO-DO LIST:
 -Bunch of other shit I can't remember
 -Add terminals for CP (Gear selection, Credential terminal)
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
+-Workforce click minigame used in some tedious task, like item belt production - RubelUN
 
 
 DONE LIST:
