@@ -239,7 +239,15 @@ function InitializeHuds()
 			return
 		end
 
+		if impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false then
+			return
+		end
+		
 		if ( IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() ) then
+			return
+		end
+		
+		if IsValid(impulse.SplashScreen) then
 			return
 		end
 	
