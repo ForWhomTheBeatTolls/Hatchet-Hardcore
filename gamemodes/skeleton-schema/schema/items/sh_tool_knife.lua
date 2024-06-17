@@ -13,10 +13,15 @@ ITEM.Weight = 2.5
 ITEM.Droppable = true
 ITEM.DropOnDeath = true
 
+ITEM.DropIfRestricted = false
+ITEM.DropOnDeathIfRestricted = true
+ITEM.CraftIfRestricted = false
+
 ITEM.Illegal = true
+ITEM.Equipable = true
+ITEM.EquipGroup = "melee"
 ITEM.CanStack = false
 
-ITEM.CraftSound = "gunmetal"
-ITEM.CraftTime = 4
+ITEM.WeaponClass = "ls_cleaver"
 
 impulse.RegisterItem(ITEM)
