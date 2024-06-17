@@ -30,20 +30,27 @@ function SKIN:GetTable(panel)
     return panel.__derma__
 end
 
-local topCol = Color(30, 30, 30, 200)
+local topCol = Color(24, 24, 24)
+local configcolor = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
+local topCol2 = Color(36, 36, 36)
+local gradient = Material("gui/gradient_up")
 local bodyCol = Color(80, 80, 80, 100)
 local bodyColOp = Color(80, 80, 80, 200)
 function SKIN:PaintFrame(panel, w, h)
-    impulse.blur(panel, 10, 20, 255)
-	draw.RoundedBox(0, 0, 0, w, h, topCol) -- this is the body of the frame
-    draw.RoundedBox(0, 0, 0, w, 25, bodyCol) -- this is the "top bar" of the derma frame
+    -- impulse.blur(panel, 10, 20, 255)
+    draw.RoundedBox(6, 0, 0, w, h, Color(73, 73, 73)) -- this is the "top bar" of the derma frame
+	surface.SetDrawColor(topCol)
+	draw.RoundedBoxEx(0,2,2,w - 4,h - 4,topCol,true,true,true,true)
+	surface.SetDrawColor(topCol2)
+	surface.SetMaterial(gradient)
+	surface.DrawTexturedRect(2, 2, w - 4, h - 4)
 end
 
 function SKIN:PaintMenuBar(panel, w, h)
 	draw.RoundedBox(0, 0, 0, w, h, bodyColOp)
 end
 
-local btnCol = Color(80, 80, 80, 255)
+local btnCol = Color(51, 51, 51)
 function SKIN:PaintButton(panel) -- button skin from ns edited
 	if (panel:GetPaintBackground()) then
 		local w, h = panel:GetWide(), panel:GetTall()
