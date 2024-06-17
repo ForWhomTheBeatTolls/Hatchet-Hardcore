@@ -361,16 +361,16 @@ function InitializeHuds()
 		local weapon = LocalPlayer():GetActiveWeapon()
 		if IsValid(weapon) then
 			if weapon:GetMaxClip1() != -1 then
-				surface.SetFont("Impulse-Elements32-Shadow")
+				surface.SetFont("Impulse-Elements24-Shadow")
 				surface.SetDrawColor(25, 25, 25, 100)
-				surface.SetTextPos(w-100, h-40)
+				surface.SetTextPos(w-80, h-40)
 				surface.SetTextColor(255, 255, 255, 200)
 				surface.DrawText(weapon:Clip1().."/"..LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()))
 			elseif weapon:GetClass() == "weapon_physgun" or weapon:GetClass() == "gmod_tool" then
 				aboveHUDUsed = true
 	
-				surface.SetFont("Impulse-Elements32-Shadow")
-				surface.SetTextPos(w-180, h-40)
+				surface.SetFont("Impulse-Elements24-Shadow")
+				surface.SetTextPos(w-140, h-40)
 				surface.DrawText("Props: "..LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0).."/"..((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
 			end
 		end
