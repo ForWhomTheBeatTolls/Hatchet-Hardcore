@@ -1,9 +1,7 @@
+local nextLOSCheck = CurTime() + 1
 hook.Add("Think", "LOSCheck", function()
 
 	if not IsValid(LocalPlayer()) then return end
-
-
-	if not nextLOSCheck then nextLOSCheck = CurTime() end
 
 	for k,v in pairs(ents.FindInSphere(LocalPlayer():EyePos(), 2500)) do
 
@@ -12,7 +10,7 @@ hook.Add("Think", "LOSCheck", function()
 
 		local isNoClipping
 
-		if v:GetMoveType() == MOVETYPE_NOCLIP then--will def break shit like seats and maybe even anims
+		if v:GetMoveType() == MOVETYPE_NOCLIP and not v:InVehicle() then
 			isNoClipping = true
 		else
 			isNoClipping = nil
@@ -27,7 +25,7 @@ hook.Add("Think", "LOSCheck", function()
 			AdjustVolume(v, 0.2*voiceScaleFactor)
 		end
 
-		if impulse.GetSetting("view_thirdperson") or isNoClipping then
+		if impulse.GetSetting("view_thirdperson") then
 			v:SetNoDraw(true)
 			if IsValid(v:GetActiveWeapon()) then
 				v:GetActiveWeapon():SetNoDraw(true)
@@ -51,14 +49,14 @@ hook.Add("Think", "LOSCheck", function()
 
 
 
-	nextLOSCheck = CurTime() + 0.2
+	nextLOSCheck = CurTime() + 0.8
 
 end)
 
 function AdjustVolume(ply, newVol)
 	if (not IsValid(ply)) or ply == LocalPlayer() or (not ply:IsPlayer()) then return end
 
-	if ply:Team() == TEAM_COMBINE then newVol = 1 end
+	if ply:Team() == TEAM_OTA then newVol = 1 end
 
 	ply:SetVoiceVolumeScale(newVol)
 
