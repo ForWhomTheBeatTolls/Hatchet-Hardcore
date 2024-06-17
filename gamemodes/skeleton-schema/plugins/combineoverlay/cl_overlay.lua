@@ -468,6 +468,18 @@ local function DrawAuxData(offset)
 
     draw.SimpleText("CITY CODE: "..cityCodeData[1].." ::>", "BudgetLabel", scrW - 8, 80 + add, cityCodeData[2], TEXT_ALIGN_RIGHT)
 
+    draw.SimpleText("<:: Health: "..LocalPlayer():Health(), "BudgetLabel",  scrW * .01,900 + add, Color(255, 84, 22), TEXT_ALIGN_LEFT)
+    draw.SimpleText("<:: Hunger: "..LocalPlayer():GetSyncVar(SYNC_HUNGER, 100), "BudgetLabel", scrW * .01,920 + add, Color(181, 121, 17), TEXT_ALIGN_LEFT)
+
+    local weapon = LocalPlayer():GetActiveWeapon()
+    if IsValid(weapon) then
+        if weapon:GetMaxClip1() != -1 then
+            draw.SimpleText(weapon:Clip1().."/"..LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()).." :"..weapon:GetPrintName().." ::>", "BudgetLabel",  scrW * .9,900 + add, Color(255, 255, 255), TEXT_ALIGN_LEFT)
+        elseif weapon:GetClass() == "weapon_physgun" or weapon:GetClass() == "gmod_tool" then
+            draw.SimpleText(LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0).."/"..((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit).." :Props ::>", "BudgetLabel", scrW * .9,900 + add, Color(255, 255, 255), TEXT_ALIGN_LEFT)
+        end
+    end
+
     add = add + 5
 
     if hp <= 70 then
