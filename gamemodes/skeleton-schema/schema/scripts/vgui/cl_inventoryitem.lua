@@ -4,7 +4,7 @@ function PANEL:Init()
 	self.model = vgui.Create("impulseSpawnIcon", self)
 	self.model:SetPaintBackground(false)
 	self:SetMouseInputEnabled(true)
-	self:SetTall(64)
+	self:SetTall(84)
 
 	self:SetCursor("hand")
 end
@@ -25,8 +25,8 @@ function PANEL:SetItem(netitem, wide)
 	self.Count = 1
 
 	local panel = self
-	self.model:SetPos(0, 0)
-	self.model:SetSize(64, 64)
+	self.model:SetPos(7, 14)
+	self.model:SetSize(48, 48)
 	self.model:SetMouseInputEnabled(true)
 	self.model:SetModel(item.Model)
 
@@ -56,9 +56,9 @@ function PANEL:SetItem(netitem, wide)
 	self.desc:SetPos(65, 30)
 
 	if self.Basic then
-		self.desc:SetSize(270, 30)
+		self.desc:SetSize(200, 60)
 	else
-		self.desc:SetSize(wide - 530, 30)
+		self.desc:SetSize(200, 60)
 	end
 
 	if wide < 800 then -- small resolutions have trouble with 16
@@ -113,15 +113,17 @@ function PANEL:SetItem(netitem, wide)
 	if self.IsRestricted then
 		self.tip = vgui.Create("DImageButton", self)
 		self.tip:SetPos(43, 45)
-		self.tip:SetSize(16, 16)
+		self.tip:SetSize(24, 24)
 		self.tip:SetImage(restrictedMat)
 	elseif self.Item.Illegal then
 		self.tip = vgui.Create("DImageButton", self)
 		self.tip:SetPos(43, 45)
-		self.tip:SetSize(16, 16)
+		self.tip:SetSize(24, 24)
 		self.tip:SetImage(illegalMat)
 	end
 end
+
+
 
 function PANEL:OnMousePressed(keycode)
 	if self.Disabled then
@@ -300,15 +302,22 @@ function PANEL:OnMousePressed(keycode)
 	popup:Open()
 end
 
-local bodyCol = Color(50, 50, 50, 210)
+local bodyCol = Color(0, 0, 0, 255)
+local topCol2 = Color(36, 36, 36)
 local restrictedCol = Color(255, 223, 0, 255)
 local illegalCol = Color(255, 0, 0, 255)
-local equippedCol =  Color(0, 220, 0, 140)
+local equippedCol =  Color(0, 255, 0, 12)
 local restrictedMat =  Material("icon16/error.png")
+local gradient = Material("gui/gradient_up")
 local illegalMat = Material("icon16/exclamation.png")
 function PANEL:Paint(w, h)
-	surface.SetDrawColor(bodyCol)
-	surface.DrawRect(0, 0, w, h)
+
+
+	draw.RoundedBox(0, 0, 0, w, h, bodyCol)
+	surface.SetDrawColor(topCol2)
+	surface.SetMaterial(gradient)
+	surface.DrawTexturedRect(0, 0, w, h)
+	draw.RoundedBox(0, 0, 82, w, h - 82, Color(255, 136, 0))
 
 	local item = self.Item
 	if item then
@@ -323,7 +332,8 @@ function PANEL:Paint(w, h)
 
 		if self.IsEquipped then -- if equipped
 			surface.SetDrawColor(equippedCol)
-			surface.DrawRect(0, 0, 5, h)
+			surface.SetMaterial(gradient)
+			surface.DrawTexturedRect(0, 0, w, h)
 		end
 	end
 end
