@@ -40,33 +40,50 @@ function PANEL:Init()
         surface.SetDrawColor(0, 0, 0, 0)
         surface.DrawRect(0, 0, w, h)
     end
-
+	
+	local cities = {
+	"City 8",
+	"City 24",
+	"City 27",
+	"City 13",
+	"City 11",
+	"City 15",
+	"City 16",
+	"City 12",
+	"City 14"
+	}
+	local randomcity = table.Random(cities)
     function self.doneBtn:DoClick()
 
         Music:PlayEx(1, 60)
         counter = counter + 1
         if counter == 1 then
             surface.PlaySound(SoundClick)
-            text = "The combine invaded earth and took over within 3 hours.\nYou find yourself in a trainstation unsure still on where fate will bring you.\nYou see a figure named Dr.Breen in a giant television of sort giving speeches\nIt gives you chills, but its probably better to ignore it."
+            text = "The Combine invaded earth and dissolved all governments within 7 hours.\nYou find yourself in a trainstation still unsure on where fate will bring you.\nOn one of the combine video monitors, a man referring to himself as Dr. Breen is giving a speech.\nHe speaks in a welcoming tone to the newly arrived citizens exiting the trainstation."
             mat1 = Material("gamepadui/chapter1")
         elseif counter == 2 then
             surface.PlaySound(SoundClick)
-            text = "Caption1"
+            text = "You have entered City 17, after being relocated from "..randomcity..".\n You are within the heart of the combine occupation of Earth.\n At the center of the city lies the center of the occupation:\n the Citadel, towering over the clouds."
             mat1 = Material("gamepadui/chapter2")
         elseif counter == 3 then
             surface.PlaySound(SoundClick)
-            text = "Caption2"
+            text = "The city is heavily combine controlled.\n Any form of resistance is typically met with execution.\n The Combine forces are controlled by an entity known as ''Overwatch''."
             mat1 = Material("gamepadui/chapter3")
         elseif counter == 4 then
             surface.PlaySound(SoundClick)
-            text = "Caption3"
+            text = "Surviving and living are not the same.\n You can choose to scrape by, surviving under the Combine,\n living luxuriously with the Combine,\n or dying slowly against the Combine.\n The choice is yours. Nothing good ever comes easy."
             mat1 = Material("gamepadui/chapter4")
         elseif counter == 5 then
             surface.PlaySound(SoundClick)
-            panel:AlphaTo(0, 4, 0)
-            timer.Simple(5, function()
-                panel:Remove()
-            end)
+			self:SetText(" ")
+			self:SetDisabled(true)
+			mat1 = Material("black_outline")
+			timer.Simple(2, function()
+			panel:AlphaTo(0, 2, 0)
+			end)
+			timer.Simple(5, function()
+				panel:Remove()
+			end)
 
             LocalPlayer():ScreenFade(SCREENFADE.IN, Color(0, 0, 0), 7, 11)
             timer.Create("StupidFuckingShitCode_"..LocalPlayer():SteamID(), 18, 1, function()
