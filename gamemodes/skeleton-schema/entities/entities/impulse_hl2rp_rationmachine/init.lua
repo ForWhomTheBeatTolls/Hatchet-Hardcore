@@ -47,23 +47,25 @@ function ENT:Use( activator, ply )
         self.dummy:EmitSound("ambient/machines/combine_terminal_idle4.wav")
 
         --local ration = ents.Create("impulse_hl2rp_ration")
+
         timer.Simple(2, function()
-            --if (!IsValid( ration )) then return end // Check whether we successfully made an entity, if not - bail
-			if ply:GetPos():Distance(self:GetPos()) < 90 then
-            --ration:SetPos(pos)
-            --ration:SetAngles(ang)
-            --ration:Spawn()
-			if ply:CanHoldItem("item_citration") then
-			ply:GiveInventoryItem("item_citration")
-			ply:ForceSequence("takepackage", nil, nil, false)
-			self.dummy:ResetSequence(sequencedispense)
-			else
-			ply:Notify("You cannot carry a ration!")
-			end
-			
-			else
-			ply:Notify("You were too far away from the machine.")
-			end
+            if ply:Team() == TEAM_CP then
+                if ply:GetPos():Distance(self:GetPos()) < 90 then
+                    if ply:CanHoldItem("item_cpcitration") then
+                        ply:GiveInventoryItem("item_cpcitration")
+                        ply:ForceSequence("takepackage", nil, nil, false)
+                        self.dummy:ResetSequence(sequencedispense)
+                    end
+                end
+            else
+                if ply:GetPos():Distance(self:GetPos()) < 90 then
+                    if ply:CanHoldItem("item_citration") then
+                        ply:GiveInventoryItem("item_citration")
+                        ply:ForceSequence("takepackage", nil, nil, false)
+                        self.dummy:ResetSequence(sequencedispense)
+                    end
+                end
+            end
         end)
 		
 		-- timer.Simple(4, function()
