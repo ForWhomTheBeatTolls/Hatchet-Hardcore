@@ -63,6 +63,12 @@ function InitializeHuds()
 			return
 		end
 
+		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
+			return
+		end
+
+
+
 		local scrW = ScrW()
 		local scrH = ScrH()
 		local health = LocalPlayer():Health()
@@ -148,6 +154,10 @@ function InitializeHuds()
 		end
 		
 		if IsValid(impulse.SplashScreen) then
+			return
+		end
+
+		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
 			return
 		end
 
@@ -261,6 +271,7 @@ function InitializeHuds()
 		if IsValid(impulse.SplashScreen) then
 			return
 		end
+		
 
 		surface.SetDrawColor(crosshaircolor)
 
@@ -324,6 +335,10 @@ function InitializeHuds()
 			return
 		end
 
+		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
+			return
+		end
+
 		local w, h = ScrW(), ScrH()
 		local hudWidth, hudHeight = 400, 100
 		local healthIcon = Material("hatchet/plus.png")
@@ -351,7 +366,6 @@ function InitializeHuds()
 		surface.DrawTexturedRect(w * .035, h * .022, w * .13, h * .008)
 		surface.DrawTexturedRect(w * .035, h * .042, w * .13, h * .008)
 		surface.SetDrawColor(255, 255, 255)
-
 
 		//draw.SimpleText(LocalPlayer():Health(), "Impulse-Elements14-Shadow", w * .1, h * .018, Color(255, 255, 255), TEXT_ALIGN_CENTER)
 		//draw.SimpleText(LocalPlayer():GetSyncVar(SYNC_HUNGER, 100), "Impulse-Elements14-Shadow", w * .1, h * .038, Color(255, 255, 255), TEXT_ALIGN_CENTER)
