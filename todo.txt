@@ -51,6 +51,7 @@ DONE LIST:
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil
 - Add mixtures for all armors (I literally got no response on what did he mean by this)
 -CP rations
+-Kush Johnson World Eater
 
 
 WILLMASTER CODING SIDE:
