@@ -9,7 +9,7 @@ function PANEL:Init()
 end
 
 function PANEL:SetPlayer(player)
-	self.Colour =  Color(200, 200, 200)--team.GetColor(player:Team()) -- Store colour and name micro optomization, other things can be calculated on the go.
+	self.Colour =  Color(255, 153, 21, 178)--team.GetColor(player:Team()) -- Store colour and name micro optomization, other things can be calculated on the go.
 	self.Name = player:Nick()
 	self.Player = player
 	self.Badges =  {}
@@ -53,7 +53,7 @@ end
 
 local gradient = Material("vgui/gradient-l")
 local gradientr = Material("vgui/gradient-r")
-local outlineCol = Color(190,190,190,240)
+local outlineCol = Color(61,61,61)
 local darkCol = Color(30,30,30,200)
 
 function PANEL:Paint(w,h)
