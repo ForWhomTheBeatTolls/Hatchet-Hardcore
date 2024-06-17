@@ -1,7 +1,7 @@
 LEAVE IT FOR NOW:
 
 - Damage slowdown (I give up.)
--Improve Death Animations to include Weapons in the hand of the ragdoll
+- Improve Death Animations to include Weapons in the hand of the ragdoll
 
 
 --------------------------
@@ -59,7 +59,7 @@ WILLMASTER CODING SIDE:
 - Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
 - Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 - Animation menu using NET functions
-- Redesign the VGUI and make the schema not 1:1 to impulse
+- Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Add descriptions (Will be Optional)
 
 MUHAMMED CODING SIDE:
