@@ -382,7 +382,7 @@ function GM:HUDPaint(mvData)
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 
 	if isPreview then
-		draw.SimpleTextOutlined("THIS SERVER IS IN DEV! THINGS MAY CHANGE OR REMOVED,\n AND THERE MIGHT BE OPTIMIZATION ISSUES!\nPlease Report bugs or exploits ASAP to our Discord.", "Trebuchet18", ScrW() * .34, ScrH() * 0, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
+		draw.SimpleTextOutlined("THIS SERVER IS IN DEV! THINGS MAY CHANGE OR REMOVED,\n AND THERE MIGHT BE OPTIMIZATION ISSUES!\nPlease Report bugs or exploits ASAP to our Discord.", "Trebuchet18", ScrW() * .34, 0, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
 	end
 	
 
