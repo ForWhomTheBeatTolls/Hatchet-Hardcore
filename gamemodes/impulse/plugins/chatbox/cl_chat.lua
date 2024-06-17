@@ -24,10 +24,10 @@ function impulse.chatBox.buildBox()
 	impulse.chatBox.frame:SetMinHeight( 100 )
 	impulse.chatBox.frame:SetPopupStayAtBack(true)
 	impulse.chatBox.frame.Paint = function( self, w, h )
-		impulse.blur( self, 10, 20, 255 )
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 30, 30, 30, 200 ) )
+		-- impulse.blur( self, 10, 20, 255 )	
+		-- draw.RoundedBox( 0, 0, 0, w, h, Color( 30, 30, 30, 200 ) )
 		
-		draw.RoundedBox( 0, 0, 0, w, 25, Color( 80, 80, 80, 100 ) )
+		-- draw.RoundedBox( 0, 0, 0, w, 25, Color( 80, 80, 80, 100 ) )
 	end
 	impulse.chatBox.oldPaint = impulse.chatBox.frame.Paint
 	impulse.chatBox.frame.Think = function()
@@ -38,7 +38,7 @@ function impulse.chatBox.buildBox()
 	
 	impulse.chatBox.entry = vgui.Create("DTextEntry", impulse.chatBox.frame) 
 	impulse.chatBox.entry:SetSize( impulse.chatBox.frame:GetWide() - 50, (impulse.IsHighRes() and 28 or 20) )
-	impulse.chatBox.entry:SetTextColor( color_white )
+	impulse.chatBox.entry:SetTextColor( Color(255,255,255) )
 	impulse.chatBox.entry:SetFont(impulse.IsHighRes() and "Impulse-ChatMedium" or "Impulse-ChatSmall")
 	impulse.chatBox.entry:SetDrawBorder( false )
 	impulse.chatBox.entry:SetDrawBackground( false )
@@ -46,7 +46,13 @@ function impulse.chatBox.buildBox()
 	impulse.chatBox.entry:SetHighlightColor( Color(52, 152, 219) )
 	impulse.chatBox.entry:SetPos( 45, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
 	impulse.chatBox.entry.Paint = function( self, w, h )
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 30, 30, 30, 100 ) )
+		local topCol2 = Color(36, 36, 36)
+		local gradient = Material("gui/gradient_up")
+		draw.RoundedBox( 0, 0, 0, w, h, Color( 73, 73, 73) )
+		draw.RoundedBox( 0, 1, 1, w - 2, h - 2, Color( 0, 0, 0, 255) )
+		surface.SetMaterial(gradient)
+		surface.SetDrawColor(topCol2)
+		surface.DrawTexturedRect(1, 1, w - 2, h - 2)
 		derma.SkinHook( "Paint", "TextEntry", self, w, h )
 	end
 
@@ -133,7 +139,7 @@ function impulse.chatBox.buildBox()
 			if (text:sub(1, 1) == "/") then
 				local command = string.PatternSafe(string.lower(text))
 
-				impulse.blur(self, 10, 20, 255)
+				-- impulse.blur(self, 10, 20, 255)
 
 				surface.SetDrawColor(0, 0, 0, 200)
 				surface.DrawRect(0, 0, w, h)
