@@ -167,6 +167,12 @@ local yellCommand = {
 
 		for v,k in pairs(player.GetAll()) do
 			if (ply:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.YellDistance ^ 2) then 
+				if string.EndsWith( rawText, "." ) or string.EndsWith( rawText, "?" ) or string.EndsWith( rawText, "!" ) then
+					rawText = string.upper( rawText )
+				else
+					rawText = string.upper( rawText )..string.Replace(string.Right( rawText, 1 ), string.Right( rawText, 1 ), "!")
+				end
+
 				k:SendChatClassMessage(6, rawText, ply)
 			end
 		end
@@ -184,6 +190,12 @@ local whisperCommand = {
 
 		for v,k in pairs(player.GetAll()) do
 			if (ply:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.WhisperDistance ^ 2) then 
+				if string.EndsWith( rawText, "." ) or string.EndsWith( rawText, "?" ) or string.EndsWith( rawText, "!" ) then
+					rawText = string.upper( string.Left(rawText, 1) )..string.Right( rawText, string.len( rawText ) - 1 )
+				else
+					rawText = string.upper( string.Left(rawText, 1) )..string.Right( rawText, string.len( rawText ) - 1 )..string.Replace(string.Right( rawText, 1 ), string.Right( rawText, 1 ), ".")
+				end
+
 				k:SendChatClassMessage(7, rawText, ply)
 			end
 		end
@@ -544,6 +556,8 @@ if CLIENT then
 
 	impulse.RegisterChatClass(1, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
+
+		impulse.customChatFont = "Impulse-ChatMedium"
 		
 		if LocalPlayer():IsCP() and speaker:Team() == TEAM_RESISTANCE then
 		chat.AddText(speaker:Nick(), talkCol, " says: ", message)
