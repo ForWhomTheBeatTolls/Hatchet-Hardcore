@@ -59,11 +59,11 @@ function PANEL:Init()
 		local lpTeam = LocalPlayer():Team()
 		local TeamCol = Color(team.GetColor(lpTeam).r, team.GetColor(lpTeam).g, team.GetColor(lpTeam).b, 14)
 		local gradient = Material("gui/gradient_up")
-		draw.RoundedBox(0, w * .497, h * .065, w * .246, h * .810, Color(team.GetColor(lpTeam).r + 100, team.GetColor(lpTeam).g + 100, team.GetColor(lpTeam).b + 100, 255))
-		draw.RoundedBox(0, w * .5, h * .07, w * .24, h * .8, Color(24, 24, 24))
+		draw.RoundedBox(0, w * .497, h * .065, w * .246, h * .28, Color(team.GetColor(lpTeam).r + 100, team.GetColor(lpTeam).g + 100, team.GetColor(lpTeam).b + 100, 255))
+		draw.RoundedBox(0, w * .5, h * .07, w * .24, h * .27, Color(24, 24, 24))
 		surface.SetDrawColor(TeamCol)
 		surface.SetMaterial(gradient)
-		surface.DrawTexturedRect(w * .5, h * .07, w * .24, h * .8)
+		surface.DrawTexturedRect(w * .5, h * .07, w * .24, h * .27)
 
 		draw.SimpleTextOutlined(LocalPlayer():Name(), "Impulse-Elements22-Shadow", w * .62, h * .085, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
 		draw.RoundedBox(45,  w * .52, h * .12, w * .2, h * .002, Color(255, 255, 255))
@@ -102,8 +102,6 @@ function PANEL:Init()
 		end
 
 		draw.SimpleTextOutlined("I have "..LocalPlayer():GetSyncVar(SYNC_MONEY, 100).."T In my wallet right now.", "Impulse-Elements22-Shadow", w * .62, h * .31, Color(255, 255, 255), TEXT_ALIGN_CENTER, nil, 1, Color(team.GetColor(lpTeam).r - 100, team.GetColor(lpTeam).g - 100, team.GetColor(lpTeam).b - 100))
-
-		draw.RoundedBox(45,  w * .52, h * .35, w * .2, h * .002, Color(255, 255, 255))
 
 	end)
 
