@@ -25,15 +25,15 @@ function PANEL:Init()
 	local splashCol = Color(200, 200, 200, 190)
 	local configcolor = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
 	function self.core:Paint(w, h)
-		local vignette = Material("impulse/vignette.png")
+		local gradient = Material("gui/gradient_up")
 		local x = w * .5
 		local y = h * .4
 		local logo_scale = 1.1
 		local logo_w = logo_scale * 367
 		local logo_h = logo_scale * 99
 
-		surface.SetDrawColor(6, 20, 4, 157)
-		surface.SetMaterial(vignette)
+		surface.SetDrawColor(24, 24, 24)
+		surface.SetMaterial(gradient)
 		surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
 		--draw.DrawText(self.welcomeMessage.." to", "Impulse-Elements27-Shadow", ScrW()/2, 150, color_white, TEXT_ALIGN_CENTER)
 		impulse.render.glowgo(x - (logo_w * .5), y, logo_w, logo_h)
