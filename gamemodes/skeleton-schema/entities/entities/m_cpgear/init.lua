@@ -87,32 +87,32 @@ local cpgear1000 = {
 	if caller:Team() == TEAM_CP then
 		caller:SetTeamClass(1)
 		self:EmitSound("items/ammo_pickup.wav", 50, 100, 0.5, CHAN_AUTO)
-		if caller:GetSyncVar(SYNC_RANKPOINTS, 0) < 250 then
-			caller:ClearInventory(1)
+		if caller:GetSyncVar(SYNC_RANKPOINTS, 0) <= 250 then
 			for k,v in pairs(cpgear250) do
+				caller:TakeInventoryItemClass(v, 1, 900)
 				caller:GiveInventoryItem(v, 1, true)
 				caller:Give("ls_stunstick")
 			end
-		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) < 500 then
-			caller:ClearInventory(1)
+		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) <= 500 then
 			for k,v in pairs(cpgear500) do
+				caller:TakeInventoryItemClass(v, 1, 900)
 				caller:GiveInventoryItem(v, 1, true)
 				caller:Give("ls_stunstick")
 			end
-		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) < 750 then
-			caller:ClearInventory(1)
+		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) <= 750 then
 			for k,v in pairs(cpgear750) do
+				caller:TakeInventoryItemClass(v, 1, 900)
 				caller:GiveInventoryItem(v, 1, true)
 				caller:Give("ls_stunstick")
 			end
-		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) < 1001 then
-			caller:ClearInventory(1)
+		elseif caller:GetSyncVar(SYNC_RANKPOINTS, 0) >= 751 then
 			for k,v in pairs(cpgear1000) do
+				caller:TakeInventoryItemClass(v, 1, 900)
 				caller:GiveInventoryItem(v, 1, true)
 				caller:Give("ls_stunstick")
 			end
 		end
 	else
-		ply:Notify("You cannot use this.")
+		caller:Notify("You cannot use this.")
 	end
 end
