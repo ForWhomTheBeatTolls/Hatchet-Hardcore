@@ -29,7 +29,7 @@ function SWEP:PrimaryAttack()
 				bullet.Tracer = 0
 				bullet.Force  = 0
 				bullet.Hullsize = self.Primary.HullSize
-				bullet.Distance = self.Primary.Range
+				bullet.Distance = self.Primary.Range + (self.Owner:GetVelocity():LengthSqr() / 950)
 				bullet.Damage = self.Primary.Damage
 				bullet.Callback = function(attacker, tr, dmginfo)
 					if tr.Hit then
@@ -93,7 +93,7 @@ end)
 		bullet.Tracer = 0
 		bullet.Force  = 0
 		bullet.Hullsize = self.Primary.HullSize
-		bullet.Distance = self.Primary.Range
+		bullet.Distance = self.Primary.Range + (self.Owner:GetVelocity():LengthSqr() / 950)
 		bullet.Damage = self.Primary.Damage
 		bullet.Callback = function(attacker, tr, dmginfo)
 					if tr.Hit then
