@@ -258,3 +258,18 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
     net.WritePlayer(sender)
 	net.Broadcast()
 end)
+
+local ArabScreamCommand = {
+    description = "",
+    requiredArg = false,
+    adminOnly = false,
+    onRun = function(ply, arg)
+        local class = arg[1]
+		if ply:GetSyncVar(SYNC_COS_FACE, 5) then
+			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
+			ply:Say("/y Alahlalalala!")
+		end
+    end
+}
+
+impulse.RegisterChatCommand("/arabscream", ArabScreamCommand)
