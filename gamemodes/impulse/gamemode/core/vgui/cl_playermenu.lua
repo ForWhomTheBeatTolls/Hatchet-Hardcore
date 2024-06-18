@@ -42,6 +42,7 @@ function PANEL:Init()
 
 	local defaultButton = self:AddSheet("Actions", Material("impulse/icons/banknotes-256.png"), self.quickActions, self.QuickActions)
 	self:AddSheet("Information", Material("impulse/icons/info-256.png"), self.info, self.Info)
+	self:AddSheet("Business", Material("impulse/icons/cart-73-256.png"), self.business, self.Business) // keeping this for now
 
 	self.tabSheet:SetActiveButton(defaultButton)
 	defaultButton.loaded = true
