@@ -41,21 +41,28 @@ local bashcommand = {
 		timer.Simple(0.4, function()
         local trace = util.TraceHull({
             start = ply:GetShootPos(),
-            endpos = ply:GetShootPos() + ply:GetAimVector() * 80,
-			mins = Vector( -6, -6, -6 ),
-			maxs = Vector( 6, 6, 6 ),
+            endpos = ply:GetShootPos() + (ply:GetAimVector() ) * (90 + ply:GetVelocity():LengthSqr() / 950),
+			mins = Vector( -12, -12, -12 ),
+			maxs = Vector( 12, 12, 12 ),
             filter = ply
         })
 		
         if trace.Hit and IsValid(trace.Entity) then
+		
+			if trace.Entity:GetClass() == "prop_door_rotating" then
+			trace.Entity:Fire("unlock", "", 0)
+			trace.Entity:Fire("open", "", 0)
+			trace.Entity:EmitSound("physics/wood/wood_crate_break"..math.random(1,5)..".wav", 80, 90, 1, CHAN_AUTO)
+			end
+			
             if trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_OTA then
             trace.Entity:TakeDamageInfo(dmgi)
 			trace.Entity:EmitSound(table.Random(bashkillsfx), 70, 90, 1, CHAN_BODY)
 		local trace2 = util.TraceHull({
             start = ply:GetShootPos(),
-            endpos = ply:GetShootPos() + ply:GetAimVector() * 60,
-			mins = Vector( -6, -6, -6 ),
-			maxs = Vector( 6, 6, 6 ),
+            endpos = ply:GetShootPos() + (ply:GetAimVector() ) * (90 + ply:GetVelocity():LengthSqr() / 950),
+			mins = Vector( -12, -12, -12 ),
+			maxs = Vector( 12, 12, 12 ),
             filter = ply
 			})
 			
