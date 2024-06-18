@@ -2,41 +2,60 @@ net.Receive("HatchetBubbleChatCall", function()
     local msg = net.ReadString()
     local clr = net.ReadColor()
     local font = net.ReadString()
+    local chatradius = net.ReadUInt(10)
     local ply = net.ReadPlayer()
     local sender = Entity(ply:EntIndex())
 
-    local textappear = true
-
-    // This is fucking 100% cancerous dude, i swear this is like the devil of all coding.
-    // If you're a code stealer and want to steal this code, Please dont, not that its because we worked hard on it, but its more that
-    // we hope you will not follow this method of coding.
-    // (also fuck you if ur gonna use this by stealing)
-
-    // I hope there will be a better way
-
-	if string.StartsWith(msg, "/") then
+    if string.StartsWith(msg, "/") then
         msg = ""
     end
 
-    //i want to kill myself with a shotgun.
+    local textPos = 1
+    local nextTime = 0
 
     hook.Add("HUDPaint", ply:SteamID().."_OverheadChatHUD", function()
         if ( sender:IsValid() and sender:Alive() and sender:GetMoveType() != MOVETYPE_NOCLIP and sender:IsEffectActive(EF_NODRAW) != true ) then
             local pos = (sender:GetBonePosition(sender:LookupBone("ValveBiped.Bip01_Spine1")) + sender:OBBCenter()):ToScreen()
             local posdist = sender:GetPos()
-            if sender:IsValid() and LocalPlayer():GetPos():Distance( posdist ) <= 418 then
-                if textappear then
-                    draw.SimpleTextOutlined(msg, font, pos.x, pos.y, clr, TEXT_ALIGN_CENTER, nil, 1, Color(0, 0, 0))
+            if sender:IsValid() and LocalPlayer():GetPos():Distance( posdist ) <= chatradius then
+                if CurTime() > nextTime and textPos != string.len(msg) then
+                    textPos = textPos + 1
+                    nextTime = CurTime() + .08
+                    if string.len(msg) > 1 then
+                        sender:EmitSound("vo/npc/male01/answer"..math.random(10,40)..".wav", 10, 100, 0.0001, CHAN_VOICE)
+                        if sender:Team() == TEAM_CITIZEN or sender:Team() == TEAM_RESISTANCE or sender:Team() == TEAM_WORKFORCE then
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 80, 1)
+                        elseif sender:Team() == TEAM_CP then
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 50, 1)
+                        elseif sender:Team() == TEAM_OTA then
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 40, 1)
+                        end
+                    end
                 end
+                draw.SimpleTextOutlined(string.sub(msg, 1, textPos), font, pos.x, pos.y, clr, TEXT_ALIGN_CENTER, nil, 1, Color(0, 0, 0))
             end
         end
     end)
-	
-    timer.Create(ply:SteamID().."_RemoveOverheadChat", 4, 1, function()
+
+    local textremovetime
+    local leng = string.len(msg)
+    if leng <= 20 then
+      textremovetime = 3
+    elseif leng <= 40 then
+        textremovetime = 5
+    elseif leng <= 80 then
+        textremovetime = 8
+    elseif leng <= 120 then
+        textremovetime = 12
+    else
+        textremovetime = 18
+    end
+
+    timer.Create(ply:SteamID().."_RemoveOverheadChat", textremovetime, 1, function()
         //print("Removed: "..ply:SteamID())
-		if IsValid(ply) then
-			hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
-		end
+        if IsValid(ply) then
+            hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
+        end
     end)
 
 
