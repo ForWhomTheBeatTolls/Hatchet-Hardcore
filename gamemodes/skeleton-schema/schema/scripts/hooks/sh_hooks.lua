@@ -71,17 +71,8 @@ hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, v
 		elseif ply:Team() == TEAM_OTA and ply:KeyDown(IN_SPEED) then
 				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 75)
 			end
-		if ply:Team() == TEAM_RESISTANCE and !ply:KeyDown(IN_SPEED) and !ply:GetBodygroup(1, 1) == 6 or !ply:GetBodygroup(1, 1) == 5 or !ply:GetBodygroup(1, 1) == 8 or !ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
-		elseif ply:Team() == TEAM_RESISTANCE and ply:KeyDown(IN_SPEED) and ply:GetBodygroup(1, 1) == 6 or ply:GetBodygroup(1, 1) == 5 or ply:GetBodygroup(1, 1) == 8 or ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
-			return true
-		end
-		if ply:Team() == TEAM_CITIZEN and !ply:KeyDown(IN_SPEED) and !ply:GetBodygroup(1, 1) == 6 or !ply:GetBodygroup(1, 1) == 5 or !ply:GetBodygroup(1, 1) == 8 or !ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
-		elseif ply:Team() == TEAM_CITIZEN and ply:KeyDown(IN_SPEED) and ply:GetBodygroup(1, 1) == 6 or ply:GetBodygroup(1, 1) == 5 or ply:GetBodygroup(1, 1) == 8 or ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
-			return true
+		if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_RESISTANCE then
+		return false
 		end
 end)
 	
