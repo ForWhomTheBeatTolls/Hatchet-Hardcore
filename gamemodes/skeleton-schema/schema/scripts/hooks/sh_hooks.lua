@@ -269,6 +269,11 @@ local ArabScreamCommand = {
 			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
 			ply:Say("/y Alahlalalala!")
 		end
+		if ply:SteamID() == "STEAM_0:0:193471001" then
+			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
+			ply:Say("/y Alahlalalala!")
+		end
+
     end
 }
 
