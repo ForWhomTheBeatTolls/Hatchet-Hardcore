@@ -226,20 +226,27 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 	local font = "BubbleChat-Talk"
 	local teamcol = team.GetColor(sender:Team())
 	local color = teamcol
+	local chatradius = 0
 	
 	if string.StartsWith(text, "/me") then
 		msg = string.Replace(text, "/me", "")
 		color = Color(224, 166, 57)
 		font = "BubbleChat-Me"
+		chatradius = impulse.Config.TalkDistance
 	elseif string.StartsWith(text, "/y") then
+		-- text = string.upper( string.Left(text, string.len( text )) )..string.Right( text, string.len( text ) - 1 )..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+		-- print(text)
 		msg = string.Replace(text, "/y", "")
 		color = Color(255, 38, 0)
 		font = "BubbleChat-Yell"
+		chatradius = impulse.Config.YellDistance
 	elseif string.StartsWith(text, "/w") then
 		msg = string.Replace(text, "/w", "")
 		color = Color(64, 201, 255)
 		font = "BubbleChat-Whisper"
+		chatradius = impulse.Config.WhisperDistance
 	else
+		chatradius = impulse.Config.TalkDistance
 		msg = text
 	end
 
@@ -247,6 +254,7 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
     net.WriteString(msg)
 	net.WriteColor(color)
 	net.WriteString(font)
+	net.WriteUInt(chatradius, 10)
     net.WritePlayer(sender)
 	net.Broadcast()
 end)
