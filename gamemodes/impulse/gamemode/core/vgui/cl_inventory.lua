@@ -47,7 +47,7 @@ function PANEL:Init()
 			dlight.b = team.GetColor(lpTeam).b
 			dlight.brightness = 2
 			dlight.decay = 1000
-			dlight.size = 140
+			dlight.size = 60
 			dlight.dietime = CurTime() + 1
 		end
 	end )
