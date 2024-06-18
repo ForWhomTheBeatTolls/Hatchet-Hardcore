@@ -31,7 +31,6 @@ function SKIN:GetTable(panel)
 end
 
 local topCol = Color(24, 24, 24)
-local configcolor = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
 local topCol2 = Color(36, 36, 36)
 local gradient = Material("gui/gradient_up")
 local bodyCol = Color(80, 80, 80, 100)
