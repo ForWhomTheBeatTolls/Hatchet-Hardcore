@@ -101,10 +101,7 @@ if SERVER then
 	food_watermelon = "food_watermelon"
 	food_halfpizza = "food_halfpizza"
 	food_pizza = "food_pizza"
-	
-	
-	
-	local NextLoot = CurTime() --+ 1
+	 --+ 1
 	--local boxloot = table.Random(lootbox)
 	local niceitemnames = {
 	[util_scrapmetal] = "Scrap Metal",
@@ -149,6 +146,7 @@ if SERVER then
 	[badloot] = "a Common"
 	}
 	
+	local NextLoot = CurTime()
 	function ENT:Use(activator, caller)
 	if NextLoot < CurTime() and !caller:IsCP() then
 	if ran < 500 then
@@ -184,7 +182,7 @@ if SERVER then
 	local lootitem = caller:GiveInventoryItem(looteditem, 1, false)
 	caller:Notify("You looted " ..niceitemnames[looteditem].. " from the box.")
 	caller:Say("/me looted "..looteditemtable.." item from the box.")
-	NextLoot = CurTime() + 300
+	NextLoot = CurTime() + 180
 	self:RemoveEffects(EF_ITEM_BLINK)
 	timer.Create(self:EntIndex().."StartBlink", NextLoot, 1, function() if IsValid(self) then self:AddEffects(EF_ITEM_BLINK) end end )
 	elseif caller:IsCP() then
@@ -195,7 +193,7 @@ if SERVER then
 end
 
 	function ENT:OnRemove()
-	 timer.Remove("StartBlink")
+	 timer.Remove(self:EntIndex().."StartBlink")
 	 end
 	
 	--function ENT:Think()
