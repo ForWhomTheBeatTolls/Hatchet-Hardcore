@@ -65,5 +65,6 @@ WILLMASTER CODING SIDE:
 MUHAMMED CODING SIDE:
 ------------------------
 
+-Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
 -Fix Lockshockers
 -Add workforce entities (This is mainly about the minigame system)
