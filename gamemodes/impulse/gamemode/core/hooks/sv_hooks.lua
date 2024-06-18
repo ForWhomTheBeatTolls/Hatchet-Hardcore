@@ -547,6 +547,18 @@ function GM:PlayerSay(ply, text, teamChat, newChat)
 
 		for v,k in pairs(player.GetAll()) do
 			if (ply:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.TalkDistance ^ 2) then
+
+				if string.len(text) != 1 then
+					if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+						text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )
+					else
+						text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+					end
+				else
+					text = string.upper(string.Left(text, 1))..string.Replace(string.Right( text, 2 ), string.Right( text, 2 ), ".")
+				end
+
+
 				k:SendChatClassMessage(1, text, ply)
 			end
 		end
