@@ -21,7 +21,21 @@ local zapsounds = {
 "ambient/energy/zap7.wav"
 }
 
+local openabledoors = {
+"introom_door_1",
+"barney_door_2",
+"storage_room_door",
+"CombineLockedDoor_01",
+"CombineLockedDoor_02"
+}
+
 function ITEM:OnUse(ply, door)
+	local returnedlsh
+	if table.HasValue(openabledoors, door:GetName()) then
+		returnedlsh = true
+	else
+		returnedlsh = false
+	end
 	--print("what")
 	--local chance = math.random(1, 100)
 	--local skill = ply:GetSkillLevel("lockpick")
@@ -56,16 +70,28 @@ function ITEM:OnUse(ply, door)
 		--ply:ChatPrint("YIPPEE")
 		--door:EmitSound("buttons/combine_button2.wav")
 		ply:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, 279 )
-		timer.Simple( 1, function () door:EmitSound("buttons/combine_button2.wav") end)
+		timer.Simple( 1, function ()
+		if returnedlsh == true then
+			door:EmitSound("buttons/combine_button2.wav")
+		else 
+			ply:Notify("There's no lock to use this on.")
+		end
+		
+		end)
+		
 		timer.Simple( 3, function()
 		if door:IsPropDoor() then
+			if returnedlsh == true then
 			door:EmitSound(table.Random(zapsounds[ math.random( #zapsounds ) ]))
 			door:Fire("open", "", 0)
             door:Fire("setanimation", "open", 0)
+			end
         else
+			if returnedlsh == true then
 			door:EmitSound(zapsounds[ math.random( #zapsounds ) ])
         	door:Fire("unlock", "", 0)
 			door:Fire("open", "", 0)
+			end
 		end
 		end)
 		timer.Simple( 6, function()
@@ -75,10 +101,10 @@ function ITEM:OnUse(ply, door)
 
 	    -- --ply:EmitSound("weapons/357/357_reload4.wav")
 		-- --ply:Notify("You have successfully lockpicked the door.")
-
-		
 	end)
-	return true
+	
+	return returnedlsh
+	
 	end
 
 function ITEM:ShouldTraceUse(ply, ent)
@@ -87,7 +113,7 @@ function ITEM:ShouldTraceUse(ply, ent)
     end
 	
 	if not ent:IsDoor() then
-		return fals
+		return false
 	end
 
 	local group = ent:GetSyncVar(SYNC_DOOR_GROUP, nil)
