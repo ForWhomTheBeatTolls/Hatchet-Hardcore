@@ -185,18 +185,22 @@ local whisperCommand = {
 	description = "Whisper in character.",
 	requiresArg = true,
 	requiresAlive = true,
-	onRun = function(ply, arg, rawText)
-		rawText = hook.Run("ChatClassMessageSend", 7, rawText, ply) or rawText
+	onRun = function(ply, arg, text)
+		text = hook.Run("ChatClassMessageSend", 7, text, ply) or text
 
 		for v,k in pairs(player.GetAll()) do
 			if (ply:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.WhisperDistance ^ 2) then 
-				if string.EndsWith( rawText, "." ) or string.EndsWith( rawText, "?" ) or string.EndsWith( rawText, "!" ) then
-					rawText = string.upper( string.Left(rawText, 1) )..string.Right( rawText, string.len( rawText ) - 1 )
+				if string.len(text) != 1 then
+					if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+						text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )
+					else
+						text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+					end
 				else
-					rawText = string.upper( string.Left(rawText, 1) )..string.Right( rawText, string.len( rawText ) - 1 )..string.Replace(string.Right( rawText, 1 ), string.Right( rawText, 1 ), ".")
+					text = string.upper(string.Left(text, 1))..string.Replace(string.Right( text, 2 ), string.Right( text, 2 ), ".")
 				end
 
-				k:SendChatClassMessage(7, rawText, ply)
+				k:SendChatClassMessage(7, text, ply)
 			end
 		end
 	end
