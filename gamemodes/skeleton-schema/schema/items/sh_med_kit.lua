@@ -26,9 +26,18 @@ ITEM.UseWorkBarName = "Applying..."
 ITEM.UseWorkBarFreeze = false
 ITEM.UseWorkBarSound = "items/smallmedkit1.wav"
 
+local increment = 1
 function ITEM:OnUse(ply, target)
 	if ply:Health() < ply:GetMaxHealth() then
-	ply:SetHealth(math.Clamp(ply:Health() + 100, 0, ply:GetMaxHealth()))
+	if timer.Exists(ply:EntIndex().."HealOverTime") then timer.Remove(ply:EntIndex().."HealOverTime") end
+		timer.Create(ply:EntIndex().."HealOverTime", 0.9, 40, function()
+			if ply:Alive() and ply:Health() < 100 then
+				ply:SetHealth(ply:Health() + increment)
+				increment = increment + 0.1
+			else
+				timer.Remove(ply:EntIndex().."HealOverTime")
+			end
+		end)
 	ply:Say("/me uses a Healthkit.")
 	else
 	ply:Notify("You can't use this, for you are not harmed.")
