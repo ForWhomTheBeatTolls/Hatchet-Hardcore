@@ -1,6 +1,6 @@
 -- Framework related
 impulse.Config.SchemaName = "hatchet-hl2rpg"
-impulse.Config.SchemaVersion = 91
+impulse.Config.SchemaVersion = 287
 
 impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>Project Lead: WillMaster, Steve B.</font>
@@ -34,7 +34,7 @@ impulse.Config.VoiceDistance = 950
 impulse.Config.OOCLimit = 500
 impulse.Config.OOCLimitVIP = 280
 
-impulse.Config.PropLimit = 90
+impulse.Config.PropLimit = 10
 impulse.Config.PropLimitDonator = 170
 
 impulse.Config.BuyableSpawnLimit = 6
@@ -46,8 +46,8 @@ impulse.Config.StartingMoney = 50
 impulse.Config.StartingBankMoney = 450
 impulse.Config.StartingKills = 0
 impulse.Config.StartingRankPoints = 0
-impulse.Config.CurrencyPrefix = "£"
-impulse.Config.CurrencyName = "pounds"
+impulse.Config.CurrencyPrefix = "T"
+impulse.Config.CurrencyName = "tokens"
 impulse.Config.ATMModel = "models/props_combine/combine_intwallunit.mdl"
 
 impulse.Config.XPTime = 100
@@ -63,8 +63,8 @@ impulse.Config.TeamChangeTimeDonator = 15
 impulse.Config.ClassChangeTime = 60
 impulse.Config.QuizWaitTime = 20 -- in mins
 
-impulse.Config.RespawnTime = 10
-impulse.Config.RespawnTimeDonator = 10
+impulse.Config.RespawnTime = 1
+impulse.Config.RespawnTimeDonator = 1
 
 impulse.Config.BodyDeSpawnTime = 360 -- 6 mins
 
@@ -121,20 +121,6 @@ impulse.Config.BoxTime = 15
 impulse.Config.RationTime = 1800
 
 impulse.Config.OSArea = Vector(1571, -1574, 191)
-
-impulse.Config.PassiveMusic = {
-{"music/hl1_song26.mp3", 69},
-{"music/hl2_song13.mp3", 53},
-{"music/hl2_song17.mp3", 61},
-{"music/hl2_song23_suitsong3.mp3", 43},
-{"music/hl2_song30.mp3", 104}
-}
-
-impulse.Config.CombatMusic = {
-{"aj_song27.wav", 220},
-{"music/hl2_song29.mp3", 135},
-{"music/hl2_song26_trainstation1.mp3", 90}
-}
 
 
 impulse.Config.BeepSounds = {
@@ -305,7 +291,7 @@ impulse.Config.LootPools = {
 			["wep_crowbar"] = {Rarity = 900},
 			["wep_pipe"] = {Rarity = 900}, 
 			["wep_shovel"] = {Rarity = 900},
-			["wep_cleaver"] = {Rarity = 900},
+			--["wep_cleaver"] = {Rarity = 900},
 			["util_electronics"] = {Rarity = 900},
 			["ammo_pistol"] = {Rarity = 900},
 			["ammo_smg"] = {Rarity = 900},
