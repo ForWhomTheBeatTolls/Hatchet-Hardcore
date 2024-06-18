@@ -14,7 +14,7 @@ function ENT:Initialize()
 if SERVER then
 
 self:SetModel("models/hunter/plates/plate.mdl")
-self:SetColor( Color( 255, 255, 255, 200 ) )
+self:SetColor( Color( 255, 255, 255, 0 ) )
 self:SetMoveType( MOVETYPE_VPHYSICS )
 self:SetSolid( SOLID_VPHYSICS )
 self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
@@ -24,7 +24,7 @@ local fire = ents.Create("env_fire")
 fire:SetPos(self:GetPos())
 
 fire:SetKeyValue("health","nil")
-fire:SetKeyValue("firesize","6")
+fire:SetKeyValue("firesize","12")
 fire:SetKeyValue("fireattack","1")
 fire:SetKeyValue("damagescale","2")
 fire:SetKeyValue("spawnflags","128")
