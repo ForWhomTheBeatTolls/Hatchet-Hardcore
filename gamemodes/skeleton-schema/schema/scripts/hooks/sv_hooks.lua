@@ -78,20 +78,20 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	if ply:Team(ply) == TEAM_CP then
 		dmginfo:ScaleDamage(0.7)
 		end
-	if ply:Team(ply) == TEAM_CP and (dmginfo:GetDamageType() == DMG_CLUB)  then
+	if ply:Team(ply) == TEAM_CP and dmginfo:GetAmmoType() == game.GetAmmoID("Snark")  then
 		dmginfo:ScaleDamage(1.5)
 		end
 	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound"))  then
-		dmginfo:ScaleDamage(1.2)
+		dmginfo:ScaleDamage(1.45)
 		end
 	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("357"))  then
-		dmginfo:ScaleDamage(1.55)
+		dmginfo:ScaleDamage(1.42)
 		end
 	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("AR2"))  then
-		dmginfo:ScaleDamage(1.55)
+		dmginfo:ScaleDamage(1.45)
 		end
 	if ply:Team(ply) == TEAM_CP and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot"))  then
-		dmginfo:ScaleDamage(1.55)
+		dmginfo:ScaleDamage(1.05)
 		end
 	if (hitgroup == HITGROUP_LEFTLEG or hitgroup == HITGROUP_RIGHTLEG or hitgroup == HITGROUP_RIGHTARM or hitgroup == HITGROUP_LEFTARM) then
 	dmginfo:ScaleDamage(2.8)
@@ -103,7 +103,7 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 		dmginfo:ScaleDamage(0.8)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) then
-		dmginfo:ScaleDamage(2.5)
+		dmginfo:ScaleDamage(2.1)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) then
 		dmginfo:ScaleDamage(2.4)
@@ -115,7 +115,7 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 		dmginfo:ScaleDamage(1)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound")) and (hitgroup == HITGROUP_HEAD) then
-		dmginfo:ScaleDamage(0.6)
+		dmginfo:ScaleDamage(0.5)
 	end
 	if ply:Team(ply) == TEAM_OTA and (dmginfo:GetAmmoType() == game.GetAmmoID("357")) and (hitgroup == HITGROUP_HEAD) then
 		dmginfo:ScaleDamage(0.6)
@@ -129,6 +129,21 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) then
 	dmginfo:ScaleDamage(0.7)
 	end
+	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) and dmginfo:GetAmmoType() == game.GetAmmoID("Snark")  then
+		dmginfo:ScaleDamage(1.5)
+		end
+	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) and (dmginfo:GetAmmoType() == game.GetAmmoID("12mmRound"))  then
+		dmginfo:ScaleDamage(1.45)
+		end
+	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) and (dmginfo:GetAmmoType() == game.GetAmmoID("357"))  then
+		dmginfo:ScaleDamage(1.42)
+		end
+	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) and (dmginfo:GetAmmoType() == game.GetAmmoID("AR2"))  then
+		dmginfo:ScaleDamage(1.45)
+		end
+	if (ply.HasVest == true) and (hitgroup != HITGROUP_HEAD) and (dmginfo:GetAmmoType() == game.GetAmmoID("Buckshot"))  then
+		dmginfo:ScaleDamage(1.05)
+		end
 	if (ply.WeldingMask == true) and (hitgroup == HITGROUP_HEAD) then
 	dmginfo:ScaleDamage(0.55)
 	end
@@ -136,9 +151,9 @@ function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 end
 	
 	
-hook.Add( "PlayerHurt", "HurtEffect", function(ply)
-	ply:ScreenFade( SCREENFADE.IN, Color( 215, 0, 0, 128 ), 0.3, 0 )
-end)
+-- hook.Add( "PlayerHurt", "HurtEffect", function(ply)
+	-- ply:ScreenFade( SCREENFADE.IN, Color( 215, 0, 0, 128 ), 0.3, 0 )
+-- end)
 		
 
 -- -- hook.Add( "PlayerShouldTakeDamage", "OSAcidImmunity", function( ply, attacker )
@@ -194,6 +209,10 @@ function SCHEMA:PlayerDeath(ply, attacker)
 
 	ply.lastDeath = CurTime()
 	ply.IsInASequence = false
+	
+	if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
+		impulse.Inventory.SpawnItem("item_kevlar", ply:GetPos())
+	end
 	
 	if ply:GetSyncVar(SYNC_DISPATCH_BOL, nil) then
 		ply:RemoveDispatchBOL()
@@ -312,7 +331,13 @@ end
 hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
 
 	local duration = nil  //How much time do the drops exist for until they dissapear (nil makes them not dissapear at all)
-	local handpos = npc:GetBonePosition(npc:LookupBone("ValveBiped.Bip01_R_Hand"))
+	local handbonenum = npc:LookupBone("ValveBiped.Bip01_R_Hand")
+	local handpos
+	if handbonenum then
+		handpos = npc:GetBonePosition(npc:LookupBone("ValveBiped.Bip01_R_Hand"))
+	else
+		handpos = npc:GetPos()
+	end
 
 	if npc:GetClass() == "npc_headcrab" or npc:GetClass() == "npc_headcrab_black" or npc:GetClass() == "npc_headcrab_fast" then
 		impulse.Inventory.SpawnItem("item_bucket", npc:GetPos() + Vector(0, 0, 20), nil, duration)
