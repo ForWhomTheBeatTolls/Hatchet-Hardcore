@@ -394,11 +394,11 @@ hook.Add("EntityTakeDamage", "DeathAnimsBrutal", function(ent, dmg)
         elseif (dmg:GetDamageType() == DMG_CLUB or dmg:GetDamageType() == DMG_CRUSH) and !ClubAsDefault:GetBool() then
             ent.DeathAnimType = "club"
         elseif dmg:GetDamageType() == DMG_SLASH or (dmg:GetDamageType() == DMG_CLUB or dmg:GetDamageType() == DMG_CRUSH) and ClubAsDefault:GetBool() then
-            ent.DeathAnimType = "slash"
+            ent.DeathAnimType = "slash"		
         elseif OtherAsDefault:GetBool() then
             ent.DeathAnimType = "bullet"
-	else
-	    ent.DeathAnimType = "club"		
+		else
+			ent.DeathAnimType = "club"
         end
     end
 end)
@@ -441,7 +441,6 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 		rag:Remove()
 	else
 	local vel = ent:GetVelocity()
-    if ent:IsNPC() and !EnableNPCs:GetBool() then return end
     if ent.DeathAnimType then
         local physcount = rag:GetPhysicsObjectCount()
         for i = 0, physcount - 1 do
@@ -451,7 +450,7 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 				timer.Simple(0.1, function()
 					ent:Remove()
 				end)
-				end
+			end
 				
             local pos, ang = ent:GetBonePosition(ent:TranslatePhysBoneToBone(i))
 			
@@ -475,13 +474,13 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 	
 	elseif ent.DeathAnimType == "explosion" then
 		ent:Remove()
-		
-		local physcount = rag:GetPhysicsObjectCount()
+	local physcount = rag:GetPhysicsObjectCount()
 	for i = 0, physcount - 1 do
+	local physObj = rag:GetPhysicsObjectNum(i)
 	physObj:SetVelocity(Vector(0,0,0))
 	end
 	
-	end
+	end	
 	
 	timer.Simple(impulse.Config.BodyDeSpawnTime, function()
 		if IsValid(rag) then
@@ -492,6 +491,52 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 					rag:Remove() -- just in case
 				end
 			end)
+		end
+	end)
+	
+	-- timer.Simple(0.1, function()
+		-- if IsValid(rag) then
+			-- local matrix = rag:GetBoneMatrix(rag:LookupBone("ValveBiped.Bip01_R_Hand"))
+			-- local f, r, u = matrix:GetForward(), matrix:GetRight(), matrix:GetUp()
+			-- local angles = matrix:GetAngles()
+			-- local position = rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_R_Hand"))
+			-- if rag:GetOwner().LastWeapon == "m_ak47" then
+				-- for k,v in pairs(ents.FindByClass("impulse_item")) do
+					-- if (v:GetPos():DistToSqr(rag:GetPos()) < 250) and (v:GetModel() == "models/weapons/w_rif_ak47.mdl") then
+						-- v:SetPos(rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_R_Hand")))
+						-- constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_R_Hand") ), 1000, true, false )
+					-- end
+				-- end
+			-- elseif rag:GetOwner().LastWeapon == "m_usp" then
+				-- for k,v in pairs(ents.FindByClass("impulse_item")) do
+					-- if (v:GetPos():DistToSqr(rag:GetPos()) < 250) and (v:GetModel() == "models/weapons/w_pistol.mdl") then
+						-- v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+						-- v:FollowBone(rag, rag:LookupBone("ValveBiped.Bip01_R_Hand"))
+						-- v:SetAngles(angles + Angle(180,0,180))
+						-- v:SetPos(position + f*4 +r*1 + u*2)
+						-- --constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_R_Hand") ), 4000, true, false )
+						-- print(angles)
+						-- print(v:GetAngles())
+					-- end
+				-- end
+			-- end
+		-- end
+	-- end)
+			
+	timer.Simple(0.2, function()
+		if IsValid(rag) then			
+			local f = rag:GetAngles():Forward()
+			local u = rag:GetAngles():Up()
+			for k,v in pairs(ents.FindByClass("impulse_item")) do
+				if (v:GetPos():DistToSqr(rag:GetPos()) < 1250) then
+					if v:GetModel() == "models/weapons/w_defuser.mdl" then
+						v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+						v:SetPos(rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_Spine4")) + f*6.5 + u*-10 )
+						v:SetAngles(Angle(180, 0, 0))
+						constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_Spine4") ), 5000, true, false)
+					end
+				end
+			end
 		end
 	end)
 	
