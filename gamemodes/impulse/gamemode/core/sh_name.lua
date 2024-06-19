@@ -14,6 +14,21 @@ if SERVER then
 		self:SetSyncVar(SYNC_RPNAME, name, true)
 	end
 
+	function meta:SetDescName(desc, save)
+		if save then
+			local query = mysql:Update("impulse_players")
+			query:Update("rpdesc", desc)
+			query:Where("steamid", self:SteamID())
+			query:Execute(true)
+
+			self.defaultDescName = desc
+		end
+
+		hook.Run("PlayerDescChanged", self, self:Name(), desc)
+
+		self:SetSyncVar(SYNC_RPDESC, name, true)
+	end
+
 	function meta:GetSavedRPName()
 		return self.defaultRPName
 	end
