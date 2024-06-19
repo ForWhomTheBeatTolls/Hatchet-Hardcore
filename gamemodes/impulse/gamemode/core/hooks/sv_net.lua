@@ -99,6 +99,7 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 	ply.NextCreate = CurTime() + 10
 
 	local charName = net.ReadString()
+	local charDesc = net.ReadString()
 	local charModel = net.ReadString()
 	local charSkin = net.ReadUInt(8)
 
@@ -108,8 +109,16 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 
 	local canUseName, filteredName = impulse.CanUseName(charName)
 
+	local canUseDesc, filteredDesc = impulse.CanUseDesc(charDesc)
+
 	if canUseName then
 		charName = filteredName
+	else
+		return ply:Kick(AUTH_FAILURE)
+	end
+
+	if canUseDesc then
+		charDesc = filteredDesc
 	else
 		return ply:Kick(AUTH_FAILURE)
 	end
@@ -131,6 +140,7 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 		
 		local insertQuery = mysql:Insert("impulse_players")
 		insertQuery:Insert("rpname", charName)
+		insertQuery:Insert("rpdesc", charDesc)
 		insertQuery:Insert("steamid", plyID)
 		insertQuery:Insert("group", "user")
 		insertQuery:Insert("rpgroup", 0)
@@ -148,6 +158,7 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 				local setupData = {
 					id = lastID,
 					rpname = charName,
+					rpdesc = charDesc,
 					steamid = plyID,
 					group = "user",
 					rpgroup = nil,
