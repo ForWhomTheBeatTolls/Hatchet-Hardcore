@@ -234,18 +234,37 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		font = "BubbleChat-Me"
 		chatradius = impulse.Config.TalkDistance
 	elseif string.StartsWith(text, "/y") then
-		-- text = string.upper( string.Left(text, string.len( text )) )..string.Right( text, string.len( text ) - 1 )..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
-		-- print(text)
-		msg = string.Replace(text, "/y", "")
+		if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+			text = string.upper(text)
+		else
+			text = string.upper(text)..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), "!")
+		end
+		print(text)
+		msg = string.Replace(text, "/Y", "")
 		color = Color(255, 38, 0)
 		font = "BubbleChat-Yell"
 		chatradius = impulse.Config.YellDistance
 	elseif string.StartsWith(text, "/w") then
-		msg = string.Replace(text, "/w", "")
+		if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+			text = string.upper(text)..string.Left(text, string.len(text) - 3)
+		else
+			text = string.upper(text)..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+		end
+		print(text)
+		msg = string.Replace(text, "/W", "")
 		color = Color(64, 201, 255)
 		font = "BubbleChat-Whisper"
 		chatradius = impulse.Config.WhisperDistance
 	else
+		if string.len(text) != 1 then
+			if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+				text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )
+			else
+				text = string.upper( string.Left(text, 1) )..string.Right( text, string.len( text ) - 1 )..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+			end
+		else
+			text = string.upper(string.Left(text, 1))..string.Replace(string.Right( text, 2 ), string.Right( text, 2 ), ".")
+		end
 		chatradius = impulse.Config.TalkDistance
 		msg = text
 	end
