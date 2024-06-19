@@ -384,16 +384,16 @@ hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
 end)
 
 gameevent.Listen( "player_connect" )
-hook.Add("player_connect", "AnnounceConnection", function( data )
+hook.Add("player_connect", "HatchetJANITORConnectNotif", function( data )
 	for i, ply in pairs( player.GetAll() ) do
-		ply:SendChatClassMessage(17, data.name.." Has connected to the server.", ply)
+		ply:SendChatClassMessage(17, data.name.." Has connected to the server. SteamID: "..data.networkid, ply)
 	end
 end)
 
 gameevent.Listen( "player_disconnect" )
-hook.Add( "player_disconnect", "player_disconnect_example", function( data )
+hook.Add( "player_disconnect", "HatchetJANITORDisconnectNotif", function( data )
 	for i, ply in pairs( player.GetAll() ) do
-		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server.", ply)
+		ply:SendChatClassMessage(18, data.name.." Has disconnected from the server. SteamID: "..data.networkid, ply)
 	end
 end )
 
