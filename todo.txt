@@ -29,6 +29,7 @@ TO-DO LIST:
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Whitelist command, system. (Important for OS!)
 -Clean up code (Comments and old code that we don't need)
+-Dispatch role (Top-down lambda wars-esque gameplay)
 
 
 DONE LIST:
