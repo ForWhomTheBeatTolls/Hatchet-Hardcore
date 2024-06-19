@@ -67,6 +67,14 @@ function impulse.CanUseName(name)
 	return true, name
 end
 
+function impulse.CanUseDesc(desc)
+	if desc:len() >= 245 then
+		return false, "Description too long. (max. 114)" 
+	end
+
+	return true, desc
+end
+
 meta.steamName = meta.steamName or meta.Name
 function meta:SteamName()
 	return self.steamName(self)
