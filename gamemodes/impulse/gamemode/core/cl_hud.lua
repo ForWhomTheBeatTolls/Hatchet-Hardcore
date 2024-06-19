@@ -139,6 +139,22 @@ local function DrawOverheadInfo(target, alpha)
 	elseif target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
 		draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
 	end
+
+	local desc = target:GetSyncVar(SYNC_RPDESC, "")
+
+	// Experimental, will finish later
+	-- if string.len(desc) > 62  then
+	-- 	draw.DrawText(string.Left(desc, string.len(desc) / 2.05).."\n"..string.Right(desc, string.len(desc) / 1.9), "Impulse-Elements18-Shadow", pos.x, pos.y - 35, Color(255, 255, 255), 1)
+	-- else
+	-- 	draw.DrawText(desc, "Impulse-Elements18-Shadow", pos.x, pos.y - 25, Color(255, 255, 255), 1)
+	-- end
+
+	// Optimization, maybe? this will not draw the text if the player decided not to have a description
+	if string.len(desc) == 0 then
+		return
+	else
+		draw.DrawText(desc, "Impulse-Elements18-Shadow", pos.x, pos.y - 25, Color(255, 255, 255), 1)
+	end
 end
 
 local function DrawDoorInfo(target, alpha)
