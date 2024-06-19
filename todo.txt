@@ -10,6 +10,7 @@ LEAVE IT FOR NOW:
 SCRAPPED / NEEDS REWORK:
 
 -Add resistance and similar skills (Resistance skill is scrapped)
+-Whitelist command (Using manual input instead)
 
 ---------------------------------------------------------------------
 NEED TWEAKING IN CODING:
@@ -27,7 +28,6 @@ TO-DO LIST:
 -Add terminals for CP (Gear selection, Credential terminal)
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
--Whitelist command, system. (Important for OS!)
 -Clean up code (Comments and old code that we don't need)
 -Dispatch role (Top-down lambda wars-esque gameplay)
 -Dequavion Ammo Bender
@@ -59,6 +59,7 @@ DONE LIST:
 -Kush Johnson World Eater
 -Add descriptions (Will be Optional)
 -Fix Lockshockers
+-Better whitelist system
 
 
 WILLMASTER CODING SIDE:
