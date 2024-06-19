@@ -84,7 +84,7 @@ end
 
 function impulse.CanUseDesc(desc)
 	if desc:len() >= 245 then
-		return false, "Description too long. (max. 114)" 
+		return false, "Description too long. (max. 245)" 
 	end
 
 	return true, desc
