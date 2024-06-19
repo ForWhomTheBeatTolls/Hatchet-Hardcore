@@ -41,9 +41,9 @@ function PANEL:Init()
 	end
 
 	local defaultButton = self:AddSheet("Actions", Material("impulse/icons/banknotes-256.png"), self.quickActions, self.QuickActions)
+	self:AddSheet("Business", Material("impulse/icons/cart-73-256.png"), self.business, self.Business)
 	self:AddSheet("Information", Material("impulse/icons/info-256.png"), self.info, self.Info)
-	self:AddSheet("Business", Material("impulse/icons/cart-73-256.png"), self.business, self.Business) // keeping this for now
-	//self:AddSheet("Teams", Material("impulse/icons/group-256.png"), self.teams, self.Teams)
+	self:AddSheet("", Material("gui/legs"), self.teams, self.Teams)
 
 	self.tabSheet:SetActiveButton(defaultButton)
 	defaultButton.loaded = true
@@ -119,18 +119,6 @@ function PANEL:QuickActions()
 	local btn = self.list:Add("DButton")
 	if impulse.IsHighRes() then btn:SetTall(30) btn:SetFont("Impulse-Elements17-Shadow") end
 	btn:Dock(TOP)
-	btn:SetText("Change Description")
-	function btn:DoClick()
-		Derma_StringRequest("impulse", "Enter your new description:", nil, function(text)
-			net.Start("impulseChangeDescription")
-			net.WriteString(text)
-			net.SendToServer()
-		end)
-	end
-
-	local btn = self.list:Add("DButton")
-	if impulse.IsHighRes() then btn:SetTall(30) btn:SetFont("Impulse-Elements17-Shadow") end
-	btn:Dock(TOP)
 	btn:SetText("Sell all doors")
 	function btn:DoClick()
 		net.Start("impulseSellAllDoors")
@@ -161,8 +149,7 @@ function PANEL:QuickActions()
 	self.list:SetSpaceX(5)
 
 	local classes = impulse.Teams.Data[LocalPlayer():Team()].classes
-	--if classes and LocalPlayer():InSpawn() then
-	if classes then
+	if classes and LocalPlayer():InSpawn() then
 		for v,classData in pairs(classes) do
 			if not classData.noMenu and LocalPlayer():GetTeamClass() != v then
 				local btn = self.list:Add("DButton")
@@ -183,126 +170,6 @@ function PANEL:QuickActions()
 					net.SendToServer()
 				end
 			end
-		end
-	end
-end
-
-function PANEL:Teams()
-	self.modelPreview = vgui.Create("DModelPanel", self.teams)
-	self.modelPreview:SetPos(373, 0)
-	self.modelPreview:SetSize(300, 370)
-	self.modelPreview:MoveToBack()
-	self.modelPreview:SetCursor("arrow")
-	self.modelPreview:SetFOV(self.modelPreview:GetFOV() - 19)
- 	function self.modelPreview:LayoutEntity(ent)
- 		ent:SetAngles(Angle(0, 43, 0))
- 		--ent:SetSequence(ACT_IDLE)
- 		--self:RunAnimation()
- 	end
-
- 	self.descLbl = vgui.Create("DLabel", self.teams)
- 	self.descLbl:SetText("Description:")
- 	self.descLbl:SetFont("Impulse-Elements18")
- 	self.descLbl:SizeToContents()
- 	self.descLbl:SetPos(410, 380)
-
-  	self.descLblT = vgui.Create("DLabel", self.teams)
- 	self.descLblT:SetText("")
- 	self.descLblT:SetFont("Impulse-Elements14")
- 	self.descLblT:SetPos(410, 400)
- 	self.descLblT:SetContentAlignment(7)
-  	self.descLblT:SetSize(230, 230)
-
-	self.teamsInner = vgui.Create("DPanel", self.teams)
-	self.teamsInner:SetSize(400, 580)
-	local panel = self
-	function self.teamsInner:Paint(w, h)
-		surface.SetDrawColor(panel.darkOverlay)
-		surface.DrawRect(0, 0, w, h)
-		return true
-	end
-
-	self.availibleTeams = vgui.Create("DCollapsibleCategory", self.teamsInner)
-	self.availibleTeams:SetLabel("Available teams")
-	self.availibleTeams:Dock(TOP)
-	local colInv = Color(0, 0, 0, 0)
-	function self.availibleTeams:Paint()
-		self:SetBGColor(colInv)
-	end
-
-	self.availibleTeamsScroll = vgui.Create("DScrollPanel", self.availibleTeams)
-	self.availibleTeamsScroll:Dock(FILL)
-	self.availibleTeams:SetContents(self.availibleTeamsScroll)
-
-	local availibleList = vgui.Create("DIconLayout", self.availibleTeamsScroll)
-	availibleList:Dock(FILL)
-	availibleList:SetSpaceY(5)
-	availibleList:SetSpaceX(5)
-
-	self.unavailibleTeams = vgui.Create("DCollapsibleCategory", self.teamsInner)
-	self.unavailibleTeams:SetLabel("Unavailable teams")
-	self.unavailibleTeams:Dock(TOP)
-	function self.unavailibleTeams:Paint()
-		self:SetBGColor(colInv)
-	end
-
-	self.unavailibleTeamsScroll = vgui.Create("DScrollPanel", self.unavailibleTeams)
-	self.unavailibleTeamsScroll:Dock(FILL)
-	self.unavailibleTeams:SetContents(self.unavailibleTeamsScroll)
-
-	local unavailibleList = vgui.Create("DIconLayout", self.unavailibleTeamsScroll)
-	unavailibleList:Dock(FILL)
-	unavailibleList:SetSpaceY(5)
-	unavailibleList:SetSpaceX(5)
-
-	for v,k in pairs(impulse.Teams.Data) do
-		local selectedList
-
-		if (k.xp > LocalPlayer():GetXP()) or (k.donatorOnly and k.donatorOnly == true and LocalPlayer():IsDonator() == false) then
-			selectedList = unavailibleList
-		else
-			selectedList = availibleList
-		end
-
-		local teamCard = selectedList:Add("impulseTeamCard")
-		teamCard:SetTeam(v)
-		teamCard.team = v
-		teamCard:Dock(TOP)
-		teamCard:SetHeight(60)
-		teamCard:SetMouseInputEnabled(true)
-		
-		local realSelf = self
-
-		function teamCard:OnCursorEntered()
-			local model = impulse.Teams.Data[self.team].model
-			local skin = impulse.Teams.Data[self.team].skin or 0
-			local desc = impulse.Teams.Data[self.team].description
-			local bodygroups = impulse.Teams.Data[self.team].bodygroups
-
-			if not model then
-				model = impulse_defaultModel or "models/Humans/Group01/male_02.mdl" 
-				skin = impulse_defaultSkin or 0
-			end
-
-			realSelf.modelPreview:SetModel(model)
-			realSelf.modelPreview.Entity:SetSkin(skin)
-
-			if bodygroups then
-				for v, bodygroupData in pairs(bodygroups) do
-					realSelf.modelPreview.Entity:SetBodygroup(bodygroupData[1], (bodygroupData[2] or 0))
-				end
-			end
-
-			realSelf.descLblT:SetText(desc)
-			realSelf.descLblT:SetWrap(true)
-		end
-
-		function teamCard:OnMousePressed()
-			net.Start("impulseTeamChange")
-			net.WriteUInt(self.team, 8)
-			net.SendToServer()
-
-			realSelf:Remove()
 		end
 	end
 end
