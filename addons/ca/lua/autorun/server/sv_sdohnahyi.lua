@@ -524,16 +524,19 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 	-- end)
 			
 	timer.Simple(0.2, function()
-		if IsValid(rag) then			
+		if IsValid(rag) then
+			local owner = rag:GetOwner()
 			local f = rag:GetAngles():Forward()
 			local u = rag:GetAngles():Up()
 			for k,v in pairs(ents.FindByClass("impulse_item")) do
-				if (v:GetPos():DistToSqr(rag:GetPos()) < 1250) then
-					if v:GetModel() == "models/weapons/w_defuser.mdl" then
-						v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-						v:SetPos(rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_Spine4")) + f*6.5 + u*-10 )
-						v:SetAngles(Angle(180, 0, 0))
-						constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_Spine4") ), 5000, true, false)
+				if owner:IsPlayer() and (owner:Team() == TEAM_CP or owner:Team() == TEAM_OTA) then 
+					if (v:GetPos():DistToSqr(rag:GetPos()) < 1250) then
+						if v:GetModel() == "models/weapons/w_defuser.mdl" then
+							v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+							v:SetPos(rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_Spine4")) + f*6.5 + u*-10 )
+							v:SetAngles(Angle(180, 0, 0))
+							constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_Spine4") ), 5000, true, false)
+						end
 					end
 				end
 			end
