@@ -268,13 +268,12 @@ local ArabScreamCommand = {
 		if ply:GetSyncVar(SYNC_COS_FACE, 5) then
 			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
 			ply:Say("/y Alahlalalala!")
-		end
-		if ply:SteamID() == "STEAM_0:0:193471001" then
+		elseif ply:SteamID() == "STEAM_0:0:193471001" then
 			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
 			ply:Say("/y Alahlalalala!")
 		end
-
     end
 }
 
 impulse.RegisterChatCommand("/arabscream", ArabScreamCommand)
+
