@@ -22,7 +22,7 @@ local kickDoorCommand = {
 		ply.kickDoorCooldown = CurTime() + 2
 
 
-		if ply:Team() != TEAM_COP then
+		if ply:Team() != TEAM_CP then
 			return ply:Notify("You must be a Civil Protection officer to use this command.")
 		end
 
