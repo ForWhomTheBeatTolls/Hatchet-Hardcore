@@ -90,6 +90,7 @@ util.AddNetworkString("impulseGroupDoSetInfo")
 util.AddNetworkString("impulseGetButtons")
 util.AddNetworkString("impulseCLChatCommand")
 util.AddNetworkString("HatchetBubbleChatCall")
+-- util.AddNetworkString("HatchetAnimationCall")
 util.AddNetworkString("impulseChangeDescription")
 
 local AUTH_FAILURE = "Invalid argument (rejoin to continue)"
@@ -2323,3 +2324,15 @@ net.Receive("impulseGroupDoSetInfo", function(len, ply)
 
 	ply:Notify("You have updated the info for your group.")
 end)
+
+-- net.Receive("HatchetAnimationCall", function(len, ply)
+-- 	local anim = net.ReadString()
+
+-- 	if IsValid(ply) then
+-- 		ply:SetSequence(anim)
+-- 		ply:SetCycle(0)
+-- 		ply:SetPlaybackRate(1)
+-- 		timer.Simple(2, function() ply:LeaveSequence() end)
+-- 		print("Sent! Name: "..ply:Name())
+-- 	end
+-- end)
