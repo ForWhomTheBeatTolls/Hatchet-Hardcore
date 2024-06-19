@@ -1,6 +1,6 @@
 -- Framework related
 impulse.Config.SchemaName = "hatchet-hl2rpg"
-impulse.Config.SchemaVersion = 287
+impulse.Config.SchemaVersion = 303
 
 impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>Project Lead: WillMaster, Steve B.</font>
@@ -12,6 +12,10 @@ impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>TehRedd</font>
 <font=Impulse-Elements23>Jokey</font>
 <font=Impulse-Elements23>GhostfacedKillah</font>]]
+
+impulse.Config.WhitelistedPlayers = {
+"STEAM_0:1:204367223" -- SteveB.
+}
 
 impulse.Config.MainColour = Color(196, 108, 26)
 impulse.Config.InteractColour = Color(251, 197, 49)
