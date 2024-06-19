@@ -119,6 +119,18 @@ function PANEL:QuickActions()
 	local btn = self.list:Add("DButton")
 	if impulse.IsHighRes() then btn:SetTall(30) btn:SetFont("Impulse-Elements17-Shadow") end
 	btn:Dock(TOP)
+	btn:SetText("Change Description")
+	function btn:DoClick()
+		Derma_StringRequest("impulse", "Enter your new description:", nil, function(text)
+			net.Start("impulseChangeDescription")
+			net.WriteString(text)
+			net.SendToServer()
+		end)
+	end
+
+	local btn = self.list:Add("DButton")
+	if impulse.IsHighRes() then btn:SetTall(30) btn:SetFont("Impulse-Elements17-Shadow") end
+	btn:Dock(TOP)
 	btn:SetText("Sell all doors")
 	function btn:DoClick()
 		net.Start("impulseSellAllDoors")
