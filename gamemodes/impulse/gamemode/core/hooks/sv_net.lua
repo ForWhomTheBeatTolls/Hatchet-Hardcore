@@ -1012,8 +1012,8 @@ net.Receive("impulseChangeDescription", function(len, ply)
 	local desc = net.ReadString()
 	local canUseDesc, output = impulse.CanUseDesc(desc)
 	if canUseDesc then
-		hook.Run("PlayerChangeRPName", ply, output)
 		ply:Notify("You have changed your description to "..output..".")
+		ply:SetDescName(output, true)
 	else
 		ply:Notify("Description rejected: "..output)
 	end
