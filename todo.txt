@@ -2,6 +2,7 @@ LEAVE IT FOR NOW:
 
 - Damage slowdown (I give up.)
 - Improve Death Animations to include Weapons in the hand of the ragdoll
+- Animation menu using NET functions (You can go suck my dick i fucking hate garrys mod due to the fact it has no functions for this stupid shit)
 
 
 --------------------------
@@ -53,15 +54,14 @@ DONE LIST:
 - Add mixtures for all armors (I literally got no response on what did he mean by this)
 -CP rations
 -Kush Johnson World Eater
+- Add descriptions (Will be Optional)
 
 
 WILLMASTER CODING SIDE:
 ------------------------
 - Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
 - Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
-- Animation menu using NET functions
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
-- Add descriptions (Will be Optional)
 
 MUHAMMED CODING SIDE:
 ------------------------
