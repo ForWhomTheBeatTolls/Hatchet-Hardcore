@@ -30,6 +30,7 @@ TO-DO LIST:
 -Whitelist command, system. (Important for OS!)
 -Clean up code (Comments and old code that we don't need)
 -Dispatch role (Top-down lambda wars-esque gameplay)
+-Dequavion Ammo Bender
 
 
 DONE LIST:
@@ -56,7 +57,8 @@ DONE LIST:
 - Add mixtures for all armors (I literally got no response on what did he mean by this)
 -CP rations
 -Kush Johnson World Eater
-- Add descriptions (Will be Optional)
+-Add descriptions (Will be Optional)
+-Fix Lockshockers
 
 
 WILLMASTER CODING SIDE:
@@ -69,5 +71,4 @@ MUHAMMED CODING SIDE:
 ------------------------
 
 -Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
--Fix Lockshockers
 -Add workforce entities (This is mainly about the minigame system)
