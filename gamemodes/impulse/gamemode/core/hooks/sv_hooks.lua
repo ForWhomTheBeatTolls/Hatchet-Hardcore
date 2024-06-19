@@ -18,6 +18,7 @@ function GM:PlayerInitialSpawn(ply)
 	local query = mysql:Select("impulse_players")
 	query:Select("id")
 	query:Select("rpname")
+	query:Select("rpdesc")
 	query:Select("group")
 	query:Select("rpgroup")
 	query:Select("rpgrouprank")
@@ -291,6 +292,7 @@ function impulse.SetupPlayer(ply, dbData)
 	end
 
 	ply:SetSyncVar(SYNC_RPNAME, dbData.rpname, true)
+	ply:SetSyncVar(SYNC_RPDESC, dbData.rpdesc, true)
 	ply:SetSyncVar(SYNC_XP, dbData.xp, true)
 	ply:SetSyncVar(SYNC_KILLS, dbData.kills, true)
 	ply:SetSyncVar(SYNC_RANKPOINTS, dbData.rankpoints, true)
@@ -359,6 +361,7 @@ function impulse.SetupPlayer(ply, dbData)
 	ply.defaultModel = dbData.model
 	ply.defaultSkin = dbData.skin
 	ply.defaultRPName = dbData.rpname
+	ply.defaultRPDesc = dbData.rpdesc
 	ply.defaultKills = dbData.kills
 	ply.defaultrankpoints = dbData.rankpoints
 	ply:UpdateDefaultModelSkin()
