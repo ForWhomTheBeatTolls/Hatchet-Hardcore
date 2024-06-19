@@ -14,7 +14,7 @@ SCRAPPED / NEEDS REWORK:
 
 ---------------------------------------------------------------------
 NEED TWEAKING IN CODING:
-- Overhead chat (Please improve the command check inside the bubblechat code (Sh_net), its bad)
+- Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 
 NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
@@ -65,7 +65,6 @@ DONE LIST:
 WILLMASTER CODING SIDE:
 ------------------------
 - Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
-- Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 
 MUHAMMED CODING SIDE:
