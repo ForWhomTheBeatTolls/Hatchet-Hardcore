@@ -3,7 +3,7 @@ local PANEL = {}
 local grey = Color(209, 209, 209)
 
 function PANEL:Init()
-	self:SetSize(700, 470)
+	self:SetSize(710, 470)
 	self:Center()
  	self:MakePopup()
 
@@ -133,7 +133,7 @@ end
 	 		else
 	 			local item = self.invScroll:Add("impulseInventoryItem")
 	 			item:Dock(TOP)
-	 			item:DockMargin(0, 0, 0, 5)
+	 			item:DockMargin(10, 0, 0, 0)
 	 			item.Basic = true
 	 			item.ContainerInv = true
 	 			item.Type = 1
@@ -161,7 +161,7 @@ end
 
 	 		local item = self.invStorageScroll:Add("impulseInventoryItem")
 	 		item:Dock(TOP)
-	 		item:DockMargin(0, 0, 0, 5)
+	 		item:DockMargin(0, 0, 0, 0)
 	 		item.Basic = true
 	 		item.ContainerType = true
 	 		item.Type = 2
