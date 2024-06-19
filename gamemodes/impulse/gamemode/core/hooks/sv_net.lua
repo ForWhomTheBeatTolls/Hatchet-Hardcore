@@ -90,6 +90,7 @@ util.AddNetworkString("impulseGroupDoSetInfo")
 util.AddNetworkString("impulseGetButtons")
 util.AddNetworkString("impulseCLChatCommand")
 util.AddNetworkString("HatchetBubbleChatCall")
+util.AddNetworkString("impulseChangeDescription")
 
 local AUTH_FAILURE = "Invalid argument (rejoin to continue)"
 
@@ -992,6 +993,18 @@ net.Receive("impulseChangeRPName", function(len, ply)
 		end
 	else
 		ply:Notify("You cannot afford to change your name.")
+	end
+end)
+
+net.Receive("impulseChangeDescription", function(len, ply)
+	if not ply.beenSetup then return end
+	local desc = net.ReadString()
+	local canUseDesc, output = impulse.CanUseDesc(desc)
+	if canUseDesc then
+		hook.Run("PlayerChangeRPName", ply, output)
+		ply:Notify("You have changed your description to "..output..".")
+	else
+		ply:Notify("Description rejected: "..output)
 	end
 end)
 
