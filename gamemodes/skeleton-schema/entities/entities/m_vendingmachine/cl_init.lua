@@ -7,8 +7,6 @@ local glowMat = Material("sprites/glow04_noz")
 local gradLeft = Material("vgui/gradient-l")
 function ENT:Draw()
 	self:DrawModel()
-	self:CreateShadow()
-	if LocalPlayer():GetPos():DistToSqr(self:GetPos()) > 900 then return end
 
 	local position = self:GetPos()
 	local angles = self:GetAngles()
@@ -17,7 +15,7 @@ function ENT:Draw()
 
 	self.buttonLocation = self.buttonLocation or {}
 
-	self.buttonLocation[1] = position + f*18 + r*-24.4 + u*4.9
+	self.buttonLocation[1] = position + f*18 + r*-24.4 + u*5
 
 	angles:RotateAroundAxis(angles:Up(), 90)
 	angles:RotateAroundAxis(angles:Forward(), 90)
