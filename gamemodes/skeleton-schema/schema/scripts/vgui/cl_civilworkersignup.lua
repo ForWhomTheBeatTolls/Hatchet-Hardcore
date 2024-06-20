@@ -74,4 +74,4 @@ function PANEL:Init()
 	end
 
 end
-vgui.Register("commercialMenu", PANEL, "DFrame")
+vgui.Register("hatchetCivilWorkerSignup", PANEL, "DFrame")
