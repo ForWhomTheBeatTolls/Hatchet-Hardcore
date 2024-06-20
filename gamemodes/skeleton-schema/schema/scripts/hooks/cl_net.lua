@@ -6,6 +6,10 @@
 	-- end
 -- end)
 
+net.Receive("HatchetVendingMachineFillStart", function()
+	vgui.Create("impulseWorkforcePuzzle1")
+end)
+
 netstream.Hook("voicePlay", function(sounds, volume, index)
 	if not sounds or #sounds == 0 then
 		return
