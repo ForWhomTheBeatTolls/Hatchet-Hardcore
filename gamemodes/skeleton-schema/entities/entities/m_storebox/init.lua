@@ -129,6 +129,7 @@ local superloot = "wep_revolver"
 	--local boxloot = table.Random(lootbox)
 	local niceitemnames = {
 	[util_scrapmetal] = "Scrap Metal",
+	[util_recmetal] = "Reclaimed Metal",
 	[ammo_smg] = "a Box of SMG Ammo",
 	[ammo_pistol] = "a Box of Pistol Ammo",
 	[ammo_revolver] = "a Box of Revolver Ammo",
