@@ -1,6 +1,5 @@
 LEAVE IT FOR NOW:
 
-- Damage slowdown (I give up.)
 - Improve Death Animations to include Weapons in the hand of the ragdoll
 - Animation menu using NET functions (You can go suck my dick i fucking hate garrys mod due to the fact it has no functions for this stupid shit)
 
@@ -66,6 +65,7 @@ DONE LIST:
 -Better whitelist system
 -Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
 -Bubble chat, make it so /me's don't play sounds
+-DAMAGE SLOWDOWN!!! FUCKING FINALLY!!!
 
 
 WILLMASTER CODING SIDE:
