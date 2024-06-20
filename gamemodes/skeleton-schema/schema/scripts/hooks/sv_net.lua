@@ -17,7 +17,28 @@ util.AddNetworkString("impulseHL2RPTheatreControls")
 util.AddNetworkString("impulseHL2RPTheatreAction")
 util.AddNetworkString("impulseHL2RPRadioInDb")
 util.AddNetworkString("impulseHL2RPWorkforceRankUse")
+util.AddNetworkString("HatchetVendingMachineFillStart")
+util.AddNetworkString("HatchetVendingMachineFillEnd")
 -- util.AddNetworkString("doWearClothing")
+
+net.Receive("HatchetVendingMachineFillEnd", function()
+	local ply = net.ReadPlayer()
+	local tr = util.TraceLine( {
+	start = ply:EyePos(),
+	endpos = ply:EyePos() + ply:GetAimVector() * 100,
+	filter = function(ent) return ( ent:GetClass() == "m_vendingmachine" ) end
+} )
+	local ent = tr.Entity
+	local success = net.ReadBool()
+	if success == true and ent:GetClass() == "m_vendingmachine" then
+		ent:Refill()
+		ply:Notify("good for you")
+		ply:TakeInventoryItemClass("work_canbox", 1, 1)
+		ply.PendingReward = ply.PendingReward + 20
+	else
+		ply:Notify("bad for you")
+	end
+end)
 
 net.Receive("impulseHL2RPTerminalLeave", function(len, ply)
 	if IsValid(ply) and ply:IsCP() then
