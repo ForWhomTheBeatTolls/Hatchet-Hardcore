@@ -50,83 +50,6 @@ hook.Add("PlayerEndVoice", "SpeechIcon", function(ply)
 	end
 end)
 
-hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, volume, rf )
-		--if ply:KeyDown(IN_SPEED) then
-		if ply:Team() == TEAM_CP and !ply:KeyDown(IN_SPEED) then
-			--if ply == LocalPlayer() then
-			--	EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", ply:GetPos(), -1, nil, 65 / 100)
-			--else
-				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
-			--end
-		elseif ply:Team() == TEAM_CP and ply:KeyDown(IN_SPEED) then
-				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
-				
-			return true
-		end
-		if ply:Team() == TEAM_OTA and !ply:KeyDown(IN_SPEED) then
-			--if ply == LocalPlayer() then
-				--EmitSound("NPC_CombineS.FootstepLeft", ply:GetPos(), 100, 100)
-			--else
-				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 55)
-		elseif ply:Team() == TEAM_OTA and ply:KeyDown(IN_SPEED) then
-				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 75)
-			end
-		if ply:Team() == TEAM_RESISTANCE and !ply:KeyDown(IN_SPEED) and !ply:GetBodygroup(1, 1) == 6 or !ply:GetBodygroup(1, 1) == 5 or !ply:GetBodygroup(1, 1) == 8 or !ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
-		elseif ply:Team() == TEAM_RESISTANCE and ply:KeyDown(IN_SPEED) and ply:GetBodygroup(1, 1) == 6 or ply:GetBodygroup(1, 1) == 5 or ply:GetBodygroup(1, 1) == 8 or ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
-			return true
-		end
-		if ply:Team() == TEAM_CITIZEN and !ply:KeyDown(IN_SPEED) and !ply:GetBodygroup(1, 1) == 6 or !ply:GetBodygroup(1, 1) == 5 or !ply:GetBodygroup(1, 1) == 8 or !ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
-		elseif ply:Team() == TEAM_CITIZEN and ply:KeyDown(IN_SPEED) and ply:GetBodygroup(1, 1) == 6 or ply:GetBodygroup(1, 1) == 5 or ply:GetBodygroup(1, 1) == 8 or ply:GetBodygroup(1, 1) == 7 then
-			ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
-			return true
-		end
-end)
-	
-
-hook.Add("PlayerHurt","hatchetdamagefunctions",function(victim)
-	
-    if ( victim:Team() == TEAM_CP ) and (victim:Health() > 1) then
-        victim:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 70)
-	elseif ( victim:Team() == TEAM_OTA ) and (victim:Health() > 1) then
-		victim:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 70)
-	elseif ( victim:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (victim:Health() > 1) then
-		victim:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
-    end
-	
-end)
-
-	local deathsounds = {
-	"npc_citizen.die",
-	"npc_citizen.startle01",
-	"npc_citizen.startle02",
-	"ep1_citizen.cit_pain04",
-	"ep1_citizen.cit_pain06",
-	"ep1_citizen.cit_pain07",
-	"ep1_citizen.cit_shock02",
-	"ep1_citizen.cit_shock08",
-	"ep1_citizen.cit_shock11"
-	}
-	
-	
-hook.Add( "PlayerDeathSound", "CustomPlayerDeath", function( ply )
-	if (ply:Team() == TEAM_CP) then
-	ply:EmitSound("npc/metropolice/die"..math.random(1,4)..".wav", 70)
-	end
-	if (ply:Team() == TEAM_OTA) then
-	ply:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 70)
-	end
-	if (ply:Team() == TEAM_CITIZEN) then
-	ply:EmitSound(table.Random(deathsounds), 100)
-	end
-	if (ply:Team() == TEAM_RESISTANCE) then
-	ply:EmitSound(table.Random(deathsounds), 100)
-	end
-	return true
-end )
-
 hook.Add( "PlayerSwitchFlashlight", "BlockFlashLight", function( ply, enabled )
 	return (ply:Team() != TEAM_OTA and ply:HasInventoryItem("tool_flashlight") or ply:Team() == TEAM_CP) and ply:GetMoveType() != MOVETYPE_NOCLIP
 end )
@@ -250,7 +173,6 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		else
 			text = string.upper(text)..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
 		end
-		print(text)
 		msg = string.Replace(text, "/W", "")
 		color = Color(64, 201, 255)
 		font = "BubbleChat-Whisper"
@@ -277,22 +199,3 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
     net.WritePlayer(sender)
 	net.Broadcast()
 end)
-
-local ArabScreamCommand = {
-    description = "",
-    requiredArg = false,
-    adminOnly = false,
-    onRun = function(ply, arg)
-        local class = arg[1]
-		if ply:GetSyncVar(SYNC_COS_FACE, 5) then
-			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
-			ply:Say("/y Alahlalalala!")
-		elseif ply:SteamID() == "STEAM_0:0:193471001" then
-			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
-			ply:Say("/y Alahlalalala!")
-		end
-    end
-}
-
-impulse.RegisterChatCommand("/arabscream", ArabScreamCommand)
-
