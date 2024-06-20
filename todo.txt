@@ -21,6 +21,7 @@ NEED TWEAKING IN DESIGN:
 - Implement a temporary OS solution
 - Bubble chat, make it so /me's don't play sounds
 - Descriptions, make certain models have a forced description that you can add onto, for example: Male 04 having "A bald male......"
+- Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
 
 TO-DO LIST:
 -----------------------------------------------------
