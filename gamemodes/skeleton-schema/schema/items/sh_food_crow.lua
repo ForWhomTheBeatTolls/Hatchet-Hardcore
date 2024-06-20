@@ -4,7 +4,7 @@ ITEM.UniqueID = "food_crow"
 ITEM.Name = "Dead Crow"
 ITEM.Desc =  "A dead crow. You should probably cook this before eating."
 ITEM.Category = "Food"
-ITEM.Model = Model("models/foodnhouseholditems/piranha.mdl")
+ITEM.Model = Model("models/crow.mdl")
 ITEM.FOV = 16
 ITEM.Weight = 3
 ITEM.NoCenter = true
@@ -20,7 +20,7 @@ ITEM.UseWorkBarTime = 2
 ITEM.UseWorkBarName = "Trying to eat..."
 ITEM.UseWorkBarSound = "impulse/eat.wav"
 
-ITEM.Food = 35 
+ITEM.Food = 35 -- imagine if you coul take away a players health.. - Thrumbo || Yes, you can! - Muhammed
 
 function ITEM:OnUse(ply)
 	local thedice = math.random(1, 100)
