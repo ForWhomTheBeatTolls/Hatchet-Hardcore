@@ -238,6 +238,16 @@ end
 local deathEndingFade
 local deathEnding
 function GM:HUDPaint(mvData)
+
+	for k, v in pairs(player.GetAll()) do
+		local headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
+	
+		if LocalPlayer():IsValid() and LocalPlayer():GetPos():Distance( v:GetPos() ) <= 600 and LocalPlayer():IsLineOfSightClear(v) then
+			if v:GetSyncVar(SYNC_TYPING, false) then
+				draw.DrawText("Typing...", "Impulse-Elements24-Shadow", headpos.x, headpos.y + 15, Color(255, 255, 255), 1)
+			end
+		end
+	end
 	--local audio = GetConVar("volume")
 	--local audionum = audio:GetFloat()
 	local health = LocalPlayer():Health()
