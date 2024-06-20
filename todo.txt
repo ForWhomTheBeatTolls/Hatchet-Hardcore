@@ -19,7 +19,6 @@ NEED TWEAKING IN CODING:
 NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
 - Implement a temporary OS solution
-- Bubble chat, make it so /me's don't play sounds
 - Descriptions, make certain models have a forced description that you can add onto, for example: Male 04 having "A bald male......"
 - Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
 
@@ -34,6 +33,7 @@ TO-DO LIST:
 -Clean up code (Comments and old code that we don't need)
 -Dispatch role (Top-down lambda wars-esque gameplay)
 -Dequavion Ammo Bender
+-Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 
 
 DONE LIST:
@@ -64,6 +64,7 @@ DONE LIST:
 -Fix Lockshockers
 -Better whitelist system
 -Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
+-Bubble chat, make it so /me's don't play sounds
 
 
 WILLMASTER CODING SIDE:
