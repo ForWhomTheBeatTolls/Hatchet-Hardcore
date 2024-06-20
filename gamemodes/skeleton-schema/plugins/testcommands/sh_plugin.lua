@@ -1,4 +1,20 @@
+local ArabScreamCommand = {
+    description = "",
+    requiredArg = false,
+    adminOnly = false,
+    onRun = function(ply, arg)
+        local class = arg[1]
+		if ply:GetSyncVar(SYNC_COS_FACE, 5) then
+			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
+			ply:Say("/y Alahlalalala!")
+		elseif ply:SteamID() == "STEAM_0:0:193471001" then
+			ply:EmitSound("hatchet/osamasound.wav", 100, 100, 100)
+			ply:Say("/y Alahlalalala!")
+		end
+    end
+}
 
+impulse.RegisterChatCommand("/arabscream", ArabScreamCommand)
 
 local randomgearreb = {
 
