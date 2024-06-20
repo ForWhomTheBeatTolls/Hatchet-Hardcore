@@ -25,7 +25,8 @@ if SERVER then
 			"wep_axe",
 			"wep_crowbar",
 			"wep_pipe",
-			"wep_shovel"
+			"wep_shovel",
+			"wep_cleaver"
 			}
 			local medloot = {
 			"util_electronics",
@@ -60,7 +61,12 @@ if SERVER then
 			"ammo_pistol",
 			"ammo_shotgun",
 			"ammo_revolver",
-			"ammo_rifle"
+			"ammo_rifle",
+			"ammo_sparesmg",
+			"ammo_sparepistol",
+			"ammo_spareshotgun",
+			"ammo_sparerevolver",
+			"ammo_sparerifle"
 			}
 			local superloot = "wep_revolver"
 			
@@ -76,12 +82,18 @@ if SERVER then
 	ammo_revolver = "ammo_revolver"
 	ammo_shotgun = "ammo_shotgun"
 	ammo_rifle = "ammo_rifle"
+	ammo_sparesmg = "ammo_sparesmg",
+	ammo_sparepistol = "ammo_sparepistol",
+	ammo_spareshotgun = "ammo_spareshotgun",
+	ammo_sparerevolver = "ammo_sparerevolver",
+	ammo_sparerifle = "ammo_sparerifle"
 	wep_revolver = "wep_revolver"
 	util_electronics = "util_electronics"
 	wep_crowbar = "wep_crowbar"
 	wep_axe = "wep_axe"
 	wep_pipe = "wep_pipe"
 	wep_shovel = "wep_shovel"
+	wep_cleaver = "wep_cleaver"
 	clothing_fadedshirt = "clothing_fadedshirt"
 	clothing_blueofficeshirt = "clothing_blueofficeshirt"
 	clothing_brownpants = "clothing_brownpants"
@@ -108,13 +120,19 @@ if SERVER then
 	[ammo_smg] = "a Box of SMG Ammo",
 	[ammo_pistol] = "a Box of Pistol Ammo",
 	[ammo_revolver] = "a Box of Revolver Ammo",
-	[wep_revolver] = "a Magnum Revolver",
 	[ammo_rifle] = "a Box of Rifle Ammo",
+	[ammo_sparesmg] = "an SMG round",
+	[ammo_sparepisto]l = "a Pistol round",
+	[ammo_spareshotgun] = "a Shotgun shell",
+	[ammo_sparerevolver] = "a Revolver round",
+	[ammo_sparerifle] = "a Rifle round"
+	[wep_revolver] = "a Magnum Revolver",
 	[util_electronics] = "Functional Electronics",
 	[wep_axe] = "an Axe",
 	[wep_crowbar] = "a Crowbar",
 	[wep_pipe] = "a Pipe",
 	[wep_shovel] = "a Shovel",
+	[wep_cleaver] = "a Cleaver",
 	[clothing_fadedshirt] = "a Faded Shirt",
 	[clothing_blueofficeshirt] = "a Blue Office Shirt",
 	[clothing_brownpants] = "Brown Pants",
@@ -149,31 +167,31 @@ if SERVER then
 	local NextLoot = CurTime()
 	function ENT:Use(activator, caller)
 	if NextLoot < CurTime() and !caller:IsCP() then
-	if ran < 500 then
-	looteditem = badloot
+	if ran < 600 then
+	looteditem = table.Random(badloot)
 	looteditemtable = "a Common"
 	caller:EmitSound("physics/concrete/concrete_impact_soft2.wav", 50, 80, 0.8)
-	elseif ran < 600 and ran > 500 then
+	elseif ran < 700 and ran > 600 then
 	looteditem = table.Random(medloot)
 	looteditemtable = "an Uncommon"
 	caller:EmitSound("physics/concrete/concrete_impact_soft1.wav", 50, 85, 0.8)
-	elseif ran < 700 and ran > 600 then
+	elseif ran < 820 and ran > 700 then
 	looteditem = table.Random(clothingloot)
 	looteditemtable = "an Uncommon"
 	caller:EmitSound("physics/concrete/rock_impact_hard5.wav", 50, 90, 0.8)
-	elseif ran < 820 and ran > 700 then
+	elseif ran < 900 and ran > 820 then
 	looteditem = table.Random(foodloot)
 	looteditemtable = "an Uncommon"
 	caller:EmitSound("physics/concrete/rock_impact_hard6.wav", 50, 95, 0.8)
-	elseif ran < 900 and ran > 820 then
+	elseif ran < 960 and ran > 900 then
 	looteditem = table.Random(meleeloot)
 	looteditemtable = "an Uncommon"
 	caller:EmitSound("physics/concrete/concrete_impact_hard3.wav", 50, 100, 0.8)
-	elseif ran < 998 and ran > 900 then
+	elseif ran < 1000 and ran > 960 then
 	looteditem = table.Random(highloot)
 	looteditemtable = "a Very Rare"
 	caller:EmitSound("physics/concrete/concrete_impact_hard1.wav", 50, 105, 0.8)
-	elseif ran >= 998 then
+	elseif ran == 1000 then
 	looteditem = superloot
 	looteditemtable = "a Super Rare"
 	caller:EmitSound("physics/concrete/concrete_impact_hard2.wav", 50, 120, 0.8)
