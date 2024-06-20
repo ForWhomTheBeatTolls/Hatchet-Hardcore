@@ -184,6 +184,9 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 		insertQuery:Execute()
 	end)
 	query:Execute()
+
+
+	timer.Simple(2, function() ply:GiveInventoryItem("util_suitcase", 1, false, false, false) ply:SetInventoryItemEquipped(1, true) ply:SelectWeapon("ls_suitcase") end)
 end)
 
 net.Receive("impulseScenePVS", function(len, ply)
