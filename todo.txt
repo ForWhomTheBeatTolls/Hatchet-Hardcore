@@ -61,6 +61,7 @@ DONE LIST:
 -Add descriptions (Will be Optional)
 -Fix Lockshockers
 -Better whitelist system
+-Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
 
 
 WILLMASTER CODING SIDE:
@@ -70,6 +71,4 @@ WILLMASTER CODING SIDE:
 
 MUHAMMED CODING SIDE:
 ------------------------
-
--Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
 -Add workforce entities (This is mainly about the minigame system)
