@@ -25,7 +25,7 @@ impulse.Config.IntroMusic = "music/hl1_song20.mp3" -- song to play when characte
 
 impulse.Config.SignalsUpdateTime = 2
 
-impulse.Config.WalkSpeed = 100
+impulse.Config.WalkSpeed = 108
 impulse.Config.JogSpeed = 194
 impulse.Config.SlowWalkRatio = 0.6
 impulse.Config.SideWalkRatio = 0.6
