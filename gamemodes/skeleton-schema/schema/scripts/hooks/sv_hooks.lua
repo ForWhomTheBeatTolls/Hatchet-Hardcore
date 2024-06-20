@@ -5,6 +5,9 @@
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamaged = ply.TimesDamaged or 0
 		ply.TimesDamagedCool = CurTime()
+		ply.FoodPoisoning = false
+		ply.PendingReward = ply.PendingReward or 0
+		ply.HealOverTime = false
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 	end
 
