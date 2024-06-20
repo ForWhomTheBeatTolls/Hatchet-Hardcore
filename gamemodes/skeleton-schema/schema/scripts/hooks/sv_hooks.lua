@@ -2,11 +2,12 @@
 
 function SCHEMA:PlayerSpawn(ply)
 	ply.IsInASequence = false
+	ply.NextHurtSound = CurTime()
 	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 end
 
 hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
-	if ent:IsPlayer() and took then
+	if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
 	
 		if dmg:IsDamageType(DMG_NERVEGAS) then
 			ent:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
@@ -14,13 +15,17 @@ hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took
 		
 			
 			if ( ent:Team() == TEAM_CP ) and (ent:Health() > 1) then
-				ent:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 70)
+				ent:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
 			elseif ( ent:Team() == TEAM_OTA ) and (ent:Health() > 1) then
-				ent:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 70)
+				ent:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 80)
 			elseif ( ent:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (ent:Health() > 1) then
-			ent:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
+				ent:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
 			end
+			
+			ent.NextHurtSound = CurTime() + 0.4
+			
 		end
+		
 	end
 	
 end)
@@ -51,6 +56,7 @@ hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, v
 		end
 		
 		if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE and not ply.HasVest then
+			return false
 		end
 		
 	return true
