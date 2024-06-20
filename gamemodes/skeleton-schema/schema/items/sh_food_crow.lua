@@ -20,7 +20,7 @@ ITEM.UseWorkBarTime = 2
 ITEM.UseWorkBarName = "Trying to eat..."
 ITEM.UseWorkBarSound = "impulse/eat.wav"
 
-ITEM.Food = 35 -- imagine if you coul take away a players health.. - Thrumbo || Yes, you can! - Muhammed
+ITEM.Food = 35 
 
 function ITEM:OnUse(ply)
 	local thedice = math.random(1, 100)
