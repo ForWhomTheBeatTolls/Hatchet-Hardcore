@@ -22,7 +22,7 @@ SWEP.SlotPos = 1
 SWEP.CSMuzzleFlashes = false
 
 SWEP.Primary.Sound = Sound("WeaponFrag.Roll")
-SWEP.Primary.ImpactSound = Sound("physics/concrete/concrete_impact_soft3.wav")
+SWEP.Primary.ImpactSound = Sound("Canister.ImpactHard")
 SWEP.Primary.ImpactSoundWorldOnly = true
 SWEP.Primary.Recoil = 1.2 -- base recoil value, SWEP.Spread mods can change this
 SWEP.Primary.Damage = 25 -- not used in this swep
