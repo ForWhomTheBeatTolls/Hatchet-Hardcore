@@ -25,6 +25,11 @@ function ITEM:OnUse(ply)
 	ply:GiveInventoryItem("food_bread")
 	ply:GiveInventoryItem("food_watercan")
 	ply:GiveMoney(impulse.Config.CitizenWage)
+	if ply.PendingReward > 0 then
+		ply:GiveMoney(ply.PendingReward)
+		ply:Notify("Due to your work, you have earned an extra "..ply.PendingReward.." tokens.")
+		ply.PendingReward = 0
+	end
 	ply:Say("/me opens a " ..self.Name.. ".", false)
 
 	return true
