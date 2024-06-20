@@ -19,56 +19,67 @@ if SERVER then
 			physObj:Wake()
 		end
 	end
-			local ran = math.random(1, 1000)
-			local badloot = "util_scrapmetal"
-			local meleeloot = {
-			"wep_axe",
-			"wep_crowbar",
-			"wep_pipe",
-			"wep_shovel",
-			"wep_cleaver"
-			}
-			local medloot = {
-			"util_electronics",
-			"tool_flashlight",
-			"util_battery"
-			}
-			local clothingloot = {
-			"clothing_fadedshirt",
-			"clothing_blueofficeshirt",
-			"clothing_brownpants",
-			"clothing_graypants",
-			"clothing_fingerlessgloves",
-			"clothing_gloves",
-			"clothing_glasses",
-			"clothing_graybeanie",
-			"clothing_greenbeanie",
-			"clothing_blackpants",
-			"clothing_greenshirt",
-			"clothing_medicalshirt",
-			"clothing_beigeshirt",
-			"clothing_whiteofficeshirt",
-			"clothing_officepants"
-			}
-			local foodloot = {
-			"food_chips",
-			"food_watermelon",
-			"food_halfpizza",
-			"food_pizza"
-			}	
-			local highloot = {
-			"ammo_smg",
-			"ammo_pistol",
-			"ammo_shotgun",
-			"ammo_revolver",
-			"ammo_rifle",
-			"ammo_sparesmg",
-			"ammo_sparepistol",
-			"ammo_spareshotgun",
-			"ammo_sparerevolver",
-			"ammo_sparerifle"
-			}
-			local superloot = "wep_revolver"
+
+local ran = math.random(1, 1000)
+
+local badloot = {
+"util_scrapmetal",
+"util_recmetal"
+}
+
+local meleeloot = {
+"wep_axe",
+"wep_crowbar",
+"wep_pipe",
+"wep_shovel",
+"wep_cleaver"
+}
+
+local medloot = {
+"util_electronics",
+"tool_flashlight",
+"util_battery"
+}
+
+local clothingloot = {
+"clothing_fadedshirt",
+"clothing_blueofficeshirt",
+"clothing_brownpants",
+"clothing_graypants",
+"clothing_fingerlessgloves",
+"clothing_gloves",
+"clothing_glasses",
+"clothing_graybeanie",
+"clothing_greenbeanie",
+"clothing_blackpants",
+"clothing_greenshirt",
+"clothing_medicalshirt",
+"clothing_beigeshirt",
+"clothing_whiteofficeshirt",
+"clothing_officepants"
+}
+
+local foodloot = {
+"food_chips",
+"food_watermelon",
+"food_halfpizza",
+"food_pizza"
+}	
+
+local highloot = {
+"ammo_smg",
+"ammo_pistol",
+"ammo_shotgun",
+"ammo_revolver",
+"ammo_rifle",
+"ammo_sparesmg",
+"ammo_sparepistol",
+"ammo_spareshotgun",
+"ammo_sparerevolver",
+"ammo_sparerifle"
+}
+
+local superloot = "wep_revolver"
 			
 	-- ##########################################################
 	-- ###Shitty unoptimal code because tables suck. Womp womp###
@@ -77,6 +88,7 @@ if SERVER then
 	util_battery = "util_battery"
 	tool_flashlight = "tool_flashlight"
 	util_scrapmetal = "util_scrapmetal"
+	util_recmetal = "util_recmetal"
 	ammo_smg = "ammo_smg"
 	ammo_pistol = "ammo_pistol"
 	ammo_revolver = "ammo_revolver"
