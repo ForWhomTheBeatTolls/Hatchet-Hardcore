@@ -32,7 +32,7 @@ function PANEL:Init()
 	
 end
 
-local x = 0
+local x = 32
 function PANEL:Paint(w, h)
 
 	local barposheight = 24
@@ -61,7 +61,7 @@ function PANEL:OnMousePressed(MOUSE_LEFT)
 	if x < 1200 then
 		x = x + increment
 		clickamount = clickamount + 1
-		nextclickdecay = CurTime() + 1
+		nextclickdecay = CurTime() + 0.5
 		--pzlwrkfc1_clickometer:SetSize( x, 100 )
 		--print(x)
 		--print(clickamount)
@@ -69,7 +69,7 @@ function PANEL:OnMousePressed(MOUSE_LEFT)
 		success = true
 		--print(success)
 		LocalPlayer():Notify("You did it! CPS: "..math.Truncate(clickamount / (CurTime() - pzlwrkfc1_starttime), 1))
-		nextclickdecay = CurTime() + 1
+		nextclickdecay = nil
 		clickamount = 0
 		self:Close()
 	end
@@ -81,12 +81,12 @@ function PANEL:Think()
 		--clickamount = clickamount - 1
 		x = x - increment
 		--pzlwrkfc1_clickometer:SetSize( x, 100 )
-		nextclickdecay = CurTime() + 1.5
+		nextclickdecay = CurTime() + 0.5
 		
 		if x < 0 then
 			nextclickdecay = nil
 			x = 0
-			LocalPlayer():Notify("You have failed.")
+			--LocalPlayer():Notify("You have failed.")
 			success = false
 			--print(success)
 			self:Close()
@@ -100,9 +100,13 @@ function PANEL:OnRemove()
 		nextclickdecay = nil
 		x = 0
 	else
-		LocalPlayer():Notify("You have failed.")
+		--LocalPlayer():Notify("You have failed.")
 		success = false
 	end
+	net.Start("HatchetVendingMachineFillEnd")
+	net.WritePlayer(LocalPlayer())
+	net.WriteBool(success)
+	net.SendToServer()
 end
 
 vgui.Register("impulseWorkforcePuzzle1", PANEL, "DFrame")
