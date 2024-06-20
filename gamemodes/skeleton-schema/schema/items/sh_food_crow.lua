@@ -36,8 +36,8 @@ function ITEM:OnUse(ply)
 		
 		if timer.Exists(ply:EntIndex().."FoodPoisoning") then timer.Remove(ply:EntIndex().."FoodPoisoning") end
 			
-		timer.Create(ply:EntIndex().."FoodPoisoning", 5, 30, function()
-			if ply:Alive() then
+		timer.Create(ply:EntIndex().."FoodPoisoning", 30, 30, function()
+			if ply:Alive() and ply.FoodPoisoning == true then
 				dmg:SetDamage(math.random(0,2))
 				dmg:SetDamageType( DMG_NERVEGAS )
 				ply:TakeDamageInfo(dmg)
