@@ -909,31 +909,6 @@ function GM:PostCleanupMap()
 	hook.Run("InitPostEntity")
 end
 
-function GM:GetFallDamage(ply, speed)
-	ply.LastFall = CurTime()
-
-	local dmg = speed * 0.12
-
-	if speed > 1000 then
-		dmg = ply:Health() --instakill the player
-	end
-
-	local shouldBreakLegs = hook.Run("PlayerShouldBreakLegs", ply, dmg)
-
-	if shouldBreakLegs != nil and shouldBreakLegs == false then
-		return dmg
-	end
-
-	local strength = ply:GetSkillLevel("strength")
-	local r = math.random(0, 20 + (strength * 2))
-
-	if r <= 20 and dmg < ply:Health() then
-		ply:BreakLegs()
-	end
-
-	return dmg
-end
-
 local lastAFKScan
 local curTime = CurTime
 function GM:Think()
