@@ -2,6 +2,6 @@
 {
 	"base"		"impulse"
 	"title"		"HATCHET: HARDCORE (powered by Impulse)"
-	"author"	"vin"
+	"author"	"SteveB & WillMasterr"
 	"menusystem"	"1"
 }
