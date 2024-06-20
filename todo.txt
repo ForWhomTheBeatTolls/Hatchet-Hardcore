@@ -19,7 +19,8 @@ NEED TWEAKING IN CODING:
 NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
 - Implement a temporary OS solution
--Bubble chat, make it so /me's don't play sounds
+- Bubble chat, make it so /me's don't play sounds
+- Descriptions, make certain models have a forced description that you can add onto, for example: Male 04 having "A bald male......"
 
 TO-DO LIST:
 -----------------------------------------------------
