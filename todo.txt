@@ -68,11 +68,14 @@ DONE LIST:
 -DAMAGE SLOWDOWN!!! FUCKING FINALLY!!!
 
 
-WILLMASTER CODING SIDE:
+WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 ------------------------
-- Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
+- Concept: Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
+- Redesign player settings screen from the ground up
+- Fix bubble chat whisper not capitalizing correctly
 
 MUHAMMED CODING SIDE:
 ------------------------
--Add workforce entities (This is mainly about the minigame system)
+- Add workforce entities (This is mainly about the minigame system)
+- people name hides when you wear the mask
