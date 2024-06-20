@@ -61,12 +61,14 @@ function ENT:Think()
 				if item.Name == "Can of Water" then
 					timer.Simple(5, function() if IsValid(v) and DistToFire < firerange then local fishpos = v:GetPos() v:Remove() impulse.Inventory.SpawnItem("util_scrapmetal", fishpos) end end)
 				elseif item.Name == "Raw Fish" then
-					timer.Simple(5, function() if IsValid(v) and DistToFire < firerange then local fishpos = v:GetPos() v:Remove() impulse.Inventory.SpawnItem("food_cookedfish", fishpos) end end)
+					timer.Simple(5, function() if IsValid(v) and DistToFire < firerange then local fishpos = v:GetPos() v:Remove() impulse.Inventory.SpawnItem("food_cookedfish", fishpos + Vector(0,0,1)) end end)
+				elseif item.Name == "Dead Crow" then
+					timer.Simple(5, function() if IsValid(v) and DistToFire < firerange then local fishpos = v:GetPos() v:Remove() impulse.Inventory.SpawnItem("food_cookedcrow", fishpos + Vector(0,0,1)) end end)
 				else
 					if nextfiretick < CurTime() then
 						v:TakeDamage(1, self, nil)
 					end
-					print(item.Name)
+					--print(item.Name)
 					nextfiretick = CurTime() + 1
 					--print(v:GetItemName())
 				end
