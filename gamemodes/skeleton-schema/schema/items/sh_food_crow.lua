@@ -38,10 +38,7 @@ function ITEM:OnUse(ply)
 			
 		timer.Create(ply:EntIndex().."FoodPoisoning", 5, 30, function()
 			if ply:Alive() then
-				local dmg = DamageInfo()
 				dmg:SetDamage(math.random(0,2))
-				dmg:SetAttacker(ply)
-				dmg:SetInflictor(Entity(0))
 				dmg:SetDamageType( DMG_NERVEGAS )
 				ply:TakeDamageInfo(dmg)
 				--ply:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
