@@ -9,7 +9,6 @@ function PANEL:Init()
 
     Music = CreateSound(LocalPlayer(), "music/hl2_song30.mp3")
     Trailer = CreateSound(LocalPlayer(), "music/hl1_song3.mp3")
-    local SoundClick = Sound("ui/buttonrollover.wav")
 
 	if impulse.TrainstationCutscene and IsValid(impulse.TrainstationCutscene) then
 		impulse.TrainstationCutscene:Remove()
@@ -40,44 +39,40 @@ function PANEL:Init()
         surface.SetDrawColor(0, 0, 0, 0)
         surface.DrawRect(0, 0, w, h)
     end
+
+
+    // these need grammar fixes, cant bother right now
+    local part1 = {
+        "I've departed from City 8 after an Mass-City evacuation ordered by \n The Civil Protection Officers there after there has been \n a Xen Infestation Outbreak from a Laboratory",
+        "I've departed from City 34 after saving up on tokens from working on \n Workshifts and Rations, Even though there was a crisis there",
+        "I've departed from city 11 after moving out due to \n getting bored from the city ghost-town activity",
+        "I've departed from Industrial 6 after all the citizens have been told to move out \n due to a project that fixes and improves the City's Structure and Security"
+    }
 	
-	local cities = {
-	"City 8",
-	"City 24",
-	"City 27",
-	"City 13",
-	"City 11",
-	"City 15",
-	"City 16",
-	"City 12",
-	"City 14"
-	}
-	local randomcity = table.Random(cities)
+    randompart1 = table.Random(part1)
     function self.doneBtn:DoClick()
 
         Music:PlayEx(1, 60)
         counter = counter + 1
         if counter == 1 then
-            surface.PlaySound(SoundClick)
-            text = "The Combine invaded earth and dissolved all governments within 7 hours.\nYou find yourself in a trainstation still unsure on where fate will bring you.\nOn one of the combine video monitors, a man referring to himself as Dr. Breen is giving a speech.\nHe speaks in a welcoming tone to the newly arrived citizens exiting the trainstation."
-            mat1 = Material("gamepadui/chapter1")
+            surface.PlaySound(Sound("ui/buttonrollover.wav"))
+            text = "''Hi, my name is "..LocalPlayer():Name()..", and I've moved to City17 Today. \n"..randompart1..".''"
+            mat1 = Material("hatchet/background/trainstation_1.png")
         elseif counter == 2 then
-            surface.PlaySound(SoundClick)
-            text = "You have entered City 17, after being relocated from "..randomcity..".\n You are within the heart of the combine occupation of Earth.\n At the center of the city lies the center of the occupation:\n the Citadel, towering over the clouds."
-            mat1 = Material("gamepadui/chapter2")
+            surface.PlaySound(Sound("ui/buttonrollover.wav"))
+            text = "''I've heard a few things about City 17, One if which is the friendly community there, \n the cheap shops, and the apartment housing blocks.''"
+            mat1 = Material("hatchet/background/trainstation_2.png")
         elseif counter == 3 then
-            surface.PlaySound(SoundClick)
-            text = "The city is heavily combine controlled.\n Any form of resistance is typically met with execution.\n The Combine forces are controlled by an entity known as ''Overwatch''."
-            mat1 = Material("gamepadui/chapter3")
+            surface.PlaySound(Sound("ui/buttonrollover.wav"))
+            text = "''Even though City 17 is notorious for having ALOT of rebel activity, \n I think you're fine if you dont intervene with their businesses by like, Snitching and stuff.''"
+            mat1 = Material("hatchet/background/trainstation_3.png")
         elseif counter == 4 then
-            surface.PlaySound(SoundClick)
-            text = "Surviving and living are not the same.\n You can choose to scrape by, surviving under the Combine,\n living luxuriously with the Combine,\n or dying slowly against the Combine.\n The choice is yours. Nothing good ever comes easy."
-            mat1 = Material("gamepadui/chapter4")
+            surface.PlaySound(Sound("ui/buttonrollover.wav"))
+            text = "''Im not sure what to do in this new City, I dont know \n if i should be scared or.. Excited with the path im going for... \n i hope It's not going to be that bad.''"
+            mat1 = Material("hatchet/background/trainstation_4.png")
         elseif counter == 5 then
-            surface.PlaySound(SoundClick)
-			self:SetText(" ")
+            surface.PlaySound(Sound("ui/buttonrollover.wav"))
 			self:SetDisabled(true)
-			mat1 = Material("black_outline")
 			timer.Simple(2, function()
 			panel:AlphaTo(0, 2, 0)
 			end)
@@ -113,7 +108,7 @@ end
 
 function PANEL:OnRemove()
     Music:FadeOut(4)
-    timer.Simple(4, function() if IsValid(LocalPlayer()) then LocalPlayer():ConCommand("snd_restart") end end)
+    timer.Simple(4.1, function() if IsValid(LocalPlayer()) then LocalPlayer():ConCommand("snd_restart") end end)
     timer.Simple(4.6, function() if IsValid(LocalPlayer()) then Trailer:Play() end end)
     timer.Simple(14, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("Welcome to Hatchet: HL2 Hardcore! We are in a development stage, so expect Bugs or exploits.") end end)
     timer.Simple(17, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("To get up in date with Hatchet's development, Join our discord!") end end)
