@@ -1,7 +1,6 @@
 impulse.DefineSetting("admin_onduty", {name="Moderator on duty (DO NOT LEAVE UNTICKED FOR A LONG TIME)", category="ops", type="tickbox", default=true})
 impulse.DefineSetting("admin_reportalpha", {name="Report menu fade alpha", category="ops", type="slider", default=130, minValue=0, maxValue=255})
 impulse.DefineSetting("admin_esp", {name="Observer ESP enabled", category="ops", type="tickbox", default=false})
-impulse.DefineSetting("admin_esp_halo", {name="Halo ESP", category="ops", type="tickbox", default=false})
 impulse.DefineSetting("admin_showgroup", {name="Show player groups", category="ops", type="tickbox", default=true})
 impulse.DefineSetting("admin_lightcol", {name="Observer light colour", category="ops", type="dropdown", options={"White", "Blue", "Blue Soft", "Amber", "Amber Soft"}, default="White"})
 
