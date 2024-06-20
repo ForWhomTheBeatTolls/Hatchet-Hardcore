@@ -55,8 +55,12 @@ if SERVER then
 			self:SetMaterial(item.Material)
 		end
 
-		if item.ItemColour then
-			self:SetColor(item.ItemColour)
+		if item.Color then
+			self:SetColor(item.Color)
+		end
+		
+		if item.Scale and IsValid(self:GetPhysicsObject()) then
+			self:SetModelScale(item.Scale)
 		end
 
 		if owner and IsValid(owner) then
