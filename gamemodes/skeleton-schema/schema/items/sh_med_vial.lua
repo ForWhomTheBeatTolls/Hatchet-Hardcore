@@ -30,12 +30,16 @@ local increment = 1
 function ITEM:OnUse(ply, target)
 	if ply:Health() < ply:GetMaxHealth() then
 	if timer.Exists(ply:EntIndex().."HealOverTime") then timer.Remove(ply:EntIndex().."HealOverTime") end
+	if timer.Exists(ply:EntIndex().."FoodPoisoning") then timer.Remove(ply:EntIndex().."FoodPoisoning") end
+	ply.FoodPoisoning = false
+	ply.HealOverTime = true
 	timer.Create(ply:EntIndex().."HealOverTime", 0.3, 25, function()
 			if ply:Alive() and ply:Health() < 100 then
 				ply:SetHealth(ply:Health() + increment)
 				increment = increment + 0.1
 			else
 				timer.Remove(ply:EntIndex().."HealOverTime")
+				ply.HealOverTime = false
 			end
 		end)
 	ply:Say("/me uses a Healthvial.")
@@ -57,6 +61,3 @@ function ITEM:OnUse(ply, target)
 end
 
 impulse.RegisterItem(ITEM)
-
-
-
