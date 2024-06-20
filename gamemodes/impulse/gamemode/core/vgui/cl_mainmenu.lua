@@ -54,7 +54,11 @@ function PANEL:Init()
 	local button = vgui.Create("DButton", self.core)
 	button:SetPos(100,200)
 	button:SetFont("Impulse-Elements48")
-	button:SetText("Play")
+	if impulse_isNewPlayer == true then
+		button:SetText("Create your character")
+	else
+		button:SetText("Play")
+	end
 	button:SizeToContents()
 
 	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
