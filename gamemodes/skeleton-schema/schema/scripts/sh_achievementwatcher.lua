@@ -5,7 +5,7 @@ if SERVER then
 		if not ply:Alive() then
 			ply:AchievementGive("ach_adie")
 		end
-		if attacker:IsPlayer() and attacker != ply then
+		if attacker:IsPlayer() and attacker:Alive() then
 			attacker:AchievementGive("ach_akill")
 		end
 		if ply:Team() == TEAM_OTA and (attacker:IsPlayer()) and (attacker != ply) then
