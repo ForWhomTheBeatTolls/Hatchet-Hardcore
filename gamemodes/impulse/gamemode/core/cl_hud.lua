@@ -134,9 +134,7 @@ local function DrawOverheadInfo(target, alpha)
 	else
 	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	end
-	if target:GetSyncVar(SYNC_TYPING, false) then
-		draw.DrawText("Typing...", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
-	elseif target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
+	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
 		draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
 	end
 
@@ -240,7 +238,12 @@ local deathEnding
 function GM:HUDPaint(mvData)
 
 	for k, v in pairs(player.GetAll()) do
-		local headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
+		local headpos
+		if v:GetModel() == "models/player.mdl" then
+			headpos = (v:GetPos() + v:OBBCenter()):ToScreen()
+		else
+			headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
+		end
 	
 		if LocalPlayer():IsValid() and LocalPlayer():GetPos():Distance( v:GetPos() ) <= 600 and LocalPlayer():IsLineOfSightClear(v) then
 			if v:GetSyncVar(SYNC_TYPING, false) then
