@@ -19,7 +19,12 @@ util.AddNetworkString("impulseHL2RPRadioInDb")
 util.AddNetworkString("impulseHL2RPWorkforceRankUse")
 util.AddNetworkString("HatchetVendingMachineFillStart")
 util.AddNetworkString("HatchetVendingMachineFillEnd")
--- util.AddNetworkString("doWearClothing")
+util.AddNetworkString("HatchetBecomeCivilWorker")
+
+net.Receive("HatchetBecomeCivilWorker", function()
+	local ply = net.ReadPlayer()
+	ply:SetTeam(TEAM_WORKFORCE)
+end)
 
 net.Receive("HatchetVendingMachineFillEnd", function()
 	local ply = net.ReadPlayer()
