@@ -34,6 +34,7 @@ TO-DO LIST:
 -Dispatch role (Top-down lambda wars-esque gameplay)
 -Dequavion Ammo Bender
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
+-CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 
 
 DONE LIST:
