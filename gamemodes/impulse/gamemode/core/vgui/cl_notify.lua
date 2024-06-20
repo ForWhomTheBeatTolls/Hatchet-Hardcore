@@ -32,8 +32,7 @@ function PANEL:SetMessage(...)
 	-- set frame position and height to suit the markup
 	local shiftHeight = self.message:GetHeight()
 	self:SetHeight(shiftHeight+baseSizeH)
-	local notifysound = CreateSound(LocalPlayer(), "physics/body/body_medium_impact_soft4.wav")
-	notifysound:PlayEx(0.9, 30)
+	surface.PlaySound("hatchet/hint.wav")
 end
 
 local gradient = Material("vgui/gradient_up")
