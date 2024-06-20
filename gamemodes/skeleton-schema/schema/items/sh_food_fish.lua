@@ -27,9 +27,26 @@ function ITEM:OnUse(ply)
     ply:FeedHunger(self.Food)
 	ply:DoCustomAnimEvent(PLAYERANIMEVENT_DOUBLEJUMP, 1)
 	ply:Say("/me eats a " ..self.Name.. ".", false)
-	if thedice <= 10 then
-	ply:Notify("A fish bone impaled your tongue!")
-	ply:TakeDamage(ply:Health() / 25)
+	if thedice <= 40 then
+	
+		ply:ScreenFade(SCREENFADE.IN, Color(0, 180, 0, 90), 0.7, 0)
+		ply:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
+		
+		ply.FoodPoisoning = true
+		
+		if timer.Exists(ply:EntIndex().."FoodPoisoning") then timer.Remove(ply:EntIndex().."FoodPoisoning") end
+			
+		timer.Create(ply:EntIndex().."FoodPoisoning", 5, 30, function()
+			if ply:Alive() then
+				dmg:SetDamage(math.random(0,2))
+				dmg:SetDamageType( DMG_NERVEGAS )
+				ply:TakeDamageInfo(dmg)
+				--ply:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
+			else
+				timer.Remove(ply:EntIndex().."FoodPoisoning")
+				ply.FoodPoisoning = false
+			end
+		end)
 	end
     return true -- returning true removes the item after use
 end
