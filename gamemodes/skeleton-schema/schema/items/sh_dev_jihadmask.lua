@@ -29,7 +29,7 @@ ITEM.CosmeticData = {
 	model = Model("models/sal/halloween/ninja.mdl"),
 	pos = Vector(0, 1, -.01),
 	ang = Angle(0, -90, 270),
-	scale = 1,
+	scale = 1.2,
 	femalePos = Vector(0.5, 0.8, -0.2),
 }
 
