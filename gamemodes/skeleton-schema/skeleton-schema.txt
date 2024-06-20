@@ -1,7 +1,7 @@
 "skeleton-schema"
 {
 	"base"		"impulse"
-	"title"		"impulse: Skeleton Schema"
+	"title"		"HATCHET: HARDCORE (powered by Impulse)"
 	"author"	"vin"
 	"menusystem"	"1"
 }
