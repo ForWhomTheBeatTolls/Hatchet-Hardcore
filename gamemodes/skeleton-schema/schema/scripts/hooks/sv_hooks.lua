@@ -5,6 +5,86 @@ function SCHEMA:PlayerSpawn(ply)
 	ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 end
 
+hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
+	if ent:IsPlayer() and took then
+	
+		if dmg:IsDamageType(DMG_NERVEGAS) then
+			ent:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
+		else
+		
+			
+			if ( ent:Team() == TEAM_CP ) and (ent:Health() > 1) then
+				ent:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 70)
+			elseif ( ent:Team() == TEAM_OTA ) and (ent:Health() > 1) then
+				ent:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 70)
+			elseif ( ent:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (ent:Health() > 1) then
+			ent:EmitSound("npc_citizen.pain0"..math.random(1,7).."", 80)
+			end
+		end
+	end
+	
+end)
+
+hook.Add( "PlayerFootstep", "CustomFootstep", function( ply, pos, foot, sound, volume, rf )
+		if ply:Team() == TEAM_CP then
+			if !ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 30)
+			elseif ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
+			end
+		end
+		
+		if ply:Team() == TEAM_OTA  then
+			if !ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 55)
+			elseif ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 75)
+			end
+		end
+		
+		if ply.HasVest then
+			if !ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/footsteps/hardboot_generic"..math.random(1,6)..".wav", 30)
+			elseif ply:KeyDown(IN_SPEED) then
+				ply:EmitSound("npc/footsteps/hardboot_generic"..math.random(1,6)..".wav", 70)
+			end
+		end
+		
+		if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE and not ply.HasVest then
+		end
+		
+	return true
+		
+end)
+
+local deathsounds = {
+	"npc_citizen.die",
+	"npc_citizen.startle01",
+	"npc_citizen.startle02",
+	"ep1_citizen.cit_pain04",
+	"ep1_citizen.cit_pain06",
+	"ep1_citizen.cit_pain07",
+	"ep1_citizen.cit_shock02",
+	"ep1_citizen.cit_shock08",
+	"ep1_citizen.cit_shock11"
+}
+
+hook.Add( "PlayerDeathSound", "CustomPlayerDeath", function( ply )
+	if (ply:Team() == TEAM_CP) then
+	ply:EmitSound("npc/metropolice/die"..math.random(1,4)..".wav", 70)
+	end
+	if (ply:Team() == TEAM_OTA) then
+	ply:EmitSound("npc/combine_soldier/die"..math.random(1,3)..".wav", 70)
+	end
+	if (ply:Team() == TEAM_CITIZEN) then
+	ply:EmitSound(table.Random(deathsounds), 100)
+	end
+	if (ply:Team() == TEAM_RESISTANCE) then
+	ply:EmitSound(table.Random(deathsounds), 100)
+	end
+	return true
+end )
+
 function SCHEMA:ChatClassMessageSend(classID, message, sender)
 	if not impulse.Voice.ChatTypes[classID] then
 		return
@@ -327,61 +407,6 @@ function SCHEMA:Think()
 	-- end
 
 end
-
-hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
-
-	local duration = nil  //How much time do the drops exist for until they dissapear (nil makes them not dissapear at all)
-	local handbonenum = npc:LookupBone("ValveBiped.Bip01_R_Hand")
-	local handpos
-	if handbonenum then
-		handpos = npc:GetBonePosition(npc:LookupBone("ValveBiped.Bip01_R_Hand"))
-	else
-		handpos = npc:GetPos()
-	end
-
-	if npc:GetClass() == "npc_headcrab" or npc:GetClass() == "npc_headcrab_black" or npc:GetClass() == "npc_headcrab_fast" then
-		impulse.Inventory.SpawnItem("item_bucket", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-	elseif npc:GetClass() == "npc_metropolice" then
-		if npc:GetActiveWeapon():GetClass() == "weapon_smg1" then
-			impulse.Inventory.SpawnItem("wep_smg", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_pistol" then
-			impulse.Inventory.SpawnItem("wep_pistol", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_pistol", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_stunstick" then
-			impulse.Inventory.SpawnItem("wep_stunstick", handpos, nil, duration)
-		end
-	elseif npc:GetClass() == "npc_combine_s" or npc:GetClass() == "CombinePrison" or npc:GetClass() == "PrisonShotgunner" or npc:GetClass() == "ShotgunSoldier" or npc:GetClass() == "CombineElite" then
-		if npc:GetActiveWeapon():GetClass() == "weapon_smg1" then
-			impulse.Inventory.SpawnItem("wep_smg", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_smg", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_shotgun" then
-			impulse.Inventory.SpawnItem("wep_shotgun", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_shotgun", npc:GetPos() + Vector(0, 0, 15), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_shotgun", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		elseif npc:GetActiveWeapon():GetClass() == "weapon_ar2" then
-			impulse.Inventory.SpawnItem("wep_ar2", handpos, nil, duration)
-			impulse.Inventory.SpawnItem("ammo_ar2", npc:GetPos() + Vector(0, 0, 15), nil, duration)
-			impulse.Inventory.SpawnItem("ammo_ar2", npc:GetPos() + Vector(0, 0, 10), nil, duration)
-		end
-	elseif npc:GetClass() == "npc_rollermine" or npc:GetClass() == "npc_combine_camera" or npc:GetClass() == "npc_manhack" or npc:GetClass() == "npc_turret_ceiling" or npc:GetClass() == "npc_clawscanner" or npc:GetClass() == "npc_cscanner" then
-		impulse.Inventory.SpawnItem("util_scrapmetal", npc:GetPos() + Vector(0, 0, 40), nil, duration)
-		impulse.Inventory.SpawnItem("util_scrapmetal", npc:GetPos() + Vector(0, 0, 30), nil, duration)
-		impulse.Inventory.SpawnItem("util_refmetal", npc:GetPos() + Vector(0, 0, 20), nil, duration)
-	elseif npc:GetClass() == "npc_crow" or npc:GetClass() == "npc_pigeon" or npc:GetClass() == "npc_seagull" then
-		impulse.Inventory.SpawnItem("food_fish", npc:GetPos() + Vector(0, 0, 0), nil, duration)
-	end
-	
-	for k,v in pairs(ents.FindByClass("impulse_item")) do
-		if v:GetPos():DistToSqr(npc:GetPos()) < 600 then
-		v:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
-		v:SetVelocity(Vector(0,0,0))
-		end
-	end
-	
-	//print(npc:GetClass().." Died while having a "..npc:GetActiveWeapon():GetClass())
-end)
 
 gameevent.Listen( "player_connect" )
 hook.Add("player_connect", "HatchetJANITORConnectNotif", function( data )
