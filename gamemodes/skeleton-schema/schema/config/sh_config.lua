@@ -1,5 +1,5 @@
 -- Framework related
-impulse.Config.SchemaName = "hatchet-hl2rpg"
+impulse.Config.SchemaName = "HATCHET: HARDCORE"
 impulse.Config.SchemaVersion = 303
 
 impulse.Config.SchemaCredits = [[Developers
@@ -14,7 +14,23 @@ impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>GhostfacedKillah</font>]]
 
 impulse.Config.WhitelistedPlayers = {
-"STEAM_0:1:204367223" -- SteveB.
+"STEAM_0:1:204367223", -- SteveB.
+"STEAM_0:0:627119036", -- Thrumbo
+"STEAM_0:0:193471001", -- WillMasterr
+"STEAM_0:0:461693288", -- Nuj
+"STEAM_0:0:526890129", -- Blurger
+"STEAM_0:0:526356848", -- Z0as1
+"STEAM_0:0:80736176", -- Gonk
+"STEAM_0:0:222027191", -- Processed Grain
+"STEAM_0:1:580569159", -- Esrah   
+--"STEAM_0:0:556861499", -- Garry  
+"STEAM_0:0:215468222", -- Rubel
+"STEAM_0:0:600025375", -- Joe Jenkins
+"STEAM_0:0:543738924", -- Atan
+"STEAM_1:0:757389970", -- Lil Martini
+"STEAM_1:0:182975876", -- Parkinson peek
+"STEAM_0:0:580927445" -- HL2Lover    
+    
 }
 
 impulse.Config.MainColour = Color(196, 108, 26)
@@ -35,7 +51,7 @@ impulse.Config.WhisperDistance = 90
 impulse.Config.YellDistance = 550
 impulse.Config.VoiceDistance = 950
 
-impulse.Config.OOCLimit = 500
+impulse.Config.OOCLimit = 0
 impulse.Config.OOCLimitVIP = 280
 
 impulse.Config.PropLimit = 10
@@ -67,8 +83,8 @@ impulse.Config.TeamChangeTimeDonator = 15
 impulse.Config.ClassChangeTime = 60
 impulse.Config.QuizWaitTime = 20 -- in mins
 
-impulse.Config.RespawnTime = 1
-impulse.Config.RespawnTimeDonator = 1
+impulse.Config.RespawnTime = 10
+impulse.Config.RespawnTimeDonator = 10
 
 impulse.Config.BodyDeSpawnTime = 360 -- 6 mins
 
@@ -278,56 +294,70 @@ impulse.Config.DefaultNameBlacklist = {
 	"nigga",
 	"faggot",
 	"bitch",
-	"negro",
-	"niggers",
-	"niggas",
-	"faggots",
-	"bitches",
-	"negros",
-	"bitchs"
+	"negro"
 }
 
 impulse.Config.LootPools = {
     ["good"] = {
         Items = {
-            ["wep_axe"] = {Rarity = 900},
+            ["wep_axe"] = {Rarity = 970},
             ["util_scrapmetal"] = {Rarity = 300},
-			["wep_crowbar"] = {Rarity = 900},
-			["wep_pipe"] = {Rarity = 900}, 
-			["wep_shovel"] = {Rarity = 900},
-			--["wep_cleaver"] = {Rarity = 900},
-			["util_electronics"] = {Rarity = 900},
-			["ammo_pistol"] = {Rarity = 900},
-			["ammo_smg"] = {Rarity = 900},
-			["ammo_revolver"] = {Rarity = 900},
-			["ammo_rifle"] = {Rarity = 900},
-			["ammo_shotgun"] = {Rarity = 900},
+			["wep_crowbar"] = {Rarity = 970},
+			["wep_pipe"] = {Rarity = 970}, 
+			["wep_shovel"] = {Rarity = 970},
+			["tool_knife"] = {Rarity = 955},
+			["util_electronics"] = {Rarity = 980},
+			["ammo_pistol"] = {Rarity = 990},
+			["ammo_smg"] = {Rarity = 990},
+			["ammo_revolver"] = {Rarity = 990},
+			["ammo_rifle"] = {Rarity = 990},
+			["ammo_shotgun"] = {Rarity = 990},
         },
         MaxItems = 2,
         MinItems = 1,
-		MaxWait = 120,
-		MinWait = 60
+		MaxWait = 300,
+		MinWait = 120
     },
-	["lootbox"] = {
+	["metal"] = {
 		Items = {
-			["wep_axe"] = {Rarity = 877},
-			["util_scrapmetal"] = {Rarity = 600},
-			["wep_crowbar"] = {Rarity = 877},
-			["util_electronics"] = {Rarity = 800},
-			["wep_revolver"] = {Rarity = 986},
-			["ammo_revolver"] = {Rarity = 800},
-			["ammo_pistol"] = {Rarity = 800},
-			["ammo_smg"] = {Rarity = 800}
-			}
+			["wep_axe"] = {Rarity = 999},
+			["util_scrapmetal"] = {Rarity = 200},
+			["wep_crowbar"] = {Rarity = 999},
+			["util_electronics"] = {Rarity = 980},
+			["ammo_sparerevolver"] = {Rarity = 980},
+			["ammo_sparepistol"] = {Rarity = 980},
+			["ammo_sparesmg"] = {Rarity = 980},
+			["ammo_sparerifle"] = {Rarity = 980},
+			["ammo_spareshotgun"] = {Rarity = 980},
+			},
+		MaxItems = 3,
+        MinItems = 1,
+		MaxWait = 300,
+		MinWait = 120
 		}
 	}
-impulse.Config.NPCDrops = {
-	["cp"] = {
-		Items = {
-			["wep_pistol"] = {Rarity = 400},
-			["ammo_pistol"] = {Rarity = 300},
-			},
-			MaxItems = 3,
-			MinItems = 1
-			}
-			}
+
+--- ### OS WHITELISTS ### ---
+
+impulse.Config.ECHOwl = {
+"STEAM_0:1:204367223"
+}
+
+-- ########################################################################### --
+
+impulse.Config.MACEwl = {
+"STEAM_0:1:204367223"
+}
+
+-- ########################################################################### --
+
+impulse.Config.APEXwl = {
+"STEAM_0:1:204367223"
+}
+
+-- ########################################################################### --
+
+impulse.Config.OSwl = {
+	"STEAM_0:1:204367223"
+}
+
