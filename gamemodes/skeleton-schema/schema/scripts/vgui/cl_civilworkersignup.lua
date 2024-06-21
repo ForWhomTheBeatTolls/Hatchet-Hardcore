@@ -1,8 +1,9 @@
 local PANEL = {}
 
 function PANEL:Init()
-	self:SetSize(750, 450)
-	self:SetPos((ScrW()*0.5)-250, (ScrH()*0.5)-125)
+	self:SetSize(350, 450)
+	self:SetPos(ScrW() / 2, ScrH() / 2)
+	self:Center()
 	self:SetBGColor( Color(200,200,255,255) )
 	self:SetFGColor( Color(200,200,255,255) )
 	self:SetTitle("Civil Worker Sign-up Terminal")
