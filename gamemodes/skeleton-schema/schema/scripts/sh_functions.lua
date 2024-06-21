@@ -5,7 +5,7 @@ function meta:IsRebel() -- if u want a smarter is rebel then make it SEPERATE to
 		return false
 	end
 
-	if self:Team() == TEAM_CITIZEN then
+	if self:Team() == TEAM_RESISTANCE or self:Team() == TEAM_CITIZEN then
 		if (self:GetBodygroup(1) == 6) or (self:GetBodygroup(1) == 5) then -- if torso is rebel
 			return true
 		end
@@ -22,7 +22,7 @@ function meta:IsRebel() -- if u want a smarter is rebel then make it SEPERATE to
 	return false
 end
 
-CRIME_ANTCIITIZEN = 1
+CRIME_ANTICITIZEN = 1
 CRIME_VORT = 2
 CRIME_WEAPON = 3
 CRIME_CONTRABAND = 4
@@ -31,7 +31,7 @@ CRIME_CURFEW = 6
 CRIME_BOL = 7
 
 CRIME_NICENAMES = {
-	[CRIME_ANTCIITIZEN] = "Anti-Citizen",
+	[CRIME_ANTICITIZEN] = "Citizen not registered in Database",
 	[CRIME_VORT] = "Unregistered Biotic",
 	[CRIME_WEAPON] = "95, illegal carrying",
 	[CRIME_EVASION] = "Surveillance Evasion",
@@ -51,7 +51,8 @@ local unallowedWeps = {
 	["ls_crowbar"] = true,
 	["ls_pipe"] = true,
 	["ls_shovel"] = true,
-	["ls_cleaver"] = true
+	["ls_cleaver"] = true,
+    ["ls_katana"] = true
 }
 
 local strsub = string.sub
@@ -105,13 +106,19 @@ function meta:IsRebelSmart()
 
 	if t == TEAM_CITIZEN and (self.GetBodygroup(self, 1) == 6 or self.GetBodygroup(self, 1) == 5) then -- rebel suit
 		isCriminal = true
-		firstCrime = firstCrime or CRIME_ANTCIITIZEN
-		crimes[CRIME_ANTCIITIZEN] = true
+		firstCrime = firstCrime or CRIME_ANTICITIZEN
+		crimes[CRIME_ANTICITIZEN] = true
 	-- elseif t == TEAM_VORT and self.GetModel(self) != "models/vortigaunt_slave.mdl" then -- unshackled vort
 		-- isCriminal = true
 		-- firstCrime = firstCrime or CRIME_VORT
 		-- crimes[CRIME_VORT] = true
 	end
+    
+    if t == TEAM_RESISTANCE then
+        isCriminal = true
+        firstCrime = firstCrime or CRIME_ANTICITIZEN
+        crimes[CRIME_ANTICITIZEN] = true
+    end
 
 	-- if self.GasSafe or self.HasHelmet or self.HasOTAVest then
 		-- isCriminal = true
