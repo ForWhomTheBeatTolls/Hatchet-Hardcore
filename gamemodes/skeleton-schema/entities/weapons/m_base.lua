@@ -183,17 +183,11 @@ bullet.Force = self.Primary.Force
 bullet.Damage = self.Primary.Damage 
 bullet.AmmoType = self.Primary.Ammo 
  
-local rnda = self.Primary.Recoil * -.025
-local rndb = self.Primary.Recoil * math.random(-.025, .025) 
-
-local rndc = self.Primary.Spread * -.025
-local rndd = self.Primary.Spread * math.random(-.025, .025)
+local rnda = self.Primary.Recoil * -.018
+local rndb = self.Primary.Recoil * math.random(-.018, .018) 
 
 local rnda2 = self.Primary.Recoil * -.01
 local rndb2 = self.Primary.Recoil * math.random(-.01, .01) 
-
-local rndc2 = self.Primary.Spread * -.025
-local rndd2 = self.Primary.Spread * math.random(-.025, .025)
  
 self:ShootEffects()
  
