@@ -129,6 +129,8 @@ local function CameraTick()
 			if c > v.RespawnTime then
 				v.RespawnTime = nil
 				v:RepairCombineCamera()
+                v:SetHealth(60)
+                v:SetNoDraw(false)
 			end
 
 			continue
