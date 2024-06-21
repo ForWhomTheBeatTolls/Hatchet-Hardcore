@@ -6,9 +6,10 @@ local greenCol = Color(50, 255, 50)
 local glowMat = Material("sprites/glow04_noz")
 local gradLeft = Material("vgui/gradient-l")
 function ENT:Draw()
-	self:DrawModel()
-
-	local position = self:GetPos()
+    
+    self:DrawModel()
+    
+    local position = self:GetPos()
 	local angles = self:GetAngles()
 	local position = self:GetPos()
 	local f, r, u = self:GetForward(), self:GetRight(), self:GetUp()
