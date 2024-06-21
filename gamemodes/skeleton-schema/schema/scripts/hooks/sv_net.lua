@@ -20,10 +20,63 @@ util.AddNetworkString("impulseHL2RPWorkforceRankUse")
 util.AddNetworkString("HatchetVendingMachineFillStart")
 util.AddNetworkString("HatchetVendingMachineFillEnd")
 util.AddNetworkString("HatchetBecomeCivilWorker")
+util.AddNetworkString("HatchetCivilWorkerSignup")
+util.AddNetworkString("HatchetSelectWorkerJobEnd")
+util.AddNetworkString("HatchetSelectWorkerJobStart")
+
+local function NetExploitNotification(ply, msg)
+	for i, admin in pairs( player.GetAll() ) do
+		admin:SendChatClassMessage(18, ply:Nick().." DETECTED AS A POTENTIAL NET EXPLOITER. NET FUNCTION: "..msg, admin)
+	end
+end
+
+net.Receive("HatchetSelectWorkerJobEnd", function()
+	local ply = net.ReadPlayer()
+	local str = net.ReadString()
+	if ply:Team() == TEAM_WORKFORCE then
+	
+		if str == "COMMERCIAL" then
+			ply:SetTeamClass(1)
+			ply:SetTeamRank(RANK_COMMERCIAL)
+			ply:Notify("You have become a Commercial Worker.")
+			ply:EmitSound("items/ammo_pickup.wav")
+		elseif str == "INDUSTRIAL" then
+			ply:SetTeamClass(1)
+			ply:SetTeamRank(RANK_INDUSTRIAL)
+			ply:Notify("You have become an Industrial Worker.")
+			ply:EmitSound("items/ammo_pickup.wav")
+		elseif str == "MEDICAL" then
+			ply:SetTeamClass(1)
+			ply:SetTeamRank(RANK_MEDICAL)
+			ply:Notify("You have become a Medical Worker.")
+			ply:EmitSound("items/ammo_pickup.wav")
+		else
+			ply:Notify("What the hell did you do?")
+		end
+		
+	else
+	
+		NetExploitNotification(ply, "HatchetSelectWorkerJobEnd")
+		
+	end
+end)
 
 net.Receive("HatchetBecomeCivilWorker", function()
 	local ply = net.ReadPlayer()
-	ply:SetTeam(TEAM_WORKFORCE)
+	
+	if ply:Team() == TEAM_CITIZEN then
+	
+		ply:TakeMoney(25)
+		ply:SetTeam(TEAM_WORKFORCE)
+		ply:EmitSound("items/ammo_pickup.wav")
+		ply:Notify("You have become a Civil Worker.")
+		
+	else
+		
+		NetExploitNotification(ply, "HatchetBecomeCivilWorker")
+		
+	end
+	
 end)
 
 net.Receive("HatchetVendingMachineFillEnd", function()
@@ -37,11 +90,11 @@ net.Receive("HatchetVendingMachineFillEnd", function()
 	local success = net.ReadBool()
 	if success == true and ent:GetClass() == "m_vendingmachine" then
 		ent:Refill()
-		ply:Notify("good for you")
+		ply:Notify("Machine successfully refilled. Your reward has been added to your next ration cycle.")
 		ply:TakeInventoryItemClass("work_canbox", 1, 1)
 		ply.PendingReward = ply.PendingReward + 20
 	else
-		ply:Notify("bad for you")
+		ply:Notify("Your clumsy hands cause the machine to eject all the cans.")
 	end
 end)
 
