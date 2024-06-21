@@ -378,8 +378,9 @@
 		end
 		
 		for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-			v:Fire("sethealth", -100)
-			--b:Activate()
+        	v:SetHealth(60)
+        	v:SetColor(Color(255,255,255,255))
+            v:RepairCombineCamera()
 		end
 		
 		RunConsoleCommand("mp_show_voice_icons", "0")
@@ -408,9 +409,9 @@
 			end
 			
 			for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-				v:Fire("sethealth", -100)
-
-				--b:Activate()
+				v:SetHealth(60)
+        		v:SetColor(Color(255,255,255,255))
+        		v:RepairCombineCamera()
 			end
 	end
 
@@ -421,7 +422,6 @@
 		for k, v in pairs( ents.FindByClass("impulse_item") ) do
 		v:SetPersistent(true)
 		--timer.Simple(15, function() v:Initialize() end )
-		
 		end
 		
 	end
