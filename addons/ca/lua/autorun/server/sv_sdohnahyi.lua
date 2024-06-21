@@ -214,7 +214,7 @@ local function choose_bd_anims(type, data)
         type = DebugType:GetString()
     end
     if type == "fire" then
-        anim = "bd_death_fire"..math.random(1,8)
+        anim = table.Random(bdtab["moving"])
     elseif type == "explosion" then
         anim = "DeathExplosion_0"..math.random(1,8)
     elseif type == "club" then
@@ -455,7 +455,7 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
             local pos, ang = ent:GetBonePosition(ent:TranslatePhysBoneToBone(i))
 			
             if pos && ang then
-                physObj:EnableMotion(false)
+                physObj:EnableMotion(true)
 				--:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
             end
         end
@@ -536,6 +536,7 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 							v:SetPos(rag:GetBonePosition(rag:LookupBone("ValveBiped.Bip01_Spine4")) + f*6.5 + u*-10 )
 							v:SetAngles(Angle(180, 0, 0))
 							constraint.Weld(v, rag, 0, rag:TranslateBoneToPhysBone( rag:LookupBone("ValveBiped.Bip01_Spine4") ), 5000, true, false)
+							break
 						end
 					end
 				end
@@ -543,8 +544,17 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 		end
 	end)
 	
+	timer.Simple(4, function()
+		if IsValid(rag) then
+			if rag:IsOnFire() then
+				rag:Extinguish()
+				rag:SetMaterial("models/charple/charple4_sheet")
+			end
+		end
+	end)
+	
 	timer.Simple(0.1, function()
-		if IsValid(ent) and rag:GetOwner():IsPlayer() then
+		if IsValid(rag) and rag:GetOwner():IsPlayer() then
 			net.Start("impulseRagdollLink")
 			net.WriteEntity(rag)
 			net.Send(ent)
