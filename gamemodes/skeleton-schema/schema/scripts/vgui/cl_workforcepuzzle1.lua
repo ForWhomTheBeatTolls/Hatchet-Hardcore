@@ -98,10 +98,12 @@ end
 function PANEL:OnRemove()
 	if success == true then
 		nextclickdecay = nil
-		x = 0
+		x = 32
 	else
 		--LocalPlayer():Notify("You have failed.")
 		success = false
+		nextclickdecay = nil
+		x = 32
 	end
 	net.Start("HatchetVendingMachineFillEnd")
 	net.WritePlayer(LocalPlayer())
