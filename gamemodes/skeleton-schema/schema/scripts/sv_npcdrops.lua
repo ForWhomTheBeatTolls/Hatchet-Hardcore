@@ -40,12 +40,7 @@ hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
 		impulse.Inventory.SpawnItem("util_scrapmetal", npc:GetPos() + Vector(0, 0, 30), nil, duration)
 		impulse.Inventory.SpawnItem("util_refmetal", npc:GetPos() + Vector(0, 0, 20), nil, duration)
 	elseif npc:GetClass() == "npc_crow" or npc:GetClass() == "npc_pigeon" or npc:GetClass() == "npc_seagull" then
-		for k,v in pairs(ents.FindByClass("prop_ragdoll")) do
-			if v:GetPos():DistToSqr(npc:GetPos()) < 1800 then
-			v:Remove()
-			end
-		end
-		impulse.Inventory.SpawnItem("food_crow", npc:GetPos() + Vector(0, 0, 0), nil, duration)
+		impulse.Inventory.SpawnItem("food_crow", npc:GetPos() + Vector(0, 0, 25), nil, duration)
 	end
 	
 	for k,v in pairs(ents.FindByClass("impulse_item")) do
@@ -56,4 +51,10 @@ hook.Add("OnNPCKilled", "NPCDropsHatchet", function(npc, attacker, inflictor)
 	end
 	
 	//print(npc:GetClass().." Died while having a "..npc:GetActiveWeapon():GetClass())
+end)
+
+hook.Add( "CreateEntityRagdoll", "NPCDropsRagdollsHatchet", function(owner, ragdoll)
+	if owner:GetClass() == "npc_crow" or owner:GetClass() == "npc_pigeon" or owner:GetClass() == "npc_seagull" then
+		ragdoll:Remove()
+	end
 end)
