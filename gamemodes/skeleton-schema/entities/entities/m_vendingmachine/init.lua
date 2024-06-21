@@ -1,21 +1,18 @@
-AddCSLuaFile()
+AddCSLuaFile("cl_init.lua")
+AddCSLuaFile("shared.lua")
 include("shared.lua")
-include("cl_init.lua")
-
 function ENT:Initialize()
-	-- Sets what model to use
 	self:SetModel( "models/props_interiors/VendingMachineSoda01a.mdl" )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	
-	-- Make prop to fall on spawn
-	phys = self:GetPhysicsObject()
+    self:SetMoveType(MOVETYPE_VPHYSICS)
+    self:SetSolid(SOLID_VPHYSICS)
+    self:PhysicsInit(SOLID_VPHYSICS)
+    self:DrawShadow(false)
+	local phys = self:GetPhysicsObject()
 	if ( IsValid( phys ) ) then 
         phys:Wake()
     end
 	
-	self.stock = 20
+	self.Stock = 20
 	self:SetStock(true)
     self:Refill()
     self.nextDispenseTime = 1
@@ -23,7 +20,7 @@ function ENT:Initialize()
 end
 
 function ENT:Refill()
-    self.stock = 20
+    self.Stock = 20
 	self:SetStock(true)
     self:EmitSound("ambient/machines/combine_terminal_idle1.wav")
 end
@@ -32,15 +29,15 @@ function ENT:Use(ply)
 	local f, r, u = self:GetForward(), self:GetRight(), self:GetUp()
 	if self.NextUse < CurTime() then
 
-		if self.stock > 0 then
+		if self.Stock > 0 then
             
 			if ply:GetSyncVar(SYNC_MONEY, 0) >= 5 then
 				ply:TakeMoney(5)
 				self:EmitSound("buttons/button1.wav", 70, 100, 0.7, CHAN_AUTO)
 				self.NextUse = CurTime() + 2
-				self.stock = self.stock - 1
+				self.Stock = self.Stock - 1
 				timer.Simple(0.6, function() if IsValid(self) then
-				if self.stock == 0 then
+				if self.Stock == 0 then
 					self:SetStock(false)
 				else
 					self:SetStock(true)
@@ -59,12 +56,4 @@ function ENT:Use(ply)
 			self.NextUse = CurTime() + 2
 		end
 	end
-end
-
-function ENT:NeedsRefill()
-    if self:GetStock() == false then
-        return true
-    else
-        return false
-    end
 end
