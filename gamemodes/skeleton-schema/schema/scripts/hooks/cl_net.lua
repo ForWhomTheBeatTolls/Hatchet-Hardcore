@@ -1,10 +1,27 @@
--- net.Receive("doWearClothing", function()
--- local item = net.ReadString("ITEM.UniqueID")
--- local player = net.ReadPlayer()
-	-- if IsValid(item) then
-	-- impulse.MakeWorkbar(1, "Wearing...", function() player:SetBodygroup(ITEM.BodyGroup) end, false )
-	-- end
--- end)
+net.Receive("HatchetSelectWorkerJobStart", function()
+	local ply = net.ReadPlayer()
+	if ply:Team() == TEAM_WORKFORCE then
+		vgui.Create("hatchetCivilWorkerJob")
+	else
+		net.Start("NetExploitNotification")
+		net.WriteString("HatchetSelectWorkerJobStart")
+		net.WritePlayer(ply)
+		net.SendToServer()
+	end
+end)
+
+net.Receive("HatchetCivilWorkerSignup", function()
+	local ply = net.ReadPlayer()
+	if ply:Team() == TEAM_CITIZEN then
+		vgui.Create("hatchetCivilWorkerSignup")
+	else
+		net.Start("NetExploitNotification")
+		net.WriteString("HatchetCivilWorkerSignup")
+		net.WritePlayer(ply)
+		net.SendToServer()
+	end
+		
+end)
 
 net.Receive("HatchetVendingMachineFillStart", function()
 	vgui.Create("impulseWorkforcePuzzle1")
