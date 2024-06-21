@@ -1,6 +1,6 @@
 -- Framework related
 impulse.Config.SchemaName = "HATCHET: HARDCORE"
-impulse.Config.SchemaVersion = 303
+impulse.Config.SchemaVersion = 430
 
 impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>Project Lead: WillMaster, Steve B.</font>
