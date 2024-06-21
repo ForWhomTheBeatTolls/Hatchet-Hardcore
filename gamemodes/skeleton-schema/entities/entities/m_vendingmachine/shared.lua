@@ -6,10 +6,9 @@ ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.Base = "base_gmodentity"
 
-ENT.HUDName = ""
-ENT.HUDDesc = ""
+ENT.HUDName = " "
+ENT.HUDDesc = " "
 
 function ENT:SetupDataTables()
     self:NetworkVar("Bool", 0, "Stock")
 end
-		
