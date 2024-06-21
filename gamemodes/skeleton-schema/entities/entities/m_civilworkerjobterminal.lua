@@ -19,7 +19,7 @@ if SERVER then
 		self:SetMoveType(SOLID_VPHYSICS)  
 		self:SetSolid(SOLID_VPHYSICS)   
 		self:SetUseType(SIMPLE_USE)
-
+		self.NextUse = CurTime()
 
     	local physObj = self:GetPhysicsObject()
     	self.nodupe = true
@@ -35,16 +35,22 @@ end
     local teamChangeTime = impulse.Config.TeamChangeTime
 	function ENT:Use(activator, caller)
 	
-	if caller:Team() == TEAM_WORKFORCE then
+	if self.NextUse < CurTime() then
 	
-		net.Start("HatchetSelectWorkerJobStart")
-		net.WritePlayer(caller)
-		net.Send(caller)
-		self:EmitSound("ambient/machines/keyboard_slow_1second.wav", 60, 100, 1, CHAN_AUTO)
+		if caller:Team() == TEAM_WORKFORCE then
+	
+			net.Start("HatchetSelectWorkerJobStart")
+			net.WritePlayer(caller)
+			net.Send(caller)
+			self:EmitSound("ambient/machines/keyboard_slow_1second.wav", 60, 100, 1, CHAN_AUTO)
 		
-	else
-	
-		caller:Notify("You can't use this.")
+		else
+		
+			caller:Notify("You can't use this.")
+			
+		end
+		
+		self.NextUse = CurTime() + 1.5
 	end
 	
 end
