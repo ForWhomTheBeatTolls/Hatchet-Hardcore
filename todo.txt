@@ -74,6 +74,10 @@ WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Redesign player settings screen from the ground up
 - Fix bubble chat whisper not capitalizing correctly
+- Inventory Possibile-Exploit Fix
+- Citizen terminals, will replace ATMs and will be a usefull way to get information of your character
+- remake player settings, turn it into a info\rule\page area.
+- Make Identity Changes by going on spawm and pressing a button on the main menu where you can change species (Dispatch, Vort, Citizen) and Your characters Model, Name, Description."
 
 MUHAMMED CODING SIDE:
 ------------------------
