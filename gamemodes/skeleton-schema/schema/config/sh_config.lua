@@ -23,7 +23,7 @@ impulse.Config.WhitelistedPlayers = {
 "STEAM_0:0:80736176", -- Gonk
 "STEAM_0:0:222027191", -- Processed Grain
 "STEAM_0:1:580569159", -- Esrah   
---"STEAM_0:0:556861499", -- Garry  
+"STEAM_0:0:556861499", -- Garry  
 "STEAM_0:0:215468222", -- Rubel
 "STEAM_0:0:600025375", -- Joe Jenkins
 "STEAM_0:0:543738924", -- Atan
