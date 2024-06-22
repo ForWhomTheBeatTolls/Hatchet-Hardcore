@@ -2,6 +2,8 @@
 
 	function SCHEMA:PlayerSpawn(ply)
 		ply.IsInASequence = false
+		ply.IsInCombat = false
+		ply.CombatCool = CurTime()
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamaged = ply.TimesDamaged or 0
 		ply.TimesDamagedCool = CurTime()
@@ -31,12 +33,15 @@
 				end
 				
 				ent.NextHurtSound = CurTime() + 0.4
-				
 			end
-			
+
+			ent.IsInCombat = true
+			ent.CombatCool = CurTime() + 30
 			ent.TimesDamaged = ent.TimesDamaged + 1
-			if ent.TimesDamagedCool < CurTime() then ent.TimesDamagedCool = CurTime() + 0.5
-			else ent.TimesDamagedCool = ent.TimesDamagedCool + 0.7
+			if ent.TimesDamagedCool < CurTime() then 
+				ent.TimesDamagedCool = CurTime() + 0.5
+			else 
+				ent.TimesDamagedCool = ent.TimesDamagedCool + 0.7
 			end
 			
 		end
