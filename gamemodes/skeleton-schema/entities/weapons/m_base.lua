@@ -140,6 +140,10 @@ function SWEP:CanPrimaryAttack()
 		return false
 		
 	end
+	
+	if self:GetOwner().Stunned then
+		return false
+	end
 
 	return true
 
