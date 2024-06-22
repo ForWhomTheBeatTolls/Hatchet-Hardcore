@@ -61,7 +61,7 @@ function InitializeHuds()
 			return
 		end
 
-		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
+		if LocalPlayer():Team() == (TEAM_CP or TEAM_OTA) and LocalPlayer():GetTeamRank() != nil then
 			return
 		end
 
@@ -155,7 +155,7 @@ function InitializeHuds()
 			return
 		end
 
-		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
+		if LocalPlayer():Team() == (TEAM_CP or TEAM_OTA) and LocalPlayer():GetTeamRank() != nil then
 			return
 		end
 
@@ -342,7 +342,7 @@ function InitializeHuds()
 			return
 		end
 
-		if LocalPlayer():GetTeamRank() == RANK_I1 or LocalPlayer():GetTeamRank() == RANK_I2 or LocalPlayer():GetTeamRank() == RANK_I3 or LocalPlayer():GetTeamRank() == RANK_I4 or LocalPlayer():GetTeamRank() == RANK_OFC or LocalPlayer():GetTeamRank() == RANK_DVL or LocalPlayer():GetTeamRank() == RANK_DCO or LocalPlayer():GetTeamRank() == RANK_CMD or LocalPlayer():GetTeamClass() == 1 or LocalPlayer():GetTeamClass() == 2 or LocalPlayer():GetTeamClass() == 3 then
+		if LocalPlayer():Team() == (TEAM_CP or TEAM_OTA) and LocalPlayer():GetTeamRank() != nil then
 			return
 		end
 
