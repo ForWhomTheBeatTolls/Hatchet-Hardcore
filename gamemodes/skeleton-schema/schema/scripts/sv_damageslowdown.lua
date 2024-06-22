@@ -1,10 +1,11 @@
 	hook.Add("Think", "DamageFunctionsHatchet", function()
 
 		for _, ply in pairs(player.GetAll()) do
+			if (ply:GetModel() != "models/player.mdl") then
 				local walk = ply:GetWalkSpeed()
 				local run = ply:GetRunSpeed()
-				ply:SetRunSpeed((impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545)) ( (1 + (ply.TimesDamaged / 3) ) + ( 1 + (ply.TimesStunned / 2.5) ) ))
-				ply:SetWalkSpeed(impulse.Config.WalkSpeed / ( (1 + (ply.TimesDamaged / 3) ) + ( 1 + (ply.TimesStunned / 2.5) ) ) )
+				ply:SetRunSpeed( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545)  /  (1 + ply.TimesDamaged / 3) ) / ( 1 + (ply.TimesStunned / 2.5) ) )
+				ply:SetWalkSpeed( impulse.Config.WalkSpeed / ((1 + (ply.TimesDamaged / 3) ) / ( 1 + (ply.TimesStunned / 2.5) ) ) )
 				
 				if ply.TimesStunned > 2 then
 					ply.Stunned = true
@@ -16,9 +17,10 @@
 					ply:SetRunSpeed(0)
 					ply:SetWalkSpeed(0)
 				else
-					ply:SetRunSpeed( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545) ) ( (1 + (ply.TimesDamaged / 3) ) + ( 1 + (ply.TimesStunned / 2.5) ) ) )
-					ply:SetWalkSpeed( impulse.Config.WalkSpeed / ( (1 + (ply.TimesDamaged / 3) ) + ( 1 + (ply.TimesStunned / 2.5) ) ) )
+					ply:SetRunSpeed( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545)  /  (1 + ply.TimesDamaged / 3) ) / ( 1 + (ply.TimesStunned / 2.5) ) )
+					ply:SetWalkSpeed( impulse.Config.WalkSpeed / ((1 + (ply.TimesDamaged / 3) ) / ( 1 + (ply.TimesStunned / 2.5) ) ) )
 				end
+			end
 		end
 		
 		for _, ply in pairs(player.GetAll()) do
