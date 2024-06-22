@@ -48,6 +48,7 @@ TO-DO LIST:
 -Improve CP name obfuscation
 -Add "Recognize" system
 -Add Citizen Apply system
+-Add handcuffs SWEP
 
 DONE LIST:
 ---------------------
