@@ -110,7 +110,7 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
 			eyeview.origin = hpos - Vector(0,0,5)
 		elseif hit2 then
 			eyeview.origin = hpos2 - Vector(0,0,15)
-		elseif clipcheckhit then
+		elseif clipcheckhit and clipcheck.Entity:Class() != "player" then
 			LocalPlayer():ScreenFade( SCREENFADE.IN, Color(0,0,80,255), 0.1, 0 )
 		else
 			eyeview.origin = LocalPlayer():GetAttachment( LocalPlayer():LookupAttachment("eyes") ).Pos
