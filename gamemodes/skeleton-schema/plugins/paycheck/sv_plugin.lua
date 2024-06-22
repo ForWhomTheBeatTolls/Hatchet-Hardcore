@@ -7,7 +7,7 @@ function PLUGIN:Think()
 				v:GiveBankMoney(5)
 			elseif v:Team() == TEAM_CP then
 				v:GiveBankMoney(15)
-			elseif v:Team() == TEAM_WORKFORCE
+			elseif v:Team() == TEAM_WORKFORCE then
 				v:GiveBankMoney(10)
 			elseif v:Team() == TEAM_RESISTANCE then
 				v:GiveBankMoney(1)
