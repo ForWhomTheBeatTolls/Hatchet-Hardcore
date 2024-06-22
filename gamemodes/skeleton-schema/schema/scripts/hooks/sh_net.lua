@@ -11,11 +11,14 @@ net.Receive("HatchetBubbleChatCall", function()
     end
 
     local textPos = 1
+	local pos
     local nextTime = 0
 
     hook.Add("HUDPaint", ply:SteamID().."_OverheadChatHUD", function()
         if ( sender:IsValid() and sender:Alive() and (sender:GetMoveType() != MOVETYPE_NOCLIP) ) then
-            local pos = (sender:GetBonePosition(sender:LookupBone("ValveBiped.Bip01_Spine1")) + sender:OBBCenter()):ToScreen()
+			if (sender:GetModel() != "models/player.mdl") then
+            pos = (sender:GetBonePosition(sender:LookupBone("ValveBiped.Bip01_Spine1")) + sender:OBBCenter()):ToScreen()
+			end
             local posdist = sender:GetPos()
             if sender:IsValid() and LocalPlayer():GetPos():Distance( posdist ) <= chatradius and LocalPlayer():IsLineOfSightClear(sender) then
                 if CurTime() > nextTime and textPos != string.len(msg) then
