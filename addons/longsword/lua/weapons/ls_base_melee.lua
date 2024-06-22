@@ -161,6 +161,32 @@ function SWEP:Reload()
 	return
 end
 
+function SWEP:StunAttack()
+	
+	local trace = {}
+	trace.start = self.Owner:GetShootPos()
+	trace.endpos = trace.start + self.Primary.Range + (self.Owner:GetVelocity():LengthSqr() / 950)
+	trace.filter = self.Owner
+	trace.mask = MASK_SHOT_HULL
+
+	local boxSize = self.Primary.HullSize or 6
+	trace.mins = Vector(-boxSize, -boxSize, -boxSize)
+	trace.maxs = Vector(boxSize, boxSize, boxSize)
+
+	self.Owner:LagCompensation(true)
+
+	local tr = util.TraceHull(trace)
+
+	self.Owner:LagCompensation(false)
+
+	if SERVER and tr.Hit then
+		if tr.Entity:IsPlayer() then
+			tr.Entity.TimesStunned = tr.Entity.TimesStunned + 1
+			tr.Entity.TimesStunnedCool = CurTime() + 1.5
+		end
+	end
+end
+
 function SWEP:ClubAttack()
 	local trace = {}
 	trace.start = self.Owner:GetShootPos()
