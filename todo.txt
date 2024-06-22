@@ -36,7 +36,6 @@ TO-DO LIST:
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
 -Add crafting via the use of fire
--Add stunstick stun mechanic
 -IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
 -Add zombification
 -Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
@@ -80,6 +79,7 @@ DONE LIST:
 -Improve bubble chat (Add automatic text capitalaztion to the text and make it so bubble chat cant be seen through walls)
 -Bubble chat, make it so /me's don't play sounds
 -DAMAGE SLOWDOWN!!! FUCKING FINALLY!!!
+-Add stunstick stun mechanic
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
