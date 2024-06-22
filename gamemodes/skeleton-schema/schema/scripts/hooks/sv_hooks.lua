@@ -168,7 +168,6 @@
 	 end
 
 	function SCHEMA:PlayerShouldGetHungry(ply)
-		-- cops will not get hungry
 		return ply:Team() != TEAM_OTA
 	end
 
@@ -347,21 +346,25 @@
 	end
 
 	function SCHEMA:PlayerUnRestrain(ply)
-		ply:GiveInventoryItem("util_ziptie")
+	
+		if ply:Team() == (TEAM_CP or TEAM_OTA) then
+			ply:GiveInventoryItem("util_ziptie", 1, true)
+		else
+			ply:GiveInventoryItem("util_ziptie", 1, false)
+		end
+		
 	end
 
 	function SCHEMA:Initialize()
 
 		for k, v in pairs( ents.FindByClass("impulse_item") ) do
-			--v:SetPersistent(true)
 			v:Initialize()
-			
 		end
 		
 		for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-        	v:SetHealth(60)
-        	v:SetColor(Color(255,255,255,255))
             v:RepairCombineCamera()
+			v:SetHealth(60)
+        	v:SetColor(Color(255,255,255,255))
 		end
 		
 		RunConsoleCommand("mp_show_voice_icons", "0")
@@ -377,32 +380,23 @@
 	end
 
 	function SCHEMA:OnReloaded()
-	print[[#    _    _           _                                                  _   _          __          __                                             ]]
-	print[[#   | |  | |         | |                                                | | ( )         \ \        / /                                             ]]
-	print[[#   | |  | |  _   _  | |__     __ _   _ __ ___    _ __ ___     ___    __| | |/   ___     \ \  /\  / /    ___    __ _   _ __     ___    _ __    ___ ]]
-	print[[#   | |\/| | | | | | |  _ \   / _  | |  _   _ \  |  _   _ \   / _ \  / _  |     / __|     \ \/  \/ /    / _ \  / _  | |  _ \   / _ \  |  _ \  / __|]]
-	print[[#   | |  | | | |_| | | | | | | (_| | | | | | | | | | | | | | |  __/ | (_| |     \__ \      \  /\  /     |  _/  |(_| | | |_) | | (_) | | | | | \__ \]]
-	print[[#   |_|  |_|  \__,_| |_| |_|  \__,_| |_| |_| |_| |_| |_| |_|  \___|  \__,_|     |___/       \/  \/      \___|  \__,_| | .__/   \___/  |_| |_| |___/]]
-	print[[#                                                                                                                     | |                          ]]
+	
 			for k, v in pairs( ents.FindByClass("impulse_item") ) do
-			--v:SetPersistent(true)
-			v:Initialize()
+				v:Initialize()
 			end
 			
 			for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-				v:SetHealth(60)
-        		v:SetColor(Color(255,255,255,255))
         		v:RepairCombineCamera()
+				v:SetHealth(60)
+				v:SetColor(Color(255,255,255,255))
 			end
 	end
 
-	-- local blacklist = {
-	-- "
 
 	function SCHEMA:Think()
+	
 		for k, v in pairs( ents.FindByClass("impulse_item") ) do
-		v:SetPersistent(true)
-		--timer.Simple(15, function() v:Initialize() end )
+			v:SetPersistent(true)
 		end
 		
 	end
