@@ -44,6 +44,7 @@ hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
 				if v:IsCP() then
 					v:SendCombineMessage("CODE CHANGED: AUTONOMOUS JUDGEMENT.", Color(255, 0, 0))
 					timer.Simple(5, function()  v:SendChatClassMessage(16, "Attention all Civil Protection members. Conduct searches on all citizens & areas within city-limits, and punish those breaking lockdown.", ply) end)
+					deathcountclear = CurTime() + 900
 				end
 			end
 		end
@@ -71,16 +72,21 @@ hook.Add("Think", "BSLCountKeepCounting", function()
 end)
 	
 local randomambiencenum = math.random(1,5)
+local mysound = "music/hl2_song26_trainstation1.mp3" 
+local isplaying = false
 NextAJAmbienceThink = CurTime()
 hook.Add("Think", "CCAmbient", function()
-	if GetGlobalInt("CityCode") != 4 then
+	if GetGlobalInt("CityCode") == 4 then
 		if NextAJAmbienceThink < CurTime() then
 			for k,v in pairs (player.GetAll()) do
-				local mysound = "music/hl2_song26_trainstation1.mp3" 
-				Entity(0):EmitSound(mysound, 0, 100, 0.1, CHAN_STATIC)
+				if isplaying == false then
+					isplaying = true
+					Entity(0):EmitSound(mysound, 0, 100, 0.05, CHAN_STATIC)
+				end
 			end
 		end
 	else
+		isplaying = false
 		Entity(0):StopSound(mysound)
 		NextAJAmbienceThink = CurTime() + 120
 	end
