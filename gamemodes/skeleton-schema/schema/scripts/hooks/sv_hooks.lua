@@ -3,11 +3,14 @@
 	function SCHEMA:PlayerSpawn(ply)
 		ply.IsInASequence = false
 		ply.IsInCombat = false
+		ply.CanCrouch = true
+		ply.CanJump = true
+		ply.Stunned = false
 		ply.CombatCool = CurTime()
 		ply.NextHurtSound = CurTime()
-		ply.TimesDamaged = ply.TimesDamaged or 0
+		ply.TimesDamaged = 0
 		ply.TimesDamagedCool = CurTime()
-		ply.TimesStunned = ply.TimesStunned or 0
+		ply.TimesStunned = 0
 		ply.TimesStunnedCool = CurTime()
 		ply.FoodPoisoning = false
 		ply.PendingReward = ply.PendingReward or 0
