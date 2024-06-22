@@ -292,7 +292,6 @@ function SWEP:SecondaryAttack()
 			direction.z = 0
 
 			ent:SetVelocity(direction)
-			ent.TimesDamaged = ent.TimesDamaged + 1
 
 			if self.Owner:Team() == TEAM_CP then
 				self.Owner:ForceSequence("pushplayer")
