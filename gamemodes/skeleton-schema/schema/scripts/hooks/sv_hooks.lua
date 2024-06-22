@@ -5,10 +5,13 @@
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamaged = ply.TimesDamaged or 0
 		ply.TimesDamagedCool = CurTime()
+		ply.TimesStunned = ply.TimesStunned or 0
+		ply.TimesStunnedCool = CurTime()
 		ply.FoodPoisoning = false
 		ply.PendingReward = ply.PendingReward or 0
 		ply.HealOverTime = false
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
+		ply:RemoveAllDecals()
 	end
 
 	hook.Add("Think", "DamageSlowDown", function()
