@@ -10,7 +10,18 @@ SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Sound = Sound("WeaponFrag.Roll")
 SWEP.Primary.ImpactSound = Sound("Canister.ImpactHard")
 
+function SWEP:CanPrimaryAttack()
+	if self.Owner.Stunned then
+		return false
+	end
+	
+	return true
+end
+
 function SWEP:PrimaryAttack()
+
+	if (!self:CanPrimaryAttack()) then return end
+	
 	local boxSize = self.Primary.HullSize
 	if self.PrePrimaryAttack then
 		self.PrePrimaryAttack(self)
@@ -165,7 +176,7 @@ function SWEP:StunAttack()
 	
 	local trace = {}
 	trace.start = self.Owner:GetShootPos()
-	trace.endpos = trace.start + self.Primary.Range + (self.Owner:GetVelocity():LengthSqr() / 950)
+	trace.endpos = trace.start + self.Owner:GetAimVector() * (self.Primary.Range + (self.Owner:GetVelocity():LengthSqr() / 950) - 7)
 	trace.filter = self.Owner
 	trace.mask = MASK_SHOT_HULL
 
