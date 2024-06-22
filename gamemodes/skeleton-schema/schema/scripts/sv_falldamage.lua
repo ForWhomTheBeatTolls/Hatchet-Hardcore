@@ -1,5 +1,13 @@
 hook.Add( "OnPlayerHitGround", "HatchetCalculateFallDamage", function(ply, inWater, onFloater, speed)
-local fallconditions = (speed > 450 and not inWater)
+local maxspeed
+
+	if ply:Crouching() then
+		maxspeed = 530
+	else
+		maxspeed = 410
+	end
+
+local fallconditions = (speed >  maxspeed and not inWater)
 	if fallconditions and not ply:Crouching() then
 		falldamage = speed / 7
 	elseif fallconditions and ply:Crouching() then
