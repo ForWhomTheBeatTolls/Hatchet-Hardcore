@@ -1,4 +1,4 @@
-	hook.Add("Think", "DamageSlowDown", function()
+	hook.Add("Think", "DamageFunctionsHatchet", function()
 
 		for _, ply in pairs(player.GetAll()) do
 				local walk = ply:GetWalkSpeed()
@@ -49,6 +49,10 @@
 					ply.TimesStunnedCool = CurTime() + 4
 				end
 				
+			end
+
+			if ply.CombatCool < CurTime() then
+				ply.IsInCombat = false
 			end
 			
 		end
