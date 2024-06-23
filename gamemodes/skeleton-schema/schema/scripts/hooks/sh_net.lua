@@ -5,10 +5,23 @@ net.Receive("HatchetBubbleChatCall", function()
     local chatradius = net.ReadUInt(10)
     local ply = net.ReadPlayer()
     local sender = Entity(ply:EntIndex())
+	local team
+	
+	if sender:Team() == TEAM_CITIZEN then team = "Citizen"
+	elseif sender:Team() == TEAM_WORKFORCE then team = "Workforce"
+	elseif sender:Team() == TEAM_CP then team = "Civil Protection"
+	else team = " "
+	end		
 
-    if string.StartsWith(msg, "/") then
+    if string.StartsWith(msg, "/") and not string.StartsWith(msg, "/apply") then
         msg = ""
     end
+	
+	if string.StartsWith(msg, "/apply") and team != " " then
+		msg = ("[ID] "..sender:Nick().." | "..team)
+	else
+		msg = ""
+	end
 
     local textPos = 1
 	local pos
