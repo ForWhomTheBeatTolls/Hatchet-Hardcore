@@ -1,17 +1,19 @@
 	--reloadmarker, make changes here then save to lua refr
 
 	function SCHEMA:PlayerSpawn(ply)
+		ply.CombatCool = CurTime()
+		ply.NextHurtSound = CurTime()
+		ply.TimesDamagedCool = CurTime()
+		ply.TimesStunnedCool = CurTime()
+		ply:SetNWInt("ApplyWearTime", CurTime() + 5)
 		ply.IsInASequence = false
 		ply.IsInCombat = false
+		ply:SetNWBool("Applied", true)
 		ply.CanCrouch = true
 		ply.CanJump = true
 		ply.Stunned = false
-		ply.CombatCool = CurTime()
-		ply.NextHurtSound = CurTime()
 		ply.TimesDamaged = 0
-		ply.TimesDamagedCool = CurTime()
 		ply.TimesStunned = 0
-		ply.TimesStunnedCool = CurTime()
 		ply.FoodPoisoning = false
 		ply.PendingReward = ply.PendingReward or 0
 		ply.HealOverTime = false
