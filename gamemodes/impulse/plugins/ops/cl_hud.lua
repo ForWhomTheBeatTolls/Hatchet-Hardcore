@@ -15,6 +15,11 @@ local hitgroups = {
 }
 
 hook.Add("HUDPaint", "impulseOpsHUD", function()
+
+	if LocalPlayer():Team() == TEAM_DISPATCH then
+		return
+	end
+		
 	if not impulse.hudEnabled then return end
 
 	if LocalPlayer():IsAdmin() and LocalPlayer():GetMoveType() == MOVETYPE_NOCLIP then
