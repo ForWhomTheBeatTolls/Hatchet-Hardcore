@@ -76,6 +76,7 @@ DONE LIST:
 -Bubble chat, make it so /me's don't play sounds
 -DAMAGE SLOWDOWN!!! FUCKING FINALLY!!!
 -Add stunstick stun mechanic
+-Add Citizen Apply system
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
@@ -95,6 +96,5 @@ MUHAMMED CODING SIDE:
 -people name hides when you wear the mask
 -Add ankle twisting (anti crouch spam)
 -Add handcuffs SWEP
--Add Citizen Apply system
 -Add custom grenade entity
 
