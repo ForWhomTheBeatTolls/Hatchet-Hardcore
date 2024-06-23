@@ -124,16 +124,21 @@ local function DrawOverheadInfo(target, alpha)
 	end
 	
 	if (LocalPlayer():Team() == target:Team()) or (LocalPlayer():IsCP() and !target:IsCP() and not target:Team() == TEAM_RESISTANCE) then
-	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif target:Team() == TEAM_CP and LocalPlayer():Team() != TEAM_CP then
-	draw.DrawText("Civil Protection", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText("Civil Protection", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif (target:Team() == TEAM_OTA) and (LocalPlayer():Team() ==  TEAM_CP) then
-	draw.DrawText("TRANSHUMAN ARM | KEEP DISTANCE", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif target:Team() == TEAM_RESISTANCE and LocalPlayer():Team() != TEAM_RESISTANCE then
-	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
+		draw.DrawText("TRANSHUMAN ARM | KEEP DISTANCE", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+	elseif (target:Team() == TEAM_OTA) and (target:Team() != LocalPlayer():Team()) and (LocalPlayer():IsCP() == false) then
+		draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == true) and (target:Team() != TEAM_RESISTANCE) then
+		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
+	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == false) or (target:Team() == TEAM_RESISTANCE) then
+		draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
 	else
-	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	end
+	
 	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
 		draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
 	end
