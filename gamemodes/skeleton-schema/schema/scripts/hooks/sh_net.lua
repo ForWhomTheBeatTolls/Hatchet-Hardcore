@@ -19,7 +19,7 @@ net.Receive("HatchetBubbleChatCall", function()
 	
 	if string.StartsWith(msg, "/apply") and team != " " then
 		msg = ("[ID] "..sender:Nick().." | "..team)
-	else
+	elseif string.StartsWith(msg, "apply") and team == " " then
 		msg = ""
 	end
 
@@ -67,14 +67,11 @@ net.Receive("HatchetBubbleChatCall", function()
         textremovetime = 18
     end
 
+if IsValid(ply) then
     timer.Create(ply:SteamID().."_RemoveOverheadChat", textremovetime, 1, function()
         //print("Removed: "..ply:SteamID())
-        if IsValid(ply) then
-            hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
-        end
+        hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
     end)
-
-
-
-    //print(ply:SteamID().."_OverheadChatHUD")
+end
+		
 end)
