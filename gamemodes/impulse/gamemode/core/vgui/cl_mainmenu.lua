@@ -100,6 +100,34 @@ function PANEL:Init()
 		CRASHSCREEN_ALLOW = true
 	end
 
+	local title = vgui.Create("DLabel", self.core)
+	title:SetText("Character Settings:")
+	title:SetPos(100,364)
+	title:SetFont("Impulse-Elements48")
+	title:SizeToContents()
+
+	local button = vgui.Create("DButton", self.core)
+	button:SetPos(100,400)
+	button:SetFont("Impulse-Elements32")
+	button:SetText("Change your species")
+	button:SizeToContents()
+
+	function button:Paint()
+		if self:IsHovered() then
+			self:SetColor(highlightCol)
+		else
+			self:SetColor(color_white)
+		end
+	end
+
+	function button:OnCursorEntered()
+		surface.PlaySound("ui/buttonrollover.wav")
+	end
+
+	function button:DoClick()
+		vgui.Create("HatchetCharacterSelectionScreen")
+	end
+
 	local button = vgui.Create("DButton", self.core)
 	button:SetPos(100,250)
 	button:SetFont("Impulse-Elements32")
