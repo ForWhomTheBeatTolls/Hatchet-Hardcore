@@ -11,11 +11,41 @@ hook.Add("SetupMove", "HatchetMovementRestrictFunctions", function(ply, mvd, cmd
 		if not ply.CanJump then
 			mvd:RemoveKeys(IN_JUMP)
 		end
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:RemoveKeys(IN_JUMP)
+		end
 	end
 	
 	if mvd:KeyDown(IN_DUCK) then
 		if not ply.CanCrouch then
 			mvd:RemoveKeys(IN_DUCK)
+		end
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:RemoveKeys(IN_DUCK)
+		end
+	end
+
+	if mvd:KeyDown(IN_FORWARD) then
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:SetForwardSpeed( 0 )
+		end
+	end
+
+	if mvd:KeyDown(IN_MOVELEFT) then
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:SetSideSpeed( 0 )
+		end
+	end
+
+	if mvd:KeyDown(IN_MOVERIGHT) then
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:SetSideSpeed( 0 )
+		end
+	end
+
+	if mvd:KeyDown(IN_BACK) then
+		if ply:Team() == TEAM_DISPATCH then
+			mvd:SetForwardSpeed( 0 )
 		end
 	end
 	
