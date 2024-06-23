@@ -15,7 +15,7 @@ function DragTheBody(ply,key)
 	draghack:SetCollisionGroup(COLLISION_GROUP_WORLD)
 	draghack:Spawn()
 	constraint.Weld(ragdoll,draghack,tr.PhysicsBone,0,0,true,false)
-	constraint.Rope(ply,draghack,0,0,(ply:GetRight() * 0) + (ply:GetForward() * 0) + (ply:GetUp() * 50),Vector(0,0,0),0,120,8000,0,"cable/rope",false)
+	constraint.Rope(ply,draghack,0,0,(ply:GetRight() * 0) + (ply:GetForward() * 0) + (ply:GetUp() * 50),Vector(0,0,0),0,-60,8000,0,"cable/rope",false)
 	ply.knropedragdelay = true
 	timer.Simple(1,function() ply.knropedragdelay = false end)
 	end
@@ -24,25 +24,13 @@ function DragTheBody(ply,key)
 end
 hook.Add("KeyPress","DragTheBodyKNROPE",DragTheBody)
 
-hook.Add( "KeyPress", "key_press_ragdrag", function( ply, ent )
-    
-	if ( key == IN_SPEED ) then
-		constraint.RemoveAll(ply)
+hook.Add( "KeyPress", "key_press_speedremoveropeknragdoll", function( ply, ent )
+    if ( key == IN_SPEED ) then
+    constraint.RemoveAll(ply)
 	end
-	
-	if ( key == IN_WALK ) then
-		if constraint.HasConstraints(ply) then
-			constraint.RemoveAll(ply)
-		end
-	end
-	
-	if ( key == IN_JUMP ) then
-		constraint.RemoveAll(ply)
-	end
-	
 end )
 
-hook.Add( "PlayerUse", "player_use_ragdrag", function( ply, ent )
+hook.Add( "PlayerUse", "WowDisknragdoll", function( ply, ent )
 	if constraint.HasConstraints(ply) then
 	local canenter = false
 	constraint.RemoveAll(ply)
@@ -50,10 +38,16 @@ hook.Add( "PlayerUse", "player_use_ragdrag", function( ply, ent )
 	end
 end )
 
-hook.Add( "KeyRelease", "key_release_ragdrag", function( ply, key )
+hook.Add( "KeyPress", "keypress_jump_superknragdoll", function( ply, key )
+	if ( key == IN_SPEED ) then
+		constraint.RemoveAll(ply)
+	end
+end )
+
+hook.Add( "KeyRelease", "makehimwalkslooowanddontsprintman__superknragdoll", function( ply, key )
 	if ( key == IN_WALK ) then
-		if constraint.HasConstraints(ply) then
-			constraint.RemoveAll(ply)
+	if constraint.HasConstraints(ply) then
+	constraint.RemoveAll(ply)
 		end
 	end
 end )
