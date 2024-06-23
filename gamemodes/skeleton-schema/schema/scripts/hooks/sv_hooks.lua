@@ -5,7 +5,7 @@
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamagedCool = CurTime()
 		ply.TimesStunnedCool = CurTime()
-		ply:SetNWInt("ApplyWearTime", CurTime() + 5)
+		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
 		ply.IsInASequence = false
 		ply.IsInCombat = false
 		ply:SetNWBool("Applied", true)
