@@ -4,7 +4,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
-// made by willmaster, designed to be optimized
+// made by willmaster n steveb
 
 ENT.PrintName = "Lamp"
 ENT.Category = "Hatchet"
@@ -64,7 +64,6 @@ function ENT:Think()
 		dlight.brightness = 4
 		dlight.Decay = 1000
 		dlight.Size = 300
-		dlight.Style = 6
 		dlight.DieTime = CurTime() + 1
 		end
 	end
