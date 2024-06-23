@@ -541,7 +541,7 @@ impulse.RegisterChatCommand("/group", groupChatCommand)
 impulse.RegisterChatCommand("/g", groupChatCommand)
 
 if CLIENT then
-	local talkCol = Color(255, 255, 100)
+	local talkCol = Color(100, 100, 100)
 	local infoCol = Color(135, 206, 250)
 	local oocCol = color_white
 	local oocTagCol = Color(200, 0, 0)
@@ -557,16 +557,18 @@ if CLIENT then
 	local fallbackRankCol = Color(211, 211, 211)
 	local groupCol = Color(148, 0, 211)
 	local rankCols = impulse.Config.RankColours
+	local speakernick = "UNKNOWN"
+	local reb = TEAM_RESISTANCE
 
 	impulse.RegisterChatClass(1, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
 
 		impulse.customChatFont = "Impulse-ChatMedium"
 		
-		if LocalPlayer():IsCP() and speaker:Team() == TEAM_RESISTANCE then
-		chat.AddText(speaker:Nick(), talkCol, " says: ", message)
+		if (!LocalPlayer():IsCP() and speaker:IsCP()) or (LocalPlayer():IsCP() and (!speaker:IsCP() or speaker:GetNWBool("Applied") == false)) and not (speaker:IsCP() and LocalPlayer():IsCP()) then
+			chat.AddText(speakernick, talkCol, " says: ", message)
 		else
-		chat.AddText(speaker, talkCol, " says: ", message)
+			chat.AddText(speaker, talkCol, " says: ", message)
 		end
 	end)
 
@@ -620,14 +622,22 @@ if CLIENT then
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
 
 		impulse.customChatFont = "Impulse-ChatLarge"
-		chat.AddText(speaker, yellCol, " yells: ", message)
+		if (!LocalPlayer():IsCP() and speaker:IsCP()) or (LocalPlayer():IsCP() and (!speaker:IsCP() or speaker:GetNWBool("Applied") == false)) and not (speaker:IsCP() and LocalPlayer():IsCP()) then
+			chat.AddText(speakernick, yellCol, " yells: ", message)
+		else
+			chat.AddText(speaker, yellCol, " yells: ", message)
+		end
 	end)
 
 	impulse.RegisterChatClass(7, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
 		
 		impulse.customChatFont = "Impulse-ChatSmall"
-		chat.AddText(speaker, whisperCol, " whispers: ", message)
+		if (!LocalPlayer():IsCP() and speaker:IsCP()) or (LocalPlayer():IsCP() and (!speaker:IsCP() or speaker:GetNWBool("Applied") == false)) and not (speaker:IsCP() and LocalPlayer():IsCP()) then
+			chat.AddText(speakernick, whisperCol, " whispers: ", message)
+		else
+			chat.AddText(speaker, whisperCol, " whispers: ", message)
+		end
 	end)
 
 	impulse.RegisterChatClass(8, function(message, speaker)
@@ -636,7 +646,11 @@ if CLIENT then
 	end)
 
 	impulse.RegisterChatClass(9, function(message, speaker)
-		chat.AddText(talkCol, speaker:KnownName(), " ", message)
+		if (!LocalPlayer():IsCP() and speaker:IsCP()) or (LocalPlayer():IsCP() and (!speaker:IsCP() or speaker:GetNWBool("Applied") == false)) and not (speaker:IsCP() and LocalPlayer():IsCP()) then
+			chat.AddText(talkCol, speakernick, " ", message)
+		else
+			chat.AddText(talkCol, speaker:KnownName(), " ", message)
+		end
 	end)
 
 	impulse.RegisterChatClass(10, function(message, speaker)
@@ -644,7 +658,11 @@ if CLIENT then
 	end)
 
 	impulse.RegisterChatClass(11, function(message, speaker)
-		chat.AddText(speaker, yellCol, " rolled ", message)
+		if (!LocalPlayer():IsCP() and speaker:IsCP()) or (LocalPlayer():IsCP() and (!speaker:IsCP() or speaker:GetNWBool("Applied") == false)) and not (speaker:IsCP() and LocalPlayer():IsCP()) then
+			chat.AddText(speakernick, yellCol, " rolled ", message)
+		else
+			chat.AddText(speaker, yellCol, " rolled ", message)
+		end
 	end)
 
 	impulse.RegisterChatClass(12, function(message, speaker)
