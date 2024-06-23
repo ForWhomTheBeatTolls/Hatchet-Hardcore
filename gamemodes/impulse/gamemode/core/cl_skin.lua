@@ -39,7 +39,7 @@ function SKIN:PaintFrame(panel, w, h)
     -- impulse.blur(panel, 10, 20, 255)
     draw.RoundedBox(6, 0, 0, w, h, Color(73, 73, 73)) -- this is the "top bar" of the derma frame
 	surface.SetDrawColor(topCol)
-	draw.RoundedBoxEx(0,2,2,w - 4,h - 4,topCol,true,true,true,true)
+	surface.DrawRect(0, 0, w, h)
 	surface.SetDrawColor(topCol2)
 	surface.SetMaterial(gradient)
 	surface.DrawTexturedRect(2, 2, w - 4, h - 4)
@@ -64,6 +64,8 @@ function SKIN:PaintButton(panel) -- button skin from ns edited
 		end
 		surface.SetDrawColor(ColorAlpha(btnCol, alpha))
 		surface.DrawRect(0, 0, w, h)
+		surface.SetDrawColor(topCol)
+		surface.DrawOutlinedRect(0, 0, w, h, 1)
 	end
 end
 
@@ -162,7 +164,9 @@ function SKIN:PaintWindowCloseButton(panel, w, h)
 end
 
 function SKIN:PaintComboBox(panel, w, h)
-    self:PaintButton(panel, w, h)
+    --self:PaintButton(panel, w, h)
+	surface.SetDrawColor(topCol)
+	surface.DrawOutlinedRect(0, 0, w, h, 1)
 end
 
 function SKIN:PaintListBox(panel, w, h)
@@ -236,7 +240,7 @@ end
 
 function SKIN:PaintNumSlider(panel, w, h)
 	surface.SetDrawColor(color_white)
-	surface.DrawRect(8, h / 2 - 1, w - 15, 1)
+	surface.DrawRect(8, h / 2 - 1, w - 5, 1)
 
 	PaintNotches(8, h / 2 - 1, w - 16, 1, panel.m_iNotches)
 end
