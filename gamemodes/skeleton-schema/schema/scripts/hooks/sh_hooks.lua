@@ -1,19 +1,18 @@
 -- put shared hooks here, format the same as sv_hooks.lua
 
 hook.Add( "PlayerSay", "SpeechAnimations", function( ply, text )
-	--local animtime = ply:SequenceDuration(randomtalking)
-	--local lastplayed = 0
-	if not (timer.Exists(ply:SteamID64().." SpeechAnimDelay")) and not string.StartsWith(text, "/") and ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_RESISTANCE then
-	ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739)
+
+	if not (timer.Exists(ply:SteamID64().." SpeechAnimDelay")) and not string.StartsWith(text, "/") and (ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_RESISTANCE) then
+		ply:DoCustomAnimEvent(PLAYERANIMEVENT_CUSTOM_GESTURE_SEQUENCE, 1739)
 	
-	if ply:GetVelocity():LengthSqr() == 0  then
-	timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() - 6.6, 1, function() end)
-	else 
-	timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() + 3, 1, function() end)
-	--lastplayed = CurTime()
-	--print("I HATE IMPULSE!!!")
+		if ply:GetVelocity():LengthSqr() == 0  then
+			timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() - 6.6, 1, function() end)
+		else 
+			timer.Create(ply:SteamID64().." SpeechAnimDelay", ply:SequenceDuration() + 3, 1, function() end)
+		end
+	
 	end
-	end
+	
 end )
 
 hook.Add("PlayerStartVoice", "SpeechAnimationsVC", function(ply)
