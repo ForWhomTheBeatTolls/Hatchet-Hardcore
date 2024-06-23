@@ -16,7 +16,7 @@ local CitizenApplyCommand = {
 		
 		if table.HasValue(CanApplyTeams, ply:Team()) then
 			ply:SetNWBool("Applied", true)
-			ply:SetNWInt("ApplyWearTime", CurTime() + 5)
+			ply:SetNWInt("ApplyWearTime", CurTime() + 300 )
 			for v,k in pairs(player.GetAll()) do
 				if (ply:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.TalkDistance ^ 2) then 
 					k:SendChatClassMessage(20, (ply:Nick().." | "..team), ply)
@@ -32,7 +32,7 @@ hook.Add("Think", "PlayerApplyWearHatchet", function()
 	for _, ply in pairs(player.GetAll()) do
 		if ply:GetNWInt("ApplyWearTime") < CurTime() then
 			ply:SetNWBool("Applied", false)
-			ply:SetNWInt("ApplyWearTime", CurTime() + 5)
+			ply:SetNWInt("ApplyWearTime", CurTime() + 300)
 		end
 	end
 end)
