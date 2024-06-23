@@ -695,4 +695,8 @@ if CLIENT then
 	impulse.RegisterChatClass(19, function(message, speaker)
 		chat.AddText(Color(187, 255, 0), "[!] ", message)
 	end) // punishment and announcement (kick, ban, mute)
+	
+	impulse.RegisterChatClass(20, function(message, speaker) -- APPLY / ID CHAT MESSAGE
+		chat.AddText(team.GetColor(speaker:Team()), "[ID] ", message)
+	end)
 end
