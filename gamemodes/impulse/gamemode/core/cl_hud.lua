@@ -250,7 +250,7 @@ function GM:HUDPaint(mvData)
 			headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
 		end
 	
-		if LocalPlayer():IsValid() and LocalPlayer():GetPos():Distance( v:GetPos() ) <= 600 and LocalPlayer():IsLineOfSightClear(v) then
+		if LocalPlayer():IsValid() and LocalPlayer():GetPos():Distance( v:GetPos() ) <= 600 and LocalPlayer():IsLineOfSightClear(v) and v:GetMoveType() != MOVETYPE_NOCLIP then
 			if v:GetSyncVar(SYNC_TYPING, false) then
 				draw.DrawText("Typing...", "Impulse-Elements24-Shadow", headpos.x, headpos.y + 15, Color(255, 255, 255), 1)
 			end
