@@ -1,3 +1,14 @@
+CONCEPTS / IDEAS / THOUGHTS:
+
+- Scavenging skill?
+- New tab in inventory where you can choose where to put items, for example: Putting a gun in your Pants slots, putting a Crowbar on your Shirt or Armor slot, etc.
+- Civil Protection search minigame when searching people, have it RNG based depending on the skill of the CP performing the search, the minigame rolls a dice for both people, if the cop rolls higher then he successfully searches the bodypart, if he rolls lower then he can't search that bodypart for the rest of the duration of the minigame
+- Redesign inventory to be slot based, give certain items attributes pertaining to inventory slots, for example armored pants having greater storage than regular civilian pants, etc.
+- Bleeding? Will need a community poll to decide this
+- Knock-outs? Will need a community poll to decide this
+
+---------------------------------------------
+
 LEAVE IT FOR NOW:
 
 - Improve Death Animations to include Weapons in the hand of the ragdoll
@@ -44,6 +55,8 @@ TO-DO LIST:
 -Add vortigaunts
 -Improve CP name obfuscation
 -Add "Recognize" system
+-Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
+
 
 DONE LIST:
 ---------------------
@@ -77,6 +90,7 @@ DONE LIST:
 -DAMAGE SLOWDOWN!!! FUCKING FINALLY!!!
 -Add stunstick stun mechanic
 -Add Citizen Apply system
+-Add custom grenade entity
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
@@ -96,5 +110,4 @@ MUHAMMED CODING SIDE:
 -people name hides when you wear the mask
 -Add ankle twisting (anti crouch spam)
 -Add handcuffs SWEP
--Add custom grenade entity
 
