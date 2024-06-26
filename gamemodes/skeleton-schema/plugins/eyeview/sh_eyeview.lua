@@ -1,6 +1,5 @@
 -- Eye View is a addon that sets the player's view to any attachment on the playermodel.
 
-impulse.DefineSetting("eyeview_fov", {name="Firstperson FOV", category="View", type="slider", default=90, minValue=70, maxValue=100})
 function EYEVIEW_Initialize()
 
 	if ( CLIENT ) then
@@ -17,7 +16,6 @@ end
 local crossr = GetConVarNumber( "eyeview_crossr" )
 local crossg = GetConVarNumber( "eyeview_crossg" )
 local crossb = GetConVarNumber( "eyeview_crossb" )
-local fov = impulse.GetSetting("eyeview_fov")
 
 hook.Add( "Initialize", "EYEVIEW_Initialize", EYEVIEW_Initialize )
 
@@ -25,6 +23,7 @@ hook.Add( "Initialize", "EYEVIEW_Initialize", EYEVIEW_Initialize )
 function EYEVIEW_Think()
 
 	if ( CLIENT ) then
+		local fov = impulse.GetSetting("eyeview_fov")
 	
 		if ( EYEVIEW_THINK_DELAY < CurTime() ) then
 			
@@ -137,7 +136,9 @@ function EYEVIEW_CalcView( ply, origin, angles, fov, near, far )
         --LocalPlayer():ManipulateBoneScale( LocalPlayer():LookupBone( "ValveBiped.Bip01_Head1" ), Vector( 1, 1, 1 ) )
 		--print(eyeview_enabled)
 		local angles = LocalPlayer():GetAimVector():Angle()
-		local targetpos = Vector(0, 0, 60)
+		local targetpos = Vector(0, 0, 0)
+
+		
 
 		if LocalPlayer():KeyDown(IN_DUCK) then
 			if LocalPlayer():GetVelocity():Length() > 0 then
