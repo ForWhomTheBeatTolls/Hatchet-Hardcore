@@ -36,7 +36,7 @@ SWEP.CarryHack = nil
 SWEP.Constr = nil
 SWEP.PreviousOwner = nil
 
-local THROW_VELOCITY_CAP = 150
+local THROW_VELOCITY_CAP = 650
 local CARRY_FORCE_LIMIT = 40000
 local CARRY_WEIGHT_LIMIT = 100
 local PLAYER_PICKUP_RANGE = 200
@@ -223,6 +223,41 @@ function SWEP:Reset(throw)
 	self.Constr = nil
 end
 
+function SWEP:Throw()
+	if not self:CheckValidity() then return end
+	if not self:AllowEntityDrop() then return end
+
+	if SERVER then
+		self.Constr:Remove()
+		self.CarryHack:Remove()
+
+		local ent = self.HoldingEntity
+		local phys = ent:GetPhysicsObject()
+		phys:ApplyForceCenter(self.Owner:GetAimVector() * 1800)
+		phys:AddAngleVelocity( Vector(self.Owner:GetAngles()) )
+
+		if IsValid(phys) then
+			phys:EnableCollisions(true)
+			phys:EnableGravity(true)
+			phys:EnableDrag(true)
+			phys:EnableMotion(true)
+			phys:Wake()
+
+			phys:ClearGameFlag(FVPHYSICS_PLAYER_HELD)
+			phys:AddGameFlag(FVPHYSICS_WAS_THROWN)
+		end
+
+		if ent:GetClass() == "prop_ragdoll" then
+			RemoveVelocity(ent)
+		end
+
+		ent:SetPhysicsAttacker(self:GetOwner())
+		if ent.OnHandsDropped then ent.OnHandsDropped(ent, self.Owner) end
+	end
+
+	self:Reset()
+end
+
 function SWEP:Drop(throw)
 	if not self:CheckValidity() then return end
 	if not self:AllowEntityDrop() then return end
@@ -345,6 +380,10 @@ function SWEP:CanCarry(ent)
 	if ent.NoCarry then
 		return false
 	end
+	
+	if ent:IsRagdoll() then
+		return false
+	end
 
 	if not IsValid(phys) then
 		return false
@@ -371,7 +410,7 @@ function SWEP:PrimaryAttack()
 	if CLIENT then return end
 
 	if IsValid(self.HoldingEntity) then
-		self:DoPickup(true)
+		self:Throw()
 		return
 	end
 
@@ -458,7 +497,7 @@ end
 
 function SWEP:GetRange(target)
 	if IsValid(target) and target:GetClass() == "prop_ragdoll" then
-		return 75
+		return 10
 	else
 		return 100
 	end
@@ -474,11 +513,9 @@ function SWEP:AllowPickup(target)
 
 	return (
 			IsValid(phys) and IsValid(ply) and
-			(not phys:HasGameFlag(FVPHYSICS_NO_PLAYER_PICKUP)) and
 			phys:GetMass() <= CARRY_WEIGHT_LIMIT and
 			(not IsPlayerStandsOn(target)) and
 			(target.CanPickup != false) and
-			hook.Run("GravGunPickupAllowed", ply, target) != false and 
 			(target.GravGunPickupAllowed and (target:GravGunPickupAllowed(ply) != false) or true)
 	)
 end
@@ -594,13 +631,12 @@ function SWEP:Pickup()
 
 			local bone = math.Clamp(trace.PhysicsBone, 0, 1)
 			local max_force = CARRY_FORCE_LIMIT
-	
+
 			if ent:GetClass() == "prop_ragdoll" then
 				self.dt.carried_rag = ent
 
 				bone = trace.PhysicsBone
-				max_force = 24000
-				
+				max_force = 0
 			else
 				self.dt.carried_rag = nil
 			end
