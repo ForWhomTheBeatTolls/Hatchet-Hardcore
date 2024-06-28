@@ -1,19 +1,20 @@
 	--reloadmarker, make changes here then save to lua refr
 
 	function SCHEMA:PlayerSpawn(ply)
-		ply.CombatCool = CurTime()
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamagedCool = CurTime()
 		ply.TimesStunnedCool = CurTime()
+		ply:SetNWInt("CombatCool", CurTime())
 		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
 		ply.IsInASequence = false
-		ply.IsInCombat = false
+		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
 		ply.CanCrouch = true
 		ply.CanJump = true
 		ply.Stunned = false
 		ply.TimesDamaged = 0
 		ply.TimesStunned = 0
+		ply:SetNWInt("CarryWeight", 25)
 		ply.FoodPoisoning = false
 		ply.PendingReward = ply.PendingReward or 0
 		ply.HealOverTime = false
@@ -52,8 +53,8 @@
 		end
 		
 		if IsValid(dmg:GetAttacker()) then
-			dmg:GetAttacker().IsInCombat = true
-			dmg:GetAttacker().CombatCool = CurTime() + 30
+			dmg:GetAttacker():SetNWBool("IsInCombat", true)
+			dmg:GetAttacker():SetNWInt("CombatCool", CurTime() + 30)
 		end
 		
 	end)
@@ -161,10 +162,14 @@
 		end
 	end
 
-	function SCHEMA:OnPlayerChangedTeam(ply)
+	function SCHEMA:PlayerChangedTeam(ply, oldTeam, newTeam)
 
-		if ply:Team() != TEAM_CP or TEAM_OTA then
+		if newTeam == TEAM_CITIZEN then
 			ply:SetRPName(ply:GetSavedRPName())
+		end
+		
+		if newTeam == TEAM_OTA then
+			ply:SetNWInt("CarryWeight", 125)
 		end
 		
 		if ply:GetSyncVar(SYNC_RANKPOINTS, 0) == nil then
@@ -279,15 +284,19 @@
 
 	function SCHEMA:InitPostEntity()
 	
-		for k, v in pairs( ents.FindByClass("impulse_item") ) do
-			v:Initialize()
-		end
-		
-		for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
-            v:RepairCombineCamera()
-			v:SetHealth(60)
-        	v:SetColor(Color(255,255,255,255))
-		end
+		timer.Simple(1, function()
+	
+			for k, v in pairs( ents.FindByClass("impulse_item") ) do
+				v:Initialize()
+			end
+			
+			for k, v in pairs(	ents.FindByClass("npc_combine_camera") ) do
+        		v:RepairCombineCamera()
+				v:SetHealth(60)
+				v:SetColor(Color(255,255,255,255))
+			end
+			
+		end)
 		
 		RunConsoleCommand("mp_show_voice_icons", "0")
 		
@@ -303,6 +312,8 @@
 
 	function SCHEMA:OnReloaded()
 	
+		timer.Simple(1, function()
+	
 			for k, v in pairs( ents.FindByClass("impulse_item") ) do
 				v:Initialize()
 			end
@@ -312,6 +323,9 @@
 				v:SetHealth(60)
 				v:SetColor(Color(255,255,255,255))
 			end
+			
+		end)
+		
 	end
 
 
