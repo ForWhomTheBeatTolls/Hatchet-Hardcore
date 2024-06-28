@@ -1,0 +1,3 @@
+hook.Add( "PlayerHurt", "ScreenFadeHurt", function(ply)
+		ply:ScreenFade( SCREENFADE.IN, Color( 255, 0, 0, 128 ), 0.3, 0 )
+end)
