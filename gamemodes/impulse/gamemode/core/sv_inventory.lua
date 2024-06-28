@@ -142,7 +142,7 @@ function meta:CanHoldItem(itemclass, amount)
 	local item = impulse.Inventory.Items[impulse.Inventory.ClassToNetID(itemclass)]
 	local weight = (item.Weight or 0) * (amount or 1)
 
-	return self.InventoryWeight + weight <= impulse.Config.InventoryMaxWeight
+	return not (self.InventoryWeight + weight > impulse.Config.InventoryMaxWeight)
 end
 
 --- Returns if a player can hold an item in their storage chest
