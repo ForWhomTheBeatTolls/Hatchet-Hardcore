@@ -17,7 +17,6 @@ hook.Add("PlayerDeath", "impulseAchDeath", function(ply, inflictor, attacker)
 			end
 		end
 		
-		ply:AchievementTake("ach_adie")
 		ply:AchievementGive("ach_adie")
 end)
 	hook.Add("PlayerSay", "impulseChatAchWatch", function(ply, text)
