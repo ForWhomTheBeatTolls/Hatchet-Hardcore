@@ -268,7 +268,7 @@ local function play_anim_on_rag(rag, an, scale)
     anm:SetPos(pos)
     anm:SetAngles(rag:GetAngles())
     if an == "crawling" then
-        anm:SetAngles(rag:GetAngles()+Angle(0,math.random(-45,45),0))
+        anm:SetAngles(rag:GetAngles()+Angle(0,math.random(-20,20),0))
         if FaceExp:GetBool() then
             rag:SetFlexScale( math.random( -0.6 , 1.1 ) )
             for i = 1, 32 do	
@@ -287,7 +287,7 @@ local function play_anim_on_rag(rag, an, scale)
         timer.Simple(0.01, function()
             if !IsValid(anm) then return end
             if an == "crawling" and math.random(1,4) >= 2 then
-                play_anim_on_rag(rag, "crawling", 0.1)
+                play_anim_on_rag(rag, "crawling", 0.01)
             end
         end)
     end
@@ -333,13 +333,13 @@ local function make_death_anim(ent, rag, type)
     end
     if type == "bullet" or type == "slash" or type == "club" or type == "fire" then
         timer.Simple(dur+math.Rand(2,8), function()
-            if !IsValid(rag) or rag.RagHealth <= 0 or math.random(1,100) > CrawlChance:GetFloat() or table.HasValue( bdtab["bd_head"], anim ) then return end
-            play_anim_on_rag(rag, "crawling", 0.1)
+            if !IsValid(rag) or rag.RagHealth <= 0 or math.random(1,100) > 25 or table.HasValue( bdtab["bd_head"], anim ) then return end
+            play_anim_on_rag(rag, "crawling", 0.01)
         end)
     end
     rag.IsDeathRagdoll = true
     rag.NPCClass = ent.GetNPCClass and ent:GetNPCClass() or ent.Classify and ent:Classify() or CLASS_BULLSEYE
-    rag.RagHealth = 20
+    rag.RagHealth = 40
     rag.MaxRagHealth = rag.RagHealth
     rag.AnimModule = anm
     local physcount = rag:GetPhysicsObjectCount()
@@ -573,5 +573,5 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 	local physvel = physObj:GetVelocity()
 	physObj:SetVelocity(Vector((physvel.x - physvel.x / 1.1), (physvel.y - physvel.y / 1.1), (physvel.z - physvel.z / 1.1)))
 	end
-	rag:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+	rag:SetCollisionGroup(COLLISION_GROUP_WORLD)
 end)
