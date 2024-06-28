@@ -71,23 +71,29 @@ function ENT:Think()
         if isstring(self.AnimString) and string.match(self.AnimString, "crawling") and (not self.BleedTime or self.BleedTime < CurTime()) then
             local ransound = math.random(1,20)
 			self.BleedTime = CurTime()+8
-			if string.match(rag:GetModel(), "^models/player/pandafishizens/male") then
+			if string.match(rag:GetModel(), "^models/player/impulse_zelpa/male") then
 				if ransound > 1 then
-			self:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 80)
+					self:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 80)
 				else
-			self:EmitSound("vo/episode_1/npc/male01/cit_evac_casualty08.wav")
+					self:EmitSound("vo/episode_1/npc/male01/cit_evac_casualty08.wav")
 				end
-			elseif string.match(rag:GetModel(), "^models/player/pandafishizens/female") then
+			elseif string.match(rag:GetModel(), "^models/player/zelpa/female") then
 				if ransound > 1 then
-			self:EmitSound("vo/npc/female01/moan0"..math.random(1,5)..".wav", 90)
+					self:EmitSound("vo/npc/female01/moan0"..math.random(1,5)..".wav", 90)
 				else
-			self:EmitSound("vo/episode_1/npc/female01/cit_evac_casualty08.wav", 90)
+					self:EmitSound("vo/episode_1/npc/female01/cit_evac_casualty08.wav", 90)
+				end
+			elseif string.match(rag:GetModel(), "^models/Police") then
+				if ransound > 1 then
+					self:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
+				else
+					self:EmitSound("npc/metropolice/vo/officerneedshelp.wav", 80)
 				end
 			else
 				if ransound > 1 then
-			self:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
+					self:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
 				else
-			self:EmitSound("npc/metropolice/vo/officerneedshelp.wav", 80)
+					self:EmitSound("npc/metropolice/vo/help.wav", 80, 80)
 				end
 			end
             util.Decal("Blood", self:GetBonePosition(0), self:GetBonePosition(0)-Vector(0,0,32), {self, rag})
