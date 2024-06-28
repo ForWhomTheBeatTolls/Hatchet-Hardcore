@@ -166,15 +166,23 @@
 
 		if newTeam == TEAM_CITIZEN then
 			ply:SetRPName(ply:GetSavedRPName())
+			ply:SetNWInt("CarryWeight", 25)
 		end
 		
 		if newTeam == TEAM_OTA then
 			ply:SetNWInt("CarryWeight", 125)
 		end
+
+		if newTeam == TEAM_CP then
+			ply:SetNWInt("CarryWeight", 25)
+		end
 		
 		if ply:GetSyncVar(SYNC_RANKPOINTS, 0) == nil then
 			ply:SetSyncVar(SYNC_RANKPOINTS, 0)
 		end
+
+		if oldTeam == TEAM_OTA then
+			ply:SetNWInt("CarryWeight", 25)
 		
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 	 end
