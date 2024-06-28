@@ -1,12 +1,14 @@
+net.Receive("HatchetBecomeRebelStart", function()
+	local ply = net.ReadPlayer()
+	if ply:Team() == TEAM_WORKFORCE or ply:Team() == TEAM_CITIZEN then
+		vgui.Create("hatchetRebelTerminal")
+	end
+end)
+
 net.Receive("HatchetSelectWorkerJobStart", function()
 	local ply = net.ReadPlayer()
 	if ply:Team() == TEAM_WORKFORCE then
 		vgui.Create("hatchetCivilWorkerJob")
-	else
-		net.Start("NetExploitNotification")
-		net.WriteString("HatchetSelectWorkerJobStart")
-		net.WritePlayer(ply)
-		net.SendToServer()
 	end
 end)
 
@@ -14,11 +16,6 @@ net.Receive("HatchetCivilWorkerSignup", function()
 	local ply = net.ReadPlayer()
 	if ply:Team() == TEAM_CITIZEN then
 		vgui.Create("hatchetCivilWorkerSignup")
-	else
-		net.Start("NetExploitNotification")
-		net.WriteString("HatchetCivilWorkerSignup")
-		net.WritePlayer(ply)
-		net.SendToServer()
 	end
 		
 end)
