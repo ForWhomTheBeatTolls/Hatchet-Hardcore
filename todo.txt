@@ -54,7 +54,6 @@ TO-DO LIST:
 -Saboteurs can make booby traps
 -Add bear traps, explosive barrels
 -Add vortigaunts
--Improve CP name obfuscation
 -Add "Recognize" system
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 -Figure out a way to incorporate grenades into the server
@@ -93,6 +92,8 @@ DONE LIST:
 -Add stunstick stun mechanic
 -Add Citizen Apply system
 -Add custom grenade entity
+-Changable carry weights
+-Improve CP name obfuscation
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
@@ -112,4 +113,5 @@ MUHAMMED CODING SIDE:
 -people name hides when you wear the mask
 -Add ankle twisting (anti crouch spam)
 -Add handcuffs SWEP
+
 
