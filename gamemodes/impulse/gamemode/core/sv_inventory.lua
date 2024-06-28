@@ -142,7 +142,7 @@ function meta:CanHoldItem(itemclass, amount)
 	local item = impulse.Inventory.Items[impulse.Inventory.ClassToNetID(itemclass)]
 	local weight = (item.Weight or 0) * (amount or 1)
 
-	return not (self.InventoryWeight + weight > impulse.Config.InventoryMaxWeight)
+	return not (self.InventoryWeight + weight > self:GetNWInt("CarryWeight", 25))
 end
 
 --- Returns if a player can hold an item in their storage chest
@@ -564,14 +564,14 @@ function meta:DropInventoryItem(itemid)
 	self.DroppedItems = self.DroppedItems or {}
 	self.DroppedItemsCA = (self.DroppedItemsCA and self.DroppedItemsCA + 1) or 1
 
-	if self.DroppedItemsC >= impulse.Config.DroppedItemsLimit then
-		for v,k in pairs(self.DroppedItems) do
-			if k and IsValid(k) and k.ItemOwner and k.ItemOwner == self then
-				k:Remove()
-				break
-			end
-		end
-	end
+	-- if self.DroppedItemsC >= impulse.Config.DroppedItemsLimit then
+		-- for v,k in pairs(self.DroppedItems) do
+			-- if k and IsValid(k) and k.ItemOwner and k.ItemOwner == self then
+				-- k:Remove()
+				-- break
+			-- end
+		-- end
+	-- end
 
 	local ent = impulse.Inventory.SpawnItem(item.class, tr.HitPos)
 	ent.ItemOwner = self
@@ -584,10 +584,11 @@ function meta:DropInventoryItem(itemid)
 	self.DroppedItems[self.DroppedItemsCA] = ent
 	self.NextItemDrop = CurTime() + 2
 	ent.DropIndex = self.DroppedItemsCA
+	ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 
-	if self.DroppedItemsC > 5 and ((self.NextItemDrop or 0) > CurTime() or self.DroppedItemsC > 14) then -- prevents lag
-		ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
-	end
+	--if self.DroppedItemsC > 5 and ((self.NextItemDrop or 0) > CurTime() or self.DroppedItemsC > 14) then -- prevents lag
+	--	ent:SetCollisionGroup(COLLISION_GROUP_WORLD)
+	--end
 end
 
 --- Uses a specific inventory item
