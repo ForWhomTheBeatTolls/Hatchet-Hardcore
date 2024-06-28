@@ -319,7 +319,7 @@ end
 
 local grey = Color(209, 209, 209)
 function PANEL:PaintOver(w, h)
-	draw.SimpleText(self.invWeight.."kg/"..impulse.Config.InventoryMaxWeight.."kg", HIGH_RES("Impulse-Elements18-Shadow", "Impulse-Elements22-Shadow"), w - 18, 40, grey, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
+	draw.SimpleText(self.invWeight.."kg/"..LocalPlayer():GetNWInt("CarryWeight", 25).."kg", HIGH_RES("Impulse-Elements18-Shadow", "Impulse-Elements22-Shadow"), w - 18, 40, grey, TEXT_ALIGN_RIGHT, TEXT_ALIGN_TOP)
 end
 
 vgui.Register("impulseInventory", PANEL, "DFrame")
