@@ -5,6 +5,7 @@ CONCEPTS / IDEAS / THOUGHTS:
 - Civil Protection search minigame when searching people, have it RNG based depending on the skill of the CP performing the search, the minigame rolls a dice for both people, if the cop rolls higher then he successfully searches the bodypart, if he rolls lower then he can't search that bodypart for the rest of the duration of the minigame
 - Redesign inventory to be slot based, give certain items attributes pertaining to inventory slots, for example armored pants having greater storage than regular civilian pants, etc.
 - Bleeding? Will need a community poll to decide this
+- Rework loot system?
 - Knock-outs? Will need a community poll to decide this
 
 ---------------------------------------------
