@@ -31,6 +31,8 @@ net.Receive("HatchetBubbleChatCall", function()
         if ( sender:IsValid() and sender:Alive() and (sender:GetMoveType() != MOVETYPE_NOCLIP) ) then
 			if (sender:GetModel() != "models/player.mdl") then
             pos = (sender:GetBonePosition(sender:LookupBone("ValveBiped.Bip01_Spine1")) + sender:OBBCenter()):ToScreen()
+			else
+			pos = sender:GetPos()
 			end
             local posdist = sender:GetPos()
             if sender:IsValid() and LocalPlayer():GetPos():Distance( posdist ) <= chatradius and LocalPlayer():IsLineOfSightClear(sender) then
@@ -69,8 +71,9 @@ net.Receive("HatchetBubbleChatCall", function()
 
 if IsValid(ply) then
     timer.Create(ply:SteamID().."_RemoveOverheadChat", textremovetime, 1, function()
-        //print("Removed: "..ply:SteamID())
-        hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
+        if IsValid(ply) then
+			hook.Remove("HUDPaint", ply:SteamID().."_OverheadChatHUD")
+		end
     end)
 end
 		
