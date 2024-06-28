@@ -333,7 +333,7 @@ local function make_death_anim(ent, rag, type)
     end
     if type == "bullet" or type == "slash" or type == "club" or type == "fire" then
         timer.Simple(dur+math.Rand(2,8), function()
-            if !IsValid(rag) or rag.RagHealth <= 0 or math.random(1,100) > 25 or table.HasValue( bdtab["bd_head"], anim ) then return end
+            if !IsValid(rag) or rag.RagHealth <= 0 or math.random(1,100) > 90 or table.HasValue( bdtab["bd_head"], anim ) then return end
             play_anim_on_rag(rag, "crawling", 0.01)
         end)
     end
@@ -523,7 +523,7 @@ hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 		-- end
 	-- end)
 			
-	timer.Simple(0.2, function()
+	timer.Simple(0.4, function()
 		if IsValid(rag) then
 			local owner = rag:GetOwner()
 			local f = rag:GetAngles():Forward()
