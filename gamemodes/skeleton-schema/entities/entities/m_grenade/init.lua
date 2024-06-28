@@ -98,7 +98,7 @@ function ENT:Boom()
 		
 		end
 		
-		if v:GetPhysicsObject():IsValid() then
+		if v:GetPhysicsObject():IsValid() and v:IsLineOfSightClear(self) then
 			
 			local vpos = v:LocalToWorld(v:OBBCenter())
 			local spos = self:GetPos()
