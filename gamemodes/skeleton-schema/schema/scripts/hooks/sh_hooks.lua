@@ -142,7 +142,6 @@ end)
 
 // SUK ME OFF LIKE A BANANA YOU LUA HOOKER!!!! !! !!
 
-
 hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 	local msg
 	local font = "BubbleChat-Talk"
@@ -156,6 +155,11 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		color = Color(224, 166, 57)
 		else
 		color = Color(224, 166, 57)
+		end
+		if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
+			msg = string.upper( string.Left(msg, 1) )..string.Right( msg, string.len( msg ) - 1 )
+		else
+			msg = string.upper( string.Left(msg, 1) )..string.Right( msg, string.len( msg ) - 1 )..string.Replace(string.Right( msg, 1 ), string.Right( msg, 1 ), ".")
 		end
 		font = "BubbleChat-Me"
 		chatradius = impulse.Config.TalkDistance
@@ -203,13 +207,19 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		end
 		chatradius = impulse.Config.TalkDistance
 		msg = text
+		if sender:Team() == TEAM_RESISTANCE then
+		color = team.GetColor(TEAM_CITIZEN)
+		else
+		color = team.GetColor(sender:Team())
+		end
 	end
 
-   	 net.Start("HatchetBubbleChatCall")
-    	net.WriteString(msg)
+    net.Start("HatchetBubbleChatCall")
+    net.WriteString(msg)
 	net.WriteColor(color)
 	net.WriteString(font)
 	net.WriteUInt(chatradius, 10)
-    	net.WritePlayer(sender)
+    net.WritePlayer(sender)
 	net.Broadcast()
 end)
+
