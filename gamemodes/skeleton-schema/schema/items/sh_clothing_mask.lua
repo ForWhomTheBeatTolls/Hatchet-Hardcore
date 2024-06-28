@@ -2,7 +2,7 @@ local ITEM = {}
 
 ITEM.UniqueID = "clothing_mask"
 ITEM.Name = "Mask"
-ITEM.Desc =  "A Mask of cloth used to hide your identity."
+ITEM.Desc =  "A cloth used to hide your identity."
 ITEM.Model = Model("models/sal/halloween/ninja.mdl")
 ITEM.Category = "Clothing"
 ITEM.FOV = 17.644699140401
