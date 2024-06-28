@@ -21,7 +21,7 @@ LEAVE IT FOR NOW:
 SCRAPPED / NEEDS REWORK:
 
 -Add resistance and similar skills (Resistance skill is scrapped)
--Whitelist command (Using manual input instead)
+-Whitelist command (Using admin input instead)
 - Descriptions, make certain models have a forced description that you can add onto, for example: Male 04 having "A bald male......"
 
 ---------------------------------------------------------------------
@@ -58,6 +58,7 @@ TO-DO LIST:
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 -Figure out a way to incorporate grenades into the server
 -Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
+-Brickbat?
 
 
 DONE LIST:
