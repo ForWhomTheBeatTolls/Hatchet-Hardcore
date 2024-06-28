@@ -23,12 +23,27 @@ util.AddNetworkString("HatchetBecomeCivilWorker")
 util.AddNetworkString("HatchetCivilWorkerSignup")
 util.AddNetworkString("HatchetSelectWorkerJobEnd")
 util.AddNetworkString("HatchetSelectWorkerJobStart")
+util.AddNetworkString("HatchetBecomeRebelEnd")
+util.AddNetworkString("HatchetBecomeRebelStart")
 
 local function NetExploitNotification(ply, msg)
 	for i, admin in pairs( player.GetAll() ) do
 		admin:SendChatClassMessage(18, ply:Nick().." DETECTED AS A POTENTIAL NET EXPLOITER. NET FUNCTION: "..msg, admin)
 	end
 end
+
+net.Receive("HatchetBecomeRebelEnd", function()
+	local ply = net.ReadPlayer()
+	local team = net.ReadUInt(4)
+	
+	if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE then
+		ply:SetTeam(TEAM_RESISTANCE)
+		ply:Notify("You have successfully expunged yourself from the civic database.")
+		ply:EmitSound("items/ammo_pickup.wav")
+	else
+		NetExploitNotification(ply, "HatchetBecomeRebel")
+	end
+end)
 
 net.Receive("HatchetSelectWorkerJobEnd", function()
 	local ply = net.ReadPlayer()
