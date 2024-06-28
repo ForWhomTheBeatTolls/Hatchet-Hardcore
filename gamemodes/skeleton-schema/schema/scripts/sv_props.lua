@@ -42,6 +42,8 @@ hook.Add("CanProperty", "HatchetPropertyFixer", function( ply, property, ent )
 		
 	end
 	
+	return false
+	
 end)
 
 --- PROP DAMAGE ---
