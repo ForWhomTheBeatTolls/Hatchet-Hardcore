@@ -43,10 +43,10 @@ function PANEL:Init()
 
     // these need grammar fixes, cant bother right now
     local part1 = {
-        "I've departed from City 8 after an Mass-City evacuation ordered by \n The Civil Protection Officers there after there has been \n a Xen Infestation Outbreak from a Laboratory",
-        "I've departed from City 34 after saving up on tokens from working on \n Workshifts and Rations, Even though there was a crisis there",
-        "I've departed from city 11 after moving out due to \n getting bored from the city ghost-town activity",
-        "I've departed from Industrial 6 after all the citizens have been told to move out \n due to a project that fixes and improves the City's Structure and Security"
+        "I've departed from City 8 after a mass evacuation due to \n an infestation of Xenian life forms.",
+        "I've departed from City 34 following a massive series of antlion attacks from the coast. \n I've managed to gain tokens from working as \n an Industrial labourer during my stay in City 34. The extra money could prove helpful.",
+        "I've departed from City 11 after being forced out of the city \n due to a lack of workers in the city. \n I should probably look into how I can get a job.",
+        "I've departed from Industrial Sector 6 after all the citizens have been forced to move out \n due to a demolition of the city's housing blocks. \n The place is now a combine manufacturing plant, spanning a few miles. "
     }
 	
     randompart1 = table.Random(part1)
@@ -56,19 +56,19 @@ function PANEL:Init()
         counter = counter + 1
         if counter == 1 then
             surface.PlaySound(Sound("ui/buttonrollover.wav"))
-            text = "''Hi, my name is "..LocalPlayer():Name()..", and I've moved to City17 Today. \n"..randompart1..".''"
+            text = "''Hello, my name is "..LocalPlayer():Name()..", and I've just arrived at City 17. \n"..randompart1.."''"
             mat1 = Material("hatchet/background/trainstation_1.png")
         elseif counter == 2 then
             surface.PlaySound(Sound("ui/buttonrollover.wav"))
-            text = "''I've heard a few things about City 17, One if which is the friendly community there, \n the cheap shops, and the apartment housing blocks.''"
+            text = "''I've heard a few things about City 17, one of which is the friendly community there, \n the cheap shops, and the apartment housing blocks.''"
             mat1 = Material("hatchet/background/trainstation_2.png")
         elseif counter == 3 then
             surface.PlaySound(Sound("ui/buttonrollover.wav"))
-            text = "''Even though City 17 is notorious for having ALOT of rebel activity, \n I think you're fine if you dont intervene with their businesses by like, Snitching and stuff.''"
+            text = "''Even though City 17 is notorious for having frequent combine raids, \n I should be fine so long as I don't get involved in shady business.''"
             mat1 = Material("hatchet/background/trainstation_3.png")
         elseif counter == 4 then
             surface.PlaySound(Sound("ui/buttonrollover.wav"))
-            text = "''Im not sure what to do in this new City, I dont know \n if i should be scared or.. Excited with the path im going for... \n i hope It's not going to be that bad.''"
+            text = "''Im not sure what to do in this city, I don't know \n if I should be scared or... Excited, with the path I'm headed down. \n Here's hoping for the best...''"
             mat1 = Material("hatchet/background/trainstation_4.png")
         elseif counter == 5 then
             surface.PlaySound(Sound("ui/buttonrollover.wav"))
@@ -110,8 +110,9 @@ function PANEL:OnRemove()
     Music:FadeOut(4)
     timer.Simple(4.1, function() if IsValid(LocalPlayer()) then LocalPlayer():ConCommand("snd_restart") end end)
     timer.Simple(4.6, function() if IsValid(LocalPlayer()) then Trailer:Play() end end)
-    timer.Simple(14, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("Welcome to Hatchet: HL2 Hardcore! We are in a development stage, so expect Bugs or exploits.") end end)
-    timer.Simple(17, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("To get up in date with Hatchet's development, Join our discord!") end end)
+    timer.Simple(14, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("Welcome to Hatchet: HL2 Hardcore! We are in a development stage, so expect bugs or exploits.") end end)
+	timer.Simple(17, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("Reporting bugs and exploits is highly recommended, and may even get you ingame rewards.") end end)
+    timer.Simple(21, function() if IsValid(LocalPlayer()) then LocalPlayer():Notify("To get up to date with Hatchet's development, Join our discord!") end end)
     counter = -1
 end
 
