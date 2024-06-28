@@ -45,9 +45,9 @@ impulse.Config.Zones = {
 
 impulse.Config.Buttons = {}
 
-local function MapRunCodeOnStart()
-	RunConsoleCommand("sv_skyname", "gcs_summerday")
-end
+--local function MapRunCodeOnStart()
+	--RunConsoleCommand("sv_skyname", "gcs_summerday")
+--end
 
 local ran = math.random(1,10)
 impulse.Config.LoadScript = function()
@@ -62,4 +62,4 @@ impulse.Config.LoadScript = function()
 	end
 end
 
-MapRunCodeOnStart()
+--MapRunCodeOnStart()
