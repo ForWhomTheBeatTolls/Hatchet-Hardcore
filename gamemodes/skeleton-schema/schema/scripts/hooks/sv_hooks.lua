@@ -292,7 +292,7 @@
 
 	function SCHEMA:InitPostEntity()
 	
-		timer.Simple(1, function()
+		timer.Simple(15, function()
 	
 			for k, v in pairs( ents.FindByClass("impulse_item") ) do
 				v:Initialize()
