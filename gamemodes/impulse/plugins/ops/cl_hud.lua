@@ -1,906 +1,161 @@
-impulse.hudEnabled = impulse.hudEnabled or true
-
-local hidden = {}
-hidden["CHudHealth"] = true
-hidden["CHudBattery"] = true
-hidden["CHudAmmo"] = true
-hidden["CHudSecondaryAmmo"] = true
-hidden["CHudCrosshair"] = true
-hidden["CHudHistoryResource"] = true
-hidden["CHudDeathNotice"] = true
-hidden["CHudDamageIndicator"] = true
-
-function GM:HUDShouldDraw(element)
-	if (hidden[element]) then
-		return false
-	end
-
-	return true
-end
-
-
-local ambience = {
-	["$pp_colour_addr"] = 0,
-	["$pp_colour_addg"] = 0,
-	["$pp_colour_addb"] = 0,
-	["$pp_colour_brightness"] = 0,
-	["$pp_colour_contrast"] = 1.2,
-	["$pp_colour_colour"] = .8,
-	["$pp_colour_mulr"] = 0,
-	["$pp_colour_mulg"] = 0,
-	["$pp_colour_mulb"] = 0
+local red = Color(255, 0, 0, 255)
+local green = Color(0, 240, 0, 255)
+local col = Color(255,255,255,120)
+local dotToggleTime = 0
+local hitgroups = {
+	[HITGROUP_GENERIC] = "generic",
+	[HITGROUP_HEAD] = "head",
+	[HITGROUP_CHEST] = "chest",
+	[HITGROUP_STOMACH] = "stomach",
+	[HITGROUP_LEFTARM] = "leftarm",
+	[HITGROUP_RIGHTARM] = "rightarm",
+	[HITGROUP_LEFTLEG] = "leftleg",
+	[HITGROUP_RIGHTLEG] = "rightleg",
+	[HITGROUP_GEAR] = "belt"
 }
 
+hook.Add("HUDPaint", "impulseOpsHUD", function()
 
-
-
-local blur = Material("pp/blurscreen")
-local cheapBlur = Color(0,0,0,205)
--- local function BlurRect(x, y, w, h)
-	-- if not impulse.GetSetting("perf_blur") then
-		-- draw.RoundedBox(0,x,y,w,h, cheapBlur)
-		-- surface.SetDrawColor(0,0,0)
-		-- surface.DrawOutlinedRect(x,y,w,h)
-	-- else
-		-- local X, Y = 0,0
-
-		-- surface.SetDrawColor(color_white)
-		-- surface.SetMaterial(blur)
-
-		-- for i = 1, 2 do
-			-- blur:SetFloat("$blur", (i / 10) * 20)
-			-- blur:Recompute()
-
-			-- render.UpdateScreenEffectTexture()
-
-			-- render.SetScissorRect(x, y, x+w, y+h, true)
-			-- surface.DrawTexturedRect(X * -1, Y * -1, ScrW(), ScrH())
-			-- render.SetScissorRect(0, 0, 0, 0, false)
-		-- end
-	-- end
--- end
-
-local vignette = Material("hatchet/overlays/vignette.png")
-local w, h = ScrW(), ScrH()
-local vig_alpha_normal = Color(0,0,0)
-local lasthealth
-local time = 0
-local zoneLbl
-local gradient = Material("vgui/gradient-l")
-local watermark = Material("impulse/impulse-logo-white.png")
-local watermarkCol = Color(255,255,255,120)
-local fde = 0
-local hudBlackGrad = Color(40,40,40,180)
-local hudBlack = Color(20,20,20,140)
-local darkCol = Color(30, 30, 30, 190)
-local whiteCol = Color(255, 255, 255, 255)
-local illegalCol = Color(100, 0 , 0, 255)
-local iconsWhiteCol = Color(255, 255, 255, 220)
-local bleedFlashCol = Color(230, 0, 0, 220)
-local painCol = Color(255,10,10,80)
-local crosshairGap = 5
-local crosshairLength = crosshairGap + 5
-local healthIcon = Material("impulse/icons/heart-128.png")
-local healthCol = Color(210, 0, 0, 255)
-local armourIcon = Material("impulse/icons/shield-128.png")
-local armourCol = Color(205, 190, 0, 255)
-local hungerIcon = Material("impulse/icons/bread-128.png")
-local hungerCol = Color(205, 133, 63, 255)
-local moneyIcon = Material("impulse/icons/banknotes-128.png")
-local moneyCol = Color(133, 227, 91, 255)
-local timeIcon = Material("impulse/icons/clock-128.png")
-local xpIcon = Material("impulse/icons/star-128.png")
-local warningIcon = Material("impulse/icons/warning-128.png")
-local infoIcon = Material("impulse/icons/info-128.png")
-local announcementIcon = Material("impulse/icons/megaphone-128.png")
-local exitIcon = Material("impulse/icons/exit-128.png")
-local bleedingIcon = Material("impulse/icons/droplet-256.png")
-
-local lastModel = ""
-local lastSkin = ""
-local lastTeam = 99
-local lastBodygroups = {}
-local iconLoaded = false
-
-local painFt
-local painFde = 1
-
-local bleedFlash = false
-local hotPink = Color(148, 0, 211)
-
-local function DrawOverheadInfo(target, alpha)
-
-	local pos
-	if target:IsValid() and target:GetModel() == "models/player.mdl" then
-		pos = target:GetPos():ToScreen()
-	else
-		pos = target:GetBonePosition(target:LookupBone("ValveBiped.Bip01_Spine1")):ToScreen()
-	end
-
-	local myGroup = LocalPlayer():GetSyncVar(SYNC_GROUP_NAME, nil)
-	local group = target:GetSyncVar(SYNC_GROUP_NAME, nil)
-	local rank = target:GetSyncVar(SYNC_GROUP_RANK, nil)
-	local col = ColorAlpha(team.GetColor(target:Team()), alpha)
-
-	if myGroup and not LocalPlayer():IsCP() and not target:IsCP() and group and rank and group == myGroup then
-		draw.DrawText(group.." - "..rank, "Impulse-Elements16-Shadow", pos.x, pos.y - 15, ColorAlpha(hotPink, alpha), 1)
-	end
-	
-	if (LocalPlayer():Team() == target:Team()) or (LocalPlayer():IsCP() and !target:IsCP() and not target:Team() == TEAM_RESISTANCE) then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif target:Team() == TEAM_CP and LocalPlayer():Team() != TEAM_CP then
-		draw.DrawText("Civil Protection", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif (target:Team() == TEAM_OTA) and (LocalPlayer():Team() ==  TEAM_CP) then
-		draw.DrawText("TRANSHUMAN ARM | KEEP DISTANCE", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif (target:Team() == TEAM_OTA) and (target:Team() != LocalPlayer():Team()) and (LocalPlayer():IsCP() == false) then
-		draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == true) and (target:Team() != TEAM_RESISTANCE) then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
-	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == false) or (target:Team() == TEAM_RESISTANCE) then
-		draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
-	else
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	end
-	
-	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
-		draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
-	end
-
-	local desc = target:GetSyncVar(SYNC_RPDESC, "")
-
-	// Experimental, will finish later
-	-- if string.len(desc) > 62  then
-	-- 	draw.DrawText(string.Left(desc, string.len(desc) / 2.05).."\n"..string.Right(desc, string.len(desc) / 1.9), "Impulse-Elements18-Shadow", pos.x, pos.y - 35, Color(255, 255, 255), 1)
-	-- else
-	-- 	draw.DrawText(desc, "Impulse-Elements18-Shadow", pos.x, pos.y - 25, Color(255, 255, 255), 1)
-	-- end
-
-	// Optimization, maybe? this will not draw the text if the player decided not to have a description
-	if string.len(desc) == 0 then
+	if LocalPlayer():Team() == TEAM_DISPATCH then
 		return
-	else	
-		draw.DrawText(desc, "HatchetFont-PlayerInfo", pos.x, pos.y + 18, ColorAlpha(Color(255, 230, 190), alpha), 1)
 	end
-end
+		
+	if not impulse.hudEnabled then return end
 
-local function DrawDoorInfo(target, alpha)
-	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local doorOwners = target:GetSyncVar(SYNC_DOOR_OWNERS, nil) 
-	local doorName = target:GetSyncVar(SYNC_DOOR_NAME, nil) 
-	local doorGroup =  target:GetSyncVar(SYNC_DOOR_GROUP, nil)
-	local doorBuyable = target:GetSyncVar(SYNC_DOOR_BUYABLE, nil)
-	local col = ColorAlpha(impulse.Config.MainColour, alpha)
+	if LocalPlayer():IsAdmin() and LocalPlayer():GetMoveType() == MOVETYPE_NOCLIP then
+		local onDuty = impulse.GetSetting("admin_onduty") or false
 
-	if doorName then
-		draw.DrawText(doorName, "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif doorGroup then
-		draw.DrawText(impulse.Config.DoorGroups[doorGroup], "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif doorOwners then
-		local ownedBy
-		if #doorOwners > 1 then
-			ownedBy = "Owners:"
+		if onDuty then
+			draw.SimpleText("OBSERVER MODE", "Impulse-Elements19-Shadow", 20, 10, col)
 		else
-			ownedBy = "Owner:"
+			draw.SimpleText("OBSERVER MODE (OFF DUTY! YOU WILL NOT VIEW INBOUND REPORTS!)", "Impulse-Elements19-Shadow", 20, 10, red)
 		end
 
-		for v,k in pairs(doorOwners) do
-			local owner = Entity(k)
+		local staffOn = 0
 
-			if IsValid(owner) and owner:IsPlayer() then
-				ownedBy = ownedBy.."\n"..owner:Name()
-			end
-		end
-		draw.DrawText(ownedBy, "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	end
-
-	if LocalPlayer():CanBuyDoor(doorOwners, doorBuyable) then
-		draw.DrawText("Ownable door (F2)", "HatchetFont20", pos.x, pos.y, col, 1)
-	end
-end
-
-local function DrawEntInfo(target, alpha)
-	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local scrW = ScrW()
-	local scrH = ScrH()
-	local hudName = target.HUDName
-	local hudDesc = target.HUDDesc
-	local hudCol = target.HUDColour or impulse.Config.InteractColour
-
-	draw.DrawText(hudName, "HatchetFont-PlayerInfo", pos.x, pos.y, ColorAlpha(hudCol, alpha), 1)
-
-	if hudDesc then
-		draw.DrawText(hudDesc, "HatchetFont-PlayerInfo", pos.x, pos.y + 20, ColorAlpha(color_white, alpha), 1)
-	end
-end
-
-local function DrawButtonInfo(target, alpha)	
-	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local scrW = ScrW()
-	local scrH = ScrH()
-	local buttonId = impulse_ActiveButtons[target:EntIndex()]
-	local hudCol = impulse.Config.InteractColour
-	local buttonData = impulse.Config.Buttons[buttonId]
-
-	if not buttonData then
-		return
-	end
-
-	if not buttonData.desc then
-		return
-	end
-
-	draw.DrawText(buttonData.desc, HIGH_RES("Impulse-Elements18-Shadow", "Impulse-Elements20A-Shadow"), pos.x, pos.y + 20, ColorAlpha(hudCol, alpha), 1)
-end
-
--- local function DrawCrosshair(x, y)
-	-- surface.SetDrawColor(color_white)
-
-	-- surface.DrawLine(x - crosshairLength, y, x - crosshairGap, y)
-	-- surface.DrawLine(x + crosshairLength, y, x + crosshairGap, y)
-	-- surface.DrawLine(x, y - crosshairLength, x, y - crosshairGap)
-	-- surface.DrawLine(x, y + crosshairLength, x, y + crosshairGap)
--- end
-
-local deathEndingFade
-local deathEnding
-function GM:HUDPaint(mvData)
-
-	for k, v in pairs(player.GetAll()) do
-		local headpos
-		if v:IsValid() and v:GetModel() == "models/player.mdl" then
-			headpos = (v:GetPos() + v:OBBCenter()):ToScreen()
-		else
-			headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
-		end
-	
-		if LocalPlayer():IsValid() and LocalPlayer():GetPos():Distance( v:GetPos() ) <= 600 and LocalPlayer():IsLineOfSightClear(v) and v:GetMoveType() != MOVETYPE_NOCLIP then
-			if v:GetSyncVar(SYNC_TYPING, false) then
-				draw.DrawText("Typing...", "Impulse-Elements24-Shadow", headpos.x, headpos.y + 15, Color(255, 255, 255), 1)
-			end
-		end
-	end
-
-	--local audio = GetConVar("volume")
-	--local audionum = audio:GetFloat()
-	local health = LocalPlayer():Health()
-	local maxhealth = LocalPlayer():GetMaxHealth()
-	local hunger = LocalPlayer():GetSyncVar(SYNC_HUNGER, 100)
-	local maxhunger = 100
-	local lp = LocalPlayer()
-	local lpTeam = lp:Team()
-	local scrW, scrH = ScrW(), ScrH()
-	local hudWidth, hudHeight = 300, 178
-	local seeColIcons = impulse.GetSetting("hud_iconcolours")
-	local aboveHUDUsed = false
-	local deathSoundPlayed
-
-	if SERVER_DOWN and CRASHSCREEN_ALLOW then
-		if not IsValid(CRASH_SCREEN) then
-			CRASH_SCREEN = vgui.Create("impulseCrashScreen")
-		end
-	elseif IsValid(CRASH_SCREEN) and not CRASH_SCREEN.fadin then
-		CRASH_SCREEN.fadin = true
-		CRASH_SCREEN:AlphaTo(0, 1.2, nil, function()
-			if IsValid(CRASH_SCREEN) then
-				CRASH_SCREEN:Remove()
-			end
-		end)
-	end
-
-	if not lp:Alive() and not SCENES_PLAYING then
-		local ft = FrameTime()
-
-		if not deathRegistered then
-			local deathSound = hook.Run("GetDeathSound") or "music/stingers/industrial_suspense1.wav"
-			--surface.PlaySound(deathSound)
-
-			deathWait = CurTime() + impulse.Config.RespawnTime
-			if lp:IsDonator() then
-				deathWait = CurTime() + impulse.Config.RespawnTimeDonator
-			end
-
-			deathRegistered = true
-			deathEnding = true
-		end
-
-		fde = math.Clamp(fde + ft * .2, 0, 1)
-		painFde = 0.7
-
-		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 255))
-		surface.DrawRect(-1, -1, ScrW() +2, ScrH() +2)
-
-		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
-		local wait = math.ceil(deathWait - CurTime())
-
-		if wait > 0 and wait < 10 then
-			lp:ConCommand("stopsound")
-		elseif wait > 2 and wait < 10 then
-			draw.SimpleText("You have died.", "Impulse-Elements18", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
-		end
-		
-
-		if IsValid(PlayerIcon) then
-			PlayerIcon:Remove()
-		end
-		
-		return
-	else
-		if FORCE_FADESPAWN or deathEnding then
-			deathEnding = true
-			FORCE_FADESPAWN = nil 
-
-			local ft = FrameTime()
-			deathEndingFade = math.Clamp((deathEndingFade or 0) + ft * .15, 0, 1)
-
-			local val = 255 - math.ceil(deathEndingFade * 255)
-
-			if deathEndingFade != 1 then
-				surface.SetDrawColor(0, 0, 0, val)
-				surface.DrawRect(0, 0, ScrW(), ScrH())
-			else
-				deathEnding = false
-				deathEndingFade = 0
+		for v,k in pairs(player.GetAll()) do
+			if k:IsAdmin() then
+				staffOn = staffOn + 1
 			end
 		end
 
-		fde = 0
+		draw.SimpleText(staffOn.." STAFF ONLINE", "Impulse-Elements18-Shadow", ScrW() * .5, 10, col, TEXT_ALIGN_CENTER)
 
-		if deathRegistered then
-			deathRegistered = false
+		if OPS_LIGHT then
+			draw.SimpleText("LIGHT ON", "Impulse-Elements18-Shadow", ScrW() * .5, 30, col, TEXT_ALIGN_CENTER)
 		end
 
-		LocalPlayer().Ragdoll = nil
-	end
-
-	if impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false then
-		if IsValid(PlayerIcon) then
-			PlayerIcon:Remove()
-		end
-		return
-	end
-
-	if health < 45 then
-		healthstate = Color(255,0,0,240)
-	elseif health < 70 then
-		healthstate = Color(255,0,0,190)
-	else
-		healthstate = nil
-	end
-
-	-- Draw any HUD stuff under this comment
-
-	if lasthealth and health < lasthealth then
-		painFde = 0
-	end
-
-	painFt = FrameTime() * 2
-	painFde = math.Clamp(painFde + painFt, 0, 0.7)
-
-	surface.SetDrawColor(ColorAlpha(painCol, 255 * (0.7 - painFde)))
-	surface.DrawRect(0, 0, scrW, scrH)
-
-	--Crosshair
-	local x, y
-	local curWep = lp:GetActiveWeapon()
-
-	-- if not curWep or not curWep.ShouldDrawCrosshair or (curWep.ShouldDrawCrosshair and curWep.ShouldDrawCrosshair(curWep) != false) then
-		-- if impulse.GetSetting("view_thirdperson") == true then
-			-- local p = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
-			-- x, y = p.x, p.y
-		-- else
-			-- x, y = scrW/2, scrH/2
-		-- end
-
-		-- DrawCrosshair(x, y)
-	-- end
-
-	-- HUD
-
-	if impulse.GetSetting("hud_ambience") then
-		hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function()
-			DrawColorModify( ambience )
-		end )
-	end
-	
-	if not impulse.GetSetting("hud_ambience") then
-		hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor")
-	end
-
-
-	y = scrH-hudHeight-8-10
-	-- surface.SetMaterial(gradient)
-	-- if impulse.GetSetting("hud_jim") then
-	-- surface.DrawTexturedRect(10, y, hudWidth, hudHeight)   --####COMMENTED OUT BECAUSE I CAN'T FIX THIS SHITTY GRADIENT/CANT BE BOTHERED.####
-	-- else
-	-- surface.DrawTexturedRect(10, y + 10, hudWidth, hudHeight)
-	-- end
-	
-	-- ### HEALTHBAR ###
-
-	local isPreview = GetConVar("impulse_ispreview"):GetBool()
-
-	if isPreview then
-		surface.SetTextColor(255, 255, 255, 30)
-		surface.SetFont("HatchetFont20")
-		surface.SetTextPos(ScrW()-270, ScrH()-1000)
-		surface.DrawText("Very Kind of playable Beta Build")
-		--draw.SimpleTextOutlined("Very Kind of playable Beta Build", "Trebuchet18", ScrW()-120, ScrH()-1000, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
-	end
-	
-
-
-	--surface.SetFont("Impulse-Elements23")
-	--surface.SetTextColor(color_white)
-	--surface.SetDrawColor(color_white)
-	--surface.SetTextPos(30, y+10)
-	--surface.DrawText(LocalPlayer():Name())
-
-	--surface.SetTextColor(team.GetColor(lpTeam))
-	--surface.SetTextPos(30, y+30)
-	--surface.DrawText(team.GetName(lpTeam))
-
-	local yAdd = 0
-
-	-- surface.SetTextColor(color_white)
-	-- surface.SetFont("Impulse-Elements19")
-
-	-- surface.SetTextPos(136, y+64+yAdd)
-	-- surface.DrawText("Health: "..LocalPlayer():Health())
-	-- if seeColIcons == true then surface.SetDrawColor(healthCol) end
-	-- surface.SetMaterial(healthIcon)
-	-- surface.DrawTexturedRect(110, y+66+yAdd, 18, 16)
-
-	-- surface.SetTextPos(136, y+86+yAdd)
-	-- surface.DrawText("Hunger: "..LocalPlayer():GetSyncVar(SYNC_HUNGER, 100))
-	-- if seeColIcons == true then surface.SetDrawColor(hungerCol) end
-	-- surface.SetMaterial(hungerIcon)
-	-- surface.DrawTexturedRect(110, y+87+yAdd, 18, 18)
-
-	-- surface.SetTextPos(136, y+108+yAdd)
-	-- surface.DrawText("Money: "..impulse.Config.CurrencyPrefix..LocalPlayer():GetSyncVar(SYNC_MONEY, 0))
-	-- if seeColIcons == true then surface.SetDrawColor(moneyCol) end
-	-- surface.SetMaterial(moneyIcon)
-	-- surface.DrawTexturedRect(110, y+107+yAdd, 18, 18)
-
-	-- surface.SetDrawColor(color_white)
-
-	if lp:GetSyncVar(SYNC_ARRESTED, false) == true and impulse_JailTimeEnd and impulse_JailTimeEnd > CurTime() then
-		local timeLeft = math.ceil(impulse_JailTimeEnd - CurTime())
-
-		surface.SetMaterial(exitIcon)
-		surface.DrawTexturedRect(10, y-30, 18, 18)
-		draw.DrawText("Sentence remaining: "..string.FormattedTime(timeLeft, "%02i:%02i"), "Impulse-Elements19", 35, y-30, color_white, TEXT_ALIGN_LEFT)
-		aboveHUDUsed = true
-	end
-
-	-- draw.DrawText(lp:GetSyncVar(SYNC_XP, 0).."XP", "Impulse-Elements19", 55, y+150+(yAdd-8), color_white, TEXT_ALIGN_LEFT)
-	-- surface.SetMaterial(xpIcon)
-	-- surface.DrawTexturedRect(30, y+150+(yAdd-8), 18, 18)
-
-	local iconsX = 315
-	local bleedIconCol
-
-	if lp:GetSyncVar(SYNC_BLEEDING, false) then
-		if (nextBleedFlash or 0) < CurTime() then
-			bleedFlash = !bleedFlash
-			nextBleedFlash = CurTime() + 1
-		end
-
-		if bleedFlash then
-			bleedIconCol = bleedFlashCol
-		else
-			bleedIconCol = iconsWhiteCol
-		end
-
-		surface.SetDrawColor(bleedIconCol)
-		surface.SetMaterial(bleedingIcon)
-		surface.DrawTexturedRect(iconsX, y + 10, 30, 30)
-	end
-
-	surface.SetDrawColor(color_white)
-
-	if not aboveHUDUsed then
-		if impulse.ShowZone then
-			if IsValid(zoneLbl) then
-				zoneLbl:Remove()	
-			end
-
-			zoneLbl = vgui.Create("impulseZoneLabel")
-			zoneLbl:SetPos(30, y - 25)
-			zoneLbl.Zone = lp:GetZoneName()
-
-			impulse.ShowZone = false
-		end
-	elseif zoneLbl and IsValid(zoneLbl) then
-		zoneLbl:Remove()
-	end
-
---  ##### Code below is Jim (The movement indicator guy) #####
-
-	if not IsValid(PlayerIcon) and (impulse.hudEnabled == true) and impulse.GetSetting("hud_jim") then
-		PlayerIcon = vgui.Create("DModelPanel")
-		PlayerIcon:SetPos(100, y+30)
-		PlayerIcon:SetSize(120, 90)
-		PlayerIcon:SetModel(LocalPlayer():GetModel())
-		PlayerIcon:SetAnimated(true)
-		function PlayerIcon.Entity:GetSkin() return LocalPlayer():GetSkin() end
-		function PlayerIcon:LayoutEntity() return end
-		
-		function PlayerIcon:Think()
-		
-		local walkseq = PlayerIcon:GetEntity():SelectWeightedSequence( ACT_HL2MP_WALK )
-		local idleseq = PlayerIcon:GetEntity():SelectWeightedSequence( ACT_IDLE )
-		local run = LocalPlayer():KeyDown(IN_SPEED)
-		local forward = LocalPlayer():KeyDown(IN_FORWARD)
-		local moveright = LocalPlayer():KeyDown(IN_MOVERIGHT)
-		local moveleft = LocalPlayer():KeyDown(IN_MOVELEFT)
-		local backward = LocalPlayer():KeyDown(IN_BACK)
-		local onground = LocalPlayer():GetMoveType() == MOVETYPE_WALK
-		local inair = !LocalPlayer():OnGround()
-		local forwardkey = IN_FORWARD
-		local runkey = IN_SPEED
-		local duck = LocalPlayer():KeyDown(IN_DUCK)
-		local movingforwards = false
-		local sprinting = false
-		local running = false
-		local crouching = LocalPlayer():Crouching()
-		
-		
-	if forward and onground then
-		--print("walk")
-		movingforwards = true
-		sprinting = false
-		running = false
-		-- if movingforwards then
-		-- print("movingforwards = true")
-		-- else
-		-- print("movingforwards = false")
-		-- -- PlayerIcon:GetEntity():SetSequence( "walk_all_moderate" )
-		-- -- PlayerIcon:RunAnimation()
-		-- end
-	end
-	if run and onground then
-		--print("sprint")
-		sprinting = true
-		-- if sprinting then
-		-- print("sprinting = true")
-		-- else
-		-- print("sprinting = false")
-		-- end
-	end
-	if (run and forward) then
-		--print("running")
-		running = true
-		sprinting = false
-		movingforwards = false
-		if running then
-		--print("running = true")
-		sprinting = false
-		movingforwards = false
-		-- else
-		-- print("running = false")
-		end
-		-- PlayerIcon:GetEntity():SetSequence( "run_all_panicked" )
-		-- PlayerIcon:RunAnimation()
-	elseif onground and !run and !forward then
-		PlayerIcon:GetEntity():SetSequence( "lineidle01" )
-		PlayerIcon:RunAnimation()
-		running = false
-		sprinting = false
-		movingforwards = false
-	end
-	
-	if running then
-	sprinting = false
-	movingforwards = false
-	end
-	
-	if inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	elseif running and inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	elseif sprinting and inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	elseif (forward or moveright or moveleft or backward) and inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	elseif duck and inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	elseif duck and (forward or moveright or moveleft or backward) and inair then
-		PlayerIcon:GetEntity():SetSequence( "jump_holding_glide" )
-		PlayerIcon:RunAnimation()
-	end
-	
-	if running then
-		PlayerIcon:GetEntity():SetSequence( "run_all_panicked" )
-		PlayerIcon:RunAnimation()
-		-- running = false
-		-- movingforwards = false
-	elseif forward or moveright or moveleft or backward and not crouching then
-		PlayerIcon:GetEntity():SetSequence( "walk_all_moderate" )
-		PlayerIcon:RunAnimation()
-	elseif sprinting and !running and !crouching then
-		PlayerIcon:GetEntity():SetSequence( "lineidle01" )
-		PlayerIcon:RunAnimation()
-		-- running = false
-		-- sprinting = false
-	elseif duck then
-		PlayerIcon:GetEntity():SetSequence( "crouch_idled" )
-		PlayerIcon:RunAnimation()
-	elseif crouching and forward then
-		PlayerIcon:GetEntity():SetSequence( "crouch_walk_all" )
-		PlayerIcon:RunAnimation()
-	elseif crouching and moveleft then
-		PlayerIcon:GetEntity():SetSequence( "crouch_walk_all" )
-		PlayerIcon:RunAnimation()
-	elseif crouching and moveright then
-		PlayerIcon:GetEntity():SetSequence( "crouch_walk_all" )
-		PlayerIcon:RunAnimation()
-	elseif crouching and backward then
-		PlayerIcon:GetEntity():SetSequence( "crouch_walk_all" )
-		PlayerIcon:RunAnimation()
-	end
-end
-		
-
-		timer.Simple(0, function()
-			if not IsValid(PlayerIcon) then
-				return
-			end
-
-			local ent = PlayerIcon.Entity
-
-			if IsValid(ent) then
-				for v,k in pairs(LocalPlayer():GetBodyGroups()) do
-					ent:SetBodygroup(k.id, LocalPlayer():GetBodygroup(k.id))
-				end
-			end
-		end)
-	end
-	
-	local bodygroupChange = false
-
-	if (nextBodygroupChangeCheck or 0) < CurTime() and IsValid(PlayerIcon) then
-		local curBodygroups = lp:GetBodyGroups()
-		local ent = PlayerIcon.Entity
-
-		for v,k in pairs(lastBodygroups) do
-			if not curBodygroups[v] or ent:GetBodygroup(k.id) != LocalPlayer():GetBodygroup(curBodygroups[v].id) then
-				bodygroupChange = true
-				break
-			end
-		end
-
-		nextBodygroupChangeCheck = CurTime() + 0.5
-	end
-	
-	if not impulse.GetSetting("hud_jim") then
-		return
-	end
-	if impulse.GetSetting("hud_jim") and (lp:GetModel() != lastModel) or (lp:GetSkin() != lastSkin) or bodygroupChange == true or (iconLoaded == false and input.IsKeyDown(KEY_W)) then -- input is super hacking fix for SpawnIcon issue
-		PlayerIcon:SetModel(lp:GetModel(), lp:GetSkin())
-		lastModel = lp:GetModel()
-		lastSkin = lp:GetSkin()
-		lastTeam = lp:Team()
-		lastBodygroups = lp:GetBodyGroups()
-
-		iconLoaded = true
-		bodygroupChange = false
-
-		timer.Simple(0, function()
-			if not IsValid(PlayerIcon) then
-				return
-			end
-
-			local ent = PlayerIcon.Entity
-
-			if IsValid(ent) then
-				for v,k in pairs(LocalPlayer():GetBodyGroups()) do
-					ent:SetBodygroup(k.id, LocalPlayer():GetBodygroup(k.id))
-				end
-			end
-		end)
-	elseif impulse.GetSetting("hud_jim") and impulse.GetSetting("hud_hunger")then
-		PlayerIcon:SetPos(100, y+10)
-	end
-
-	local isPreview = GetConVar("impulse_ispreview"):GetBool()
-
-	if isPreview then
-		-- watermark
-		surface.SetDrawColor(watermarkCol)
-		surface.SetMaterial(watermark)
-		surface.DrawTexturedRect(390, y, 112, 30)
-
-		surface.SetTextPos(390, y + 30)
-		surface.SetTextColor(watermarkCol)
-		surface.SetFont("Impulse-Elements18-Shadow")
-		surface.DrawText("PREVIEW BUILD - "..impulse.Version.." - "..LocalPlayer():SteamID64().. " - ".. os.date("%H:%M:%S - %d/%m/%Y", os.time()))
-		surface.SetTextPos(390, y + 50)
-		surface.DrawText("SCHEMA: "..SCHEMA_NAME.." VERSION: "..impulse.Config.SchemaVersion or "?")
-	end
-
-	-- dev hud
-
-	if impulse_DevHud and (lp:IsSuperAdmin() or lp:IsDeveloper()) then
-		local trace = {}
-		trace.start = lp:EyePos()
-		trace.endpos = trace.start + lp:GetAimVector() * 3000
-		trace.filter = lp
-
-		local traceData = util.TraceLine(trace)
-		local traceEnt = traceData.Entity
-
-		if traceEnt and traceEnt != NULL then
-			surface.SetTextPos((scrW / 2) + 30, (scrH / 2) - 100)
-			surface.DrawText(tostring(traceEnt))
-
-			surface.SetTextPos((scrW / 2) + 30, (scrH / 2) - 80)
-			surface.DrawText(traceEnt:GetModel().."     "..traceData.HitTexture or "")
-
-			local syncData = impulse.Sync.Data[traceEnt:EntIndex()]
-			local netData
-			local y = (scrH / 2) - 40
-
-			if syncData then
-				for v,k in pairs(syncData) do
-					if type(k) == "table" then
-						k = table.ToString(k)
-					end
-
-					surface.SetTextPos((scrW / 2) + 30, y)
-					surface.DrawText("syncvalue: "..v.." ; "..tostring(k))
-					y = y + 20
-				end
-			end
-
-			if IsValid(traceEnt) and traceEnt.GetNetworkVars then
-				netData = traceEnt:GetNetworkVars()
-			end
-
-			if netData then
-				for v,k in pairs(netData) do
-					surface.SetTextPos((scrW / 2) + 30, y)
-					surface.DrawText("netvalue: "..v.." ; "..tostring(k))
-					y = y + 20
-				end
-			end
-		end
-
-		surface.SetTextPos(400, scrH / 1.5)
-		surface.DrawText(tostring(lp:GetPos()))
-		surface.SetTextPos(400, (scrH / 1.5) + 20)
-		surface.DrawText(tostring(lp:GetAngles()))
-		surface.SetTextPos(400, (scrH / 1.5) + 40)
-		surface.DrawText(lp:GetVelocity():Length2D())
-	end
-
-	lasthealth = health
-end
-
-local nextOverheadCheck = 0
-local lastEnt
-local trace = {}
-local approach = math.Approach
-local letterboxFde = 0
-local textFde = 0
-local holdTime
-overheadEntCache = {}
--- overhead info is HEAVILY based off nutscript. I'm not taking credit for it. but it saves clients like 70 fps so its worth it
-function GM:HUDPaintBackground()
-
-	if impulse.GetSetting("hud_vignette") == true then
-		surface.SetMaterial(vignette)
-		surface.SetDrawColor(vig_alpha_normal)
-		surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
-	end
-
-	if impulse.hudEnabled == false then
-		return
-	end
-
-	local lp = LocalPlayer()
-	local realTime = RealTime()
-	local frameTime = FrameTime()
-
-	if nextOverheadCheck < realTime then
-		nextOverheadCheck = realTime + 0.5
-		
-		trace.start = lp.GetShootPos(lp)
-		trace.endpos = trace.start + lp.GetAimVector(lp) * 300
-		trace.filter = lp
-		trace.mins = Vector(-4, -4, -4)
-		trace.maxs = Vector(4, 4, 4)
-		trace.mask = MASK_SHOT_HULL
-
-		lastEnt = util.TraceHull(trace).Entity
-
-		if IsValid(lastEnt) then
-			overheadEntCache[lastEnt] = true
-		end
-	end
-
-	for entTarg, shouldDraw in pairs(overheadEntCache) do
-		if IsValid(entTarg) then
-			local goal = shouldDraw and 255 or 0
-			local alpha = approach(entTarg.overheadAlpha or 0, goal, frameTime * 1000)
-
-			if lastEnt != entTarg then
-				overheadEntCache[entTarg] = false
-			end
-
-			if alpha > -1 then
-				if not entTarg:GetNoDraw() then
-					if entTarg:IsPlayer() then
-						DrawOverheadInfo(entTarg, alpha)
-					elseif entTarg.HUDName then
-						DrawEntInfo(entTarg, alpha)
-					elseif entTarg:IsDoor() then
-						DrawDoorInfo(entTarg, alpha)
-					elseif impulse_ActiveButtons[entTarg.EntIndex(entTarg)] then
-						DrawButtonInfo(entTarg, alpha)
+		draw.SimpleText("TOTAL REPORTS: " ..#impulse.Ops.Reports, "Impulse-Elements16-Shadow", 20, 30, col)
+
+		local totalClaimed = 0
+		for v,k in pairs(impulse.Ops.Reports) do
+			if k[3] then
+				totalClaimed = totalClaimed + 1
+
+				if k[3] == LocalPlayer() then
+					if IsValid(k[1]) then
+						draw.SimpleText("REPORTEE: "..k[1]:SteamName().." ("..k[1]:Name()..")", "Impulse-Elements16-Shadow", 20, 80, green)
+					else
+						draw.SimpleText("REPORTEE IS INVALID! CLOSE THIS REPORT.", "Impulse-Elements16-Shadow", 20, 80, green)
 					end
 				end
 			end
-
-			entTarg.overheadAlpha = alpha
-
-			if alpha == 0 and goal == 0 then
-				overheadEntCache[entTarg] = nil
-			end
-		else
-			overheadEntCache[entTarg] = nil
-		end
-	end
-	
-	if impulse.CinematicIntro and lp:Alive() then
-		local ft = FrameTime()
-		local maxTall =  ScrH() * .12
-
-		if holdTime and holdTime + 6 < CurTime() then
-			letterboxFde = math.Clamp(letterboxFde - ft * .5, 0, 1)
-			textFde = math.Clamp(textFde - ft * .3, 0, 1)
-
-			if letterboxFde == 0 then
-				impulse.CinematicIntro = false
-			end
-		elseif holdTime and holdTime + 4 < CurTime() then
-			textFde = math.Clamp(textFde - ft * .3, 0, 1)
-		else
-			letterboxFde = math.Clamp(letterboxFde + ft * .5, 0, 1)
-
-			if letterboxFde == 1 then
-				textFde = math.Clamp(textFde + ft * .1, 0, 1)
-				holdTime = holdTime or CurTime()
-			end
 		end
 
-		surface.SetDrawColor(color_black)
-		surface.DrawRect(0, 0, ScrW(), (maxTall * letterboxFde))
-		surface.DrawRect(0, (ScrH() - (maxTall * letterboxFde)) + 1, ScrW(), maxTall)
+		draw.SimpleText("CLAIMED REPORTS: " ..totalClaimed, "Impulse-Elements16-Shadow", 20, 50, col)
 
-		draw.DrawText(impulse.CinematicTitle, "Impulse-Elements36", ScrW() - 150, ScrH() * .905, ColorAlpha(color_white, (255 * textFde)), TEXT_ALIGN_RIGHT)
+		if LocalPlayer():IsAdmin() and impulse.GetSetting("admin_esp") then
+			draw.SimpleText("ENTCOUNT: "..#ents.GetAll(), "Impulse-Elements16-Shadow", 20, 100, col)
+			draw.SimpleText("PLAYERCOUNT: "..#player.GetAll(), "Impulse-Elements16-Shadow", 20, 120, col)
+
+			-- if impulse.Dispatch then
+				-- local ccode = impulse.Dispatch.CityCodes[impulse.Dispatch.GetCityCode()]
+				-- draw.SimpleText("CITYCODE: "..ccode[1], "Impulse-Elements16-Shadow", 20, 140, ccode[2])
+			-- end
+
+			local y = 160
+
+			for v,k in pairs(impulse.Teams.Data) do
+				draw.SimpleText(team.GetName(v)..": "..#team.GetPlayers(v), "Impulse-Elements16-Shadow", 20, y, col)
+				y = y + 20
+			end
+
+			for v,k in pairs(player.GetAll()) do
+				if k ==  LocalPlayer() then continue end
+				
+				local pos = (k:GetPos() + k:OBBCenter()):ToScreen()
+				local col = team.GetColor(k:Team())
+
+				local eyePos = k:EyePos() + k:GetRight()
+				local eyeDir = k:GetAimVector()
+			
+				local tr = util.TraceLine( {
+					start = eyePos,
+					endpos = eyePos + eyeDir * 10000,
+					filter = k
+				} )
+
+				cam.Start3D()
+					render.DrawLine( eyePos, tr.HitPos, col, true )
+				cam.End3D()
+
+
+				if k:IsAdmin() and k:GetMoveType() == MOVETYPE_NOCLIP and k:GetNoDraw() then
+					draw.SimpleText("** In Observer Mode **", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+				else
+					draw.SimpleText(k:Name(), "Impulse-Elements18-Shadow", pos.x, pos.y + 3, col, TEXT_ALIGN_CENTER)
+				end
+
+				draw.SimpleText("HP: "..k:Health(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+
+				draw.SimpleText("Armor: "..k:Armor(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 2, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+
+				draw.SimpleText(k:SteamName(), "Impulse-Elements16-Shadow", pos.x, pos.y - 15 * 3, impulse.Config.InteractColour, TEXT_ALIGN_CENTER)
+				if k:Alive() and k:GetActiveWeapon() != nil then
+				draw.SimpleText(k:GetActiveWeapon(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 4.1, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				else
+				draw.SimpleText("Player has died.", "Impulse-Elements18-Shadow", pos.x, pos.y - 55, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				end
+			end
+		end
+
+		if CUR_SNAPSHOT then
+			local snapData = impulse.Ops.Snapshots[CUR_SNAPSHOT]
+			impulse.Ops.Snapshots[CUR_SNAPSHOT].VictimNeatName = impulse.Ops.Snapshots[CUR_SNAPSHOT].VictimNeatName or ((IsValid(snapData.Victim) and snapData.Victim:IsPlayer()) and (snapData.VictimNick.." ("..snapData.Victim:SteamName()..")") or snapData.VictimID)
+			impulse.Ops.Snapshots[CUR_SNAPSHOT].InflictorNeatName = impulse.Ops.Snapshots[CUR_SNAPSHOT].InflictorNeatName or ((IsValid(snapData.Inflictor) and snapData.Inflictor:IsPlayer()) and (snapData.InflictorNick.." ("..snapData.Inflictor:SteamName()..")") or snapData.InflictorID)
+
+			draw.SimpleText("VIEWING SNAPSHOT #"..CUR_SNAPSHOT.." (CLOSE WITH F2)", "Impulse-Elements16-Shadow", 250, 100, col)
+			draw.SimpleText("VICTIM: "..snapData.VictimNeatName.." ["..snapData.VictimID.."]", "Impulse-Elements16-Shadow", 250, 120, Color(255, 0, 0))
+			draw.SimpleText("ATTACKER: "..snapData.InflictorNeatName.." ["..snapData.InflictorID.."]", "Impulse-Elements16-Shadow", 250, 140, Color(0, 255, 0))
+
+			for v,k in pairs(impulse.Ops.SnapshotEnts) do
+				local pos = (k:GetPos() + k:OBBCenter()):ToScreen()
+				local col = k:GetColor()
+
+				draw.SimpleText(k.IsVictim and snapData.VictimNeatName or snapData.InflictorNeatName, "Impulse-Elements18-Shadow", pos.x, pos.y, col, TEXT_ALIGN_CENTER)
+
+				if not k.IsVictim then
+					draw.SimpleText("WEP: "..snapData.AttackerClass, "Impulse-Elements18-Shadow", pos.x, pos.y + 20, col, TEXT_ALIGN_CENTER)
+					draw.SimpleText("HP: "..snapData.InflictorHealth, "Impulse-Elements18-Shadow", pos.x, pos.y + 40, col, TEXT_ALIGN_CENTER)
+				else
+					draw.SimpleText("HITGROUP: "..hitgroups[snapData.VictimHitGroup], "Impulse-Elements18-Shadow", pos.x, pos.y + 20, col, TEXT_ALIGN_CENTER)
+				end
+			end
+		end
+
+		if impulse.Ops.EventManager and impulse.Ops.EventManager.GetEventMode() and impulse.Ops.EventManager.GetSequence() then
+			local symb = "•"
+
+			if dotToggleTime < CurTime() then
+				symb = ""
+
+				if dotToggleTime + 1 < CurTime() then
+					dotToggleTime = CurTime() + 1
+				end
+			end
+
+			draw.SimpleText(symb.." LIVE (CURRENT SEQUENCE: "..impulse.Ops.EventManager.GetSequence()..")", "Impulse-Elements18-Shadow", ScrW() - 20, 20, red, TEXT_ALIGN_RIGHT)
+		end
 	else
-		letterboxFde = 0
-		textFde = 0
-		holdTime = nil
-	end
-end
-
-concommand.Add("impulse_cameratoggle", function()
-	impulse.hudEnabled = (!impulse.hudEnabled)
-
-	if not IsValid(impulse.chatBox.frame) then
-		return
-	end
-
-	if impulse.hudEnabled then
-		impulse.chatBox.frame:Show()
-	else
-		impulse.chatBox.frame:Hide()
 	end
 end)
