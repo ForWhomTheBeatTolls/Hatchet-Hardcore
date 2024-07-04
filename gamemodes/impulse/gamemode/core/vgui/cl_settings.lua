@@ -25,23 +25,25 @@ function PANEL:Init()
 		local settingBase = addedCategories[k.category]:Add("DPanel")
 		settingBase:Dock(TOP)
 		settingBase:DockMargin(0,0,0,2)
+		settingBase:SetSize(24, 34)
 		--settingBase:InvalidateParent(true) -- this is called to sync the new positions and sizes with the dock
 		function settingBase:Paint(w, h)
-			draw.RoundedBox(0, 0, 0, w, h, Color( 80, 80, 80, 100 ))
+			surface.DrawRect(0, 0, w, 1.2)
 		end
 
 		local settingLabel = vgui.Create("DLabel", settingBase)
 		settingLabel:SetText(k.name)
-		settingLabel:SetFont("Impulse-Elements18")
+		settingLabel:SetFont("HatchetFont20")
 		settingLabel:SizeToContents()
 		settingLabel:CenterVertical()
-		settingLabel:SetPos(5, settingLabel.y)
+		settingLabel:SetPos(5, settingLabel.y + 4)
 
 		local settingType = k.type
 		if settingType == "tickbox" then
 			local tickbox = vgui.Create("DCheckBox", settingBase)
 			tickbox:CenterVertical()
-			tickbox:SetPos(590, tickbox.y)
+			tickbox:SetPos(580, tickbox.y + 2)
+			tickbox:SetSize(22, 22)
 			tickbox:SetValue(impulse.GetSetting(v))
 
 			function tickbox:OnChange(value)
