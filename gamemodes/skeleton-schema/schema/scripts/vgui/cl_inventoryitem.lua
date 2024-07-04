@@ -1,11 +1,9 @@
 local PANEL = {}
 
 function PANEL:Init()
-	self.model = vgui.Create("impulseSpawnIcon", self)
-	self.model:SetPaintBackground(false)
 	self:SetMouseInputEnabled(true)
 	self:SetTall(84)
-
+	self:SetWide(280)
 	self:SetCursor("hand")
 end
 
@@ -13,6 +11,7 @@ function PANEL:SetItem(netitem, wide)
     local w, h = self:GetSize()
 	local direct = self.ContainerType
 	local item = impulse.Inventory.Items[(direct and netitem) or netitem.id]
+
 	self.Item = item
 
 	if not direct then
@@ -25,7 +24,10 @@ function PANEL:SetItem(netitem, wide)
 	self.Count = 1
 
 	local panel = self
-	self.model:SetPos(7, 14)
+
+	self.model = vgui.Create("impulseSpawnIcon", self)
+	self.model:SetPaintBackground(false)
+	self.model:SetPos(220, 22)
 	self.model:SetSize(48, 48)
 	self.model:SetMouseInputEnabled(true)
 	self.model:SetModel(item.Model)
@@ -53,7 +55,7 @@ function PANEL:SetItem(netitem, wide)
 	end
 
 	self.desc = vgui.Create("DLabel", self)
-	self.desc:SetPos(65, 30)
+	self.desc:SetPos(0, 15)
 
 	if self.Basic then
 		self.desc:SetSize(200, 60)
@@ -112,18 +114,16 @@ function PANEL:SetItem(netitem, wide)
 
 	if self.IsRestricted then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(43, 45)
-		self.tip:SetSize(24, 24)
+		self.tip:SetPos(6, 6)
+		self.tip:SetSize(14, 14)
 		self.tip:SetImage(restrictedMat)
 	elseif self.Item.Illegal then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(43, 45)
-		self.tip:SetSize(24, 24)
+		self.tip:SetPos(232, 5)
+		self.tip:SetSize(14, 14)
 		self.tip:SetImage(illegalMat)
 	end
 end
-
-
 
 function PANEL:OnMousePressed(keycode)
 	if self.Disabled then
@@ -302,47 +302,64 @@ function PANEL:OnMousePressed(keycode)
 	popup:Open()
 end
 
-local bodyCol = Color(0, 0, 0, 255)
-local topCol2 = Color(36, 36, 36)
+local bodyCol = Color(77, 77, 77)
+local topCol2 = Color(51, 51, 51)
+local basiccol = Color(255, 136, 0)
+local equipcol = Color(39, 230, 22)
 local restrictedCol = Color(255, 223, 0, 255)
 local illegalCol = Color(255, 0, 0, 255)
-local equippedCol =  Color(0, 255, 0, 12)
+local illegalbodycol = Color(68, 6, 6, 142)
+local equipbodycol = Color(32, 185, 18, 52)
+local equippedCol =  Color(10, 70, 10, 169)
 local restrictedMat =  Material("icon16/error.png")
 local gradient = Material("gui/gradient_up")
 local illegalMat = Material("icon16/exclamation.png")
 function PANEL:Paint(w, h)
 
 
-	draw.RoundedBox(0, 0, 0, w, h, bodyCol)
-	surface.SetDrawColor(topCol2)
-	surface.SetMaterial(gradient)
-	surface.DrawTexturedRect(0, 0, w, h)
-	draw.RoundedBox(0, 0, 82, w, h - 82, Color(255, 136, 0))
+	surface.SetDrawColor(bodyCol)
+	surface.DrawRect(0, 0, w, h)
+
 
 	local item = self.Item
 	if item then
 		surface.SetTextColor(item.Colour or color_white)
-		surface.SetFont("Impulse-Elements19-Shadow")
-		surface.SetTextPos(65, 10)
+		surface.SetFont("HatchetFont-ItemName")
+		surface.SetTextPos(0, 0)
 		surface.DrawText(item.Name)
 
-		draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", w - 10, 10, color_white, TEXT_ALIGN_RIGHT)
+		surface.SetDrawColor(topCol2)
+		surface.SetMaterial(gradient)
+		surface.DrawTexturedRect(0, 0, w, h)
+
+		surface.SetDrawColor(basiccol)
+		surface.DrawRect(0, 82, w, h - 82)
+
+		draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", w - 6, 4, color_white, TEXT_ALIGN_RIGHT)
 
 		if self.Basic then return end
 
-		if self.IsEquipped then -- if equipped
-			surface.SetDrawColor(equippedCol)
+		if self.Item.Illegal then
+			surface.SetDrawColor(illegalbodycol)
 			surface.SetMaterial(gradient)
 			surface.DrawTexturedRect(0, 0, w, h)
+			surface.SetDrawColor(illegalCol)
+			surface.DrawRect(0, 82, w, h - 82)
 		end
-	end
-end
 
-local disabledCol = Color(15, 15, 15, 210)
-function PANEL:PaintOver(w, h)
-	if self.Disabled then
-		surface.SetDrawColor(disabledCol)
-		surface.DrawRect(0, 0, w, h)
+		if self.IsEquipped then -- if equipped
+			surface.SetDrawColor(equipbodycol)
+			surface.SetMaterial(gradient)
+			surface.DrawTexturedRect(0, 0, w, h)
+			surface.SetDrawColor(equipcol)
+			surface.DrawRect(0, 82, w, h - 82)
+		end
+
+		local disabledCol = Color(15, 15, 15, 210)
+		if self.Disabled then
+			surface.SetDrawColor(disabledCol)
+			surface.DrawRect(0, 0, w, h)
+		end
 	end
 end
 
