@@ -3,7 +3,10 @@ local surface = surface
 local draw = draw
 local Color = Color
 local DARK_50, DARK_25, DARK_100, WHITE = Color(0,0,0,45), Color(0,0,0,35), Color(0, 0, 0, 80) Color(255,255,255,255)
-local HIGHLIGHT = Color(14, 141, 201)
+local HIGHLIGHT = Color(201, 98, 14)
+local dark = Color(0, 0, 0, 255)
+local bodycol = Color(12, 12, 12, 185)
+local noblur = Color(65, 65, 65, 168)
 
 
 SKIN = {}
@@ -30,23 +33,27 @@ function SKIN:GetTable(panel)
     return panel.__derma__
 end
 
-local topCol = Color(24, 24, 24)
-local topCol2 = Color(36, 36, 36)
-local gradient = Material("gui/gradient_up")
-local bodyCol = Color(80, 80, 80, 100)
-local bodyColOp = Color(80, 80, 80, 200)
 function SKIN:PaintFrame(panel, w, h)
-    -- impulse.blur(panel, 10, 20, 255)
-    draw.RoundedBox(6, 0, 0, w, h, Color(73, 73, 73)) -- this is the "top bar" of the derma frame
-	surface.SetDrawColor(topCol)
+	if impulse.GetSetting("perf_blur") then
+    	impulse.blur(panel, 10, 20, 255)
+	else
+		surface.SetDrawColor(noblur)
+		surface.DrawRect(0, 0, w, h)
+	end
+
+	local gradient = Material("gui/gradient_up")
+
+	surface.SetDrawColor(bodycol)
 	surface.DrawRect(0, 0, w, h)
-	surface.SetDrawColor(topCol2)
-	surface.SetMaterial(gradient)
-	surface.DrawTexturedRect(2, 2, w - 4, h - 4)
+
+	surface.SetDrawColor(HIGHLIGHT)
+	surface.DrawRect(0, 0, w, 24)
+
+	surface.DrawOutlinedRect(0, 0, w, h, 1)
 end
 
 function SKIN:PaintMenuBar(panel, w, h)
-	draw.RoundedBox(0, 0, 0, w, h, bodyColOp)
+	draw.RoundedBox(0, 0, 0, w, h, dark)
 end
 
 local btnCol = Color(51, 51, 51)
@@ -62,9 +69,7 @@ function SKIN:PaintButton(panel) -- button skin from ns edited
 		elseif (panel.Hovered) then
 			alpha = 150
 		end
-		surface.SetDrawColor(ColorAlpha(btnCol, alpha))
-		surface.DrawRect(0, 0, w, h)
-		surface.SetDrawColor(topCol)
+		surface.SetDrawColor(dark)
 		surface.DrawOutlinedRect(0, 0, w, h, 1)
 	end
 end
@@ -165,7 +170,7 @@ end
 
 function SKIN:PaintComboBox(panel, w, h)
     --self:PaintButton(panel, w, h)
-	surface.SetDrawColor(topCol)
+	surface.SetDrawColor(dark)
 	surface.DrawOutlinedRect(0, 0, w, h, 1)
 end
 
@@ -176,7 +181,7 @@ end
 function SKIN:PaintProgress(panel, w, h)
 	surface.SetDrawColor(DARK_25)
 	surface.DrawRect(0, 0, w, h)
-	surface.SetDrawColor(panel.BarCol or HIGHLIGHT)
+	surface.SetDrawColor(HIGHLIGHT)
 	surface.DrawRect(0, 0, w * panel:GetFraction(), h)
 	surface.SetDrawColor(DARK_50)
 	surface.DrawOutlinedRect(0, 0, w, h)
