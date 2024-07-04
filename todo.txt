@@ -13,6 +13,8 @@ LEAVE IT FOR NOW:
 
 - Improve Death Animations to include Weapons in the hand of the ragdoll
 - Animation menu using NET functions (You can go suck my dick i fucking hate garrys mod due to the fact it has no functions for this stupid shit)
+- Concept: Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
+
 
 
 --------------------------
@@ -41,22 +43,16 @@ TO-DO LIST:
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Clean up code (Comments and old code that we don't need)
--Dispatch role (Top-down lambda wars-esque gameplay)
 -Dequavion Ammo Bender
--Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
 -Add crafting via the use of fire
 -IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
--Add zombification
 -Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
 -Saboteurs can make booby traps
 -Add bear traps, explosive barrels
--Add vortigaunts
--Add "Recognize" system
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 -Figure out a way to incorporate grenades into the server
--Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
 -Brickbat?
 -Bleeding ( Community requested (73% of voters) )
 
@@ -100,13 +96,20 @@ DONE LIST:
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 ------------------------
-- Concept: Unpackaging (OPEN BOX, PULL manhack out, put it in cart)
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Redesign player settings screen from the ground up
 - Fix bubble chat whisper not capitalizing correctly
-- Inventory Possibile-Exploit Fix
 - Citizen terminals, will replace ATMs and will be a usefull way to get information of your character
 - remake player settings, turn it into a info\rule\page area.
+-Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
+-Add vortigaunts
+-Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
+-Dispatch role (Top-down lambda wars-esque gameplay)
+
+-Add "Recognize" system
+-Add zombification
+
+
 - Make Identity Changes by going on spawm and pressing a button on the main menu where you can change species (Dispatch, Vort, Citizen) and Your characters Model, Name, Description."
 
 MUHAMMED CODING SIDE:
