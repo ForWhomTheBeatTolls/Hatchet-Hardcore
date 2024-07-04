@@ -23,9 +23,9 @@ local ambience = {
 	["$pp_colour_addr"] = 0,
 	["$pp_colour_addg"] = 0,
 	["$pp_colour_addb"] = 0,
-	["$pp_colour_brightness"] = -0.04,
-	["$pp_colour_contrast"] = 1.5,
-	["$pp_colour_colour"] = 0.8,
+	["$pp_colour_brightness"] = 0,
+	["$pp_colour_contrast"] = 1.2,
+	["$pp_colour_colour"] = .8,
 	["$pp_colour_mulr"] = 0,
 	["$pp_colour_mulg"] = 0,
 	["$pp_colour_mulb"] = 0
@@ -60,8 +60,9 @@ local cheapBlur = Color(0,0,0,205)
 	-- end
 -- end
 
-local vignette = Material("impulse/vignette.png")
-local vig_alpha_normal = Color(10,10,10,190)
+local vignette = Material("hatchet/overlays/vignette.png")
+local w, h = ScrW(), ScrH()
+local vig_alpha_normal = Color(0,0,0)
 local lasthealth
 local time = 0
 local zoneLbl
@@ -108,11 +109,13 @@ local bleedFlash = false
 local hotPink = Color(148, 0, 211)
 
 local function DrawOverheadInfo(target, alpha)
-	local pos = target:EyePos()
 
-	pos.z = pos.z + 5
-	pos = pos:ToScreen()
-	pos.y = pos.y - 50
+	local pos
+	if target:IsValid() and target:GetModel() == "models/player.mdl" then
+		pos = target:GetPos():ToScreen()
+	else
+		pos = target:GetBonePosition(target:LookupBone("ValveBiped.Bip01_Spine1")):ToScreen()
+	end
 
 	local myGroup = LocalPlayer():GetSyncVar(SYNC_GROUP_NAME, nil)
 	local group = target:GetSyncVar(SYNC_GROUP_NAME, nil)
@@ -155,8 +158,8 @@ local function DrawOverheadInfo(target, alpha)
 	// Optimization, maybe? this will not draw the text if the player decided not to have a description
 	if string.len(desc) == 0 then
 		return
-	else
-		draw.DrawText(desc, "Impulse-Elements18-Shadow", pos.x, pos.y - 25, Color(255, 255, 255), 1)
+	else	
+		draw.DrawText(desc, "HatchetFont-PlayerInfo", pos.x, pos.y + 18, ColorAlpha(Color(255, 230, 190), alpha), 1)
 	end
 end
 
@@ -191,7 +194,7 @@ local function DrawDoorInfo(target, alpha)
 	end
 
 	if LocalPlayer():CanBuyDoor(doorOwners, doorBuyable) then
-		draw.DrawText("Ownable door (F2)", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText("Ownable door (F2)", "HatchetFont20", pos.x, pos.y, col, 1)
 	end
 end
 
@@ -203,10 +206,10 @@ local function DrawEntInfo(target, alpha)
 	local hudDesc = target.HUDDesc
 	local hudCol = target.HUDColour or impulse.Config.InteractColour
 
-	draw.DrawText(hudName, "Impulse-Elements19-Shadow", pos.x, pos.y, ColorAlpha(hudCol, alpha), 1)
+	draw.DrawText(hudName, "HatchetFont-PlayerInfo", pos.x, pos.y, ColorAlpha(hudCol, alpha), 1)
 
 	if hudDesc then
-		draw.DrawText(hudDesc, "Impulse-Elements16-Shadow", pos.x, pos.y + 20, ColorAlpha(color_white, alpha), 1)
+		draw.DrawText(hudDesc, "HatchetFont-PlayerInfo", pos.x, pos.y + 20, ColorAlpha(color_white, alpha), 1)
 	end
 end
 
@@ -244,7 +247,7 @@ function GM:HUDPaint(mvData)
 
 	for k, v in pairs(player.GetAll()) do
 		local headpos
-		if v:GetModel() == "models/player.mdl" then
+		if v:IsValid() and v:GetModel() == "models/player.mdl" then
 			headpos = (v:GetPos() + v:OBBCenter()):ToScreen()
 		else
 			headpos = (v:GetBonePosition(v:LookupBone("ValveBiped.Bip01_Spine1")) + v:OBBCenter()):ToScreen()
@@ -256,6 +259,7 @@ function GM:HUDPaint(mvData)
 			end
 		end
 	end
+
 	--local audio = GetConVar("volume")
 	--local audionum = audio:GetFloat()
 	local health = LocalPlayer():Health()
@@ -416,7 +420,11 @@ function GM:HUDPaint(mvData)
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 
 	if isPreview then
-		draw.SimpleTextOutlined("THIS SERVER IS IN DEV! THINGS MAY CHANGE OR REMOVED,\n AND THERE MIGHT BE OPTIMIZATION ISSUES!\nPlease Report bugs or exploits ASAP to our Discord.", "Trebuchet18", ScrW() * .34, 0, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
+		surface.SetTextColor(255, 255, 255, 30)
+		surface.SetFont("HatchetFont20")
+		surface.SetTextPos(ScrW()-270, ScrH()-1000)
+		surface.DrawText("Very Kind of playable Beta Build")
+		--draw.SimpleTextOutlined("Very Kind of playable Beta Build", "Trebuchet18", ScrW()-120, ScrH()-1000, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
 	end
 	
 
@@ -825,7 +833,7 @@ function GM:HUDPaintBackground()
 				overheadEntCache[entTarg] = false
 			end
 
-			if alpha > 0 then
+			if alpha > -1 then
 				if not entTarg:GetNoDraw() then
 					if entTarg:IsPlayer() then
 						DrawOverheadInfo(entTarg, alpha)
