@@ -106,14 +106,14 @@ function InitializeHuds()
 		end
 
 		local w, h = ScrW(), ScrH()
-		local hudWidth, hudHeight = 400, 10
+		local hudWidth, hudHeight = 280, 8
 		local healthIcon = Material("hatchet/plus.png")
 		local hungerIcon = Material("hatchet/food.png")
 		local gradient = Material("gui/gradient_up")
 		local basecol = Color(85, 85, 85)
 		local basecol2 = Color(0, 0, 0, 130)
 		local basecol3 = Color(0, 0, 0, 255)
-		local basecol4 = Color(255, 255, 255)
+		local basecol4 = Color(226, 226, 226)
 		local hpcolor = Color(252, 50, 50)
 		local hungercolor = Color(252, 164, 50)
 		local superstaminacolor = Color(71, 201, 20)
@@ -136,25 +136,45 @@ function InitializeHuds()
 		surface.DrawOutlinedRect(w * .018, h * .9, hudWidth * 100 / 100, hudHeight, 1) --hp
 		surface.DrawOutlinedRect(w * .018, h * .918, hudWidth * 100 / 100, hudHeight, 1) --hunger
 
-
+		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
 		if IsValid(weapon) then
+			if weapon:Clip1() < 1 then
+				ammocounter = "Empty"
+			elseif weapon:Clip1() < weapon:GetMaxClip1() / 2.7 then
+				ammocounter = "Near Empty"
+			elseif weapon:Clip1() < weapon:GetMaxClip1() / 1 then
+				ammocounter = "Near Full"
+			elseif weapon:Clip1() < weapon:GetMaxClip1() + 1 then
+				ammocounter = "Full"
+			end
+
+			local pos = LocalPlayer():GetBonePosition(LocalPlayer():LookupBone("ValveBiped.Bip01_L_Hand")):ToScreen()
+
 			if weapon:GetMaxClip1() != -1 then
-				surface.SetFont("Impulse-Elements24-Shadow")
-				surface.SetDrawColor(25, 25, 25, 100)
-				surface.SetTextPos(w-80, h-40)
 				surface.SetTextColor(255, 255, 255, 200)
-				surface.DrawText(weapon:Clip1().."/"..LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()))
+				surface.SetFont("HatchetFont34")
+				surface.SetTextPos(pos.x, pos.y)
+				surface.DrawText("Ammo: "..ammocounter)
 			elseif weapon:GetClass() == "weapon_physgun" or weapon:GetClass() == "gmod_tool" then
 				aboveHUDUsed = true
-	
-				surface.SetFont("Impulse-Elements24-Shadow")
-				surface.SetTextPos(w-140, h-40)
+				surface.SetTextColor(255, 255, 255, 200)
+				surface.SetFont("HatchetFont20")
+				surface.SetTextPos(w * .008, h-134)
 				surface.DrawText("Props: "..LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0).."/"..((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
 			end
 		end
 	end)
-	
+
+
+	hook.Add("HUDPaint", "AmmoCounter3D2D", function()
+		local weapon = LocalPlayer():GetActiveWeapon()
+		if IsValid(weapon) then
+			if weapon:GetMaxClip1() != -1 then
+
+			end
+		end
+	end)
 end
 
 
