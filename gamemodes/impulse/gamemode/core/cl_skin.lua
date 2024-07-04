@@ -5,8 +5,9 @@ local Color = Color
 local DARK_50, DARK_25, DARK_100, WHITE = Color(0,0,0,45), Color(0,0,0,35), Color(0, 0, 0, 80) Color(255,255,255,255)
 local HIGHLIGHT = Color(201, 98, 14)
 local dark = Color(0, 0, 0, 255)
+local dark1 = Color(0, 0, 0, 204)
 local bodycol = Color(12, 12, 12, 185)
-local noblur = Color(65, 65, 65, 168)
+local bodycol2 = Color(65, 65, 65, 168)
 
 
 SKIN = {}
@@ -37,11 +38,17 @@ function SKIN:PaintFrame(panel, w, h)
 	if impulse.GetSetting("perf_blur") then
     	impulse.blur(panel, 10, 20, 255)
 	else
-		surface.SetDrawColor(noblur)
-		surface.DrawRect(0, 0, w, h)
+		
 	end
 
 	local gradient = Material("gui/gradient_up")
+
+	surface.SetDrawColor(bodycol2)
+	surface.DrawRect(0, 0, w, h)
+
+	surface.SetDrawColor(dark1)
+	surface.SetMaterial(gradient)
+	surface.DrawTexturedRect(0,	0,	w,	h)
 
 	surface.SetDrawColor(bodycol)
 	surface.DrawRect(0, 0, w, h)
@@ -49,7 +56,7 @@ function SKIN:PaintFrame(panel, w, h)
 	surface.SetDrawColor(HIGHLIGHT)
 	surface.DrawRect(0, 0, w, 24)
 
-	surface.DrawOutlinedRect(0, 0, w, h, 1)
+	surface.DrawOutlinedRect(0, 0, w, h, 2)
 end
 
 function SKIN:PaintMenuBar(panel, w, h)
@@ -197,6 +204,7 @@ function SKIN:PaintCollapsibleCategory(panel, w, h)
     	draw.RoundedBox( 0, 0, 0, w, h, ccCol)
 	end
 end
+
 
 local darkCol = Color(0, 0, 0, 255)
 function SKIN:PaintTooltip(panel, w, h)
