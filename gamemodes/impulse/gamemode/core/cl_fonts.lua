@@ -1,28 +1,65 @@
 	-- Font's are still a bit squiffy, they will all be scaled properly soon. Also - please name none specific fonts 'Impulse-Elements<description>'
+-- math.max(ScreenScale(6), 17)
 
-	surface.CreateFont("HatchetFont18", {
-		font = "Consolas",
-		size = 18,
-		weight = 400,
+
+	surface.CreateFont("HatchetFont20", {
+		font = "Arial",
+		size = 20,
+		weight = 800,
 		antialias = true,
-		shadow = false,
+		outline = true
 	} )
 
-	surface.CreateFont("HatchetFont10", {
-		font = "Consolas",
-		size = 18,
-		weight = 400,
+	surface.CreateFont("HatchetFont-Menu48", {
+		font = "Arial",
+		size = 48,
+		weight = 800,
 		antialias = true,
 		shadow = false,
+		outline = true
 	} )
 
-	surface.CreateFont("HatchetFont10", {
-		font = "Consolas",
-		size = 18,
-		weight = 400,
+	surface.CreateFont("HatchetFont-Menu32", {
+		font = "Arial",
+		size = ScreenScale(11),
+		weight = 800,
 		antialias = true,
 		shadow = false,
+		outline = true
 	} )
+
+	surface.CreateFont("HatchetFont-PlayerInfo", {
+		font = "Arial",
+		size = 18,
+		weight = 8,
+		antialias = true,
+		shadow = true
+	} )
+
+	surface.CreateFont("HatchetFont-ItemName", {
+		font = "Arial",
+		size = 17,
+		weight = 600,
+		shadow = true,
+		antialias = true
+	} )
+
+	surface.CreateFont("HatchetFont-ItemDesc", {
+		font = "Arial",
+		size = 11,
+		weight = 2,
+		antialias = true
+	} )
+
+
+	surface.CreateFont("HatchetFont34", {
+		font = "Arial",
+		size = 34,
+		weight = 100,
+		antialias = true,
+		shadow = true,
+	} )
+
 
 	surface.CreateFont("Impulse-Elements18", {
 		font = "Arial",
