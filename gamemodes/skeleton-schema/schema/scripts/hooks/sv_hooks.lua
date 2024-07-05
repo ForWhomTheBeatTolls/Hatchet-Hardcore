@@ -1,5 +1,4 @@
 	--reloadmarker, make changes here then save to lua refr
-
 	function SCHEMA:PlayerSpawn(ply)
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamagedCool = CurTime()
@@ -13,6 +12,7 @@
 		ply.CanJump = true
 		ply.Stunned = false
 		ply.TimesDamaged = 0
+		ply.CombatCool = 0
 		ply.TimesStunned = 0
 		ply:SetNWInt("CarryWeight", 25)
 		ply.FoodPoisoning = false
@@ -21,6 +21,7 @@
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 	end
+
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
 		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
