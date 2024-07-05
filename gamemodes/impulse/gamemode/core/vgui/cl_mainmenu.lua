@@ -1,6 +1,7 @@
 local PANEL = {}
 
 function PANEL:Init()
+	local w, h = ScrW(), ScrH()
 	if IsValid(impulse.MainMenu) then
 		impulse.MainMenu:Remove()
 	end
@@ -42,18 +43,18 @@ function PANEL:Init()
 
 		surface.SetMaterial(hatcheticon)
 		surface.SetDrawColor(Color(255,255,255))
-		surface.DrawTexturedRect(160, 40, 100,100)
+		surface.DrawTexturedRect(w/1.34,100, 100,100)
 
 		local isPreview = GetConVar("impulse_ispreview"):GetBool()
 
 		if isPreview then
-			draw.SimpleText("preview build", "Impulse-SpecialFont", 260, 115, Color(255, 242, 0))
+			draw.SimpleText("preview build", "Impulse-SpecialFont", w/1.25,150, Color(255, 242, 0))
 		end
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,200)
-	button:SetFont("Impulse-Elements48")
+	button:SetPos(24,11)
+	button:SetFont("HatchetFont-Menu48")
 	if impulse_isNewPlayer == true then
 		button:SetText("Create your character")
 	else
@@ -100,15 +101,11 @@ function PANEL:Init()
 		CRASHSCREEN_ALLOW = true
 	end
 
-	local title = vgui.Create("DLabel", self.core)
-	title:SetText("Character Settings:")
-	title:SetPos(100,364)
-	title:SetFont("Impulse-Elements48")
-	title:SizeToContents()
+	local white_color = Color(255, 255, 255)
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,400)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(737,20)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Change your species")
 	button:SizeToContents()
 
@@ -129,8 +126,8 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,250)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(128,22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Settings")
 	button:SizeToContents()
 
@@ -153,8 +150,8 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,280)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(254,22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Achievements")
 	button:SizeToContents()
 
@@ -177,8 +174,8 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,310)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(454,22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Community")
 	button:SizeToContents()
 
@@ -202,8 +199,9 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,340)
-	button:SetFont("Impulse-Elements32")
+
+	button:SetPos(624,22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Donate")
 	button:SizeToContents()
 
@@ -227,8 +225,8 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(100,ScrH()-230)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(1027,22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Credits")
 	button:SizeToContents()
 
@@ -261,8 +259,8 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self)
-	button:SetPos(100,ScrH()-200)
-	button:SetFont("Impulse-Elements32")
+	button:SetPos(w/1.2, 22)
+	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Disconnect")
 	button:SizeToContents()
 
@@ -318,14 +316,15 @@ function PANEL:Init()
 
 	local schemaLabel = vgui.Create("DLabel", self.core)
 	schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b))
-	schemaLabel:SetFont("Impulse-Elements32")
+	schemaLabel:SetFont("HatchetFont-Menu32")
 	schemaLabel:SetText("HATCHET: HL2 HARDCORE")
+	schemaLabel:SetTextInset(0, 0)
 	--schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)) not sure if i like this
 	schemaLabel:SizeToContents()
-	schemaLabel:SetPos(100,140)
+	schemaLabel:SetPos(w/1.25,124)
 
 	if schemaLabel:GetWide() > 300 then
-		schemaLabel:SetFont("Impulse-Elements27")
+		schemaLabel:SetFont("HatchetFont-Menu32")
 	end
 
 	--local newsLabel = vgui.Create("DLabel", self.core)
@@ -407,7 +406,16 @@ end
 
 
 function PANEL:Paint(w,h)
+	local gradient = Material("vgui/gradient_up")
+	local bottompart = Color(255, 136, 25)
+	local bodycol = Color(0,0,0)
 
+	surface.SetMaterial(gradient)
+	surface.SetDrawColor(bodycol)
+	surface.DrawTexturedRect(0, 2, w, 80)
+
+	surface.SetDrawColor(bottompart)
+	surface.DrawRect(0, 80, w, 2)
 end
 
 vgui.Register("impulseMainMenu", PANEL, "DPanel")
