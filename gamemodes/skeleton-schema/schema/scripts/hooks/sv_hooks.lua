@@ -1,4 +1,5 @@
 	--reloadmarker, make changes here then save to lua refr
+
 	function SCHEMA:PlayerSpawn(ply)
 		ply.NextHurtSound = CurTime()
 		ply.TimesDamagedCool = CurTime()
@@ -21,7 +22,6 @@
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 	end
-
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
 		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
@@ -390,3 +390,41 @@
 			return true
 		end
 	end)
+end
+
+local function callhookremoval()
+	hook.Add("CreateEntityRagdoll", "ZomficiationRadgollRemoval", function(owner, rdg)
+		rdg:Remove()
+	end)
+end
+
+hook.Add("PlayerDeath", "ZombificationTransformer", function(victim, inflictor, attacker)
+	if attacker:GetClass() == "npc_headcrab" then
+		local headcrab = ents.Create("npc_zombie")
+		headcrab:SetPos(victim:GetPos())
+		headcrab:Spawn()
+
+		callhookremoval()
+
+		victim:EmitSound( "npc/zombie/zombie_voice_idle6.wav", 75, 100, 1, CHAN_AUTO )
+		victim:EmitSound( "npc/headcrab/headbite.wav", 75, 100, 1, CHAN_AUTO )
+
+		attacker:Remove()
+	end
+
+	if attacker:GetClass() == "npc_headcrab_fast" then
+		local headcrab = ents.Create("npc_fastzombie")
+		headcrab:SetPos(victim:GetPos())
+		headcrab:Spawn()
+
+		callhookremoval()
+
+		victim:EmitSound( "npc/fast_zombie/fz_alert_far1.wav", 75, 100, 1, CHAN_AUTO )
+		victim:EmitSound( "npc/headcrab/headbite.wav", 75, 100, 1, CHAN_AUTO )
+
+		attacker:Remove()
+	end
+
+	timer.Simple(1, function() hook.Remove("CreateEntityRagdoll", "ZomficiationRadgollRemoval") end)
+
+end)
