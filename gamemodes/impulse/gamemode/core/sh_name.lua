@@ -26,7 +26,7 @@ if SERVER then
 
 		hook.Run("PlayerDescChanged", self, self:Name(), desc)
 
-		self:SetSyncVar(SYNC_RPDESC, name, true)
+		self:SetSyncVar(SYNC_RPDESC, desc, true)
 	end
 
 	function meta:GetSavedRPName()
