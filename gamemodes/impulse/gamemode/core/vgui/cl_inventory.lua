@@ -265,7 +265,7 @@ function PANEL:Paint(w, h)
 	if impulse.GetSetting("perf_blur") == true then
 		impulse.blur(self, 4, 8, 255)
 	else
-		return
+		
 	end
 	if LocalPlayer():Team() != TEAM_DISPATCH then
 		local curhp = ""
