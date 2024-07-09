@@ -108,6 +108,10 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 	local plyGroup = ply:GetUserGroup()
 	local timestamp = math.floor(os.time())
 
+    local selfintroduce = {
+        [ply:SteamID()] = true,
+    }
+
 	local canUseName, filteredName = impulse.CanUseName(charName)
 
 	local canUseDesc, filteredDesc = impulse.CanUseDesc(charDesc)
@@ -153,6 +157,8 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 		insertQuery:Insert("skin", charSkin)
 		insertQuery:Insert("firstjoin", timestamp)
 		insertQuery:Insert("data", "[]")
+		insertQuery:Insert("recognizedata", util.TableToJSON(selfintroduce))
+		
 		insertQuery:Insert("skills", "[]")
 		insertQuery:Callback(function(result, status, lastID)
 			if IsValid(ply) then
@@ -170,6 +176,7 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 					model = charModel,
 					data = "[]",
 					skills = "[]",
+					recognizedata = util.TableToJSON(selfintroduce),
 					skin = charSkin,
 					firstjoin = timestamp
 				}
