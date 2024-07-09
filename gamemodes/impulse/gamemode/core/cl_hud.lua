@@ -154,6 +154,8 @@ local function DrawOverheadInfo(target, alpha)
 		draw.DrawText("Transhuman Arm Soldier", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif ( LocalPlayer():Team() == TEAM_CP and target:Team() == TEAM_CP ) or ( LocalPlayer():Team() == TEAM_OTA and target:Team() == TEAM_OTA ) then
 		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+	elseif target:Team() == TEAM_RESISTANCE and LocalPlayer():Team() == TEAM_CITIZEN or LocalPlayer():Team() == TEAM_WORKFORCE or LocalPlayer():Team() == TEAM_RESITANCE then
+		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == false) or target:Team() == TEAM_RESISTANCE then
 		draw.DrawText("", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == true) then
