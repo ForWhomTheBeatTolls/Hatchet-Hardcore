@@ -33,6 +33,8 @@ NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
 - Implement a temporary OS solution
 - Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
+- Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
+
 
 TO-DO LIST:
 -----------------------------------------------------
@@ -92,6 +94,9 @@ DONE LIST:
 -Add custom grenade entity
 -Changable carry weights
 -Improve CP name obfuscation
+-Add "Recognize" system
+-Add zombification
+-Dispatch role (Top-down lambda wars-esque gameplay)
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
@@ -99,15 +104,10 @@ WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Redesign player settings screen from the ground up
 - Fix bubble chat whisper not capitalizing correctly
-- Citizen terminals, will replace ATMs and will be a usefull way to get information of your character
 - remake player settings, turn it into a info\rule\page area.
 -Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
 -Add vortigaunts
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
--Dispatch role (Top-down lambda wars-esque gameplay)
-
--Add "Recognize" system
--Add zombification
 
 
 - Make Identity Changes by going on spawm and pressing a button on the main menu where you can change species (Dispatch, Vort, Citizen) and Your characters Model, Name, Description."
