@@ -2,6 +2,10 @@ resource.AddWorkshop("3010264401") -- Impulse: Enhanced framework Content
 
 DeriveGamemode("sandbox")
 
+AddCSLuaFile("imguilib/imgui.lua")
+--AddCSLuaFile("imguilib/imgui_nonperf.lua")
+
+
 MsgC(Color(83, 143, 239), '[impulse] Starting boot sequence...')
 
 print('\n\n\nCopyright (c) 2021 2i games (www.2i.games)')
