@@ -20,6 +20,7 @@ function GM:DatabaseConnected()
         sqlQuery:Create("skin", "tinyint") -- skin
         sqlQuery:Create("cosmetic", "longtext") -- cosmetic extra data
         sqlQuery:Create("data", "longtext") -- general data
+        sqlQuery:Create("recognizedata", "longtext") -- general data
         sqlQuery:Create("firstjoin", "int(11) unsigned NOT NULL") -- first join date
         sqlQuery:PrimaryKey("id")
     sqlQuery:Execute()
