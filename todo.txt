@@ -57,6 +57,7 @@ TO-DO LIST:
 -Figure out a way to incorporate grenades into the server
 -Brickbat?
 -Bleeding ( Community requested (73% of voters) )
+-Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 
 
 DONE LIST:
