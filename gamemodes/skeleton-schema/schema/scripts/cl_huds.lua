@@ -138,14 +138,16 @@ function InitializeHuds()
 
 		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
-		if IsValid(weapon) then
-			if weapon:Clip1() < 1 then
+		if IsValid(weapon) then    
+			if weapon:Clip1() == 0 then
 				ammocounter = "Empty"
-			elseif weapon:Clip1() < weapon:GetMaxClip1() / 2.7 then
+			elseif weapon:Clip1() <= ( (weapon:GetMaxClip1() / 2) - 3 ) then
 				ammocounter = "Near Empty"
-			elseif weapon:Clip1() < weapon:GetMaxClip1() / 1 then
+			elseif weapon:Clip1() < (weapon:GetMaxClip1()) and weapon:Clip1() >= ( (weapon:GetMaxClip1() / 2) + 3 ) then
 				ammocounter = "Near Full"
-			elseif weapon:Clip1() < weapon:GetMaxClip1() + 1 then
+           	 	elseif weapon:Clip1() > ( (weapon:GetMaxClip1() / 2) - 3 ) and weapon:Clip1() < ( (weapon:GetMaxClip1() / 2) + 3 ) then
+                		ammocounter = "Around Half"
+			elseif weapon:Clip1() == weapon:GetMaxClip1() then
 				ammocounter = "Full"
 			end
 
