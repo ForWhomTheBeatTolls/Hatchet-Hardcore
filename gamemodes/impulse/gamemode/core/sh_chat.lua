@@ -592,13 +592,6 @@ if CLIENT then
 			chat.AddText(speaker, talkCol, " says: ", message)
 		end
 
-		//LocalPlayer():IsCP() and !speaker:IsCP() and (speaker:GetNWInt("Applied") == false) or speaker:Team() == TEAM_RESISTANCE
-		-- chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		-- chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		-- chat.AddText(speaker, talkCol, " says: ", message)
-
-		chat.AddText("", talkCol, "", speaker:GetNWInt("Applied"))
-
 	end)
 
 	local strFind = string.find
