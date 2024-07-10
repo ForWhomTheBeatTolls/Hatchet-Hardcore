@@ -352,41 +352,36 @@
 
 	surface.CreateFont("BubbleChat-Talk", {
 		font = "Arial",
-		size = 32,
-		weight = 200,
-		blursize = 1,
-		scanlines = 3,
+		size = 28,
+		weight = 600,
 		antialias = true
 	} )
 
 	surface.CreateFont("BubbleChat-Yell", {
 		font = "Arial",
-		size = 42,
-		weight = 200,
-		blursize = 1,
-		scanlines = 3,
-		antialias = true
+		size = 34,
+		weight = 300,
+		antialias = true,
+		italic = true
+
 	} )
 
 	surface.CreateFont("BubbleChat-Me", {
 		font = "Arial",
-		size = 32,
-		weight = 200,
-		blursize = 1,
-		italic = true,
-		scanlines = 3,
-		antialias = true
+		size = 28,
+		weight = 400,
+		antialias = true,
+		italic = true
 	} )
 
 	surface.CreateFont("BubbleChat-Whisper", {
 		font = "Arial",
-		size = 20,
-		weight = 200,
-		blursize = 0.2,
-		italic = true,
-		scanlines = 3,
+		size = 28,
+		weight = 100,
 		antialias = true
 	} )
+
+	
 
 
 	hook.Run("PostLoadFonts")
