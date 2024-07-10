@@ -30,6 +30,7 @@ function GM:PlayerInitialSpawn(ply)
 	query:Select("model")
 	query:Select("skin")
 	query:Select("data")
+	query:Select("recognizedata")
 	query:Select("skills")
 	query:Select("ammo")
 	query:Select("firstjoin")
@@ -296,6 +297,7 @@ function impulse.SetupPlayer(ply, dbData)
 	ply:SetSyncVar(SYNC_XP, dbData.xp, true)
 	ply:SetSyncVar(SYNC_KILLS, dbData.kills, true)
 	ply:SetSyncVar(SYNC_RANKPOINTS, dbData.rankpoints, true)
+	ply:SetSyncVar(SYNC_RECOGNIZES, dbData.recognizedata, true)
 
 	ply:SetLocalSyncVar(SYNC_MONEY, dbData.money)
 	ply:SetLocalSyncVar(SYNC_BANKMONEY, dbData.bankmoney)
@@ -364,6 +366,7 @@ function impulse.SetupPlayer(ply, dbData)
 	ply.defaultRPDesc = dbData.rpdesc
 	ply.defaultKills = dbData.kills
 	ply.defaultrankpoints = dbData.rankpoints
+	ply.defaultrecognizedata = dbData.recognizedata
 	ply:UpdateDefaultModelSkin()
 	
 	--ply:SetFOV(100, 0)
