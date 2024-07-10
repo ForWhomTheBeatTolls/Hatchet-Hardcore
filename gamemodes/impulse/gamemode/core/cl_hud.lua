@@ -126,54 +126,17 @@ local function DrawOverheadInfo(target, alpha)
 		draw.DrawText(group .. " - " .. rank, "Impulse-Elements16-Shadow", pos.x, pos.y - 15, ColorAlpha(hotPink, alpha), 1)
 	end
 
-	-- if (LocalPlayer():Team() == target:Team()) or (LocalPlayer():IsCP() and !target:IsCP() and not target:Team() == TEAM_RESISTANCE) then
-	-- 	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	-- elseif target:Team() == TEAM_CP and LocalPlayer():Team() != TEAM_CP then
-	-- 	draw.DrawText("Civil Protection", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	-- elseif (target:Team() == TEAM_OTA) and (LocalPlayer():Team() ==  TEAM_CP) then
-	-- 	draw.DrawText("TRANSHUMAN ARM | KEEP DISTANCE", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	-- elseif (target:Team() == TEAM_OTA) and (target:Team() != LocalPlayer():Team()) and (LocalPlayer():IsCP() == false) then
-	-- 	draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	-- elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == true) and (target:Team() != TEAM_RESISTANCE) then
-	-- 	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
-	-- elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == false) or (target:Team() == TEAM_RESISTANCE) then
-	-- 	draw.DrawText(" ", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(125, 161, 208), 1)
-	-- else
-	-- 	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	-- end
-
-	// keep this here for now
-
 	local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
 
-	if not recognizecheck[target:SteamID()] and target:Team() != TEAM_CP and target:Team() != TEAM_OTA then
+	if not recognizecheck[target:SteamID()] and !LocalPlayer():IsCP() then
 		draw.DrawText("Unknown", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif target:Team() == TEAM_CP and LocalPlayer():Team() != TEAM_CP then
-		draw.DrawText("Civil Protection", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif target:Team() == TEAM_OTA and LocalPlayer():Team() != TEAM_OTA then
-		draw.DrawText("Transhuman Arm Soldier", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif ( LocalPlayer():Team() == TEAM_CP and target:Team() == TEAM_CP ) or ( LocalPlayer():Team() == TEAM_OTA and target:Team() == TEAM_OTA ) then
+	elseif recognizecheck[target:SteamID()] and LocalPlayer():IsCP() then
 		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif target:Team() == TEAM_RESISTANCE and LocalPlayer():Team() == TEAM_CITIZEN or LocalPlayer():Team() == TEAM_WORKFORCE or LocalPlayer():Team() == TEAM_RESITANCE then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == false) or target:Team() == TEAM_RESISTANCE then
+	elseif LocalPlayer():IsCP() and target:GetNWInt("Applied") == false and !target:IsCP() or target:Team() == TEAM_RESISTANCE then
 		draw.DrawText("", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif LocalPlayer():Team() == TEAM_CP and (target:GetNWInt("Applied") == true) then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif LocalPlayer():Team() == TEAM_OTA and (target:GetNWInt("Applied") == false) then
-		draw.DrawText("", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
-	elseif LocalPlayer():Team() == TEAM_OTA and (target:GetNWInt("Applied") == true) then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	else
 		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	end
-
-	-- if target:GetNWInt("Applied") == true then
-	-- 	print("true")
-	-- else
-	-- 	print("false")
-	-- end
-
 
 	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then
 		draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1)
@@ -184,7 +147,7 @@ local function DrawOverheadInfo(target, alpha)
 	// Optimization, maybe? this will not draw the text if the player decided not to have a description
 	if string.len(desc) == 0 then
 		return
-	else	
+	else
 		draw.DrawText("[ "..desc.." ]", "HatchetFont-PlayerInfo", pos.x, pos.y + 18, ColorAlpha(Color(255, 230, 190), alpha), 1)
 	end
 end
