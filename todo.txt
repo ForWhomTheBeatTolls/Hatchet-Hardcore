@@ -98,13 +98,14 @@ DONE LIST:
 -Add "Recognize" system
 -Add zombification
 -Dispatch role (Top-down lambda wars-esque gameplay)
+- Fix bubble chat whisper not capitalizing correctly
+
 
 
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 ------------------------
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Redesign player settings screen from the ground up
-- Fix bubble chat whisper not capitalizing correctly
 - remake player settings, turn it into a info\rule\page area.
 -Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
 -Add vortigaunts
