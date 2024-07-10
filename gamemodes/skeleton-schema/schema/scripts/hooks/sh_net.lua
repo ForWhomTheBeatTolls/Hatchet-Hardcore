@@ -21,7 +21,7 @@ net.Receive("HatchetBubbleChatCall", function()
 		msg = ("[ID] "..sender:Nick().." | "..team)
 	elseif string.StartsWith(msg, "apply") and team == " " then
 		msg = ""
-	end
+	end 
 
     local textPos = 1
 	local pos
@@ -42,11 +42,11 @@ net.Receive("HatchetBubbleChatCall", function()
                     if string.len(msg) > 1 and font != "BubbleChat-Me" then
                         sender:EmitSound("vo/npc/male01/answer"..math.random(10,40)..".wav", 10, 100, 0.0001, CHAN_VOICE)
                         if sender:Team() == TEAM_CITIZEN or sender:Team() == TEAM_RESISTANCE or sender:Team() == TEAM_WORKFORCE then
-                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 80, 1)
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 80, .2)
                         elseif sender:Team() == TEAM_CP then
-                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 50, 1)
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 50, .2)
                         elseif sender:Team() == TEAM_OTA then
-                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 40, 1)
+                            sender:EmitSound("hatchet/buttonrollover.wav", 100, 40, .2)
                         end
                     end
                 end
