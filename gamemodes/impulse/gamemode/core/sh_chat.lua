@@ -552,7 +552,7 @@ if CLIENT then
 	local radioCol = Color(65, 120, 200)
 	local pmCol = Color(45, 154, 6)
 	local advertCol = Color(255, 174, 66)
-	local acCol = Color(0, 235, 0, 255)
+	local acCol = Color(152, 255, 42)
 	local eventCol = Color(255, 69, 0)
 	local fallbackRankCol = Color(211, 211, 211)
 	local groupCol = Color(148, 0, 211)
@@ -578,25 +578,27 @@ if CLIENT then
 			chatdesc = "An unknown person stands before you."
 		end
 
+
 		impulse.customChatFont = "Impulse-ChatMedium"
 
-		if not recognizecheck[speaker:SteamID()] or speaker:Team() == TEAM_CP or speaker:Team() == TEAM_OTA then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == true) then
+
+		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
+			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
+		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == false) then
+		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(speaker, talkCol, " says: ", message)
 		else
 			chat.AddText(speaker, talkCol, " says: ", message)
 		end
+
+		//LocalPlayer():IsCP() and !speaker:IsCP() and (speaker:GetNWInt("Applied") == false) or speaker:Team() == TEAM_RESISTANCE
+		-- chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
+		-- chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
+		-- chat.AddText(speaker, talkCol, " says: ", message)
+
+		chat.AddText("", talkCol, "", speaker:GetNWInt("Applied"))
+
 	end)
 
 	local strFind = string.find
@@ -664,20 +666,12 @@ if CLIENT then
 
 		impulse.customChatFont = "Impulse-ChatMedium"
 
-		if not recognizecheck[speaker:SteamID()] or speaker:Team() == TEAM_CP or speaker:Team() == TEAM_OTA then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == true) then
+		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
+			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
+		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == false) then
+		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(speaker, yellCol, " yells: ", message)
 		else
 			chat.AddText(speaker, yellCol, " yells: ", message)
 		end
@@ -701,20 +695,12 @@ if CLIENT then
 
 		impulse.customChatFont = "Impulse-ChatSmall"
 
-		if not recognizecheck[speaker:SteamID()] or speaker:Team() == TEAM_CP or speaker:Team() == TEAM_OTA then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == true) then
+		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
+			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
+		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == false) then
+		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(speaker, whisperCol, " whispers: ", message)
 		else
 			chat.AddText(speaker, whisperCol, " whispers: ", message)
 		end
@@ -740,22 +726,13 @@ if CLIENT then
 			chatdesc = "An unknown person stands before you."
 		end
 		
-		-- chat.AddText(talkCol, speaker:KnownName(), " ", message)
-
-		if not recognizecheck[speaker:SteamID()] or speaker:Team() == TEAM_CP or speaker:Team() == TEAM_OTA then
+		
+		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and speaker:Team() == TEAM_RESISTANCE then
+		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and speaker:Team() == TEAM_RESISTANCE then
+		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(talkCol, speaker:KnownName(), " ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(talkCol, speaker:KnownName(), " ", message)
 		else
 			chat.AddText(talkCol, speaker:KnownName(), " ", message)
 		end
@@ -780,20 +757,12 @@ if CLIENT then
 			chatdesc = "An unknown person stands before you."
 		end
 
-		if not recognizecheck[speaker:SteamID()] or speaker:Team() == TEAM_CP or speaker:Team() == TEAM_OTA then
-			chat.AddText(Color(112, 112, 112), "[ "..chatdesc.." ]", yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ "..chatdesc.." ]", yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ "..chatdesc.." ]", yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(Color(112, 112, 112), "[ "..chatdesc.." ]", yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_CP and (speaker:GetNWInt("Applied") == true) then
+		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
+			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " rolled ", message)
+		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == false) then
-			chat.AddText(Color(112, 112, 112), "[ "..chatdesc.." ]", yellCol, " rolled ", message)
-		elseif LocalPlayer():Team() == TEAM_OTA and (speaker:GetNWInt("Applied") == true) then
-			chat.AddText(speaker, yellCol, " rolled ", message)
+		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
+			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " rolled ", message)
 		else
 			chat.AddText(speaker, yellCol, " rolled ", message)
 		end
@@ -841,11 +810,11 @@ if CLIENT then
 	end) // connect
 
 	impulse.RegisterChatClass(18, function(message, speaker)
-		chat.AddText(Color(223, 50, 50), "[-] ", message)
+		chat.AddText(Color(209, 66, 66), "[-] ", message)
 	end) // disconnect 
 
 	impulse.RegisterChatClass(19, function(message, speaker)
-		chat.AddText(Color(187, 255, 0), "[!] ", message)
+		chat.AddText(Color(255, 72, 0), "[!] ", message)
 	end) // punishment and announcement (kick, ban, mute)
 	
 	impulse.RegisterChatClass(20, function(message, speaker) -- APPLY / ID CHAT MESSAGE
