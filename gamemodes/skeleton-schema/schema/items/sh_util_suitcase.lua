@@ -21,6 +21,23 @@ ITEM.Equipable = true
 ITEM.EquipGroup = "primary"
 ITEM.CanStack = false
 
-ITEM.WeaponClass = "ls_suitcase"
+function ITEM:CanEquip(ply)
+
+	return not ply:IsCP()
+
+end
+
+function ITEM:OnEquip(ply)
+	if ply:IsFemale() then
+        ply:Give("ls_femalesuitcase")
+    else
+        ply:Give("ls_suitcase")
+    end
+end
+
+function ITEM:UnEquip(ply)
+    ply:StripWeapon("ls_suitcase")
+    ply:StripWeapon("ls_femalesuitcase")
+end
 
 impulse.RegisterItem(ITEM)
