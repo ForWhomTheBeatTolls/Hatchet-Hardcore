@@ -169,7 +169,6 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		else
 			text = string.upper(text)..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), "!")
 		end
-		print(text)
 		msg = string.Replace(text, "/Y", "")
 		if sender:Team() == TEAM_RESISTANCE then
 		color = Color(255, 38, 0)
@@ -180,9 +179,9 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		chatradius = impulse.Config.YellDistance
 	elseif string.StartsWith(text, "/w") then
 		if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
-			text = string.upper(text)..string.Left(text, string.len(text) - 3)
+			text = string.upper( string.Left(text, 4) ) .. string.lower(string.Right(text, string.len(text) - 4))
 		else
-			text = string.upper(text)..string.Replace(string.Right( text, 1 ), string.Right( text, 1 ), ".")
+			text = string.upper( string.Left(text, 4) ) .. string.lower(string.Right(text, string.len(text) - 4)) .. string.Replace(string.Right(text, 1), string.Right(text, 1), ".")
 		end
 		msg = string.Replace(text, "/W", "")
 		if sender:Team() == TEAM_RESISTANCE then
@@ -195,6 +194,8 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 	elseif string.StartsWith(text, "/apply") then
 		chatradius = impulse.Config.TalkDistance
 		msg = text
+	elseif string.StartsWith(text, ".") then
+		msg = ""
 	else
 		if string.len(text) != 1 then
 			if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
