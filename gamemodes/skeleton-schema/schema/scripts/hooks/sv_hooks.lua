@@ -23,17 +23,6 @@
 		ply:RemoveAllDecals()
 	end
 
-	hook.Add("EntityTakeDamage", "HatchetDamage", function(ent, dmg)
-		if ent:IsPlayer() and dmg:GetAttacker():IsPlayer() then
-			if ent:GetActiveWeapon():GetClass() == "ls_unarmed" and dmg:GetAttacker():GetActiveWeapon():GetClass() == "ls_unarmed" then
-				if ent:KeyDown(IN_ATTACK2) == true then
-					dmg:SetDamage(0)
-				end
-			end
-		end
-	end)
-
-
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
 		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
 
