@@ -144,7 +144,7 @@ impulse.RegisterChatCommand("/introducewhisper", WhisperRecognitionCore)
 
 local dwad = {
     description = " resets ur introduction (temp com for testing)",
-    adminOnly = false,
+    adminOnly = true,
     onRun = function(ply, arg, rawText)
         local selfintroduce = {
             [ply:SteamID()] = true,
@@ -162,3 +162,35 @@ local dwad = {
 
 impulse.RegisterChatCommand("/introducereset", dwad)
 
+hook.Add("PlayerSay", "RecognizeSystemNameCheck", function(sender, text, teamChat)
+    
+    if string.find(string.lower(text), string.lower(sender:Nick())) then
+    	for v,k in pairs(player.GetAll()) do
+            if (sender:GetPos() - k:GetPos()):LengthSqr() <= (impulse.Config.TalkDistance ^ 2) then
+                local tabl = util.JSONToTable(k:GetSyncVar(SYNC_RECOGNIZES))
+
+                if k:SteamID() == sender:SteamID() then continue end
+
+                if k:IsCP() then return end
+
+                if tabl[sender:SteamID()] then
+                    return
+                else
+
+                    AddIntroduction(sender, k)
+	
+                    if tabl[k:SteamID()] then
+                        sender:Notify( "You introduced yourself to " .. k:Name() .. "." )
+                        k:Notify(sender:Name() .. " Introduced himself to you.")
+                    else
+                        sender:Notify( "You introduced yourself to an unknown person." )
+                        k:Notify(sender:Name() .. " Introduced himself to you.")
+                    end
+                end
+
+
+            end
+        end
+    end
+    
+end)
