@@ -82,3 +82,13 @@
 		end
 		
 	end
+
+	hook.Add("EntityTakeDamage", "HatchetFFDamage", function(ent, dmg)
+		if ent:IsPlayer() and dmg:GetAttacker():IsPlayer() then
+			if ent:GetActiveWeapon():GetClass() == "ls_unarmed" and dmg:GetAttacker():GetActiveWeapon():GetClass() == "ls_unarmed" then
+				if ent:KeyDown(IN_ATTACK2) == true then
+					dmg:SetDamage(0)
+				end
+			end
+		end
+	end)
