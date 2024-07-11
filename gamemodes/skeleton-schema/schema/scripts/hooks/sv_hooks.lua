@@ -25,11 +25,12 @@
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
 		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
-
+		
 			if dmg:IsDamageType(DMG_NERVEGAS) then
 				ent:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
 			else
-
+			
+				
 				if ( ent:Team() == TEAM_CP ) and (ent:Health() > 1) then
 					ent:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
 				elseif ( ent:Team() == TEAM_OTA ) and (ent:Health() > 1) then
@@ -183,9 +184,11 @@
 
 		if oldTeam == TEAM_OTA then
 			ply:SetNWInt("CarryWeight", 25)
+		end
 		
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
-	 end
+		
+	end
 
 	function SCHEMA:PlayerShouldGetHungry(ply)
 		return ply:Team() != TEAM_OTA
@@ -389,7 +392,6 @@
 			return true
 		end
 	end)
-end
 
 local function callhookremoval()
 	hook.Add("CreateEntityRagdoll", "ZomficiationRadgollRemoval", function(owner, rdg)
