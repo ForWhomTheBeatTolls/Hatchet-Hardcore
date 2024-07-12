@@ -8,7 +8,7 @@ SWEP.Category = "Hatchet"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
-SWEP.HoldType = "grenade"
+SWEP.HoldType = "fist"
 
 SWEP.WorldModel = Model("")
 SWEP.ViewModel = Model("")
@@ -32,17 +32,27 @@ SWEP.Primary.Damage = 5 -- not used in this swep
 SWEP.Primary.NumShots = 1
 SWEP.Primary.HitDelay = 0.3
 SWEP.Primary.HullSize = 4
-SWEP.Primary.Delay = 1.4
+SWEP.Primary.Delay = 0.7
 SWEP.Primary.Range = 50
 SWEP.Primary.StunTime = 0.1
 SWEP.Primary.Automatic = true
 
+SWEP.BlockDelay = CurTime()
+
 function SWEP:PrimaryAttack()
+	
+	if self.Owner:KeyDown(IN_WALK) == true then
+		if SERVER then
+			KMCheck(self.Owner)
+		end
+	end
+		
+	
 	if self.PrePrimaryAttack then
 		self.PrePrimaryAttack(self)
 	end
 
-    if self.Owner:KeyDown(IN_ATTACK2) == true then
+    if self.Owner.IsBlocking then
         return
     end
 
@@ -71,9 +81,28 @@ function SWEP:PrimaryAttack()
 		"vo/npc/male01/upthere02.wav",
 		"vo/npc/male01/thehacks01.wav"
     }
-
-    self:EmitSound( sounds[math.random(1, #sounds)] )
-	self:EmitSound(self.Primary.Sound)
+	
+	local lsounds = {
+	"yakuza0/kiryu/attack_s1.wav",
+	"yakuza0/kiryu/attack_s2.wav",
+	"yakuza0/kiryu/attack_s3.wav"
+	}
+	
+	local msounds = {
+	"yakuza0/kiryu/attack_l1.wav",
+	"yakuza0/kiryu/attack_l2.wav",
+	"yakuza0/kiryu/attack_l3.wav"
+	}
+	
+	local swingsounds = {
+	"yakuza0/weapons/fists/swing1.wav",
+	"yakuza0/weapons/fists/swing2.wav",
+	"yakuza0/weapons/fists/swing3.wav",
+	"yakuza0/weapons/fists/swing4.wav"
+	}
+	
+    --self:EmitSound( sounds[math.random(1, #sounds)] )
+	self:EmitSound( swingsounds[math.random(1, #swingsounds)] )
 
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 
@@ -87,19 +116,27 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	if self.Owner:KeyDown(IN_ATTACK2) then
+	if self.Owner:KeyDown(IN_WALK) then
 		if SERVER then
-			self.Owner:Say("/me Blocks their arms!")
+			if self.BlockDelay < CurTime() then
+				self.Owner:Say("/me raises their guard.")
+				self.Owner.IsBlocking = true
+				self:EmitSound("physics/body/body_medium_impact_soft6.wav")
+			else
+				self.Owner:Notify("You must wait "..tostring(math.ceil(self.BlockDelay - CurTime())).." seconds before blocking again.")
+				self.Owner.IsBlocking = false
+			end
 		end
-		self:EmitSound("physics/body/body_medium_impact_soft6.wav")
 	end
 end
 
 function SWEP:Think()
-	if self.Owner:KeyReleased(IN_ATTACK2) == true then
-		if SERVER then
-			self.Owner:Say("/me UnBlocks their arms!")
+	if SERVER then
+		if (self.Owner:KeyReleased(IN_WALK) == true) and self.Owner.IsBlocking == true then
+			self.Owner:Say("/me lowers their guard.")
+			self.Owner.IsBlocking = false
+			self.BlockDelay = CurTime() + 4
+			self:EmitSound("physics/body/body_medium_impact_soft6.wav")
 		end
-		self:EmitSound("physics/body/body_medium_impact_soft6.wav")
 	end
 end
