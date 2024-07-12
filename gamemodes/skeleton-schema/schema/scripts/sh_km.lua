@@ -613,6 +613,15 @@ if SERVER then
 		target.kmModel:SetParent(target.kmAnim)
 		
 		--Play the KillMove animations 1 frame later to fix them not playing properly
+
+		timer.Simple(5, function()
+			if target:Health() < 1 then
+				target.KillMoved = true
+			else
+				target.KillMoved = false
+			end
+		end)
+		
 		timer.Simple(0, function()
 		
 			self.kmAnim:ResetSequence( animName )
@@ -676,6 +685,10 @@ if SERVER then
 									target:TakeDamageInfo( dmginfo )
 									
 									--timer.Simple(0, function() if target:Health() > 0 then target:Kill() end end)
+								else
+
+									target.KillMoved = true
+									
 								end
 							elseif target:IsNPC() or target:IsNextBot() then
 
