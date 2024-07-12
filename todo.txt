@@ -21,9 +21,8 @@ LEAVE IT FOR NOW:
 
 SCRAPPED / NEEDS REWORK:
 
--Add resistance and similar skills (Resistance skill is scrapped)
--Whitelist command (Using admin input instead)
-- Descriptions, make certain models have a forced description that you can add onto, for example: Male 04 having "A bald male......"
+- Add resistance and similar skills (Resistance skill is scrapped)
+- Inventory and ImpulseItem GUI (Something broke so im unable to get the items name when hovering it)
 
 ---------------------------------------------------------------------
 NEED TWEAKING IN CODING:
@@ -34,6 +33,7 @@ NEED TWEAKING IN DESIGN:
 - Implement a temporary OS solution
 - Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
 - Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
+- Make Identity Changes by going on spawm and pressing a button on the main menu where you can change species (Dispatch, Vort, Citizen) and Your characters Model, Name, Description."
 
 
 TO-DO LIST:
@@ -105,14 +105,11 @@ DONE LIST:
 WILLMASTER CODING SIDE (ON VACATION, WILL BE DELAYED):
 ------------------------
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
-- Redesign player settings screen from the ground up
 - remake player settings, turn it into a info\rule\page area.
--Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
+- Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
 -Add vortigaunts
+-Whitelist command (Using admin input instead)
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
-
-
-- Make Identity Changes by going on spawm and pressing a button on the main menu where you can change species (Dispatch, Vort, Citizen) and Your characters Model, Name, Description."
 
 MUHAMMED CODING SIDE:
 ------------------------
