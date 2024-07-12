@@ -22,6 +22,8 @@ local RecognitionCore = {
         local hitplayer = trace.Entity
         if trace.Hit and IsValid(trace.Entity) then
             AddIntroduction(ply, hitplayer)
+        else
+            return
         end
 
         local tabl = util.JSONToTable(ply:GetSyncVar(SYNC_RECOGNIZES))
