@@ -12,6 +12,7 @@
 		ply.CanCrouch = true
 		ply.CanJump = true
 		ply.Stunned = false
+		ply.KillMoved = false
 		ply.TimesDamaged = 0
 		ply.CombatCool = 0
 		ply.TimesStunned = 0
