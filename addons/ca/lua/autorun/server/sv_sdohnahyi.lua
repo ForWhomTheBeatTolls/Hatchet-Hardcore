@@ -431,7 +431,7 @@ end)
 hook.Add("CreateEntityRagdoll", "DeathAnimsBrutal", function(ent, rag)
 	local rtd = math.random(1, 100)
 	
-	if rtd > 20 and rag:GetOwner():GetVelocity():Length() <  700 then
+	if rtd > 20 and rag:GetOwner():GetVelocity():Length() < 700 and rag:GetOwner().KillMoved == false then
 
 	local ragCount = #ents.FindByClass("prop_ragdoll")
 
