@@ -10,7 +10,8 @@ SWEP.AdminOnly = false
 
 SWEP.HoldType = "suitcase"
 
-SWEP.WorldModel = Model("models/weapons/w_hatchetsuitcase.mdl")
+SWEP.WorldModel = Model("models/weapons/w_suitcase_passenger.mdl")
+
 SWEP.ViewModel = Model("models/weapons/c_crowbar.mdl")
 SWEP.ViewModelFOV = 65
 
