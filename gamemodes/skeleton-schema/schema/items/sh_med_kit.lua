@@ -28,7 +28,7 @@ ITEM.UseWorkBarSound = "items/smallmedkit1.wav"
 
 local increment = 1
 function ITEM:OnUse(ply, target)
-	if ply:Health() < ply:GetMaxHealth() then
+	if (ply:Health() < ply:GetMaxHealth()) or ply:GetNWInt("BleedRate") > 0 then
 	if timer.Exists(ply:EntIndex().."HealOverTime") then timer.Remove(ply:EntIndex().."HealOverTime") end
 	if timer.Exists(ply:EntIndex().."FoodPoisoning") then timer.Remove(ply:EntIndex().."FoodPoisoning") end
 	ply.FoodPoisoning = false
@@ -39,17 +39,19 @@ function ITEM:OnUse(ply, target)
 				increment = increment + 0.1
 			else
 				timer.Remove(ply:EntIndex().."HealOverTime")
+				ply.HealOverTime = false
 			end
 		end)
 	ply:Say("/me uses a Healthkit.")
+	timer.Simple(0.1, function() if IsValid(ply) then if ply:Health() > 100 then ply:SetHealth(100) end end end)
 	else
 	ply:Notify("You can't use this, for you are not harmed.")
 	return false
 	end
 	
-	if ply:GetSyncVar(SYNC_BLEEDING,false) then
-		ply:SetSyncVar(SYNC_BLEEDING,false,true)
-		ply:Notify("You have stopped the bleeding.")
+	if ply:GetNWInt("BleedRate") != 0 then
+		ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 5)
+		timer.Simple(0.1, function() if IsValid(ply) then if ply:GetNWInt("BleedRate") < 0 then ply:SetNWInt("BleedRate", 0) end end end)
 	end
 	
 	if ply:HasBrokenLegs() then
