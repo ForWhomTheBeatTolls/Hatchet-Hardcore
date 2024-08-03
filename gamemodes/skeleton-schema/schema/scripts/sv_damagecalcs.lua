@@ -81,11 +81,20 @@
 			dmginfo:ScaleDamage(0.55)
 		end
 		
+		---BLEED FUNCTIONS---
+		local rtd = math.random(1, 100)
+		if dmginfo:GetDamage() > 10 and dmginfo:GetAttacker() != ply then
+			if rtd > 15 then
+			ply:SetNWInt("BleedRate",  ply:GetNWInt("BleedRate") + (dmginfo:GetDamage() / 20))
+			ply.NextBleed = CurTime() + ( 7 - (0.5 * ply:GetNWInt("BleedRate")) )
+			end
+		end
+		
 	end
 
 	hook.Add("EntityTakeDamage", "HatchetFFDamage", function(ent, dmg)
 		if ent:IsPlayer() and dmg:GetAttacker():IsPlayer() then
-			if ply.IsBlocking == true then
+			if ent.IsBlocking == true then
 				dmg:SetDamage(dmg / 2.5)
 			end
 		end
