@@ -1,7 +1,23 @@
 function util.PaintDown(start, effname, ignore)
-	local btr = util.TraceLine({start=start, endpos=(start + Vector(0,0,-256)), mask=CONTENTS_SOLID})
 
-	util.Decal(effname, btr.HitPos+btr.HitNormal, btr.HitPos-btr.HitNormal)
+	local btr = util.TraceLine({
+	
+	start=start, 
+	endpos=(start + Vector(0,0,-456)),
+	filter = Entity(0)
+	--mask=CONTENTS_SOLID
+	})
+
+	util.Decal(effname, start, btr.HitPos)
+	
+end
+
+function util.GetPaintDownPos(start, effname, ignore)
+
+	local btr = util.TraceLine({start=start, endpos=(start + Vector(0,0,-256)), mask=CONTENTS_SOLID})
+	
+	return btr.HitPos-btr.HitNormal
+	
 end
 
 function corpsebleedttt(ent)
