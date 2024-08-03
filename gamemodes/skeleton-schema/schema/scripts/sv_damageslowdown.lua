@@ -31,6 +31,34 @@
 				end
 				
 			end
+			
+			---BLEED FUNCTIONS---
+			
+			if (ply:GetNWInt("BleedRate") > 0) and (ply.NextBleed < CurTime() or ply.NextBleed == nil) then
+				ply.NextBleed = CurTime() + ( 7 - (0.5 * ply:GetNWInt("BleedRate")) )
+				ply:TakeDamage(ply:GetNWInt("BleedRate") * 1.5)
+				util.PaintDown(ply:GetPos() - Vector(0,0,0.5), "Blood")
+				EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", ply:GetPos(), CHAN_AUTO, 0.75, 75, 0, math.random(75,100))
+				local rtd = math.random(1,10)
+				if rtd > 8 then
+					ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 0.35)
+				end
+				if ply:GetNWInt("BleedRate") > 5 then
+					ply:SetNWInt("BleedRate", 5)
+				end
+			end
+			
+			---EXTRA CHECKS---
+			
+			if ply:Health() > 100 and ply.HealOverTime == true then
+				ply:SetHealth(100)
+				ply.HealOverTime = false
+			end
+			
+			if ply.BleedRate < 0 then
+				ply.BleedRate = 0 
+			end
+			
 		end
 		
 		for _, ply in pairs(player.GetAll()) do
