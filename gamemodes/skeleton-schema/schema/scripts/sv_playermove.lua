@@ -38,11 +38,13 @@ hook.Add("SetupMove", "HatchetMovementRestrictFunctions", function(ply, mvd, cmd
 	end
 
 	if mvd:KeyDown(IN_SPEED) then
-		if ply:GetActiveWeapon():GetClass() == "ls_suitcase" or ply:GetActiveWeapon():GetClass() == "ls_femalesuitcase" then
-			if ply:IsWalking() then
-				mvd:SetForwardSpeed( impulse.Config.WalkSpeed )
-			else
-				mvd:SetForwardSpeed( 0 )
+		if ply:Alive() then
+			if ply:GetActiveWeapon():GetClass() == "ls_suitcase" or ply:GetActiveWeapon():GetClass() == "ls_femalesuitcase" then
+				if ply:IsWalking() then
+					mvd:SetForwardSpeed( impulse.Config.WalkSpeed )
+				else
+					mvd:SetForwardSpeed( 0 )
+				end
 			end
 		end
 	end
