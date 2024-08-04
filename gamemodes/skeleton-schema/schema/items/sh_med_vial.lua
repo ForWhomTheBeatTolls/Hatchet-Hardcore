@@ -50,7 +50,7 @@ function ITEM:OnUse(ply, target)
 	
 	if ply:GetNWInt("BleedRate") != 0 then
 		ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 2.5)
-		timer.Simple(0.1, function() if IsValid(ply) then if ply.BleedRate < 0 then ply:SetNWInt("BleedRate", 0) end end end)
+		timer.Simple(0.1, function() if IsValid(ply) then if ply:GetNWInt("BleedRate") < 0 then ply:SetNWInt("BleedRate", 0) end end end)
 	end
 	
 	if ply:HasBrokenLegs() then
