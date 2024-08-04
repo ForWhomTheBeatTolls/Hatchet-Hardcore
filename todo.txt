@@ -99,7 +99,8 @@ DONE LIST:
 -Add "Recognize" system
 -Add zombification
 -Dispatch role (Top-down lambda wars-esque gameplay)
-- Fix bubble chat whisper not capitalizing correctly
+-Fix bubble chat whisper not capitalizing correctly
+-Add ankle twisting (anti crouch spam)
 
 
 
@@ -116,7 +117,5 @@ MUHAMMED CODING SIDE:
 ------------------------
 -Add workforce entities (This is mainly about the minigame system)
 -people name hides when you wear the mask
--Add ankle twisting (anti crouch spam)
 -Add handcuffs SWEP
-
 
