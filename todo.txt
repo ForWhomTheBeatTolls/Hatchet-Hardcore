@@ -56,13 +56,14 @@ TO-DO LIST:
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 -Figure out a way to incorporate grenades into the server
 -Brickbat?
--Bleeding ( Community requested (73% of voters) )
 -Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
+-Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 
 
 DONE LIST:
 ---------------------
 
+-Bleeding ( Community requested (73% of voters) )
 -Ambience Color and make it toggleable
 -Make a Vitality statistic
 -Make Vitality a constantly decreasing skill [Technically??]
