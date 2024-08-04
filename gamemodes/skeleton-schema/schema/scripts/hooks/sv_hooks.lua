@@ -6,26 +6,30 @@
 		ply.TimesStunnedCool = CurTime()
 		ply:SetNWInt("CombatCool", CurTime())
 		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
-		ply.IsInASequence = false
 		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
-		ply.CanCrouch = true
-		ply.CanJump = true
+		ply:SetNWInt("CarryWeight", 25)
+		ply.IsInASequence = false
+		ply.FoodPoisoning = false
 		ply.Stunned = false
 		ply.KillMoved = false
+		ply.HealOverTime = false
+		ply.CanCrouch = true
+		ply.CanJump = true
+		ply.Bleeding = false
+		ply:SetNWInt("BleedRate", 0)
+		ply.NextBleed = CurTime()
 		ply.TimesDamaged = 0
 		ply.CombatCool = 0
 		ply.TimesStunned = 0
-		ply:SetNWInt("CarryWeight", 25)
-		ply.FoodPoisoning = false
+		ply.CrouchCount = 0
 		ply.PendingReward = ply.PendingReward or 0
-		ply.HealOverTime = false
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 	end
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
-		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
+		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() and dmg:GetDamage() > 10 then
 		
 			if dmg:IsDamageType(DMG_NERVEGAS) then
 				ent:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
@@ -401,6 +405,9 @@ local function callhookremoval()
 end
 
 hook.Add("PlayerDeath", "ZombificationTransformer", function(victim, inflictor, attacker)
+	if not IsValid(attacker) then return end
+	if not IsValid(victim) then return end
+	
 	if attacker:GetClass() == "npc_headcrab" then
 		local headcrab = ents.Create("npc_zombie")
 		headcrab:SetPos(victim:GetPos())
