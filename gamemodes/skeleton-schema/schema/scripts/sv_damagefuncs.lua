@@ -34,11 +34,18 @@
 			
 			---BLEED FUNCTIONS---
 			
-			if (ply:GetNWInt("BleedRate") > 0) and (ply.NextBleed < CurTime() or ply.NextBleed == nil) then
+			
+			if (ply:GetNWInt("BleedRate") > 0) and (ply.NextBleed < CurTime() or ply.NextBleed == nil) and ply:Alive() then
 				ply.NextBleed = CurTime() + ( 7 - (0.5 * ply:GetNWInt("BleedRate")) )
-				ply:TakeDamage(ply:GetNWInt("BleedRate") * 1.5)
-				util.PaintDown(ply:GetPos() - Vector(0,0,0.5), "Blood")
-				EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", ply:GetPos(), CHAN_AUTO, 0.75, 75, 0, math.random(75,100))
+				local bleeddmg = DamageInfo()
+				bleeddmg:SetDamage(ply:GetNWInt("BleedRate") * 1.5)
+				bleeddmg:SetAttacker( ply )
+				bleeddmg:SetInflictor( Entity(0) )
+				bleeddmg:SetDamageType( DMG_DIRECT )
+				ply:TakeDamageInfo(bleeddmg)
+				ply:SetViewPunchAngles( Angle(0,0,0) )
+				util.PaintDown(ply:GetPos() - Vector( math.random(-15,15) , math.random(-15,15) , 0.5 ), "Blood")
+				ply:EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", 65, math.random(45,80), 0.7, CHAN_AUTO)
 				local rtd = math.random(1,10)
 				if rtd > 8 then
 					ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 0.35)
@@ -55,8 +62,8 @@
 				ply.HealOverTime = false
 			end
 			
-			if ply.BleedRate < 0 then
-				ply.BleedRate = 0 
+			if ply:GetNWInt("BleedRate") < 0 then
+				ply:SetNWInt("BleedRate", 0)
 			end
 			
 		end
@@ -75,6 +82,10 @@
 					ply.TimesDamagedCool = ply.TimesDamagedCool + 0.8
 				else
 					ply.TimesDamagedCool = CurTime() + 0.8
+				end
+				
+				if ply.CrouchCount > 0 then
+					ply.CrouchCount = ply.CrouchCount - 1
 				end
 				
 			end
