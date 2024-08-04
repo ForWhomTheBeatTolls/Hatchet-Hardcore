@@ -101,6 +101,7 @@ DONE LIST:
 -Dispatch role (Top-down lambda wars-esque gameplay)
 -Fix bubble chat whisper not capitalizing correctly
 -Add ankle twisting (anti crouch spam)
+-Add handcuffs SWEP
 
 
 
@@ -117,5 +118,4 @@ MUHAMMED CODING SIDE:
 ------------------------
 -Add workforce entities (This is mainly about the minigame system)
 -people name hides when you wear the mask
--Add handcuffs SWEP
 
