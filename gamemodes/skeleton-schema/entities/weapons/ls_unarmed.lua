@@ -39,7 +39,27 @@ SWEP.Primary.Automatic = true
 
 SWEP.BlockDelay = CurTime()
 
+function SWEP:CanPrimaryAttack()
+	
+	if self:GetNextPrimaryFire() > CurTime() then
+		return false
+	elseif self.Owner.IsBlocking == true then
+		return false
+	end
+	
+	return true
+	
+end
+
 function SWEP:PrimaryAttack()
+	
+	if self:CanPrimaryAttack() then
+	
+	self:ShootEffects()
+	
+	if self.Owner.IsBlocking then
+        return
+    end
 	
 	if self.Owner:KeyDown(IN_WALK) == true then
 		if SERVER then
@@ -51,10 +71,6 @@ function SWEP:PrimaryAttack()
 	if self.PrePrimaryAttack then
 		self.PrePrimaryAttack(self)
 	end
-
-    if self.Owner.IsBlocking then
-        return
-    end
 
 	if self.Primary.HitDelay then
 		timer.Simple(self.Primary.HitDelay, function()
@@ -105,6 +121,12 @@ function SWEP:PrimaryAttack()
 	self:EmitSound( swingsounds[math.random(1, #swingsounds)] )
 
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
+	
+end
+
+end
+
+function SWEP:ShootEffects()
 
 	if self.DoFireAnim then
 		self:PlayAnim(ACT_VM_PRIMARYATTACK)
@@ -113,9 +135,15 @@ function SWEP:PrimaryAttack()
 	end
 	
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
+	
 end
 
 function SWEP:SecondaryAttack()
+	
+	if !self.Owner:KeyDown(IN_WALK) and self:GetNextPrimaryFire() < CurTime() then
+		self:PrimaryAttack()
+	end
+	
 	if self.Owner:KeyDown(IN_WALK) then
 		if SERVER then
 			if self.BlockDelay < CurTime() then
