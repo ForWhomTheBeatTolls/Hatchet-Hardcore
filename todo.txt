@@ -55,6 +55,7 @@ TO-DO LIST:
 -Brickbat?
 -Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 -Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
+-Fix impulse_hands not being able to pick up items that the player can't collide with
 
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 ------------------------
