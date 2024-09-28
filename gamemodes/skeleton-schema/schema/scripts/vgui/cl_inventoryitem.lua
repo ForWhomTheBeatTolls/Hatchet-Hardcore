@@ -101,9 +101,9 @@ function PANEL:SetItem(netitem, wide)
 			end
 
 			if panel.IsRestricted or panel.Item.Illegal then
-				self:SetPos(42 + wShift, 28)
+				self:SetPos(212 + wShift, 2)
 			else
-				self:SetPos(42 + wShift, 38)
+				self:SetPos(212 + wShift, 2)
 			end
 		end
 	end
@@ -114,12 +114,12 @@ function PANEL:SetItem(netitem, wide)
 
 	if self.IsRestricted then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(6, 6)
+		self.tip:SetPos(216, 65)
 		self.tip:SetSize(14, 14)
 		self.tip:SetImage(restrictedMat)
 	elseif self.Item.Illegal then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(232, 5)
+		self.tip:SetPos(232, 65)
 		self.tip:SetSize(14, 14)
 		self.tip:SetImage(illegalMat)
 	end
