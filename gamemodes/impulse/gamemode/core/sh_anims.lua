@@ -404,7 +404,7 @@ impulse.Anim.vort = {
 		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN}
 	},
 	shotgun = {
-		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE},
+		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE_ANGRY},
 		[ACT_MP_CROUCH_IDLE] = {"crouchidle", "crouchidle"},
 		[ACT_MP_WALK] = {ACT_WALK, ACT_WALK},
 		[ACT_MP_CROUCHWALK] = {ACT_WALK, ACT_WALK},
