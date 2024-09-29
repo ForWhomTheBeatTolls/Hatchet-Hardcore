@@ -178,6 +178,7 @@ hook.Add("PlayerSay", "NetCallerifSpeak", function(sender, text, teamchat)
 		font = "BubbleChat-Yell"
 		chatradius = impulse.Config.YellDistance
 	elseif string.StartsWith(text, "/w") then
+		if string.len(text) <= 4 then return end
 		if string.EndsWith( text, "." ) or string.EndsWith( text, "?" ) or string.EndsWith( text, "!" ) then
 			text = string.upper( string.Left(text, 4) ) .. string.lower(string.Right(text, string.len(text) - 4))
 		else
