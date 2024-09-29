@@ -247,6 +247,11 @@ function PANEL:OnMousePressed(keycode)
 
 					if self.Item.UseWorkBarSound then
 						surface.PlaySound(self.Item.UseWorkBarSound)
+						timer.Simple(self.Item.UseWorkBarTime, function() surface.PlaySound("null.wav") end)
+					end
+					
+					if self.Item.UseWorkBarSoundLooping then
+						timer.Simple(self.Item.UseWorkBarTime, function() print("gaaah") surface.PlaySound("null.wav") end)
 					end
 
 					impulse.MakeWorkbar(self.Item.UseWorkBarTime, self.Item.UseWorkBarName or "Using...", function()
