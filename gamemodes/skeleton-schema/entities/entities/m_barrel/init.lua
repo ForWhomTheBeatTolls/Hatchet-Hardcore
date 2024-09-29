@@ -50,10 +50,10 @@ function ENT:Boom()
 	explode:SetKeyValue("iMagnitude", "0")
 	explode:SetKeyValue("DamageForce", "380")
 	explode:Fire( "Explode", 0, 0 )
-	for k,v in pairs(ents.FindInSphere(explode:GetPos(), 404)) do
+	for k,v in pairs(ents.FindInSphere(explode:GetPos(), 904)) do
 		
 		local center = self:GetPos()
-		local r = 494 ^ 2
+		local r = 894 ^ 2
 		local d = 0.0
 		local diff = nil 
 		local dmg = 0
@@ -64,7 +64,7 @@ function ENT:Boom()
 			d = diff:Dot(diff)
 			
 			d = math.max(0 , math.sqrt(d) - 190)
-			dmg = -0.01 * (d^2) + 125
+			dmg = -0.3 * (d^2) + 150
 			
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage(dmg)
@@ -72,7 +72,9 @@ function ENT:Boom()
 			dmginfo:SetInflictor(self)
 			dmginfo:SetDamagePosition(self:GetPos())
 			
+			v.Dmg = "Explosion"
 			v:TakeDamageInfo(dmginfo)
+			
 			
 			v:ViewPunch(Angle(math.random(-50, 50),  math.random(-50, 50),  math.random(-50, 50)))
 		
