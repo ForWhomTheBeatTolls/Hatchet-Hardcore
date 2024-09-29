@@ -744,6 +744,7 @@ hook.Add("CreateEntityRagdoll", "Animrag_CreateEntityRagdoll_D", function(ONPC, 
 	end
 
 	Animrag_StartDeathAnimation(ONPC, Orgn_Rag)
+	Orgn_Rag:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 end)
 
 
@@ -935,6 +936,7 @@ hook.Add("DoPlayerDeath", "Animrag_PlayerDeath_D", function(ply)
 		NewRag:SetAngles(ply:GetAngles())
 		NewRag:Spawn()
 		NewRag:Activate()
+		NewRag:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
 
 		for i = 0, NewRag:GetPhysicsObjectCount() - 1 do
 			local NewPhyBone = NewRag:GetPhysicsObjectNum( i )
@@ -947,6 +949,14 @@ hook.Add("DoPlayerDeath", "Animrag_PlayerDeath_D", function(ply)
 		end
 
 		Animrag_StartDeathAnimation(ply, NewRag)
+		
+		local ragCount = #ents.FindByClass("prop_ragdoll")
+
+	if ragCount > 24 then
+		print("[impulse] Avoiding ragdoll body spawn for performance reasons... (rag count: "..ragCount..")")
+		NewRag:Remove()
+	end
+		
 	end
 end)
 
