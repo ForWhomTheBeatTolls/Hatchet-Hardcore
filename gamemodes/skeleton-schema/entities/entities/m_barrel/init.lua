@@ -80,26 +80,27 @@ function ENT:Boom()
 		
 		end
 		
-		if v:IsLineOfSightClear(self) and v:GetClass() == "impulse_item" then
+		-- if v:IsLineOfSightClear(self) and v:IsPlayer() == false and v:GetClass() == "impulse_item" then
 			
-			diff = center - v:GetPos()
-			d = diff:Dot(diff)
+			-- diff = center - v:GetPos()
+			-- d = diff:Dot(diff)
 			
-			d = math.max(0 , math.sqrt(d) - 190)
-			dmg = -0.01 * (d^2) + 125
+			-- d = math.max(0 , math.sqrt(d) - 190)
+			-- dmg = -0.01 * (d^2) + 125
 			
-			local dmginfo = DamageInfo()
-			dmginfo:SetDamage(dmg)
-			dmginfo:SetDamageType(DMG_BLAST)
-			dmginfo:SetInflictor(self)
-			dmginfo:SetDamagePosition(self:GetPos())
+			-- local dmginfo = DamageInfo()
+			-- dmginfo:SetDamage(dmg)
+			-- dmginfo:SetDamageType(DMG_BLAST)
+			-- dmginfo:SetInflictor(self)
+			-- dmginfo:SetDamagePosition(self:GetPos())
 			
-			v:TakeDamageInfo(dmginfo)
+			-- v:TakeDamageInfo(dmginfo)
+			-- --v:TakeDamage(dmg)
 			
 		
-		end
+		-- end
 		
-		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false and v:IsLineOfSightClear(self) then
+		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false then
 			
 			local vpos = v:LocalToWorld(v:OBBCenter())
 			local spos = self:GetPos()
@@ -111,8 +112,8 @@ function ENT:Boom()
 			diff = center - v:GetPos()
 			d = diff:Dot(diff)
 			
-			d = math.max(0 , math.sqrt(d) - 190)
-			dmg = -0.01 * (d^2) + 125
+			d = math.max(0 , math.sqrt(d) - 120)
+			dmg = -0.01 * (d^2) + 70
 			
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage(dmg)
