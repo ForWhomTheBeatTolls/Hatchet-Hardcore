@@ -55,7 +55,6 @@ TO-DO LIST:
 -Brickbat?
 -Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 -Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
--Fix impulse_hands not being able to pick up items that the player can't collide with
 
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 ------------------------
@@ -70,9 +69,7 @@ MUHAMMED CODING SIDE:
 ------------------------
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
--Add bear traps, explosive barrels
--Remake death animations
-
+-Fix impulse_hands not being able to pick up items that the player can't collide with
 
 
 
@@ -122,4 +119,5 @@ DONE LIST:
 -Fix bubble chat whisper not capitalizing correctly
 -Add ankle twisting (anti crouch spam)
 -Add handcuffs SWEP
-
+-Add bear traps, explosive barrels
+-Remake death animations
