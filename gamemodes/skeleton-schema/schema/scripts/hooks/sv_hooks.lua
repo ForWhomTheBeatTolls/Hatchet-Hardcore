@@ -6,30 +6,25 @@
 		ply.TimesStunnedCool = CurTime()
 		ply:SetNWInt("CombatCool", CurTime())
 		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
+		ply.IsInASequence = false
 		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
-		ply:SetNWInt("CarryWeight", 25)
-		ply.IsInASequence = false
-		ply.FoodPoisoning = false
-		ply.Stunned = false
-		ply.KillMoved = false
-		ply.HealOverTime = false
 		ply.CanCrouch = true
 		ply.CanJump = true
-		ply.Bleeding = false
-		ply:SetNWInt("BleedRate", 0)
-		ply.NextBleed = CurTime()
+		ply.Stunned = false
 		ply.TimesDamaged = 0
 		ply.CombatCool = 0
 		ply.TimesStunned = 0
-		ply.CrouchCount = 0
+		ply:SetNWInt("CarryWeight", 25)
+		ply.FoodPoisoning = false
 		ply.PendingReward = ply.PendingReward or 0
+		ply.HealOverTime = false
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 	end
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
-		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() and dmg:GetDamage() > 10 then
+		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() then
 		
 			if dmg:IsDamageType(DMG_NERVEGAS) then
 				ent:EmitSound("vo/npc/male01/moan0"..math.random(1,5)..".wav", 50)
@@ -72,6 +67,8 @@
 				elseif ply:KeyDown(IN_SPEED) then
 					ply:EmitSound("npc/metropolice/gear"..math.random(1,6)..".wav", 70)
 				end
+
+				return true
 			end
 			
 			if ply:Team() == TEAM_OTA  then
@@ -79,6 +76,16 @@
 					ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 55)
 				elseif ply:KeyDown(IN_SPEED) then
 					ply:EmitSound("npc/combine_soldier/gear"..math.random(1,6)..".wav", 75)
+				end
+
+				return true
+			end
+
+			if ply:Team() == TEAM_VORTIGAUNT  then
+				if !ply:KeyDown(IN_SPEED) then
+					ply:EmitSound("npc/vort/vort_foot"..math.random(1,4)..".wav", 30)
+				elseif ply:KeyDown(IN_SPEED) then
+					ply:EmitSound("npc/vort/vort_foot"..math.random(1,4)..".wav", 50)
 				end
 			end
 			
@@ -93,9 +100,6 @@
 			if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE and not ply.HasVest then
 				return false
 			end
-			
-		return true
-			
 	end)
 
 	local deathsounds = {
@@ -405,9 +409,6 @@ local function callhookremoval()
 end
 
 hook.Add("PlayerDeath", "ZombificationTransformer", function(victim, inflictor, attacker)
-	if not IsValid(attacker) then return end
-	if not IsValid(victim) then return end
-	
 	if attacker:GetClass() == "npc_headcrab" then
 		local headcrab = ents.Create("npc_zombie")
 		headcrab:SetPos(victim:GetPos())
