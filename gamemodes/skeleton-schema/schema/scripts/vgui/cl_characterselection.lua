@@ -59,7 +59,7 @@ function PANEL:Init()
     end
 
     local VortBox = self:Add("HatchetSpeciesBox")
-    VortBox:SpeciesBox("Vortigaunt", "hatchet/background/species/vortigauntspecies.png", 1)
+    VortBox:SpeciesBox("Vortigaunt", "hatchet/background/species/vortigauntspecies.png", 7)
     VortBox:DockMargin(0, 0, 0, 0)
     VortBox:Dock(RIGHT)
 
