@@ -68,7 +68,7 @@ function PANEL:SetupPDA()
 		return
 	end
 
-	self.sheet:AddSheet(n.."S", self.squadPnl).Button:SetFont("DebugFixed")
+	self.sheet:AddSheet("INFO", self.squadPnl).Button:SetFont("DebugFixed")
 
 	self.scroll = vgui.Create("DScrollPanel", self.squadPnl)
 	self.scroll:SetPos(10, 80)
@@ -324,23 +324,6 @@ function PANEL:SetupPDA()
 		k:SetLabel(n.." "..k.squadId.."    ("..k.count.."/"..(lp:Team() == TEAM_CP and impulse.Config.MaxSquadSizeCP or impulse.Config.MaxSquadSizeOTA)..")")
 	end
 
-	self.make = vgui.Create("DButton", self.squadPnl)
-	self.make:SetPos(10, 50)
-	self.make:SetSize(340, 20)
-	self.make:SetFont("DebugFixed")
-	self.make:SetText("CREATE "..n.." ("..curSquads.."/"..(lp:Team() == TEAM_CP and impulse.Config.MaxSquadsCP)..")")
-
-	if not lp:SquadCanMake() then
-		self.make:SetDisabled(true)
-	end
-
-	function self.make:DoClick()
-		net.Start("impulseSquadMake")
-		net.SendToServer()
-
-		pdaSound()
-	end
-
 	self.utilPnl = vgui.Create("DPanel", self.sheet)
 	self.utilPnl:Dock(FILL)
 
@@ -427,12 +410,9 @@ function PANEL:PaintOver()
 	local squad = lp:GetSyncVar(SYNC_SQUAD_ID)
 	local isLeader = lp:GetSyncVar(SYNC_SQUAD_LEADER)
 	local n = lp:Team() == TEAM_CP and "PT" or "SQUAD"
-
-	if squad then
-		draw.SimpleText("LOCAL "..n..": "..squad, "DebugFixed", 90, 30)
-	else
-		draw.SimpleText("AWAITING "..n.." ASSIGNMENT - SELECT BELOW:", "DebugFixed",90, 30)
-	end
+	draw.SimpleText("INFORMATION: UNIT "..lp:Name(), "DebugFixed", 150, 30)
+	draw.SimpleText("RANKPOINTS: "..lp:GetSyncVar(SYNC_RANKPOINTS, 0), "DebugFixed", 150, 45, Color(100,100,255,255))
+	draw.SimpleText("CURRENT OBJECTIVE: NIL", "DebugFixed", 150, 60, Color(255, 215, 0,255))
 end
 
 function PANEL:Think()
