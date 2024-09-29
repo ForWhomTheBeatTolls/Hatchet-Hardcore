@@ -44,8 +44,8 @@
 				bleeddmg:SetDamageType( DMG_DIRECT )
 				ply:TakeDamageInfo(bleeddmg)
 				ply:SetViewPunchAngles( Angle(0,0,0) )
-				util.PaintDown(ply:GetPos() - Vector( math.random(-15,15) , math.random(-15,15) , 0.5 ), "Blood")
-				ply:EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", 65, math.random(45,80), 0.7, CHAN_AUTO)
+				util.BleedDecal(ply:GetPos(), ply)
+				--ply:EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", 65, math.random(45,80), 0.7, CHAN_AUTO)
 				local rtd = math.random(1,10)
 				if rtd > 8 then
 					ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 0.35)
