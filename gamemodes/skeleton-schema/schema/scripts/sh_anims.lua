@@ -881,6 +881,10 @@ function SCHEMA:DoAnimationEvent(ply, event, data)
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_zapattack1"), 0, true)
 				return ACT_INVALID
+			elseif data == ply:LookupSequence("g_zapattack1") then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_zapattack1"), 0, true)
+				return ACT_INVALID
 			elseif data == 1706 then
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, 1706, 0, true)
