@@ -12,6 +12,24 @@ function util.PaintDown(start, effname, ignore)
 	
 end
 
+function util.BleedDecal(start, ply)
+	local trace = util.TraceLine({
+                        start = start + Vector(math.random(-10,12),math.random(-10,12),2),
+                        endpos = start - Vector(0, 0, 500),
+                        filter = ply
+                    })
+
+        if trace.HitWorld or trace.Hit then
+			local rtd = math.random(1,2)
+			if rtd == 1 then
+				util.Decal("Blood", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal, ply)
+			else
+				util.Decal("Blood", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal)
+			end
+			EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", trace.HitPos + trace.HitNormal, 0, CHAN_AUTO, 0.7, 65, 0, math.random(45,80))
+        end
+end
+
 function util.GetPaintDownPos(start, effname, ignore)
 
 	local btr = util.TraceLine({start=start, endpos=(start + Vector(0,0,-256)), mask=CONTENTS_SOLID})
