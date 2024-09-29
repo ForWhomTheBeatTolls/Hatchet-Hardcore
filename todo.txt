@@ -71,7 +71,7 @@ MUHAMMED CODING SIDE:
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 -Add bear traps, explosive barrels
-
+-Remake death animations
 
 
 
