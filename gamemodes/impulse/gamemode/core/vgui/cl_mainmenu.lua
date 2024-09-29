@@ -52,19 +52,19 @@ function PANEL:Init()
 		end
 	end
 
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(24,11)
-	button:SetFont("HatchetFont-Menu48")
+	self.playbutton = vgui.Create("DButton", self.core)
+	self.playbutton:SetPos(24,11)
+	self.playbutton:SetFont("HatchetFont-Menu48")
 	if impulse_isNewPlayer == true then
-		button:SetText("Create your character")
+		self.playbutton:SetText("Create your character")
 	else
-		button:SetText("Play")
+		self.playbutton:SetText("Play")
 	end
-	button:SizeToContents()
+	self.playbutton:SizeToContents()
 
 	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
 	local selfPanel = self
-	function button:Paint()
+	function self.playbutton:Paint()
 		if self:IsHovered() then
 			self:SetColor(highlightCol)
 		else
@@ -72,11 +72,11 @@ function PANEL:Init()
 		end
 	end
 
-	function button:OnCursorEntered()
+	function self.playbutton:OnCursorEntered()
 		surface.PlaySound("ui/buttonrollover.wav")
 	end
 
-	function button:DoClick()
+	function self.playbutton:DoClick()
 		surface.PlaySound("ui/buttonclick.wav")
 		if impulse_isNewPlayer == true then
 			vgui.Create("impulseCharacterCreator", selfPanel)
@@ -101,13 +101,16 @@ function PANEL:Init()
 		CRASHSCREEN_ALLOW = true
 	end
 
+	local plybutton_width, plybutton_height = self.playbutton:GetTextSize()
+
 	local white_color = Color(255, 255, 255)
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(737,20)
+	button:SetPos(plybutton_width + 740,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Change your species")
 	button:SizeToContents()
+
 
 	function button:Paint()
 		if self:IsHovered() then
@@ -126,7 +129,7 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(128,22)
+	button:SetPos(plybutton_width + 30,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Settings")
 	button:SizeToContents()
@@ -140,6 +143,7 @@ function PANEL:Init()
 		end
 	end
 
+
 	function button:OnCursorEntered()
 		surface.PlaySound("ui/buttonrollover.wav")
 	end
@@ -150,7 +154,7 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(254,22)
+	button:SetPos(plybutton_width + 150,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Achievements")
 	button:SizeToContents()
@@ -174,7 +178,7 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(454,22)
+	button:SetPos(plybutton_width + 350,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Community")
 	button:SizeToContents()
@@ -200,7 +204,7 @@ function PANEL:Init()
 
 	local button = vgui.Create("DButton", self.core)
 
-	button:SetPos(624,22)
+	button:SetPos(plybutton_width + 524,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Donate")
 	button:SizeToContents()
@@ -225,7 +229,7 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DButton", self.core)
-	button:SetPos(1027,22)
+	button:SetPos(plybutton_width + 634,22)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Credits")
 	button:SizeToContents()
@@ -250,13 +254,13 @@ function PANEL:Init()
 		mainmenu:AlphaTo(0, 2, 0)
 	end
 
-	function button:Think()
-		if impulse.MainMenu.popup then
-			self:Hide()
-		else
-			self:Show()
-		end
-	end
+	-- function button:Think()
+	-- 	if impulse.MainMenu.popup then
+	-- 		self:Hide()
+	-- 	else
+	-- 		self:Show()
+	-- 	end
+	-- end
 
 	local button = vgui.Create("DButton", self)
 	button:SetPos(w/1.2, 22)
