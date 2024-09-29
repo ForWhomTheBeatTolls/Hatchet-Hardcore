@@ -1,0 +1,22 @@
+actor "NPC"
+{
+  channel "Reviving"
+  {
+    event gesture "Reviving"
+    {
+      time 0 0.1
+      param "Crouch_idleD"
+    }
+  }
+}
+
+scalesettings
+{
+  "CChoreoView" "86"
+  "ExpressionTool" "100"
+  "GestureTool" "100"
+  "RampTool" "100"
+  "SceneRampTool" "100"
+}
+fps 60
+snap off
