@@ -342,11 +342,11 @@ impulse.Anim.vort = {
 		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN}
 	},
 	shotgun = {
-		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE},
+		[ACT_MP_STAND_IDLE] = {ACT_IDLE, "sweep_idle"},
 		[ACT_MP_CROUCH_IDLE] = {"crouchidle", "crouchidle"},
 		[ACT_MP_WALK] = {ACT_WALK, ACT_WALK},
 		[ACT_MP_CROUCHWALK] = {ACT_WALK, ACT_WALK},
-		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN}
+		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN},
 	},
 	grenade = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE},
@@ -876,6 +876,10 @@ function SCHEMA:DoAnimationEvent(ply, event, data)
 			elseif data == ply:LookupSequence("g_palm_out_r") then
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_palm_out_r"), 0, true)
+				return ACT_INVALID
+			elseif data == ply:LookupSequence("g_zapattack1") then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_zapattack1"), 0, true)
 				return ACT_INVALID
 			elseif data == 1706 then
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
