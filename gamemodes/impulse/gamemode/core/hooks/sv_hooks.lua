@@ -690,7 +690,7 @@ function GM:PlayerDeath(ply, killer)
 			--print("2, 1:"..physObj:GetMass())
 			physObj:SetMass(physObjWeight)
 			--print("2, 2:"..physObj:GetMass())
-			ent:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 			--print("Ended!!!")
 			end)
 			end
