@@ -245,13 +245,14 @@ function PANEL:OnMousePressed(keycode)
 					local invid = self.InvID
 					gui.EnableScreenClicker(false)
 
-					if self.Item.UseWorkBarSound then
+					if self.Item.UseWorkBarSound and not self.Item.UseWorkBarSoundLooping then
 						surface.PlaySound(self.Item.UseWorkBarSound)
-						timer.Simple(self.Item.UseWorkBarTime, function() surface.PlaySound("null.wav") end)
+						timer.Simple(self.Item.UseWorkBarTime, function() surface.PlaySound("common/null.wav") end)
 					end
 					
 					if self.Item.UseWorkBarSoundLooping then
-						timer.Simple(self.Item.UseWorkBarTime, function() print("gaaah") surface.PlaySound("null.wav") end)
+						local uwbsl_id = LocalPlayer():StartLoopingSound( self.Item.UseWorkBarSound )
+						timer.Simple(self.Item.UseWorkBarTime, function() LocalPlayer():StopLoopingSound( uwbsl_id ) end)
 					end
 
 					impulse.MakeWorkbar(self.Item.UseWorkBarTime, self.Item.UseWorkBarName or "Using...", function()
