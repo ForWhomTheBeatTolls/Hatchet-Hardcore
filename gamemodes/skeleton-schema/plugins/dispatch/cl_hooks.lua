@@ -1,5 +1,5 @@
 function PLUGIN:CheckMenuInput()
-	if input.IsKeyDown(KEY_F6) and not IsValid(PDA_MENU) and (LocalPlayer():GetTeamRank() or 0) != 0 and (LocalPlayer():Team() == TEAM_CP or LocalPlayer():Team() == TEAM_OTA) then
+	if input.IsKeyDown(KEY_F6) and not IsValid(PDA_MENU) and (LocalPlayer():Team() == TEAM_CP or LocalPlayer():Team() == TEAM_OTA) then
 		PDA_MENU = vgui.Create("impulsePDAMenu")
 	end
 end
