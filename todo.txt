@@ -61,7 +61,7 @@ WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - remake player settings, turn it into a info\rule\page area.
 - Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
--Add vortigaunts
+-Add vortigaunts (Add vort rp names)
 -Whitelist command (Using admin input instead)
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 
@@ -79,6 +79,7 @@ MUHAMMED CODING SIDE:
 
 DONE LIST:
 ---------------------
+
 
 -Bleeding ( Community requested (73% of voters) )
 -Ambience Color and make it toggleable
