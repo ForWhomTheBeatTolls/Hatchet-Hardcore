@@ -12,7 +12,7 @@ function util.PaintDown(start, effname, ignore)
 	
 end
 
-function util.BleedDecal(start, ply)
+function util.BleedDecal(start, ply, isbleed)
 	local trace = util.TraceLine({
                         start = start + Vector(math.random(-10,12),math.random(-10,12),2),
                         endpos = start - Vector(0, 0, 500),
@@ -26,7 +26,9 @@ function util.BleedDecal(start, ply)
 			else
 				util.Decal("Blood", trace.HitPos + trace.HitNormal, trace.HitPos - trace.HitNormal)
 			end
-			EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", trace.HitPos + trace.HitNormal, 0, CHAN_AUTO, 0.7, 65, 0, math.random(45,80))
+			if isbleed then
+				EmitSound("ambient/water/rain_drip"..math.random(1,4)..".wav", trace.HitPos + trace.HitNormal, 0, CHAN_AUTO, 0.7, 65, 0, math.random(45,80))
+			end
         end
 end
 
@@ -43,17 +45,19 @@ function corpsebleedttt(ent)
       return
    end
 
-   local jitter = VectorRand() * 30
-   jitter.z = 20
+   -- local jitter = VectorRand() * 30
+   -- jitter.z = 20
 
    
-   if ent:GetBoneSurfaceProp(0) == "flesh" then
-   util.PaintDown(ent:GetPos() + jitter, "Blood", ent)
-   elseif ent:GetBoneSurfaceProp(0) == "zombieflesh" then
-   util.PaintDown(ent:GetPos() + jitter, "YellowBlood", ent)
-   elseif ent:GetBoneSurfaceProp(0) == "alienflesh" then
-   util.PaintDown(ent:GetPos() + jitter, "YellowBlood", ent)
-   end
+   -- if ent:GetBoneSurfaceProp(0) == "flesh" then
+   -- util.PaintDown(ent:GetPos() + jitter, "Blood", ent)
+   -- elseif ent:GetBoneSurfaceProp(0) == "zombieflesh" then
+   -- util.PaintDown(ent:GetPos() + jitter, "YellowBlood", ent)
+   -- elseif ent:GetBoneSurfaceProp(0) == "alienflesh" then
+   -- util.PaintDown(ent:GetPos() + jitter, "YellowBlood", ent)
+   -- end
+   
+	util.BleedDecal(ent:GetPos() + Vector(0,0,5), ent, false)
 end
 
   
