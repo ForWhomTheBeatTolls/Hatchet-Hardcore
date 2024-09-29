@@ -41,35 +41,14 @@ function ITEM:OnUse(ply, door)
 	--local skill = ply:GetSkillLevel("lockpick")
 
 	--if chance < (75 + ((skill * 2) * 1.4)) then
-		--if door:IsPlayer() and door:GetSyncVar(SYNC_ARRESTED, false) then
-			--print("ghrmm")
-			--door:UnArrest()
-			--door.JailEscaped = true
-			--door:Notify("You have been lockpicked out of your restraints by "..ply:Nick()..".")
-
-			--ply:EmitSound("weapons/357/357_reload4.wav")
-			--ply:AddSkillXP("lockpick", math.random(15, 25))
-			--ply:Notify("You lockpicked "..door:Nick().." out off their restraints.")
-
-			--door:AchievementGive("ach_greatescape")
-			--return
-		--end
-
-		--if door:IsPlayer() and door:Team() == TEAM_VORT and door:GetModel() == "models/vortigaunt_slave.mdl" then
-		--	door:SetModel("models/vortigaunt.mdl")
-		--	door:Notify("You have had your shackles removed by "..ply:Nick()..".")
-
-		--	if door:HasWeapon("ls_broom") then
-		--		door:StripWeapon("ls_broom")
-		--	end
-			
-		--	ply:Notify("You lockpicked "..door:Nick().." out of their shackles.")
-		--	return
-		--end
-
-		--ply:ChatPrint("YIPPEE")
-		--door:EmitSound("buttons/combine_button2.wav")
 		ply:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, 279 )
+
+		if door:IsPlayer() and door:GetModel() == "models/vortigaunt_slave.mdl" then
+			door:SetModel("models/vortigaunt.mdl")
+			ply:Notify("You freed the vortigaunt from his shackles.")
+			door:Notify("You have been freed from your shackles.")
+			return
+		end
 		timer.Simple( 1, function ()
 		if returnedlsh == true then
 			door:EmitSound("buttons/combine_button2.wav")
@@ -112,8 +91,12 @@ function ITEM:ShouldTraceUse(ply, ent)
         return false
     end
 	
-	if not ent:IsDoor() then
-		return false
+	-- if not ent:IsDoor() then
+	-- 	return false
+	-- end
+
+	if ent:GetModel() == "models/vortigaunt_slave.mdl" then
+		return true
 	end
 
 	local group = ent:GetSyncVar(SYNC_DOOR_GROUP, nil)
