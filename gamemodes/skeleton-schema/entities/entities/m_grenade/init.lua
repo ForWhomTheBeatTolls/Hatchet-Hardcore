@@ -64,8 +64,8 @@ function ENT:Boom()
 			diff = center - v:GetPos()
 			d = diff:Dot(diff)
 			
-			d = math.max(0 , math.sqrt(d) - 190)
-			dmg = -0.01 * (d^2) + 125
+			d = math.max(0 , math.sqrt(d) - 120)
+			dmg = -0.01 * (d^2) + 100
 			
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage(dmg)
@@ -73,13 +73,15 @@ function ENT:Boom()
 			dmginfo:SetInflictor(self)
 			dmginfo:SetDamagePosition(self:GetPos())
 			
+			v.Dmg = "Explosion"
 			v:TakeDamageInfo(dmginfo)
+			timer.Simple(1, function() v.Dmg = " " end)
 			
 			v:ViewPunch(Angle(math.random(-50, 50),  math.random(-50, 50),  math.random(-50, 50)))
 		
 		end
 		
-		if v:IsLineOfSightClear(self) and v:GetClass() == "impulse_item" then
+		if v:IsLineOfSightClear(self) and v:IsPlayer() == false and v:GetClass() == "impulse_item" then
 			
 			diff = center - v:GetPos()
 			d = diff:Dot(diff)
@@ -94,11 +96,12 @@ function ENT:Boom()
 			dmginfo:SetDamagePosition(self:GetPos())
 			
 			v:TakeDamageInfo(dmginfo)
+			v:TakeDamage(dmg)
 			
 		
 		end
 		
-		if v:GetPhysicsObject():IsValid() and v:IsLineOfSightClear(self) then
+		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false and v:IsLineOfSightClear(self) then
 			
 			local vpos = v:LocalToWorld(v:OBBCenter())
 			local spos = self:GetPos()
