@@ -40,6 +40,28 @@ local setHealthCommand = {
 
 impulse.RegisterChatCommand("/sethp", setHealthCommand)
 
+local setFixLegs = {
+    description = "Fixes the legs of a specified player.",
+    requiresArg = true,
+    adminOnly = true,
+    onRun = function(ply, arg, rawText)
+        local targ = impulse.FindPlayer(arg[1])
+
+        if targ and IsValid(targ) then
+            if targ:HasBrokenLegs() then
+                targ:FixLegs()
+                ply:Notify("You have fixed "..targ:Nick().."'s legs.")
+            else
+                ply:Notify(targ:Nick() .. " Leg's arent broken.")
+            end
+        else
+            return ply:Notify("Could not find player: "..tostring(arg[1]))
+        end
+    end
+}
+
+impulse.RegisterChatCommand("/fixlegs", setFixLegs)
+
 local kickCommand = {
     description = "Kicks the specified player from the server.",
     requiresArg = true,
