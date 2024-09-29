@@ -53,7 +53,7 @@ function ENT:Boom()
 	for k,v in pairs(ents.FindInSphere(explode:GetPos(), 904)) do
 		
 		local center = self:GetPos()
-		local r = 894 ^ 2
+		local r = 904 ^ 2
 		local d = 0.0
 		local diff = nil 
 		local dmg = 0
@@ -63,8 +63,8 @@ function ENT:Boom()
 			diff = center - v:GetPos()
 			d = diff:Dot(diff)
 			
-			d = math.max(0 , math.sqrt(d) - 190)
-			dmg = -0.3 * (d^2) + 150
+			d = math.max(0 , math.sqrt(d) - 120)
+			dmg = -0.01 * (d^2) + 125
 			
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage(dmg)
@@ -99,7 +99,7 @@ function ENT:Boom()
 		
 		end
 		
-		if v:GetPhysicsObject():IsValid() and v:IsLineOfSightClear(self) then
+		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false and v:IsLineOfSightClear(self) then
 			
 			local vpos = v:LocalToWorld(v:OBBCenter())
 			local spos = self:GetPos()
