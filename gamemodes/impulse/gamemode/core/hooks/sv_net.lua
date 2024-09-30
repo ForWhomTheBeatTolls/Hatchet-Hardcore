@@ -100,6 +100,7 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 	ply.NextCreate = CurTime() + 10
 
 	local charName = net.ReadString()
+	local charCity = net.ReadUInt(8)
 	local charDesc = net.ReadString()
 	local charModel = net.ReadString()
 	local charSkin = net.ReadUInt(8)
@@ -145,6 +146,8 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 		
 		local insertQuery = mysql:Insert("impulse_players")
 		insertQuery:Insert("rpname", charName)
+		insertQuery:Insert("vortrpname", "")
+		insertQuery:Insert("city", charCity)
 		insertQuery:Insert("rpdesc", charDesc)
 		insertQuery:Insert("steamid", plyID)
 		insertQuery:Insert("group", "user")
@@ -165,6 +168,8 @@ net.Receive("impulseCharacterCreate", function(len, ply)
 				local setupData = {
 					id = lastID,
 					rpname = charName,
+					vortrpname = "",
+					city = charCity,
 					rpdesc = charDesc,
 					steamid = plyID,
 					group = "user",
