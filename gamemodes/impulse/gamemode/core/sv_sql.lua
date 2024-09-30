@@ -4,6 +4,8 @@ function GM:DatabaseConnected()
     local sqlQuery = mysql:Create("impulse_players") -- if not table exist, make it.
         sqlQuery:Create("id", "int unsigned NOT NULL AUTO_INCREMENT") -- index
         sqlQuery:Create("rpname", "varchar(70) NOT NULL") -- rpname
+        sqlQuery:Create("vortrpname", "varchar(70) NOT NULL") -- vortrpname
+        sqlQuery:Create("city", "int(11) NOT NULL") -- vortrpname
         sqlQuery:Create("rpdesc", "varchar(255) NOT NULL") -- rpdesc
         sqlQuery:Create("steamid", "varchar(25) NOT NULL") -- steamid
         sqlQuery:Create("group", "varchar(70) NOT NULL") -- usergroup
