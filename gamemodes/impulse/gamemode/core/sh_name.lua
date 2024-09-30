@@ -99,6 +99,10 @@ function meta:Name()
     return self:GetSyncVar(SYNC_RPNAME, self:SteamName())
 end
 
+function meta:GetCity()
+    return self:GetSyncVar(SYNC_RPCITY, self:SteamName())
+end
+
 function meta:KnownName()
 	local custom = hook.Run("PlayerGetKnownName", self)
 	return custom or self:GetSyncVar(SYNC_RPNAME, self:SteamName())
