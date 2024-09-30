@@ -56,6 +56,9 @@ TO-DO LIST:
 -Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 -Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 
+-IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
+
+
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 ------------------------
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
