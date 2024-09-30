@@ -38,6 +38,8 @@
 				
 				if ( ent:Team() == TEAM_CP ) and (ent:Health() > 1) then
 					ent:EmitSound("npc/metropolice/pain"..math.random(1,4)..".wav", 80)
+				elseif ( ent:Team() == TEAM_VORTIGAUNT ) and (ent:Health() > 1) then
+					ent:EmitSound("vo/npc/vortigaunt/vortigese0" .. math.random(2, 8) .. ".wav", 80)
 				elseif ( ent:Team() == TEAM_OTA ) and (ent:Health() > 1) then
 					ent:EmitSound("npc/combine_soldier/pain"..math.random(1,3)..".wav", 80)
 				elseif ( ent:Team() == TEAM_CITIZEN or TEAM_RESISTANCE ) and (ent:Health() > 1) then
