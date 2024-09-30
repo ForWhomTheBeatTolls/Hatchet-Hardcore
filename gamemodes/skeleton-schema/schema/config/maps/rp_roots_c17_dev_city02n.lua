@@ -3,12 +3,8 @@
 impulse.Config.MenuCamPos = Vector(-3531.849365, -2581.553955, 117.032791)
 impulse.Config.MenuCamAng = Angle(-21.510452, 131.078705, 0.000000)
 
-impulse.Config.SpawnPos1 = Vector(-6970.562012, -1981.045776, 65.752151)
-impulse.Config.SpawnPos2 = Vector(-6803.397461, -2117.691406, 67.050522)
-impulse.Config.SpawnPos3 = Vector(-6317.864258, -1975.392334, 66.888390)
-impulse.Config.SpawnPos4 = Vector(-6342.052246, -2101.275391, 66.742241)
-impulse.Config.SpawnPos5 = Vector(-6063.499512, -2099.411133, 66.672424)
-impulse.Config.SpawnPos6 = Vector(-6020.071777, -1989.494995, 66.784615)
+impulse.Config.SpawnPos1 = Vector(-7443.290039, -1436.839233, -31.968748)
+impulse.Config.SpawnPos2 = Vector(-5002.032715, -3117.450684, 370.818573)
 
 impulse.Config.BlacklistEnts = {
 	["game_text"] = true,
@@ -18,7 +14,7 @@ impulse.Config.BlacklistEnts = {
 }
 
 impulse.Config.Zones = {
-	{name = "Spawn", pos1 = Vector(-7273.3833007813, -2595.669921875, -43.829444885254), pos2 = Vector(-5036.5541992188, -1508.5622558594, 560.92633056641)},
+	{name = "Trainstation", pos1 = Vector(-7273.3833007813, -2595.669921875, -43.829444885254), pos2 = Vector(-5036.5541992188, -1508.5622558594, 560.92633056641)},
 	{name = "Precinct 9", pos1 = Vector(-3050.6494140625, -798.19805908203, -25.602670669556), pos2 = Vector(-1267.1274414063, -2943.8610839844, 892.61614990234)},
 	{name = "Residential Alley", pos1 = Vector(-3010.1164550781, -4409.4243164063, -23.718994140625), pos2 = Vector(-3776.1584472656, -5183.5546875, 292.00234985352)},
 	{name = "Park", pos1 = Vector(-5547.5732421875, -4159.322265625, -21.217350006104), pos2 = Vector(-4426.6928710938, -3329.6650390625, 539.16619873047)},
