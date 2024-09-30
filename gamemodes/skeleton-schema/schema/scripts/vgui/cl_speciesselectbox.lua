@@ -35,7 +35,7 @@ function PANEL:SpeciesBox(teamname, backgroundname, teamidselect)
     function button:DoClick()
         self.teamselectionid = teamidselect
         panel:Remove()
-        if LocalPlayer():GetZoneName() == "Spawn" or LocalPlayer():Team() == TEAM_DISPATCH then
+        if LocalPlayer():InSpawn() or LocalPlayer():Team() == TEAM_DISPATCH then
             net.Start("impulseTeamChange")
             net.WriteUInt(self.teamselectionid, 8)
             net.SendToServer()
