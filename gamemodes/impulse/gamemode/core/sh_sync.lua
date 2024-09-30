@@ -209,6 +209,8 @@ end
 -- @table SyncDefaults
 
 SYNC_RPNAME = impulse.Sync.RegisterVar(SYNC_STRING)
+SYNC_RPVORTNAME = impulse.Sync.RegisterVar(SYNC_STRING)
+SYNC_RPCITY = impulse.Sync.RegisterVar(SYNC_STRING)
 SYNC_RPDESC = impulse.Sync.RegisterVar(SYNC_STRING)
 SYNC_RECOGNIZES = impulse.Sync.RegisterVar(SYNC_STRING)
 SYNC_XP = impulse.Sync.RegisterVar(SYNC_HUGEINT)
