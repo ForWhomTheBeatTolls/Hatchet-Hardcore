@@ -1003,6 +1003,27 @@ net.Receive("impulseChangeRPName", function(len, ply)
 	end
 
 	local name = net.ReadString()
+	local isvortmode = net.ReadBool()
+
+	if isvortmode and ply:GetSyncVar(SYNC_RPVORTNAME) == "" then
+		local canUseName, output = impulse.CanUseName(name)
+
+		if canUseName then
+			ply:SetSyncVar(SYNC_RPVORTNAME, output)
+			ply:SetRPName(output)
+			ply:Notify("Your vort name is now " .. output)
+
+			local query = mysql:Update("impulse_players")
+			query:Update("vortrpname", output)
+			query:Where("steamid", ply:SteamID())
+			query:Execute(true)
+		else
+			ply:Notify("Name rejected: "..output)
+			ply:SetTeam(1)
+		end
+
+		return
+	end
 
 	if ply:CanAfford(impulse.Config.RPNameChangePrice) then
 		local canUseName, output = impulse.CanUseName(name)
