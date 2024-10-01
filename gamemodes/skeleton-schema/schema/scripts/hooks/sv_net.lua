@@ -26,6 +26,7 @@ util.AddNetworkString("HatchetSelectWorkerJobStart")
 util.AddNetworkString("HatchetBecomeRebelEnd")
 util.AddNetworkString("HatchetBecomeRebelStart")
 util.AddNetworkString("HatchetVortRPName")
+util.AddNetworkString("impulseHL2RPClassBecome")
 
 local function NetExploitNotification(ply, msg)
 	for i, admin in pairs( player.GetAll() ) do
@@ -52,18 +53,15 @@ net.Receive("HatchetSelectWorkerJobEnd", function()
 	if ply:Team() == TEAM_WORKFORCE then
 	
 		if str == "COMMERCIAL" then
-			ply:SetTeamClass(1)
-			ply:SetTeamRank(RANK_COMMERCIAL)
+			ply:SetTeamClass(2)
 			ply:Notify("You have become a Commercial Worker.")
 			ply:EmitSound("items/ammo_pickup.wav")
 		elseif str == "INDUSTRIAL" then
 			ply:SetTeamClass(1)
-			ply:SetTeamRank(RANK_INDUSTRIAL)
 			ply:Notify("You have become an Industrial Worker.")
 			ply:EmitSound("items/ammo_pickup.wav")
 		elseif str == "MEDICAL" then
-			ply:SetTeamClass(1)
-			ply:SetTeamRank(RANK_MEDICAL)
+			ply:SetTeamClass(3)
 			ply:Notify("You have become a Medical Worker.")
 			ply:EmitSound("items/ammo_pickup.wav")
 		else
@@ -120,6 +118,21 @@ net.Receive("impulseHL2RPTerminalLeave", function(len, ply)
 
 		if terminal and IsValid(terminal) then
 			terminal:RemoveUser(ply)
+		end
+	end
+end)
+
+net.Receive("impulseHL2RPClassBecome", function(len, ply)
+	if ply.currentStorage then
+		local div = net.ReadUInt(8)
+		local classData = impulse.Teams.Data[ply:Team()].classes
+
+		local Class = classData[div]
+		if ply:CanBecomeTeamClass(div, true) then
+			ply:Notify("You became a " .. Class.name .. ".")
+			ply:ClearRestrictedInventory()
+			ply:SetTeamClass(div, true) -- the second argument skips the loadout, as rank will set it up. it can be kinda stressful on the server if you remove this
+			set = true
 		end
 	end
 end)
