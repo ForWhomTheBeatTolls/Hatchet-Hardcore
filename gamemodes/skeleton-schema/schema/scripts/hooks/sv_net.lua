@@ -25,6 +25,7 @@ util.AddNetworkString("HatchetSelectWorkerJobEnd")
 util.AddNetworkString("HatchetSelectWorkerJobStart")
 util.AddNetworkString("HatchetBecomeRebelEnd")
 util.AddNetworkString("HatchetBecomeRebelStart")
+util.AddNetworkString("HatchetVortRPName")
 
 local function NetExploitNotification(ply, msg)
 	for i, admin in pairs( player.GetAll() ) do
