@@ -586,8 +586,12 @@ if CLIENT then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, talkCol, " says: ", message)
+		elseif speaker == LocalPlayer() then
+			chat.AddText(speaker, talkCol, " says: ", message)
 		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
+		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
+			chat.AddText(speaker, talkCol, " says: ", message)
 		else
 			chat.AddText(speaker, talkCol, " says: ", message)
 		end
