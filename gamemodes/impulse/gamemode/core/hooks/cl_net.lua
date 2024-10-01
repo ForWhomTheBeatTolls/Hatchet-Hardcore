@@ -4,12 +4,16 @@ end)
 
 net.Receive("impulseNotify", function(len)
 	local message = net.ReadString()
+	local isangry = net.ReadBool()
 
 	if not LocalPlayer() or not LocalPlayer().Notify then
 		return
 	end
-	
-	LocalPlayer():Notify(message)
+	if isangry then
+		LocalPlayer():AngryNotify(message)
+	else
+		LocalPlayer():Notify(message)
+	end
 end)
 
 net.Receive("impulseATMOpen", function()
