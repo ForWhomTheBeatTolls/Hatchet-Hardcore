@@ -11,23 +11,6 @@ TEAM_WORKFORCE = impulse.Teams.Define({
 
 	classes = {
 		{
-			name = "WORKER",
-			description = "Work",
-			--model = "models/roots_characters/metropol/playermodels/roots_metropolice.mdl",
-			itemsAdd = {
-				--{class = "wep_stunstick", amount = 1}
-			},
-			xp = 0,
-			noMenu = true,
-			onBecome = function(ply)
-				--ply:SetModel("models/Police.mdl")
-			end
-		},
-	},
-
-
-	ranks = {
-		{
 			name = "Industrial Worker",
 			description = "work and fix",
 			xp = 0,
@@ -49,9 +32,6 @@ TEAM_WORKFORCE = impulse.Teams.Define({
 	},
 })
 
-CLASS_WORKER = 1
---CLASS_GUNNER = 2
-
-RANK_INDUSTRIAL = 1
-RANK_COMMERCIAL = 2
-RANK_MEDICAL = 3
+CLASS_INDUSTRIAL = 1
+CLASS_COMMERCIAL = 2
+CLASS_MEDICAL = 3
