@@ -46,10 +46,9 @@ TO-DO LIST:
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Clean up code (Comments and old code that we don't need)
 -Dequavion Ammo Bender
--CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
+
 -Add crafting via the use of fire
--IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
--Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
+
 -Saboteurs can make booby traps
 -Figure out a way to incorporate grenades into the server
 -Brickbat?
@@ -62,10 +61,10 @@ TO-DO LIST:
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 ------------------------
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
-- remake player settings, turn it into a info\rule\page area.
-- Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
--Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 - Fix whitelist system (fuck muhammed)
+-IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
+-Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
+-CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
 
 MUHAMMED CODING SIDE:
 ------------------------
@@ -75,6 +74,9 @@ MUHAMMED CODING SIDE:
 DONE LIST:
 ---------------------
 
+- remake player settings, turn it into a info\rule\page area.
+- Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
+- Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 - RPVortNames
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 -Bleeding ( Community requested (73% of voters) )
