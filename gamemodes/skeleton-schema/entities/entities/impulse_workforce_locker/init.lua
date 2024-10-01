@@ -40,12 +40,14 @@ end
 
 function ENT:Use(activator, caller)
 	if activator:IsPlayer() and activator:Alive() and activator:Team() == TEAM_WORKFORCE then
-		if activator:GetTeamRank() == RANK_MEDICAL then
+		if activator:GetTeamClass() == CLASS_MEDICAL then
 			activator:GiveInventoryItem("clothing_medicalshirt", 1, true )
-		elseif activator:GetTeamRank() == RANK_INDUSTRIAL then
+		elseif activator:GetTeamClass() == CLASS_INDUSTRIAL then
 			activator:GiveInventoryItem("clothing_cmborange", 1, true )
-		elseif activator:GetTeamRank() == RANK_COMMERCIAL then
+		elseif activator:GetTeamClass() == CLASS_COMMERCIAL then
 			activator:GiveInventoryItem("clothing_cmbblue", 1, true )
 		end
+
+		activator:Notify("You retrieved your workforce outfit.")
 	end
 end
