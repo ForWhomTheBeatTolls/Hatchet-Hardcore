@@ -122,10 +122,76 @@ local function OrganizeNotices(i)
     local lastHeight = ScrH() + 1
 
     for k, v in ipairs(impulse.notices) do
-        local height = lastHeight - v:GetTall() - 1
-        v:MoveTo(scrW - (v:GetWide()), height, 0.4, (k / #impulse.notices) * 0.4, nil)
+        local height = lastHeight - 50
+        v:MoveTo(scrW - (v:GetWide()), height, 0.2, (k / #impulse.notices) * 0.2, nil)
         lastHeight = height
     end
+end
+
+local function angry_notify(message)
+    local notice = vgui.Create("impulseNotify")
+
+    local i = table.insert(impulse.notices, notice)
+
+
+    notice:SetMessage(message)
+    notice:SetPanelSettings(Color(189, 23, 37), Sound("hatchet/buttonclickrelease.wav"))
+    notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 4) * (notice:GetTall() + 2) + 4) -- needs to be recoded to support variable heights
+    notice:MoveToFront()
+    notice:AlphaTo(255, 2, 0)
+    OrganizeNotices(i)
+
+    timer.Simple(7.5, function()
+
+    if IsValid(notice) then
+    notice:AlphaTo(0, 1, 0, function() 
+    notice:Remove()
+
+    for v,k in pairs(impulse.notices) do
+    if k == notice then
+    table.remove(impulse.notices, v)
+    end
+    end
+
+    OrganizeNotices(i)
+    end)
+    end
+    end)
+
+    MsgN(message)
+end
+
+local function normal_notify(message)
+    local notice = vgui.Create("impulseNotify")
+
+    local i = table.insert(impulse.notices, notice)
+
+
+    notice:SetMessage(message)
+    -- notice:SetPanelSettings(Color(255, 0, 100), Sound("hatchet/buttonclickrelease.wav"))
+    notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 4) * (notice:GetTall() + 2) + 4) -- needs to be recoded to support variable heights
+    notice:MoveToFront()
+    notice:AlphaTo(255, 2, 0)
+    OrganizeNotices(i)
+
+    timer.Simple(7.5, function()
+
+    if IsValid(notice) then
+    notice:AlphaTo(0, 1, 0, function() 
+    notice:Remove()
+
+    for v,k in pairs(impulse.notices) do
+    if k == notice then
+    table.remove(impulse.notices, v)
+    end
+    end
+
+    OrganizeNotices(i)
+    end)
+    end
+    end)
+
+    MsgN(message)
 end
 
 --- Sends a notification to a player
@@ -136,46 +202,25 @@ function meta:Notify(message)
         if not impulse.hudEnabled then
             return MsgN(message)
         end
-
-        local notice = vgui.Create("impulseNotify")
-        local hatchetnotice = vgui.Create("HatchetNotify")
-        local i = table.insert(impulse.notices, notice)
-
-
-        notice:SetMessage(message)
-        notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 3) * (notice:GetTall() + 4) + 4) -- needs to be recoded to support variable heights
-        notice:MoveToFront()
-        notice:AlphaTo(255, 4, 0)
-        hatchetnotice:AlphaTo(180, 1, 0)
-        OrganizeNotices(i)
-
-        timer.Simple(7.5, function()
-            if IsValid(hatchetnotice) then
-                hatchetnotice:AlphaTo(0, 1, 0, function() 
-                    hatchetnotice:Remove()
-
-                end)
-            end
-
-            if IsValid(notice) then
-                notice:AlphaTo(0, 1, 0, function() 
-                    notice:Remove()
-
-                    for v,k in pairs(impulse.notices) do
-                        if k == notice then
-                            table.remove(impulse.notices, v)
-                        end
-                    end
-
-                    OrganizeNotices(i)
-                end)
-            end
-        end)
-
-        MsgN(message)
+        normal_notify(message)
     else
         net.Start("impulseNotify")
         net.WriteString(message)
+        net.WriteBool(false)
+        net.Send(self)
+    end
+end
+
+function meta:AngryNotify(message)
+    if CLIENT then
+        if not impulse.hudEnabled then
+            return MsgN(message)
+        end
+        angry_notify(message)
+    else
+        net.Start("impulseNotify")
+        net.WriteString(message)
+        net.WriteBool(true)
         net.Send(self)
     end
 end
