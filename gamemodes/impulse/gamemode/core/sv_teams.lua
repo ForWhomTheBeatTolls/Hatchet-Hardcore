@@ -3,6 +3,8 @@ function meta:SetTeam(teamID, forced)
 	local teamData = impulse.Teams.Data[teamID]
 	local teamPlayers = team.NumPlayers(teamID)
 
+	self:SetRPName(self:GetSavedRPName())
+
 	if teamData.model then
 		self:SetModel(teamData.model)
 	else
