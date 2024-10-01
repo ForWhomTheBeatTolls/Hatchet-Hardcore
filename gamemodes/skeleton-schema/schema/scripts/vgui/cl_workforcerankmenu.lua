@@ -97,67 +97,6 @@ function PANEL:Init()
 		panel.doneBtn.Division = data
 	end
 
-	self.rankLbl = vgui.Create("DLabel", self)
- 	self.rankLbl:SetFont("BudgetLabel")
-	self.rankLbl:SetText("Rank")
-	self.rankLbl:SizeToContents()
-	self.rankLbl:SetTall(54)
-	self.rankLbl:SetPos(96, ScrH() * 0.6 + 72)
-	self.rankLbl:SetColor(color_white)
-
-	self.rankSelect = vgui.Create("DComboBox", self)
-	self.rankSelect:SetFont("BudgetLabel")
-	self.rankSelect:SetPos(112 + self.divisionLbl:GetWide(), ScrH() * 0.6 + 72)
-	self.rankSelect:SetSize(500, 54)
-	self.rankSelect:SetSortItems(false)
-	self.rankSelect:SetValue("Select a rank")
-
-	for v,k in pairs(impulse.Teams.Data[LocalPlayer():Team()].ranks) do
-		local add = (k.whitelistLevel and " + whitelist") or ""
-		if k.xp <= xp then
-			self.rankSelect:AddChoice(k.name.." - Requires "..k.xp.."XP"..add, v, false)
-		else
-			self.rankSelect:AddChoice(k.name.." - Requires "..k.xp.."XP"..add, v, false, "icon16/lock.png")
-		end
-	end
-
-	function self.rankSelect:OnSelect(index, value, data)
-		local rank = impulse.Teams.Data[LocalPlayer():Team()].ranks[data]
-		local div = impulse.Teams.Data[LocalPlayer():Team()].classes[panel.doneBtn.Division]
-
-		if rank.model then
-			panel.characterPreview:SetModel(rank.model)
-		end
-
-		if rank.subMaterial then
-			panel.characterPreview.subMats = {}
-			for v,k in pairs(rank.subMaterial) do
-				panel.characterPreview.Entity:SetSubMaterial(v - 1, k)
-				panel.characterPreview.subMats[v] = k
-			end
-		end
-
-		if rank.bodygroups then
-			--panel.characterPreview.subMats = {}
-			for v,k in pairs(rank.bodygroups) do
-				panel.characterPreview.Entity:SetBodygroup(k[1], k[2])
-				--panel.characterPreview.subMats[v] = k
-			end
-		end
-
-		if div and div.noSubMats then
-			panel.characterPreview.Entity:SetSubMaterial(0, nil)
-		end
-
-		if rank.xp > LocalPlayer():GetXP() then
-			panel.doneBtn.RankName = nil
-			return
-		end
-
-		panel.doneBtn.RankName = rank.name
-		panel.doneBtn.Rank = data
-	end
-
 	self.descLbl = vgui.Create("DLabel", self)
  	self.descLbl:SetFont("BudgetLabel")
 	self.descLbl:SetText("Description:")
@@ -179,8 +118,8 @@ function PANEL:Init()
   	self.doneBtn:SetDisabled(true)
 
   	function self.doneBtn:Think()
-  		if self.DivisionName and self.RankName then
-  			self:SetText("Become a "..self.DivisionName.." "..self.RankName)
+  		if self.DivisionName then
+  			self:SetText("Become a "..self.DivisionName.."")
   			self:SetDisabled(false)
   			return
   		end
@@ -190,10 +129,9 @@ function PANEL:Init()
   	end
 
   	function self.doneBtn:DoClick()
-  		if self.Division and self.Rank then
-	  		net.Start("impulseHL2RPRankBecome")
+  		if self.Division then
+	  		net.Start("impulseHL2RPClassBecome")
 	  		net.WriteUInt(self.Division, 8)
-	  		net.WriteUInt(self.Rank, 8)
 	  		net.SendToServer()
 
 	  		panel:Remove()
