@@ -14,31 +14,23 @@ TEAM_RESISTANCE = impulse.Teams.Define({
 			xp = 0,
 			noMenu = true,
 			onBecome = function(ply)
-				--ply:SetModel("models/Police.mdl")
 			end
 		},
-		{
-			name = "Rebel",
-			description = "temp desc",
-			xp = 0,
-			noMenu = true,
-			onBecome = function(ply)
-				--ply:SetModel("models/Police.mdl")
-			end
-		},
-	},
-
-
-	ranks = {
 		{
 			name = "Runner",
 			description = "temp desc",
 			xp = 0,
+			noMenu = true,
+			onBecome = function(ply)
+			end
 		},
 		{
 			name = "Medical",
 			description = "temp desc",
 			xp = 0,
+			noMenu = true,
+			onBecome = function(ply)
+			end
 		},
 		{
 			name = "Engineer",
@@ -48,13 +40,14 @@ TEAM_RESISTANCE = impulse.Teams.Define({
 			--},
 			doorGroup = {1, 2},
 			xp = 0,
+			noMenu = true,
+			onBecome = function(ply)
+			end
 		},
 	},
 })
 
 CLASS_REFUGEE = 1
-CLASS_REBEL = 1
-
-RANK_RUNNER = 1
-RANK_MEDICAL = 2
-RANK_ENGINEER = 3
+CLASS_RUNNER = 2
+CLASS_MEDICAL = 3
+CLASS_ENGINEER = 4
