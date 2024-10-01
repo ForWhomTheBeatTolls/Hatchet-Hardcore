@@ -20,6 +20,15 @@ net.Receive("HatchetCivilWorkerSignup", function()
 		
 end)
 
+net.Receive("HatchetVortRPName", function()
+	Derma_StringRequest("impulse", "it seems like this is your first time playing as a vortigaunt! Enter your vort Name:", nil, function(text)
+		net.Start("impulseChangeRPName")
+		net.WriteString(text)
+		net.WriteBool(true)
+		net.SendToServer()
+	end)
+end)
+
 net.Receive("HatchetVendingMachineFillStart", function()
 	vgui.Create("impulseWorkforcePuzzle1")
 end)
