@@ -53,7 +53,7 @@ TO-DO LIST:
 -Saboteurs can make booby traps
 -Figure out a way to incorporate grenades into the server
 -Brickbat?
--Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
+
 -Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 
 -IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
@@ -64,7 +64,7 @@ WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - remake player settings, turn it into a info\rule\page area.
 - Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
-- RPVortNames
+-Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
 - Fix whitelist system (fuck muhammed)
 
 MUHAMMED CODING SIDE:
@@ -72,15 +72,10 @@ MUHAMMED CODING SIDE:
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 
-
-
-
-
-
-
 DONE LIST:
 ---------------------
 
+- RPVortNames
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 -Bleeding ( Community requested (73% of voters) )
 -Ambience Color and make it toggleable
