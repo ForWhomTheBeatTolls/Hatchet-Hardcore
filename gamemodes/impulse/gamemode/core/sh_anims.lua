@@ -397,11 +397,11 @@ impulse.Anim.vort = {
 		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN}
 	},
 	ar2 = {
-		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE},
+		[ACT_MP_STAND_IDLE] = {ACT_IDLE, "sweep_idle"},
 		[ACT_MP_CROUCH_IDLE] = {"crouchidle", "crouchidle"},
-		[ACT_MP_WALK] = {ACT_WALK, ACT_WALK},
-		[ACT_MP_CROUCHWALK] = {ACT_WALK, ACT_WALK},
-		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN}
+		[ACT_MP_WALK] = {ACT_WALK, "walk_all_holdbroom"},
+		[ACT_MP_CROUCHWALK] = {ACT_WALK, "walk_all_holdbroom"},
+		[ACT_MP_RUN] = {ACT_RUN, "walk_all_holdbroom"}
 	},
 	shotgun = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE_ANGRY},
