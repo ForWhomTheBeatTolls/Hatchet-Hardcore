@@ -45,6 +45,7 @@ function ITEM:OnUse(ply, door)
 
 		if door:IsPlayer() and door:GetModel() == "models/vortigaunt_slave.mdl" then
 			door:SetModel("models/vortigaunt.mdl")
+			door:Give("vortbeam")
 			ply:Notify("You freed the vortigaunt from his shackles.")
 			door:Notify("You have been freed from your shackles.")
 			return
