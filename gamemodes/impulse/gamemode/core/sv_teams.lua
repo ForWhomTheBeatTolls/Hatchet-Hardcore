@@ -1,7 +1,18 @@
 meta.OldSetTeam = meta.OldSetTeam or meta.SetTeam
+local function NetExploitNotification(ply, msg)
+	for i, admin in pairs( player.GetAll() ) do
+		admin:SendChatClassMessage(18, ply:Nick().." DETECTED AS A POTENTIAL NET EXPLOITER. NET FUNCTION: "..msg, admin)
+	end
+end
+
 function meta:SetTeam(teamID, forced)
 	local teamData = impulse.Teams.Data[teamID]
 	local teamPlayers = team.NumPlayers(teamID)
+
+	if teamData.isadminonly and !self:IsAdmin() then
+		NetExploitNotification(self, "Attempted to become admin faction: " .. teamData.name)
+		return
+	end
 
 	self:SetRPName(self:GetSavedRPName())
 
@@ -356,11 +367,13 @@ end
 
 function meta:HasTeamWhitelist(team, level)
 	if not self.Whitelists then
+
 		return false
 	end
 
-	local whitelist = self.Whitelists[team]
+	-- PrintTable(self.Whitelists)
 
+	local whitelist = self.Whitelists["" .. team .. ""]
 	if whitelist then
 		if level then
 			return whitelist >= level
@@ -368,7 +381,6 @@ function meta:HasTeamWhitelist(team, level)
 			return true
 		end
 	end
-
 	return false
 end
 
