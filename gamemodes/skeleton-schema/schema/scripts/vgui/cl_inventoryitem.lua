@@ -3,12 +3,12 @@ local PANEL = {}
 function PANEL:Init()
 	self:SetMouseInputEnabled(true)
 	self:SetTall(84)
-	self:SetWide(280)
 	self:SetCursor("hand")
 end
 
 function PANEL:SetItem(netitem, wide)
-    local w, h = self:GetSize()
+	local panel = self
+    local w, h = ScrW(), ScrH()
 	local direct = self.ContainerType
 	local item = impulse.Inventory.Items[(direct and netitem) or netitem.id]
 
@@ -23,11 +23,10 @@ function PANEL:SetItem(netitem, wide)
 	self.Weight = item.Weight or 0
 	self.Count = 1
 
-	local panel = self
 
 	self.model = vgui.Create("impulseSpawnIcon", self)
 	self.model:SetPaintBackground(false)
-	self.model:SetPos(220, 22)
+	self.model:SetPos(0, 32)
 	self.model:SetSize(48, 48)
 	self.model:SetMouseInputEnabled(true)
 	self.model:SetModel(item.Model)
@@ -55,12 +54,12 @@ function PANEL:SetItem(netitem, wide)
 	end
 
 	self.desc = vgui.Create("DLabel", self)
-	self.desc:SetPos(0, 15)
+	self.desc:SetPos(48, 15)
 
 	if self.Basic then
-		self.desc:SetSize(200, 60)
+		self.desc:SetSize(180, 60)
 	else
-		self.desc:SetSize(200, 60)
+		self.desc:SetSize(180, 60)
 	end
 
 	if wide < 800 then -- small resolutions have trouble with 16
@@ -111,15 +110,14 @@ function PANEL:SetItem(netitem, wide)
 	if self.Basic then return end
 	local restrictedMat = "icon16/error.png"
 	local illegalMat = "icon16/exclamation.png"
-
 	if self.IsRestricted then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(216, 65)
+		self.tip:SetPos(0, 65)
 		self.tip:SetSize(14, 14)
 		self.tip:SetImage(restrictedMat)
 	elseif self.Item.Illegal then
 		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(232, 65)
+		self.tip:SetPos(0, 65)
 		self.tip:SetSize(14, 14)
 		self.tip:SetImage(illegalMat)
 	end
@@ -331,7 +329,7 @@ function PANEL:Paint(w, h)
 	if item then
 		surface.SetTextColor(item.Colour or color_white)
 		surface.SetFont("HatchetFont-ItemName")
-		surface.SetTextPos(0, 0)
+		surface.SetTextPos(48, 0)
 		surface.DrawText(item.Name)
 
 		surface.SetDrawColor(topCol2)
@@ -341,7 +339,7 @@ function PANEL:Paint(w, h)
 		surface.SetDrawColor(basiccol)
 		surface.DrawRect(0, 82, w, h - 82)
 
-		draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", w - 6, 4, color_white, TEXT_ALIGN_RIGHT)
+		draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", 6, 4, color_white, TEXT_ALIGN_LEFT)
 
 		if self.Basic then return end
 
