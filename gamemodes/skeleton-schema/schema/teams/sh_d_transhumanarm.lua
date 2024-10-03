@@ -8,6 +8,7 @@ TEAM_OTA = impulse.Teams.Define({
     percentLimit = true,
     limit = 0.15,
     xp = 400,
+    IsWhitelisted = true,
     cp = true,
     blockNameChange = true,
     doorGroup = {1},
