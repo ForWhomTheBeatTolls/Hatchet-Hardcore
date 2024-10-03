@@ -1,21 +1,22 @@
 local PANEL = {}
 
-local baseSizeW, baseSizeH = 300, 20
+local baseSizeW, baseSizeH = 500, 14
 
 function PANEL:Init()
 	self.message = markup.Parse("")
 	self:SetSize(baseSizeW, baseSizeH)
 	self.startTime = CurTime()
 	self.endTime = CurTime() + 7.5
-	self.bordercol = impulse.Config.MainColour
-	self.notifsound = "hatchet/hint.wav"
+
+	self.colnotif = impulse.Config.MainColour
+	self.soundnotif = "hatchet/hint.wav"
 end
 
 function PANEL:SetPanelSettings(col, snd)
-	self.bordercol = col
-	self.notifsound = snd
+	self.colnotif = col
+	self.soundnotif = snd
 
-	surface.PlaySound(self.notifsound)
+	surface.PlaySound(self.soundnotif)
 end
 
 function PANEL:SetMessage(...)
@@ -40,14 +41,13 @@ function PANEL:SetMessage(...)
 	-- set frame position and height to suit the markup
 	local shiftHeight = self.message:GetHeight()
 	self:SetHeight(shiftHeight+baseSizeH)
-	surface.PlaySound(self.notifsound)
-
+	surface.PlaySound(self.soundnotif)
 end
 
-local gradient = Material("gui/gradient_up")
+local gradient = Material("vgui/gradient-d")
 local gradient2 = Material("vgui/gradient-r")
-local darkCol = Color(0, 0, 0, 227)
-local lightCol = Color(0,0,0,208)
+local darkCol = Color(0, 0, 0, 190)
+local lightCol = Color(0,0,0,166)
 local hudBlackGrad = Color(40,40,40,120)
 local lifetime = 10
 
@@ -65,13 +65,14 @@ function PANEL:Paint(w,h)
 
 	-- draw timebar
 	local w2 = math.TimeFraction(self.startTime, self.endTime, CurTime()) * w
-	surface.SetDrawColor(self.bordercol)
-	surface.DrawRect(w2, h-2, w - w2, 2)
-	//surface.SetDrawColor(self.bordercol)
-	surface.DrawRect(285, 0, 20, h)
+	surface.SetDrawColor(self.colnotif)
+	surface.DrawRect(w2, h-2, w - w2, 4)
+	surface.DrawRect(480, 0, 24, h)
 	surface.SetDrawColor(lightCol)
 	surface.SetMaterial(gradient2)
-	surface.DrawTexturedRect(265, 0, 40, h)
+	surface.DrawTexturedRect(420, 0, 80, h)
+	surface.SetMaterial(gradient)
+	surface.DrawTexturedRect(0, 0, w, h)
 end
 
 vgui.Register("impulseNotify", PANEL, "DPanel")
