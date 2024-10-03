@@ -66,7 +66,6 @@ WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 
 
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
-- Fix whitelist system (fuck muhammed)
 -IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
 -Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
