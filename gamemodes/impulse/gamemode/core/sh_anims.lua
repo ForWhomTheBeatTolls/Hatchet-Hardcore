@@ -544,6 +544,7 @@ impulse.Anim.SetModelClass("models/player/impulse_zelpa/male_08.mdl", "citizen_m
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/male_09.mdl", "citizen_male")
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/male_10.mdl", "citizen_male")
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/male_11.mdl", "citizen_male")
+impulse.Anim.SetModelClass("models/schoolboypm/schoolboy.mdl", "citizen_male")
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/female_01.mdl", "citizen_female")
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/female_02.mdl", "citizen_female")
 impulse.Anim.SetModelClass("models/player/impulse_zelpa/female_03.mdl", "citizen_female")
