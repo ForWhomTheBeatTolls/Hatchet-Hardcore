@@ -1,3 +1,5 @@
+local ITEM = {}
+
 ITEM.UniqueID = "trap_bear"
 ITEM.Name = "Bear Trap"
 ITEM.Desc =  "A bear trap."
