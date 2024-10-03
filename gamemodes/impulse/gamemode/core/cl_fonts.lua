@@ -21,7 +21,7 @@
 
 	surface.CreateFont("HatchetFont-Menu32", {
 		font = "Arial",
-		size = ScreenScale(11),
+		size = 32,
 		weight = 800,
 		antialias = true,
 		shadow = false,
