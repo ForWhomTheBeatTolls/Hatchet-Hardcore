@@ -5,14 +5,26 @@ local function NetExploitNotification(ply, msg)
 	end
 end
 
+local function NoWhiteListTeamNotif(ddddd, ply)
+	ply:Notify("You dont have the whitelist for this faction! " .. "(" .. ddddd.name .. ")")
+end
+
 function meta:SetTeam(teamID, forced)
 	local teamData = impulse.Teams.Data[teamID]
 	local teamPlayers = team.NumPlayers(teamID)
 
-	print(teamID)
 	if teamData.isadminonly and !self:IsAdmin() then
 		NetExploitNotification(self, "Attempted to become admin faction: " .. teamData.name)
 		return
+	end
+
+	if teamData.IsWhitelisted then
+		if teamID == 5 then
+			if not self.impulseData.OSWhitelist then
+				NoWhiteListTeamNotif(teamData, self)
+				return 
+			end
+		end
 	end
 
 	self:SetRPName(self:GetSavedRPName())
