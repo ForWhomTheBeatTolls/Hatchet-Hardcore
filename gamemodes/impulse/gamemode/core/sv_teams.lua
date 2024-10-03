@@ -10,7 +10,7 @@ function meta:SetTeam(teamID, forced)
 	local teamPlayers = team.NumPlayers(teamID)
 
 	print(teamID)
-	if teamData.isadminonly and self:IsAdmin() then
+	if teamData.isadminonly and !self:IsAdmin() then
 		NetExploitNotification(self, "Attempted to become admin faction: " .. teamData.name)
 		return
 	end
