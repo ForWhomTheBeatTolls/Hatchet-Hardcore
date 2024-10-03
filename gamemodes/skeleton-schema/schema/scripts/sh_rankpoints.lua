@@ -1,4 +1,4 @@
-function hatchet.CorrectRankpoints()
+function impulse.CorrectRankpoints()
 	for k,ply in pairs(player.GetAll()) do
 	
 		if ply:GetSyncVar(SYNC_RANKPOINTS, -1) < 0 then --This should never happen. There's no reason for it to, but you never know, so why not? :P
@@ -16,7 +16,7 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function hatchet.TakeRankpoints(ply, number, boolean) -- The player to take from / The amount / Whether it should be allowed to go below 0 or not
+function impulse.TakeRankpoints(ply, number, boolean) -- The player to take from / The amount / Whether it should be allowed to go below 0 or not
 
 	if not boolean then boolean = false end
 	if not ply then return end
@@ -42,7 +42,7 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function hatchet.GiveRankpoints(ply, number) -- The player to give to / The amount
+function impulse.GiveRankpoints(ply, number) -- The player to give to / The amount
 	
 	if not number then return end
 	if not isnumber(number) then return end
@@ -59,7 +59,7 @@ end
 
 --------------------------------------------------------------------------------------------------
 
-function hatchet.SetRankpoints(ply, number) -- The player to set the amount of / The amount
+function impulse.SetRankpoints(ply, number) -- The player to set the amount of / The amount
 	
 	if not number then return end
 	if not isnumber(number) then return end
@@ -74,12 +74,18 @@ function hatchet.SetRankpoints(ply, number) -- The player to set the amount of /
 	
 end
 
--------------------------------------Functions End-------------------------------------------------
+-------------------------------------#############################-------------------------------------------------
+-------------------------------------#############################-------------------------------------------------
+-------------------------------------########Functions End########-------------------------------------------------
+-------------------------------------#############################-------------------------------------------------
+-------------------------------------#############################-------------------------------------------------
+
 
 local GiveRPFacingCommand = {
 	adminOnly = true,
     description = "GIVE rankpoints to the person you're facing. Has limited range. (Amount)",
     onRun = function(ply, arg)
+		local amount = tonumber(arg[1])
 		local trace = util.TraceLine({
             start = ply:GetShootPos(),
             endpos = ply:GetShootPos() + ply:GetAimVector() * 1050,
@@ -87,13 +93,16 @@ local GiveRPFacingCommand = {
         })
 		if trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() then
 			
-			if isnumber(arg[1]) then
-				ply:Notify("Gave "..trace.Entity:Nick().." "..arg[1].." rankpoints.")
-			elseif !isnumber(arg[1]) or arg[1] < 0 then
-				ply:Notify("Input value is NaN.")
+			if type(amount) == "number" and (amount > 0) then
+				ply:Notify("Gave "..trace.Entity:Nick().." "..amount.." rankpoints.")
+				impulse.GiveRankpoints(trace.Entity, amount)
+			else
+				ply:Notify("Input value is NaN or invalid.")
 			end
 			
-			hatchet.GiveRankpoints(trace.Entity, arg[1])
+			print(type(amount))
+			
+			
 			
 		end
 	end
@@ -106,6 +115,7 @@ local TakeRPFacingCommand = {
 	adminOnly = true,
     description = "TAKE rankpoints from the person you're facing. Has limited range. (Amount / Danger Mode)",
     onRun = function(ply, arg)
+		local amount = tonumber(arg[1])
 		local trace = util.TraceLine({
             start = ply:GetShootPos(),
             endpos = ply:GetShootPos() + ply:GetAimVector() * 1050,
@@ -114,13 +124,14 @@ local TakeRPFacingCommand = {
 		if trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() then
 		
 			
-			if isnumber(arg[1]) then
-				ply:Notify("Took "..arg[1].." rankpoints from "..trace.Entity:Nick()".")
-			elseif !isnumber(arg[1]) or arg[1] < 0 then
+			if type(amount) == "number" and (amount > 0) then
+				ply:Notify("Took "..amount.." rankpoints from "..trace.Entity:Nick()..".")
+				impulse.TakeRankpoints(trace.Entity, amount, arg[2])
+			else
 				ply:Notify("Input value is NaN or invalid.")
 			end
 			
-			hatchet.TakeRankpoints(trace.Entity, arg[1], arg[2])
+			
 			
 		end
 	end
@@ -133,6 +144,7 @@ local SetRPFacingCommand = {
 	adminOnly = true,
     description = "Set the rankpoints of the person you're facing. Has limited range. (Amount)",
     onRun = function(ply, arg)
+		local amount = tonumber(arg[1])
 		local trace = util.TraceLine({
             start = ply:GetShootPos(),
             endpos = ply:GetShootPos() + ply:GetAimVector() * 1050,
@@ -141,13 +153,13 @@ local SetRPFacingCommand = {
 		if trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() then
 		
 			
-			if isnumber(arg[1]) then
-				ply:Notify("Set the rankpoints of "..trace.Entity:Nick().." to "..arg[1]".")
-			elseif !isnumber(arg[1]) then
+			if type(amount) == "number" then
+				ply:Notify("Set the rankpoints of "..trace.Entity:Nick().." to "..amount..".")
+				impulse.SetRankpoints(trace.Entity, amount)
+			else
 				ply:Notify("Input value is NaN or invalid.")
 			end
 			
-			hatchet.SetRankpoints(trace.Entity, arg[1])
 			
 		end
 	end
