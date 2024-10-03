@@ -96,7 +96,7 @@ function PANEL:SetupItems()
 	
 	local List = vgui.Create( "DIconLayout", Scroll )
 	List:SetSize(w / 6, h)
-	List:SetPos(w / 2.6, h / 15)
+	List:SetPos(w / 2.7, h / 15)
 	List:SetSpaceY( 5 ) -- Sets the space in between the panels on the Y Axis by 5
 	List:SetSpaceX( 5 ) -- Sets the space in between the panels on the X Axis by 5
 
@@ -132,6 +132,8 @@ function PANEL:SetupItems()
 
 				local item = List:Add("impulseInventoryItem")
 			   	item:SetItem(k, w)
+				item:Dock( TOP )
+				item:DockMargin( 0, 0, 0, 2 )
 			   	item.InvID = k.realKey
 			   	item.InvPanel = self
 			   	self.items[k.id] = item
@@ -151,6 +153,8 @@ function PANEL:SetupItems()
 			else
 				local item = List:Add("impulseInventoryItem")
 			   	item:SetItem(k, w)
+				item:Dock( TOP )
+				item:DockMargin( 0, 0, 0, 2 )
 			   	item.InvID = k.realKey
 			   	item.InvPanel = self
 			   	self.items[k.id] = item
