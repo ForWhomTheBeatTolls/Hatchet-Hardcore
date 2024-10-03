@@ -122,8 +122,8 @@ local function OrganizeNotices(i)
     local lastHeight = ScrH() + 1
 
     for k, v in ipairs(impulse.notices) do
-        local height = lastHeight - 50
-        v:MoveTo(scrW - (v:GetWide()), height, 0.2, (k / #impulse.notices) * 0.2, nil)
+        local height = lastHeight - v:GetTall()
+        v:MoveTo(scrW - (v:GetWide()), height, 0.15, (k / #impulse.notices) * 0.25, nil)
         lastHeight = height
     end
 end
@@ -136,7 +136,7 @@ local function angry_notify(message)
 
     notice:SetMessage(message)
     notice:SetPanelSettings(Color(189, 23, 37), Sound("hatchet/buttonclickrelease.wav"))
-    notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 4) * (notice:GetTall() + 2) + 4) -- needs to be recoded to support variable heights
+    notice:SetPos(ScrW(), ScrH() - (i - 1) * (notice:GetTall() + 4) + 4) -- needs to be recoded to support variable heights
     notice:MoveToFront()
     notice:AlphaTo(255, 2, 0)
     OrganizeNotices(i)
@@ -169,7 +169,7 @@ local function normal_notify(message)
 
     notice:SetMessage(message)
     -- notice:SetPanelSettings(Color(255, 0, 100), Sound("hatchet/buttonclickrelease.wav"))
-    notice:SetPos(ScrW() / ScrW(), ScrH() - (i - 4) * (notice:GetTall() + 2) + 4) -- needs to be recoded to support variable heights
+    notice:SetPos(ScrW(), ScrH() - (i - 1) * (notice:GetTall() + 4) + 4) -- needs to be recoded to support variable heights
     notice:MoveToFront()
     notice:AlphaTo(255, 2, 0)
     OrganizeNotices(i)
