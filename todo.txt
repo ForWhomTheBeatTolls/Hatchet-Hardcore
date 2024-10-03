@@ -35,44 +35,53 @@ NEED TWEAKING IN DESIGN:
 - Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
 - Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
 - Make it so via the menu you're able to change your model (120T), name (60T), skin (30T)
+--------------------------------------------------------------
+
+SERVER RELEASE TO-DO LIST:
+-Saboteurs can make booby traps
+-Figure out a way to incorporate grenades into the server
+-Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
+-IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
+
+-----------------------------------------------------
 
 
 TO-DO LIST:
------------------------------------------------------
+
+
+-This one is important, add a documentation text file for certain features and functions.
 
 -Brainstorm ideas for Workforce entities
--Bunch of other shit I can't remember
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Clean up code (Comments and old code that we don't need)
 -Dequavion Ammo Bender
-
 -Add crafting via the use of fire
-
--Saboteurs can make booby traps
--Figure out a way to incorporate grenades into the server
 -Brickbat?
 
--Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 
--IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
-
+-----------------------------------------------------
 
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
-------------------------
+
+
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 - Fix whitelist system (fuck muhammed)
 -IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
 -Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
 
+-----------------------------------------------------
+
 MUHAMMED CODING SIDE:
-------------------------
+
+
 -CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 
+-----------------------------------------------------
+
 DONE LIST:
----------------------
 
 - remake player settings, turn it into a info\rule\page area.
 - Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
