@@ -20,6 +20,10 @@ net.Receive("HatchetCivilWorkerSignup", function()
 		
 end)
 
+net.Receive("HatchetTerminalCivilOpen", function()
+	vgui.Create("CombineCivilTerminal_Screen")
+end)
+
 net.Receive("HatchetVortRPName", function()
 	Derma_StringRequest("impulse", "it seems like this is your first time playing as a vortigaunt! Enter your vort Name:", nil, function(text)
 		net.Start("impulseChangeRPName")
