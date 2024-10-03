@@ -26,6 +26,8 @@ util.AddNetworkString("HatchetSelectWorkerJobStart")
 util.AddNetworkString("HatchetBecomeRebelEnd")
 util.AddNetworkString("HatchetBecomeRebelStart")
 util.AddNetworkString("HatchetVortRPName")
+util.AddNetworkString("HatchetTerminalCivilOpen")
+
 util.AddNetworkString("impulseHL2RPClassBecome")
 
 local function NetExploitNotification(ply, msg)
