@@ -81,11 +81,13 @@ function InitializeHuds()
 		local healthIcon = Material("hatchet/plus.png")
 		local hungerIcon = Material("hatchet/food.png")
 		local gradient = Material("gui/gradient_up")
+		local bleedind = Material("hatchet/overlays/screendamage.png")
 		local basecol = Color(85, 85, 85)
 		local basecol2 = Color(0, 0, 0, 130)
 		local basecol3 = Color(0, 0, 0, 255)
 		local basecol4 = Color(226, 226, 226)
 		local hpcolor = Color(252, 50, 50)
+		local bleedcol = Color(255,255,255,255)
 		local hungercolor = Color(252, 164, 50)
 		local superstaminacolor = Color(71, 201, 20)
 		surface.SetDrawColor(basecol)
@@ -143,6 +145,16 @@ function InitializeHuds()
 				surface.SetTextPos(w * .008, h - 134)
 				surface.DrawText("Props: " .. LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0) .. "/" .. ((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
 			end
+
+			---BLEED---
+		
+			if LocalPlayer():GetNWInt("BleedRate") > 0 then
+				surface.SetMaterial(bleedind)
+				surface.SetDrawColor(255, 255, 255, 51 * LocalPlayer():GetNWInt("BleedRate"))
+				surface.DrawTexturedRect(0, 0, w, h, 1)
+			end
+
+			----
 		end
 	end)
 end
