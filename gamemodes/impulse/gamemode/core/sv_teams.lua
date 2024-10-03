@@ -9,7 +9,8 @@ function meta:SetTeam(teamID, forced)
 	local teamData = impulse.Teams.Data[teamID]
 	local teamPlayers = team.NumPlayers(teamID)
 
-	if teamData.isadminonly and !self:IsAdmin() then
+	print(teamID)
+	if teamData.isadminonly and self:IsAdmin() then
 		NetExploitNotification(self, "Attempted to become admin faction: " .. teamData.name)
 		return
 	end
@@ -367,13 +368,11 @@ end
 
 function meta:HasTeamWhitelist(team, level)
 	if not self.Whitelists then
-
 		return false
 	end
 
-	-- PrintTable(self.Whitelists)
+	local whitelist = self.Whitelists[team]
 
-	local whitelist = self.Whitelists["" .. team .. ""]
 	if whitelist then
 		if level then
 			return whitelist >= level
@@ -381,6 +380,7 @@ function meta:HasTeamWhitelist(team, level)
 			return true
 		end
 	end
+
 	return false
 end
 
