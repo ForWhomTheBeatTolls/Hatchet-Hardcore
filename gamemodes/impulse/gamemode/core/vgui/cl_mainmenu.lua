@@ -263,7 +263,7 @@ function PANEL:Init()
 	-- end
 
 	local button = vgui.Create("DButton", self)
-	button:SetPos(w/1.2, 22)
+	button:SetPos(0, h / 1.05)
 	button:SetFont("HatchetFont-Menu32")
 	button:SetText("Disconnect")
 	button:SizeToContents()
@@ -288,7 +288,7 @@ function PANEL:Init()
 	end
 
 	local button = vgui.Create("DImageButton", self)
-	button:SetPos(self:GetWide() - 30 - 53, 10)
+	button:SetPos(180, h / 1.07)
 	button:SetImage("impulse/icons/social/discord.png")
 	button:SetSize(62, 55)
 
