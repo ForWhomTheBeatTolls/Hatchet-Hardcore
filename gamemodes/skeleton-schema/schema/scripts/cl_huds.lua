@@ -91,22 +91,22 @@ function InitializeHuds()
 		local hungercolor = Color(252, 164, 50)
 		local superstaminacolor = Color(71, 201, 20)
 		surface.SetDrawColor(basecol)
-		surface.DrawRect(w * .018, h * .9, hudWidth * 100 / 100, hudHeight) --hp
-		surface.DrawRect(w * .018, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
+		surface.DrawRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
+		surface.DrawRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
 		surface.SetDrawColor(basecol4)
 		surface.SetMaterial(healthIcon)
 		surface.DrawTexturedRect(w * .006, h * .897, 16, 16)
 		surface.SetMaterial(hungerIcon)
 		surface.DrawTexturedRect(w * .006, h * .914, 16, 16)
-		surface.DrawRect(w * .018, h * .9, hudWidth * LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), hudHeight) --hp
-		surface.DrawRect(w * .018, h * .918, hudWidth * LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) / 100, hudHeight) --hunger
+		surface.DrawRect(w * .02, h * .9, hudWidth * LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), hudHeight) --hp
+		surface.DrawRect(w * .02, h * .918, hudWidth * LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) / 100, hudHeight) --hunger
 		surface.SetDrawColor(basecol2)
 		surface.SetMaterial(gradient)
-		surface.DrawTexturedRect(w * .018, h * .9, hudWidth * 100 / 100, hudHeight) --hp
-		surface.DrawTexturedRect(w * .018, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
+		surface.DrawTexturedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
+		surface.DrawTexturedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
 		surface.SetDrawColor(basecol3)
-		surface.DrawOutlinedRect(w * .018, h * .9, hudWidth * 100 / 100, hudHeight, 1) --hp
-		surface.DrawOutlinedRect(w * .018, h * .918, hudWidth * 100 / 100, hudHeight, 1) --hunger
+		surface.DrawOutlinedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight, 1) --hp
+		surface.DrawOutlinedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight, 1) --hunger
 		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
 		local pos
