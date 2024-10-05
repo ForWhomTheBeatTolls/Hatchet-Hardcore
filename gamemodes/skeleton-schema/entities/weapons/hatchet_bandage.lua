@@ -6,17 +6,17 @@ SWEP.Spawnable = true --Must be true
 SWEP.AdminOnly = false
 
 SWEP.Base = "hatchet_medicalbase"
-SWEP.hidehud = true
 
 SWEP.hidehud = true
 SWEP.OffsetVector = Vector(6, -0.5, -2.4)
 SWEP.OffsetAngle = Angle(180, 90, -90)
 SWEP.WorldModelOfHand   = "models/warz/items/bandage.mdl"
-
-
-SWEP.AmountOfHealth = 10
+SWEP.AmountOfHealth = 15
 SWEP.HealSound = "items/smallmedkit1.wav"
-SWEP.AmountOfUses = 1
+SWEP.HealDelay = .5
+SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
+SWEP.Primary.ClipSize = 1 -- How much bullets are in the mag
+SWEP.Primary.Ammo = "bandage_hatchet_ammo" --The ammo type will it use
 
 -- SWEP.Primary.Sound = Sound("")
 -- SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
