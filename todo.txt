@@ -37,6 +37,7 @@ NEED TWEAKING IN DESIGN:
 SERVER RELEASE TO-DO LIST:
 -Saboteurs can make booby traps
 -Figure out a way to incorporate grenades into the server
+-Change m_base to a folder structure and seperate into init, cl_init and shared (since attacking is desynced between client and server)
 
 -IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
 
