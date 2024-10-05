@@ -46,6 +46,7 @@ function impulse.RegisterItem(item)
 
 			if wep and IsValid(wep) then
 				self.clip = wep:Clip1()
+				ply:SelectWeapon("impulse_hands")
 				ply:StripWeapon(class)
 			end
 
