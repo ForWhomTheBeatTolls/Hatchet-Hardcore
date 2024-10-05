@@ -31,10 +31,7 @@ NEED TWEAKING IN CODING:
 
 NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
-- Implement a temporary OS solution
-- Inventory, make it so if you're too close to a wall the camera doesn't change, and instead only the inventory opens
-- Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
-- Make it so via the menu you're able to change your model (120T), name (60T), skin (30T)
+
 --------------------------------------------------------------
 
 SERVER RELEASE TO-DO LIST:
@@ -48,7 +45,7 @@ SERVER RELEASE TO-DO LIST:
 
 TO-DO LIST:
 
-
+- Implement a temporary OS solution (I added whitelistes, so technically it isnt "Temporary" anymore)
 -This one is important, add a documentation text file for certain features and functions.
 
 -Brainstorm ideas for Workforce entities
@@ -64,10 +61,11 @@ TO-DO LIST:
 
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 
-
+- Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
+- Make it so via the menu you're able to change your model (120T), name (60T), skin (30T)
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
--IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
--Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
+- IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
+- Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
 
 -----------------------------------------------------
 
