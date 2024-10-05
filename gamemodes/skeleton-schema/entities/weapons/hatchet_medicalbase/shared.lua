@@ -6,7 +6,6 @@ SWEP.Spawnable = false --Must be true
 SWEP.AdminOnly = false
 
 SWEP.Base = "m_base"
-SWEP.hidehud = true
 
 SWEP.hidehud = true
 SWEP.OffsetVector = Vector(6, -0.5, -2.4)
@@ -15,7 +14,11 @@ SWEP.WorldModelOfHand   = "models/warz/items/medkit.mdl"
 
 SWEP.AmountOfHealth = 15
 SWEP.HealSound = "items/smallmedkit1.wav"
-SWEP.AmountOfUses = 5
+SWEP.HealDelay = 2
+-- SWEP.AmountOfUses = 5 // Ignore this, we arent using it anymore
+SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
+SWEP.Primary.ClipSize = 1 -- How much bullets are in the mag
+SWEP.Primary.Ammo = "medkit_base" --The ammo type will it use
 
 -- SWEP.Primary.Sound = Sound("")
 -- SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
@@ -43,7 +46,11 @@ SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
 
-local d = false
+local Delay = CurTime()
+
+-- function SWEP:Think()
+-- 	print(self:GetOwner():GetActiveWeapon():Clip1())
+-- end
 
 function SWEP:PrimaryAttack()
 
@@ -59,22 +66,19 @@ function SWEP:PrimaryAttack()
 		return
 	end
 
-	self.AmountOfUses = self.AmountOfUses - 1
-	print(self.AmountOfUses)
+	self:TakePrimaryAmmo(1)
 	self:EmitSound(self.HealSound)
 	ent:SetHealth(math.Clamp( ent:Health() + self.AmountOfHealth, 0, ent:GetMaxHealth() ))
+	ent:ScreenFade(1, Color(201, 217, 242, 180), 1, 0)
 
-	self:SetNextPrimaryFire(CurTime() + 2)
-	timer.Simple(2, function()
-		d = false
-	end)
+	Delay = CurTime() + self.HealDelay
+	self:SetNextPrimaryFire(CurTime() + self.HealDelay)
 
 	if SERVER then
-		if self.AmountOfUses <= 0 then
+		if self:GetOwner():GetActiveWeapon():Clip1() <= 0 then
 			local curwep = self:GetOwner():GetActiveWeapon():GetClass()
 			-- print(curwep)
 			self:GetOwner():Notify("You're out!")
-
 			self:GetOwner():SelectWeapon("impulse_hands")
 			self:GetOwner():StripWeapon(curwep)
 		end
@@ -82,14 +86,36 @@ function SWEP:PrimaryAttack()
 
 end
 
+function SWEP:SecondaryAttack()
+	if Delay < CurTime() then
+		self:TakePrimaryAmmo(1)
+
+		self:EmitSound(self.HealSound)
+		self:GetOwner():SetHealth(math.Clamp( self:GetOwner():Health() + self.AmountOfHealth, 0, self:GetOwner():GetMaxHealth() ))
+		self:SetNextPrimaryFire(CurTime() + self.HealDelay)
+		self:GetOwner():ScreenFade(1, Color(201, 217, 242, 180), 1, 0)
+
+		if SERVER then
+			if self:GetOwner():GetActiveWeapon():Clip1() <= 0 then
+				local curwep = self:GetOwner():GetActiveWeapon():GetClass()
+				-- print(curwep)
+				self:GetOwner():Notify("You're out!")
+	
+				self:GetOwner():SelectWeapon("impulse_hands")
+				self:GetOwner():StripWeapon(curwep)
+			end
+		end
+		Delay = CurTime() + self.HealDelay
+	end
+end
+
 if SERVER then
 
 	local broom = ents.Create("prop_dynamic")
 
 	function SWEP:Deploy()
-		print(self.AmountOfUses)
 
-		print(self:GetOwner().curwepmodel)
+		-- print(self:GetOwner().curwepmodel)
 		if IsValid(self:GetOwner().curwepmodel) then
 			self:GetOwner().curwepmodel:Remove()
 			self:GetOwner().curwepmodel = nil
