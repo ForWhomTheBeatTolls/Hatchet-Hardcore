@@ -31,6 +31,7 @@ SWEP.Primary.HitDelay = 0.03
 SWEP.Primary.HullSize = 12
 SWEP.Primary.Range = 80
 SWEP.Primary.StunTime = 1.5
+SWEP.Primary.Bleeder = true
 
 function SWEP:PrePrimaryAttack()
 	local vm = self.Owner:GetViewModel()
