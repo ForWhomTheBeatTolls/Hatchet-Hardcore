@@ -65,7 +65,6 @@ TO-DO LIST:
 WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 
 
--Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
 -IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
 -Add industrial worker tasks: Vending Machine Maintenance (collecting the money and bringing it to a combine machine), Factory Line work (item manufacturing like Kevlar, Flashlights, etc.), repairs of stuff around the city
@@ -82,6 +81,8 @@ MUHAMMED CODING SIDE:
 
 DONE LIST:
 
+
+-Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
 - remake player settings, turn it into a info\rule\page area.
 - Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
