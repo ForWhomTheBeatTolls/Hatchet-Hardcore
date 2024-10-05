@@ -649,7 +649,7 @@ function GM:HUDPaintBackground()
 	if nextOverheadCheck < realTime then
 		nextOverheadCheck = realTime + 0.5
 		trace.start = lp.GetShootPos(lp)
-		trace.endpos = trace.start + lp.GetAimVector(lp) * 300
+		trace.endpos = trace.start + lp.GetAimVector(lp) * 100
 		trace.filter = lp
 		trace.mins = Vector(-4, -4, -4)
 		trace.maxs = Vector(4, 4, 4)
