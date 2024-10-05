@@ -51,8 +51,11 @@ function SWEP:PrimaryAttack()
 	if SERVER then
 		self:GetOwner():ForceSequence("sweep")
 		self:GetOwner():EmitSound("impulse/broom.wav")
+
+		self:GetOwner():Freeze(true)
 	end
 
+	timer.Simple(3, function() self:GetOwner():Freeze(false) end)
 	self:SetNextPrimaryFire(CurTime() + 3)
 end
 
@@ -61,6 +64,10 @@ if SERVER then
 	local broom = ents.Create("prop_dynamic")
 
 	function SWEP:Deploy()
+		if IsValid(self:GetOwner().curwepmodel) then
+			self:GetOwner().curwepmodel:Remove()
+			self:GetOwner().curwepmodel = nil
+		end
 		if not IsValid(broom) then
 			broom = ents.Create("prop_dynamic")
 		end
@@ -72,12 +79,21 @@ if SERVER then
 		broom:Spawn()
 		broom:SetName(self:GetOwner():SteamID64() .. "_Broom")
 		broom:Fire("setparentattachment", "cleaver_attachment", 0.01)
+
+		self:GetOwner().curwepmodel = broom
 	end
 
 	function SWEP:Holster()
 		-- print("Broom: " .. broom:GetName())
-		if broom:GetName() == self:GetOwner():SteamID64() .. "_Broom" then
+		if IsValid(broom) and broom:GetName() == self:GetOwner():SteamID64() .. "_Broom" then
 			broom:Remove()
+			return true
+		end
+
+		if IsValid(self:GetOwner().curwepmodel) then
+			-- print("side 2")
+			self:GetOwner().curwepmodel:Remove()
+			self:GetOwner().curwepmodel = nil
 			return true
 		end
 	end
