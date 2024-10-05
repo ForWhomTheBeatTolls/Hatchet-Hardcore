@@ -94,7 +94,7 @@
 
 	hook.Add("EntityTakeDamage", "HatchetFFDamage", function(ent, dmg)
 		if ent:IsPlayer() and dmg:GetAttacker():IsPlayer() then
-			if ent.IsBlocking == true then
+			if ent.IsBlocking == true and dmg:GetAttacker():GetActiveWeapon():GetClass() == "m_unarmed" and !dmg:IsDamageType(DMG_BLAST) then
 				dmg:SetDamage(dmg / 2.5)
 			end
 		end
