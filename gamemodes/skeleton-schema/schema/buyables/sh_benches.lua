@@ -22,3 +22,14 @@ impulse.Business.Define("Microwave", {
     	return true
     end
 })
+impulse.Business.Define("Barrel", {
+    entity = "m_barrel",
+    model = "models/props_c17/oildrum001.mdl", -- old: models/props_junk/wood_crate002a.mdl
+    description = "Can store fuel.",
+    price = 150,
+    refund = true,
+	teams = {TEAM_RESISTANCE},
+    postSpawn = function(ent, ply)
+        ent:SetOwner(ply)
+    end
+})
