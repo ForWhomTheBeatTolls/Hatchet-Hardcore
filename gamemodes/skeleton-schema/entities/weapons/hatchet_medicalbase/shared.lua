@@ -1,0 +1,146 @@
+SWEP.PrintName = "HEALINGBASE" -- The name of the weapon
+SWEP.Author = "WillMaster"
+SWEP.Category = "Hatchet"
+
+SWEP.Spawnable = false --Must be true
+SWEP.AdminOnly = false
+
+SWEP.Base = "m_base"
+SWEP.hidehud = true
+
+SWEP.hidehud = true
+SWEP.OffsetVector = Vector(6, -0.5, -2.4)
+SWEP.OffsetAngle = Angle(180, 90, -90)
+SWEP.WorldModelOfHand   = "models/warz/items/medkit.mdl"
+
+SWEP.AmountOfHealth = 15
+SWEP.HealSound = "items/smallmedkit1.wav"
+SWEP.AmountOfUses = 5
+
+-- SWEP.Primary.Sound = Sound("")
+-- SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
+-- SWEP.Primary.ClipSize = 1  -- How much bullets are in the mag
+-- SWEP.Primary.Ammo = "medkit" --The ammo type will it use
+
+SWEP.Slot = 2
+SWEP.SlotPos = 1
+SWEP.DrawCrosshair = true --Does it draw the crosshair
+SWEP.DrawAmmo = true
+SWEP.Weight = 0 --Priority when the weapon your currently holding drops
+SWEP.AutoSwitchTo = false
+SWEP.AutoSwitchFrom = false
+
+SWEP.ViewModelFlip		= false
+SWEP.ViewModelFOV		= 60
+SWEP.ViewModel			= "models/weapons/v_bugbait.mdl"
+SWEP.WorldModel			= ""
+SWEP.UseHands           = true
+SWEP.IsAlwaysRaised = true
+
+SWEP.HoldType = "normal"
+
+SWEP.FiresUnderwater = false
+
+SWEP.CSMuzzleFlashes = true
+
+local d = false
+
+function SWEP:PrimaryAttack()
+
+	local trace = util.TraceLine({
+
+		start = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 25,
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 500,
+		filter = ply
+	})
+
+	local ent = trace.Entity
+	if !ent:IsPlayer() then
+		return
+	end
+
+	self.AmountOfUses = self.AmountOfUses - 1
+	print(self.AmountOfUses)
+	self:EmitSound(self.HealSound)
+	ent:SetHealth(math.Clamp( ent:Health() + self.AmountOfHealth, 0, ent:GetMaxHealth() ))
+
+	self:SetNextPrimaryFire(CurTime() + 2)
+	timer.Simple(2, function()
+		d = false
+	end)
+
+	if SERVER then
+		if self.AmountOfUses <= 0 then
+			local curwep = self:GetOwner():GetActiveWeapon():GetClass()
+			-- print(curwep)
+			self:GetOwner():Notify("You're out!")
+
+			self:GetOwner():SelectWeapon("impulse_hands")
+			self:GetOwner():StripWeapon(curwep)
+		end
+	end
+
+end
+
+if SERVER then
+
+	local broom = ents.Create("prop_dynamic")
+
+	function SWEP:Deploy()
+		print(self.AmountOfUses)
+
+		print(self:GetOwner().curwepmodel)
+		if IsValid(self:GetOwner().curwepmodel) then
+			self:GetOwner().curwepmodel:Remove()
+			self:GetOwner().curwepmodel = nil
+		end
+		timer.Simple(0, function()
+			if not IsValid(broom) then
+				broom = ents.Create("prop_dynamic")
+			end
+			broom:SetModel(self.WorldModelOfHand)
+			broom:DrawShadow(true)
+			broom:SetMoveType(MOVETYPE_NONE)
+			broom:SetParent(self:GetOwner())
+			broom:SetSolid(SOLID_NONE)
+			broom:Spawn()
+			broom:SetName(self:GetOwner():SteamID64() .. "_Broom")
+			broom:Fire("setparentattachment", "anim_attachment_RH", 0.01)
+			timer.Simple(0.016, function()
+	
+				local boneid = self:GetOwner():LookupBone( "ValveBiped.Bip01_R_Hand" ) -- Right Hand
+				if !boneid then return end
+	
+				local matrix = self:GetOwner():GetBoneMatrix(boneid)
+				if !matrix then return end
+	
+				local newPos, newAng = LocalToWorld(self.OffsetVector, self.OffsetAngle, matrix:GetTranslation(), matrix:GetAngles())
+		
+				if IsValid(broom) then
+					broom:SetPos(newPos)
+					broom:SetAngles(newAng)
+				end
+			end)
+
+			self:GetOwner().curwepmodel = broom
+
+		end)
+
+	end
+
+	function SWEP:Holster()
+		-- print("Broom: " .. broom:GetName())
+		if IsValid(broom) and broom:GetName() == self:GetOwner():SteamID64() .. "_Broom" then
+			broom:Remove()
+			return true
+		end
+
+		if IsValid(self:GetOwner().curwepmodel) then
+			-- print("side 2")
+			self:GetOwner().curwepmodel:Remove()
+			self:GetOwner().curwepmodel = nil
+			return true
+		end
+	end
+
+end
