@@ -9,6 +9,8 @@ SWEP.Primary.DefaultClip = -1
 
 SWEP.Primary.Sound = Sound("WeaponFrag.Roll")
 SWEP.Primary.ImpactSound = Sound("Canister.ImpactHard")
+SWEP.Primary.Bleeder = false
+
 
 function SWEP:CanPrimaryAttack()
 	if self.Owner.Stunned then
@@ -26,14 +28,22 @@ function SWEP:PrimaryAttack()
 	if self.PrePrimaryAttack then
 		self.PrePrimaryAttack(self)
 	end
-
+	
+	local ammotype
+	
+	if self.Primary.Bleeder == true then
+		ammotype = "Snark"
+	else
+		ammotype = "Hornet"
+	end
+	
 	if self.Primary.HitDelay then
 		timer.Simple(self.Primary.HitDelay, function()
 			if IsValid(self) and IsValid(self.Owner) then
 				if SERVER then
 				local bullet = {}
 				bullet.Num    = 1
-				bullet.AmmoType = "Snark"
+				bullet.AmmoType = ammotype
 				bullet.Src    = self.Owner:GetShootPos()
 				bullet.Dir    = self.Owner:GetAimVector()
 				bullet.Spread = Vector(0, 0, 0)
@@ -97,7 +107,7 @@ end)
 		if SERVER then
 		local bullet = {}
 		bullet.Num    = 1
-		bullet.AmmoType = "Snark"
+		bullet.AmmoType = ammotype
 		bullet.Src    = self.Owner:GetShootPos()
 		bullet.Dir    = self.Owner:GetAimVector()
 		bullet.Spread = Vector(0, 0, 0)
