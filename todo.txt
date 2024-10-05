@@ -72,7 +72,7 @@ WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 MUHAMMED CODING SIDE:
 
 
--CP Rankpoint deductions, awards, suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
+-CP suspensions, defunctions, blacklists, information terminals, gear selection terminal, oh my days this shit never ends
 -Add rewards and punishments for CPs, rankpoints, and make it so if they kill another CP without them being marked as defunct by dispatch, they get marked defunct and a strike gets added onto their IC punishments
 
 -----------------------------------------------------
@@ -129,3 +129,4 @@ DONE LIST:
 -Add bear traps, explosive barrels
 -Remake death animations
 -Fix impulse_hands not being able to pick up items that the player can't collide with (Kind of? Couldn't fix impulse hands so I changed item collision groups)
+-CP Rankpoint deductions, awards
