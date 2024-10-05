@@ -31,6 +31,7 @@ SWEP.Primary.NumShots = 1
 SWEP.Primary.Delay = 0.7
 SWEP.Primary.HullSize = 12
 SWEP.Primary.Range = 75
+SWEP.Primary.Bleeder = false
 
 sound.Add({
 	name = "lsStunstickBuzz",
