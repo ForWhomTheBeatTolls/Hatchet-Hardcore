@@ -1,0 +1,6 @@
+This list explains which does which.. uhh yeah
+
+meta:RTJLog(msg) //Logs via the RTJ Bot
+
+meta:AlarmNetExploit(reason, actiontype) // Does a net exploit alarm, actiontype : "kick"
+
