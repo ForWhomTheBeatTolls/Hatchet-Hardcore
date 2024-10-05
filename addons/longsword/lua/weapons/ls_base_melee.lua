@@ -30,9 +30,13 @@ function SWEP:PrimaryAttack()
 	end
 	
 	local ammotype
-	
-	if self.Primary.Bleeder == true then
-		ammotype = "Snark"
+
+	if self.Primary.Bleeder then
+		if self.Primary.Bleeder == true then
+			ammotype = "Snark"
+		else
+			ammotype = "Hornet"
+		end
 	else
 		ammotype = "Hornet"
 	end
