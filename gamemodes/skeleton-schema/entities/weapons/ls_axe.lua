@@ -33,6 +33,7 @@ SWEP.Primary.Delay = 0.9
 SWEP.Primary.Range = 75
 SWEP.Primary.StunTime = 0.3
 SWEP.Primary.Automatic = true
+SWEP.Primary.Bleeder = false
 
 function SWEP:PrePrimaryAttack()
 	local vm = self.Owner:GetViewModel()
