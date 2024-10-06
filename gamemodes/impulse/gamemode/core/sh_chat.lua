@@ -37,10 +37,10 @@ end
 
 local oocCol = color_white
 local oocTagCol = Color(200, 0, 0)
-local yellCol = Color(255, 140, 0)
-local whisperCol = Color(65, 105, 225)
+local yellCol = Color(214, 71, 46)
+local whisperCol = Color(80, 93, 133)
 local infoCol = Color(135, 206, 250)
-local talkCol = Color(255, 255, 100)
+local talkCol = Color(223, 223, 223)
 local radioCol = Color(55, 146, 21)
 local dispCol = Color(90, 244, 255)
 local pmCol = Color(45, 154, 6)
@@ -545,10 +545,10 @@ if CLIENT then
 	local infoCol = Color(135, 206, 250)
 	local oocCol = color_white
 	local oocTagCol = Color(200, 0, 0)
-	local yellCol = Color(255, 140, 0)
-	local whisperCol = Color(65, 105, 225)
+	local yellCol = Color(214, 71, 46)
+	local whisperCol = Color(67, 156, 197)
 	local infoCol = Color(135, 206, 250)
-	local talkCol = Color(255, 255, 100)
+	local talkCol = Color(223, 223, 223)
 	local radioCol = Color(65, 120, 200)
 	local pmCol = Color(45, 154, 6)
 	local advertCol = Color(255, 174, 66)
@@ -579,8 +579,9 @@ if CLIENT then
 		end
 
 
-		impulse.customChatFont = "Impulse-ChatMedium"
+		impulse.customChatFont = "Impulse-ChatTalk"
 
+		print(speaker:KnownName())
 
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
@@ -661,14 +662,18 @@ if CLIENT then
 			chatdesc = "An unknown person stands before you."
 		end
 
-		impulse.customChatFont = "Impulse-ChatMedium"
+		impulse.customChatFont = "Impulse-YellTalk"
 
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, yellCol, " yells: ", message)
+		elseif speaker == LocalPlayer() then
+			chat.AddText(speaker, yellCol, " yells: ", message)
 		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
+		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
+			chat.AddText(speaker, yellCol, " yells: ", message)
 		else
 			chat.AddText(speaker, yellCol, " yells: ", message)
 		end
@@ -690,14 +695,18 @@ if CLIENT then
 			chatdesc = "An unknown person stands before you."
 		end
 
-		impulse.customChatFont = "Impulse-ChatSmall"
+		impulse.customChatFont = "Impulse-WhisperTalk"
 
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
 			chat.AddText(speaker, whisperCol, " whispers: ", message)
+		elseif speaker == LocalPlayer() then
+			chat.AddText(speaker, whisperCol, " whispers: ", message)
 		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
 			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
+		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
+			chat.AddText(speaker, whisperCol, " whispers: ", message)
 		else
 			chat.AddText(speaker, whisperCol, " whispers: ", message)
 		end
@@ -725,13 +734,17 @@ if CLIENT then
 		
 		
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
+			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
+			chat.AddText(speaker, talkCol, " ", message)
+		elseif speaker == LocalPlayer() then
+			chat.AddText(speaker, talkCol, " ", message)
 		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(talkCol, "[ ", chatdesc, " ]", " ", message)
+			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " ", message)
+		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
+			chat.AddText(speaker, talkCol, " ", message)
 		else
-			chat.AddText(talkCol, speaker:KnownName(), " ", message)
+			chat.AddText(speaker, talkCol, " ", message)
 		end
 	end)
 
