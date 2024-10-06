@@ -37,22 +37,24 @@ function impulse.chatBox.buildBox()
 	end
 	
 	impulse.chatBox.entry = vgui.Create("DTextEntry", impulse.chatBox.frame) 
-	impulse.chatBox.entry:SetSize( impulse.chatBox.frame:GetWide() - 50, (impulse.IsHighRes() and 28 or 20) )
+	impulse.chatBox.entry:SetSize( impulse.chatBox.frame:GetWide(), (impulse.IsHighRes() and 28 or 20) )
 	impulse.chatBox.entry:SetTextColor( Color(255,255,255) )
 	impulse.chatBox.entry:SetFont(impulse.IsHighRes() and "Impulse-ChatMedium" or "Impulse-ChatSmall")
 	impulse.chatBox.entry:SetDrawBorder( false )
 	impulse.chatBox.entry:SetDrawBackground( false )
 	impulse.chatBox.entry:SetCursorColor( color_white )
 	impulse.chatBox.entry:SetHighlightColor( Color(52, 152, 219) )
-	impulse.chatBox.entry:SetPos( 45, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
+	impulse.chatBox.entry:SetPos( 0, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
 	impulse.chatBox.entry.Paint = function( self, w, h )
 		local topCol2 = Color(36, 36, 36)
+		local OutlineCol = Color(0, 0, 0)
 		local gradient = Material("gui/gradient_up")
-		draw.RoundedBox( 0, 0, 0, w, h, Color( 73, 73, 73) )
-		draw.RoundedBox( 0, 1, 1, w - 2, h - 2, Color( 0, 0, 0, 255) )
-		surface.SetMaterial(gradient)
+
+
 		surface.SetDrawColor(topCol2)
-		surface.DrawTexturedRect(1, 1, w - 2, h - 2)
+		surface.DrawRect(0, 0, w, h)
+		surface.SetDrawColor(OutlineCol)
+		surface.DrawOutlinedRect(0, 0, w, h, 1)
 		derma.SkinHook( "Paint", "TextEntry", self, w, h )
 	end
 
@@ -126,8 +128,8 @@ function impulse.chatBox.buildBox()
 	end
 
 	impulse.chatBox.chatLog = vgui.Create("impulseRichText", impulse.chatBox.frame)
-	impulse.chatBox.chatLog:SetPos(5, 30)
-	impulse.chatBox.chatLog:SetSize(impulse.chatBox.frame:GetWide() - 10, impulse.chatBox.frame:GetTall() - 70)
+	impulse.chatBox.chatLog:SetPos(0, 35)
+	impulse.chatBox.chatLog:SetSize(impulse.chatBox.frame:GetWide(), impulse.chatBox.frame:GetTall() - 70)
 	local strFind = string.find
 	impulse.chatBox.chatLog.PaintOver = function(self, w, h)
 		local entry = impulse.chatBox.entry
@@ -220,7 +222,7 @@ function impulse.chatBox.buildBox()
 	surface.SetFont( "Impulse-ChatSmall")
 	local w, h = surface.GetTextSize( text )
 	say:SetSize( w + 5, 20 )
-	say:SetPos( 5, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
+	say:SetPos( 0, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
 	
 	say.Paint = function( self, w, h )
 		draw.DrawText( text, "Impulse-ChatSmall", 2, 1, color_white )
@@ -231,21 +233,23 @@ function impulse.chatBox.buildBox()
 		local s = {}
 
 		if impulse.chatBox.ChatType == types[2] then 
-			text = "Radio:"	
+			text = "Radio:"
+			s.pw = 0
+			s.sw = impulse.chatBox.frame:GetWide() - 10
 		else
-			text = "Say:"
-			s.pw = 45
-			s.sw = impulse.chatBox.frame:GetWide() - 50
+			text = "Says:"
+			s.pw = 0
+			s.sw = impulse.chatBox.frame:GetWide() - 10
 		end
 
 		if s then
 			if not s.pw then s.pw = self:GetWide() + 10 end
-			if not s.sw then s.sw = impulse.chatBox.frame:GetWide() - self:GetWide() - 15 end
+			if not s.sw then s.sw = impulse.chatBox.frame:GetWide() end
 		end
 
 		local w, h = surface.GetTextSize( text )
 		self:SetSize( w + 5, 20 )
-		self:SetPos( 5, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
+		self:SetPos( 0, impulse.chatBox.frame:GetTall() - 45 )
 
 		impulse.chatBox.entry:SetSize( s.sw, 20 )
 		impulse.chatBox.entry:SetPos( s.pw, impulse.chatBox.frame:GetTall() - impulse.chatBox.entry:GetTall() - 5 )
