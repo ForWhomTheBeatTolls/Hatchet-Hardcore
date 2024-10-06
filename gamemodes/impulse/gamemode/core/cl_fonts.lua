@@ -2,6 +2,16 @@
 -- math.max(ScreenScale(6), 17)
 
 
+surface.CreateFont("zoneFont", {
+	font = "Courier New",
+	size = 20,
+	weight = 1,
+	antialias = true,
+	outline = true,
+	scanlines = 2
+
+} )
+
 	surface.CreateFont("HatchetFont20", {
 		font = "Arial",
 		size = 20,
@@ -288,8 +298,35 @@
 		shadow = false,
 	} )
 
+	surface.CreateFont("Impulse-ChatTalk", {
+		font = "Courier New",
+		size = 20,
+		extended = true,
+		shadow = true,
+		weight = 600,
+		antialias = true
+	} )
+
+	surface.CreateFont("Impulse-WhisperTalk", {
+		font = "Courier New",
+		size = 16,
+		extended = true,
+		shadow = true,
+		weight = 600,
+		antialias = true
+	} )
+
+	surface.CreateFont("Impulse-YellTalk", {
+		font = "Courier New",
+		size = 30,
+		extended = true,
+		shadow = true,
+		weight = 600,
+		antialias = true
+	} )
+
 	surface.CreateFont("Impulse-ChatSmall", {
-		font = font,
+		font = "Courier New",
 		size = (impulse.IsHighRes() and 26 or 19),
 		extended = true,
 		shadow = true,
@@ -298,7 +335,7 @@
 	} )
 
 	surface.CreateFont("Impulse-ChatMedium", {
-		font = font,
+		font = "Courier New",
 		size = (impulse.IsHighRes() and 21 or 19),
 		extended = true,
 		shadow = true,
@@ -307,7 +344,7 @@
 	} )
 
 	surface.CreateFont("Impulse-ChatRadio", {
-		font = "Consolas",
+		font = "Courier New",
 		size = (impulse.IsHighRes() and 24 or 20),
 		extended = true,
 		shadow = true,
@@ -376,9 +413,10 @@
 
 	surface.CreateFont("BubbleChat-Whisper", {
 		font = "Arial",
-		size = 28,
+		size = 18,
 		weight = 100,
-		antialias = true
+		antialias = true,
+		italic = true
 	} )
 
 	
