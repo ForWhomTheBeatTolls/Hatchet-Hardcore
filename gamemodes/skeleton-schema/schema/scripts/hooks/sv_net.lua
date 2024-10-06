@@ -27,14 +27,7 @@ util.AddNetworkString("HatchetBecomeRebelEnd")
 util.AddNetworkString("HatchetBecomeRebelStart")
 util.AddNetworkString("HatchetVortRPName")
 util.AddNetworkString("HatchetTerminalCivilOpen")
-
 util.AddNetworkString("impulseHL2RPClassBecome")
-
-local function NetExploitNotification(ply, msg)
-	for i, admin in pairs( player.GetAll() ) do
-		admin:SendChatClassMessage(18, ply:Nick().." DETECTED AS A POTENTIAL NET EXPLOITER. NET FUNCTION: "..msg, admin)
-	end
-end
 
 net.Receive("HatchetBecomeRebelEnd", function()
 	local ply = net.ReadPlayer()
@@ -45,7 +38,7 @@ net.Receive("HatchetBecomeRebelEnd", function()
 		ply:Notify("You have successfully expunged yourself from the civic database.")
 		ply:EmitSound("items/ammo_pickup.wav")
 	else
-		NetExploitNotification(ply, "HatchetBecomeRebel")
+		ply:AlarmNetExploit("HatchetBecomeRebel")
 	end
 end)
 
@@ -71,8 +64,7 @@ net.Receive("HatchetSelectWorkerJobEnd", function()
 		end
 		
 	else
-	
-		NetExploitNotification(ply, "HatchetSelectWorkerJobEnd")
+		ply:AlarmNetExploit("HatchetSelectWorkerJobEnd")
 		
 	end
 end)
@@ -88,9 +80,7 @@ net.Receive("HatchetBecomeCivilWorker", function()
 		ply:Notify("You have become a Civil Worker.")
 		
 	else
-		
-		NetExploitNotification(ply, "HatchetBecomeCivilWorker")
-		
+		ply:AlarmNetExploit("HatchetBecomeCivilWorker")
 	end
 	
 end)
