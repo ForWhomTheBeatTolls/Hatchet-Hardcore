@@ -1,0 +1,3 @@
+THIS LIST FEATURES IMPORTANT STUFF TO DO!
+
+- Make benches automatically spawn (Like minerva)
