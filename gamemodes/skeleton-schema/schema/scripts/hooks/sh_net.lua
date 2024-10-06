@@ -54,7 +54,7 @@ net.Receive("HatchetBubbleChatCall", function()
             if sender:IsValid() and LocalPlayer():GetPos():Distance(posdist) <= chatradius and LocalPlayer():IsLineOfSightClear(sender) then
                 if CurTime() > nextTime and textPos ~= string.len(msg) then
                     textPos = textPos + 1
-                    nextTime = CurTime() + .08
+                    nextTime = CurTime() + .04
                     if string.len(msg) > 1 and font ~= "BubbleChat-Me" then
                         sender:EmitSound("vo/npc/male01/answer" .. math.random(10, 40) .. ".wav", 10, 100, 0.0001, CHAN_VOICE)
                         if sender:Team() == TEAM_CITIZEN or sender:Team() == TEAM_RESISTANCE or sender:Team() == TEAM_WORKFORCE then
