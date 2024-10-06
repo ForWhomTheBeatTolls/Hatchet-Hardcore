@@ -35,8 +35,6 @@ NEED TWEAKING IN DESIGN:
 --------------------------------------------------------------
 
 SERVER RELEASE TO-DO LIST:
--Saboteurs can make booby traps
--Figure out a way to incorporate grenades into the server
 -Change m_base to a folder structure and seperate into init, cl_init and shared (since attacking is desynced between client and server)
 
 -IMPORTANT!!! TEST ALL RESOLUTIONS AND ASPECT RATIOS ON GUIS, INTERFACES AND WHATNOT TO ENSURE NOTHING IS MAJORLY FUCKED SINCE I'M FAIRLY CERTAIN WE HAVEN'T USED SCRW() AND SCRH() AS MUCH AS WE SHOULD'VE
@@ -46,9 +44,8 @@ SERVER RELEASE TO-DO LIST:
 
 TO-DO LIST:
 
-- Implement a temporary OS solution (I added whitelistes, so technically it isnt "Temporary" anymore)
+-Implement a temporary OS solution (I added whitelistes, so technically it isnt "Temporary" anymore)
 -This one is important, add a documentation text file for certain features and functions.
-
 -Brainstorm ideas for Workforce entities
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
@@ -56,6 +53,7 @@ TO-DO LIST:
 -Dequavion Ammo Bender
 -Add crafting via the use of fire
 -Brickbat?
+-Figure out a way to incorporate grenades into the server
 
 
 -----------------------------------------------------
@@ -83,10 +81,10 @@ DONE LIST:
 
 -Bandages, food poisoning pills, turn medkits, bandages and healthvials into items you have to equip in your hands to use on yourself/others
 -CP Database terminal having Citizen Names, Descriptions, Teams, Classes, Last Given Task
-- remake player settings, turn it into a info\rule\page area.
-- Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
-- Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
-- RPVortNames
+-remake player settings, turn it into a info\rule\page area.
+-Different notifications, NotifyUnimportant, NotifyImportant, replace achievement gain notif with one that appears at the top right and is much smaller, and plays a quieter noise, etc., AND MAKE IT SO YOU CAN COLOR THEM!!!
+-Change rebel classes and workforce sectors to be team classes instead of team ranks because impulse rank system sucks
+-RPVortNames
 -Add "City" option when creating a character, will be used for the intro cinematic and included in the Civil Protection Citizen Database terminal
 -Bleeding ( Community requested (73% of voters) )
 -Ambience Color and make it toggleable
@@ -107,7 +105,7 @@ DONE LIST:
 -Vending machines that dispense boring ass water
 -Rework weapon recoil
 -Rebalance SMG, AK-47, AR2 (increase firerate & recoil
-- Add mixtures for all armors (I literally got no response on what did he mean by this)
+-Add mixtures for all armors (I literally got no response on what did he mean by this)
 -CP rations
 -Kush Johnson World Eater
 -Add descriptions (Will be Optional)
@@ -131,3 +129,4 @@ DONE LIST:
 -Remake death animations
 -Fix impulse_hands not being able to pick up items that the player can't collide with (Kind of? Couldn't fix impulse hands so I changed item collision groups)
 -CP Rankpoint deductions, awards
+-Saboteurs can make booby traps
