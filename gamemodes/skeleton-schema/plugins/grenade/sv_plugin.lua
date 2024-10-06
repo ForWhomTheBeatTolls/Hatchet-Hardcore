@@ -12,11 +12,10 @@ local grenadecommand = {
         end
 
         if CurTime() > ply.NextGrenadeTimer then
-            local ent = ents.Create( "npc_grenade_frag" )
+            local ent = ents.Create( "m_grenade" )
             ent:SetPos(ply:EyePos() + ( ply:GetAimVector()*22 )+(ply:GetRight()*1) )
             ent:Spawn()
             ent:SetNotSolid()
-            ent:Fire("SetTimer",4,0)
             ent:GetPhysicsObject():ApplyForceCenter( ply:GetAimVector() * 800 )
             ply:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, ply:LookupSequence("grenthrow") )
             ply.NextGrenadeTimer = CurTime() + 60
