@@ -377,7 +377,7 @@ function GM:HUDPaint(mvData)
 		if impulse.ShowZone then
 			if IsValid(zoneLbl) then zoneLbl:Remove() end
 			zoneLbl = vgui.Create("impulseZoneLabel")
-			zoneLbl:SetPos(30, y - 25)
+			zoneLbl:SetPos(0, y - 25)
 			zoneLbl.Zone = lp:GetZoneName()
 			impulse.ShowZone = false
 		end
@@ -649,7 +649,7 @@ function GM:HUDPaintBackground()
 	if nextOverheadCheck < realTime then
 		nextOverheadCheck = realTime + 0.5
 		trace.start = lp.GetShootPos(lp)
-		trace.endpos = trace.start + lp.GetAimVector(lp) * 100
+		trace.endpos = trace.start + lp.GetAimVector(lp) * 300
 		trace.filter = lp
 		trace.mins = Vector(-4, -4, -4)
 		trace.maxs = Vector(4, 4, 4)
