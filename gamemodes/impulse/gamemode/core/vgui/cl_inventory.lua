@@ -253,6 +253,7 @@ function PANEL:Paint(w, h)
 	local orange = Color(255, 123, 0)
 	local bodycol = Color(39, 39, 39)
 	local blk = Color(0, 0, 0, 255)
+	local d = Color(0, 0, 0, 194)
 	local gradient = Material("vgui/gradient_up")
 	local background = Material("hatchet/overlays/vignette.png")
 
@@ -263,7 +264,7 @@ function PANEL:Paint(w, h)
 	surface.SetMaterial(background)
 	surface.DrawTexturedRect(0, 0, w,  h)
 
-	surface.SetDrawColor(Color(65, 65, 65, 140))
+	surface.SetDrawColor(d)
 	surface.DrawRect(0, 0, w, h)
 
 	if impulse.GetSetting("perf_blur") == true then
