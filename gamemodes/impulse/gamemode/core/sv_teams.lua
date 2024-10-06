@@ -1,9 +1,4 @@
 meta.OldSetTeam = meta.OldSetTeam or meta.SetTeam
-local function NetExploitNotification(ply, msg)
-	for i, admin in pairs( player.GetAll() ) do
-		admin:SendChatClassMessage(18, ply:Nick().." DETECTED AS A POTENTIAL NET EXPLOITER. NET FUNCTION: "..msg, admin)
-	end
-end
 
 local function NoWhiteListTeamNotif(ddddd, ply)
 	ply:Notify("You dont have the whitelist for this faction! " .. "(" .. ddddd.name .. ")")
@@ -14,7 +9,7 @@ function meta:SetTeam(teamID, forced)
 	local teamPlayers = team.NumPlayers(teamID)
 
 	if teamData.isadminonly and !self:IsAdmin() then
-		NetExploitNotification(self, "Attempted to become admin faction: " .. teamData.name)
+		self:AlarmNetExploit("Attempted to switch to: " .. teamData.name)
 		return
 	end
 
