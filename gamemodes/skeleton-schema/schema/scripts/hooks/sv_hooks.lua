@@ -26,6 +26,25 @@
 		ply.PendingReward = ply.PendingReward or 0
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
+
+		// Limbs n Stuff
+
+		ply.Hurted_R_Arm = false
+		ply.Hurted_R_Arm_points = 0
+
+		ply.Hurted_L_Arm = false
+		ply.Hurted_L_Arm_points = 0
+
+		ply.Hurted_R_Leg = false
+		ply.Hurted_R_Leg_points = 0
+
+		ply.Hurted_L_Leg = false
+		ply.Hurted_L_Leg_points = 0
+
+		ply:SetNW2Bool("Hatchet_Broken_RightLeg", false)
+		ply:SetNW2Bool("Hatchet_Broken_LeftLeg", false)
+		ply:SetNW2Bool("Hatchet_Broken_RightArm", false)
+		ply:SetNW2Bool("Hatchet_Broken_LeftArm", false)
 	end
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
