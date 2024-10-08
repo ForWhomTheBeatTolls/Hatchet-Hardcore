@@ -14,6 +14,7 @@ SWEP.WorldModelOfHand   = "models/warz/items/medkit.mdl"
 SWEP.AmountOfHealth = 15
 SWEP.HealSound = "items/smallmedkit1.wav"
 SWEP.HealDelay = .5
+SWEP.HealDelayOnSecondaryAttack = 2
 SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 15 -- How much bullets are in the mag
 SWEP.Primary.Ammo = "medkit_hatchet_ammo" --The ammo type will it use
