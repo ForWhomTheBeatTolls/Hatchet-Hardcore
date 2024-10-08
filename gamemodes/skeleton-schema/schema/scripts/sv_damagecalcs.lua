@@ -7,6 +7,49 @@
 				dmginfo:ScaleDamage(0.7)
 			end
 		end
+
+		if hitgroup == HITGROUP_LEFTARM then
+			ply.Hurted_L_Arm_points = ply.Hurted_L_Arm_points + 0.2
+
+			if ply.Hurted_L_Arm_points >= 1 and ply.Hurted_L_Arm != true then
+				ply.Hurted_L_Arm = true
+				ply:SetNW2Bool("Hatchet_Broken_LeftArm", true)
+				ply:Notify("Your Left Arm feels numb!")
+			end
+		elseif hitgroup == HITGROUP_RIGHTARM then
+			ply.Hurted_R_Arm_points = ply.Hurted_R_Arm_points + 0.2
+
+			if ply.Hurted_R_Arm_points >= 1 and ply.Hurted_R_Arm != true then
+				ply.Hurted_R_Arm = true
+				ply:SetNW2Bool("Hatchet_Broken_RightArm", true)
+				ply:Notify("Your Right Arm feels numb!")
+			end
+		elseif hitgroup == HITGROUP_LEFTLEG then
+			ply.Hurted_L_Leg_points = ply.Hurted_L_Leg_points + 0.2
+
+			if ply.Hurted_L_Leg_points >= 1 and ply.Hurted_L_Leg != true then
+				ply.Hurted_L_Leg = true
+				ply:SetNW2Bool("Hatchet_Broken_LeftLeg", true)
+				ply:Notify("Your Left Leg feels numb!")
+			end
+		elseif hitgroup == HITGROUP_RIGHTLEG then
+			ply.Hurted_R_Leg_points = ply.Hurted_R_Leg_points + 0.2
+
+			if ply.Hurted_R_Leg_points >= 1 and ply.Hurted_R_Leg != true then
+				ply.Hurted_R_Leg = true
+				ply:SetNW2Bool("Hatchet_Broken_RightLeg", true)
+				ply:Notify("Your Right Leg feels numb!")
+			end
+		end
+
+		-- print("LARMPOINTS " .. ply.Hurted_L_Arm_points)
+		-- print(ply.Hurted_L_Arm)
+		-- print("RARMPOINTS " .. ply.Hurted_R_Arm_points)
+		-- print(ply.Hurted_R_Arm)
+		-- print("RLEGPOINTS " .. ply.Hurted_R_Leg_points)
+		-- print(ply.Hurted_R_Leg)
+		-- print("LLEGPOINTS " .. ply.Hurted_L_Leg_points)
+		-- print(ply.Hurted_L_Leg)
 		 
 		if ply:Team(ply) == TEAM_CP then
 			dmginfo:ScaleDamage(0.7)
