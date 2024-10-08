@@ -105,6 +105,26 @@
 			if ply.CombatCool < CurTime() then
 				ply.IsInCombat = false
 			end
+					if dly < CurTime() then
+			if ply.Hurted_L_Arm_points >= 0.2 and ply.Hurted_L_Arm != true then
+				ply.Hurted_L_Arm_points = ply.Hurted_L_Arm_points - 0.2
+			end
+			if ply.Hurted_R_Arm_points >= 0.2 and ply.Hurted_R_Arm != true then
+				ply.Hurted_R_Arm_points = ply.Hurted_R_Arm_points - 0.2
+			end
+			if ply.Hurted_L_Leg_points >= 0.2 and ply.Hurted_L_Leg != true then
+				ply.Hurted_L_Leg_points = ply.Hurted_L_Leg_points - 0.2
+			end
+			if ply.Hurted_R_Leg_points >= 0.2 and ply.Hurted_R_Leg != true then
+				ply.Hurted_R_Leg_points = ply.Hurted_R_Leg_points - 0.2
+			end
+
+			-- print(ply:Name() .. " LARM: " .. ply.Hurted_L_Arm_points)
+			-- print(ply:Name() .. " RARM: " .. ply.Hurted_R_Arm_points)
+			if _ == player.GetCount() then
+				dly = CurTime() + 2
+			end
+		end
 			
 		end
 		
