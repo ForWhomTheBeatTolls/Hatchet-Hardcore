@@ -2,7 +2,7 @@ SWEP.PrintName = "HEALINGBASE" -- The name of the weapon
 SWEP.Author = "WillMaster"
 SWEP.Category = "Hatchet"
 
-SWEP.Spawnable = false --Must be true
+SWEP.Spawnable = true --Must be true
 SWEP.AdminOnly = false
 
 SWEP.Base = "m_base"
@@ -15,9 +15,10 @@ SWEP.WorldModelOfHand   = "models/warz/items/medkit.mdl"
 SWEP.AmountOfHealth = 15
 SWEP.HealSound = "items/smallmedkit1.wav"
 SWEP.HealDelay = 2
+SWEP.HealDelayOnSecondaryAttack = 2
 -- SWEP.AmountOfUses = 5 // Ignore this, we arent using it anymore
 SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
-SWEP.Primary.ClipSize = 1 -- How much bullets are in the mag
+SWEP.Primary.ClipSize = 15 -- How much bullets are in the mag
 SWEP.Primary.Ammo = "medkit_base" --The ammo type will it use
 
 -- SWEP.Primary.Sound = Sound("")
@@ -87,12 +88,15 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	-- print("t")
 	if Delay < CurTime() then
+		-- print("t2")
+
 		self:TakePrimaryAmmo(1)
 
 		self:EmitSound(self.HealSound)
 		self:GetOwner():SetHealth(math.Clamp( self:GetOwner():Health() + self.AmountOfHealth, 0, self:GetOwner():GetMaxHealth() ))
-		self:SetNextPrimaryFire(CurTime() + self.HealDelay)
+		self:SetNextPrimaryFire(CurTime() + self.HealDelayOnSecondaryAttack)
 		self:GetOwner():ScreenFade(1, Color(201, 217, 242, 180), 1, 0)
 
 		if SERVER then
@@ -105,7 +109,7 @@ function SWEP:SecondaryAttack()
 				self:GetOwner():StripWeapon(curwep)
 			end
 		end
-		Delay = CurTime() + self.HealDelay
+		Delay = CurTime() + self.HealDelayOnSecondaryAttack
 	end
 end
 
