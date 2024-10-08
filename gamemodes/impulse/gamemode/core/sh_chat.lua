@@ -581,7 +581,9 @@ if CLIENT then
 
 		impulse.customChatFont = "Impulse-ChatTalk"
 
-		print(speaker:KnownName())
+		-- print(speaker:KnownName())
+
+		message = "'' " .. message .. " ''"
 
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
@@ -663,7 +665,7 @@ if CLIENT then
 		end
 
 		impulse.customChatFont = "Impulse-YellTalk"
-
+		message = "'' " .. message .. " ''"
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
@@ -696,7 +698,7 @@ if CLIENT then
 		end
 
 		impulse.customChatFont = "Impulse-WhisperTalk"
-
+		message = "'' " .. message .. " ''"
 		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
 			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
 		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
