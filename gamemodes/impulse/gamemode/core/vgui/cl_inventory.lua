@@ -10,6 +10,7 @@ function PANEL:Init()
  	self:MoveToFront()
 	self:SetAlpha(0)
 	self:AlphaTo(255, .1, 0)
+	self.once = false
 
  	local w, h = self:GetSize()
 
@@ -252,10 +253,11 @@ function PANEL:Paint(w, h)
 	local TeamCol = Color(team.GetColor(lpTeam).r, team.GetColor(lpTeam).g, team.GetColor(lpTeam).b, 10)
 	local orange = Color(255, 123, 0)
 	local bodycol = Color(39, 39, 39)
-	local blk = Color(0, 0, 0, 255)
-	local d = Color(0, 0, 0, 194)
+	local blk = Color(0, 0, 0)
+	local d = Color(0, 0, 0, 240)
 	local gradient = Material("vgui/gradient_up")
 	local background = Material("hatchet/overlays/vignette.png")
+
 
 
 	surface.SetDrawColor(blk)
@@ -267,11 +269,56 @@ function PANEL:Paint(w, h)
 	surface.SetDrawColor(d)
 	surface.DrawRect(0, 0, w, h)
 
-	if impulse.GetSetting("perf_blur") == true then
-		impulse.blur(self, 4, 8, 255)
-	else
+	-- if impulse.GetSetting("perf_blur") == true then
+	-- 	impulse.blur(self, 4, 8, 255)
+	-- else
 		
+	-- end
+
+	local figure_col = Color(255, 255, 255, 40)
+	local injured_figure_col = Color(170, 41, 41)
+	local body = Material("hatchet/limbs/body.png")
+
+	local figure_larm = Material("hatchet/limbs/larm.png")
+	local figure_rarm = Material("hatchet/limbs/rarm.png")
+	local figure_lleg = Material("hatchet/limbs/lleg.png")
+	local figure_rleg = Material("hatchet/limbs/rleg.png")
+	local figure_head = Material("hatchet/limbs/head.png")
+	local figure_chest = Material("hatchet/limbs/chest.png")
+
+	surface.SetDrawColor(figure_col)
+	surface.SetMaterial(body)
+	surface.DrawTexturedRect(500, h / 1.7, 210, 400)
+
+	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightLeg") == true then
+		surface.SetDrawColor(injured_figure_col)
+		surface.SetMaterial(figure_rleg)
+		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 	end
+
+	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftLeg") == true then
+		surface.SetDrawColor(injured_figure_col)
+		surface.SetMaterial(figure_lleg)
+		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
+	end
+
+	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightArm") == true then
+		surface.SetDrawColor(injured_figure_col)
+		surface.SetMaterial(figure_rarm)
+		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
+	end
+
+	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftArm") == true then
+		surface.SetDrawColor(injured_figure_col)
+		surface.SetMaterial(figure_larm)
+		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
+	end
+
+
+	-- surface.SetDrawColor(injured_figure_col)
+	-- surface.SetMaterial(figure_head)
+	-- surface.DrawTexturedRect(500, h / 1.7, 210, 400)
+
 	if LocalPlayer():Team() != TEAM_DISPATCH then
 		local curhp = ""
 		local curhunger = ""
