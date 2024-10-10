@@ -18,15 +18,25 @@ local fallconditions = (speed >  maxspeed and not inWater)
 	
 	if fallconditions then
 	local fall = DamageInfo()
+	local leg = {"RLeg", "LLeg"}
 	fall:SetDamage(falldamage)
 	fall:SetAttacker(Entity(0))
 	fall:SetInflictor(Entity(0))
 	fall:SetDamageType(DMG_FALL)
+	
+	ply:TakeDamageLimb(table.Random(leg), falldamage * 2)
+	-- if ply:GetNWBool("LLegCrippled") == true then
+		-- ply:Notify("Your Left Leg feels numb!")
+	-- end
+	-- if ply:GetNWBool("RLegCrippled") == true then
+		-- ply:Notify("Your Right Leg feels numb!")
+	-- end
+	
 	ply:TakeDamageInfo(fall)
 	ply:EmitSound("player/pl_fallpain3.wav", 75, 100, 1, CHAN_BODY)
-		if falldamage > 55 then
-			ply:BreakLegs()
-		end
+		-- if falldamage > 55 then
+			-- ply:BreakLegs()
+		-- end
 	end
 	
 end)
