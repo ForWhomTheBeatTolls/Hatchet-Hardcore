@@ -10,8 +10,17 @@ local PitchMax = 20
 local TiltMax = 15
 
 local function GetDamagedArmsCount()
-	if LocalPlayer():GetNWBool("LArmCrippled") == true then larm = 1 end
-	if LocalPlayer():GetNWBool("RArmCrippled") == true then rarm = 1 end
+	local rarm = 0
+	local larm = 0
+
+	if LocalPlayer():GetNWBool("LArmCrippled") == true then 
+		larm = 1
+	end
+
+	if LocalPlayer():GetNWBool("RArmCrippled") == true then 
+		rarm = 1
+	end
+
 	return larm + rarm
 end
 
