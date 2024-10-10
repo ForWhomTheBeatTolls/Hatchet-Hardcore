@@ -1,3 +1,7 @@
+net.Receive("HatchetOpenLimbsMenu", function()
+	vgui.Create("HatchetLimbsSystem")
+end)
+
 net.Receive("HatchetBecomeRebelStart", function()
 	local ply = net.ReadPlayer()
 	if ply:Team() == TEAM_WORKFORCE or ply:Team() == TEAM_CITIZEN then
