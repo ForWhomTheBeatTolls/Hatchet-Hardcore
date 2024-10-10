@@ -9,7 +9,7 @@ MIX.Bench = "general"
 MIX.Output = "trap_bear"
 MIX.Input = {
 	["util_refmetal"] = {take = 3},
-	["util_recmetal"} = {take = 1},
+	["util_recmetal"] = {take = 1}
 }
 
 impulse.RegisterMixture(MIX)
