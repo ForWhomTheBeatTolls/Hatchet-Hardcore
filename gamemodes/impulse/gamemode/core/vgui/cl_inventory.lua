@@ -290,25 +290,25 @@ function PANEL:Paint(w, h)
 	surface.SetMaterial(body)
 	surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightLeg") == true then
+	if LocalPlayer():GetNWBool("RLegCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_rleg)
 		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftLeg") == true then
+	if LocalPlayer():GetNWBool("LLegCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_lleg)
 		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightArm") == true then
+	if LocalPlayer():GetNWBool("RArmCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_rarm)
 		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftArm") == true then
+	if LocalPlayer():GetNWBool("LArmCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_larm)
 		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
@@ -345,17 +345,17 @@ function PANEL:Paint(w, h)
 		surface.SetTextPos(w / 1.72, 110)
 	
 		if LocalPlayer():Health() < 10 then
-			curhp = "I'm Extremely injured!"
+			curhp = "I'm on the verge of death!"
 		elseif LocalPlayer():Health() < 25 then
-			curhp = "I'm Seriously injured!"
+			curhp = "I'm seriously injured!"
 		elseif LocalPlayer():Health() < 45 then
 			curhp = "I'm injured!"
 		elseif LocalPlayer():Health() < 60 then
-			curhp = "I'm Hurt!"
+			curhp = "I'm hurt."
 		elseif LocalPlayer():Health() < 80 then
-			curhp = "I'm Bruised."
+			curhp = "I'm bruised."
 		elseif LocalPlayer():Health() < 101 then
-			curhp = "I'm Healthy."
+			curhp = "I'm healthy."
 		end
 	
 		surface.DrawText(curhp)
