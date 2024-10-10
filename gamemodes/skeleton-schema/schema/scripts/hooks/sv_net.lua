@@ -28,6 +28,7 @@ util.AddNetworkString("HatchetBecomeRebelStart")
 util.AddNetworkString("HatchetVortRPName")
 util.AddNetworkString("HatchetTerminalCivilOpen")
 util.AddNetworkString("impulseHL2RPClassBecome")
+util.AddNetworkString("HatchetOpenLimbsMenu")
 
 net.Receive("HatchetBecomeRebelEnd", function()
 	local ply = net.ReadPlayer()
