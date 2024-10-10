@@ -29,22 +29,18 @@
 
 		// Limbs n Stuff
 
-		ply.Hurted_R_Arm = false
-		ply.Hurted_R_Arm_points = 0
+		ply:SetNWBool("RArmCrippled", false)
+		ply:SetNWInt("RArm", 100)
 
-		ply.Hurted_L_Arm = false
-		ply.Hurted_L_Arm_points = 0
+		ply:SetNWBool("LArmCrippled", false)
+		ply:SetNWInt("LArm", 100)
 
-		ply.Hurted_R_Leg = false
-		ply.Hurted_R_Leg_points = 0
+		ply:SetNWBool("RLegCrippled", false)
+		ply:SetNWInt("RLeg", 100)
 
-		ply.Hurted_L_Leg = false
-		ply.Hurted_L_Leg_points = 0
-
-		ply:SetNW2Bool("Hatchet_Broken_RightLeg", false)
-		ply:SetNW2Bool("Hatchet_Broken_LeftLeg", false)
-		ply:SetNW2Bool("Hatchet_Broken_RightArm", false)
-		ply:SetNW2Bool("Hatchet_Broken_LeftArm", false)
+		ply:SetNWBool("LLegCrippled", false)
+		ply:SetNWInt("LLeg", 100)
+		
 	end
 
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
