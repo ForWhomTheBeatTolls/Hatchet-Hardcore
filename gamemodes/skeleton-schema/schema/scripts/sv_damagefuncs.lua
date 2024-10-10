@@ -1,16 +1,29 @@
-	hook.Add("Think", "DamageFunctionsHatchet", function()
+local dly = CurTime()
+hook.Add("Think", "DamageFunctionsHatchet", function()
 
 		for _, ply in pairs(player.GetAll()) do
 		
 			if (ply:GetModel() != "models/player.mdl") then
 				local walk = ply:GetWalkSpeed()
 				local run = ply:GetRunSpeed()
-				if ply.TimesStunned == 0 then
-					ply:SetRunSpeed( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545))  /  (1 + ply.TimesDamaged / 3) )
-					ply:SetWalkSpeed( impulse.Config.WalkSpeed / (1 + (ply.TimesDamaged / 3) ))
+				
+				if ply:IsCrippledLimb("LLeg") then
+					ply.llegc = 1
 				else
-					ply:SetRunSpeed( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545)) / ( 1 + (ply.TimesStunned / 2.5) ) )
-					ply:SetWalkSpeed( (impulse.Config.WalkSpeed / ( 1 + (ply.TimesStunned / 2.5) ) ) )
+					ply.llegc = 0
+				end
+				if ply:IsCrippledLimb("RLeg") then
+					ply.rlegc = 1
+				else
+					ply.rlegc = 0
+				end
+				
+				if ply.TimesStunned == 0 then
+					ply:SetRunSpeed( ( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545))  /  (1 + ply.TimesDamaged / 3) ) / (1 + ply.rlegc + ply.llegc) )
+					ply:SetWalkSpeed( impulse.Config.WalkSpeed / (1 + (ply.TimesDamaged / 3) ) / (1 + ply.rlegc + ply.llegc) )
+				else
+					ply:SetRunSpeed( ( (impulse.Config.JogSpeed + (ply:GetSkillXP("vital") / 204.545)) / ( 1 + (ply.TimesStunned / 2.5) ) ) / (1 + ply.rlegc + ply.llegc) )
+					ply:SetWalkSpeed( (impulse.Config.WalkSpeed / ( 1 + (ply.TimesStunned / 2.5) ) ) / (1 + ply.rlegc + ply.llegc) )
 				end
 				
 				if ply.TimesStunned > 2 then
@@ -105,27 +118,141 @@
 			if ply.CombatCool < CurTime() then
 				ply.IsInCombat = false
 			end
-					if dly < CurTime() then
-			if ply.Hurted_L_Arm_points >= 0.2 and ply.Hurted_L_Arm != true then
-				ply.Hurted_L_Arm_points = ply.Hurted_L_Arm_points - 0.2
-			end
-			if ply.Hurted_R_Arm_points >= 0.2 and ply.Hurted_R_Arm != true then
-				ply.Hurted_R_Arm_points = ply.Hurted_R_Arm_points - 0.2
-			end
-			if ply.Hurted_L_Leg_points >= 0.2 and ply.Hurted_L_Leg != true then
-				ply.Hurted_L_Leg_points = ply.Hurted_L_Leg_points - 0.2
-			end
-			if ply.Hurted_R_Leg_points >= 0.2 and ply.Hurted_R_Leg != true then
-				ply.Hurted_R_Leg_points = ply.Hurted_R_Leg_points - 0.2
-			end
+			
+			-- if dly < CurTime() then
+			
+				-- if ply:IsHurtLimb("LArm") then
+					-- ply:GiveHealthLimb("LArm", 2.5)
+				-- end
+			
+				-- if ply:IsHurtLimb("RArm") then
+					-- ply:GiveHealthLimb("RArm", 2.5)
+				-- end
+				
+				-- if ply:IsHurtLimb("LLeg") then
+					-- ply:GiveHealthLimb("LLeg", 2.5)
+				-- end
+				
+				-- if ply:IsHurtLimb("RLeg") then
+					-- ply:GiveHealthLimb("RLeg", 2.5)
+				-- end
 
-			-- print(ply:Name() .. " LARM: " .. ply.Hurted_L_Arm_points)
-			-- print(ply:Name() .. " RARM: " .. ply.Hurted_R_Arm_points)
-			if _ == player.GetCount() then
-				dly = CurTime() + 2
-			end
-		end
+			-- -- print(ply:Name() .. " LARM: " .. ply.Hurted_L_Arm_points)
+			-- -- print(ply:Name() .. " RARM: " .. ply.Hurted_R_Arm_points)
+				-- if _ == player.GetCount() then
+					-- dly = CurTime() + 6
+				-- end
+			-- end
 			
 		end
 		
-	end)
+end)
+
+function GetNiceLimbName(limb)
+	
+	if limb == "LArm" then
+		return "Left Arm"
+	elseif limb == "RArm" then
+		return "Right Arm"
+	elseif limb == "LLeg" then
+		return "Left Leg"
+	elseif limb == "RLeg" then
+		return "Right Leg"
+	end
+	
+end
+
+
+function meta:IsHurtLimb(limb)
+	
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) < 100 then
+		return true
+	end
+	
+	return false
+
+end
+
+function meta:IsCrippledLimb(limb)
+	
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) == 0 then
+		return true
+	end
+	
+	return false
+
+end
+
+function meta:TakeDamageLimb(limb, num)
+	
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) then
+		self:SetNWInt(limb, self:GetNWInt(limb) - num)
+			if self:GetNWInt(limb) < 0 then
+				self:SetNWInt(limb, 0)
+			end
+	if self:GetNWInt(limb) == 0 and self:GetNWBool(limb.."Crippled") == false then
+		self:CrippleLimb(limb)
+	end
+		return true
+	else
+		return false
+	end
+
+end
+
+function meta:CrippleLimb(limb)
+	
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) then
+		self:SetNWBool(limb.."Crippled", true)
+		self:SetNWInt(limb, 0)
+		self:Notify("Your "..GetNiceLimbName(limb).." has been crippled.")
+		return true
+	else
+		return false
+	end
+	
+end
+
+function meta:UncrippleLimb(limb, num)
+	
+	if !num then num = 1 end
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) then
+		self:SetNWBool(limb.."Crippled", false)
+		self:SetNWInt(limb, num)
+	
+		self:Notify("Your "..GetNiceLimbName(limb).." has been healed.")
+		return true
+	else
+		return false
+	end
+	
+end
+
+function meta:GiveHealthLimb(limb, num)
+	
+	local limb = tostring(limb)
+	
+	if self:GetNWInt(limb) then
+		self:SetNWInt(limb, self:GetNWInt(limb) + num)
+			if self:GetNWInt(limb) > 100 then
+				self:SetNWInt(limb, 100)
+			end
+	if self:GetNWBool(limb.."Crippled") == true then
+		self:UncrippleLimb(limb)
+	end
+		return true
+	else
+		return false
+	end
+
+end
