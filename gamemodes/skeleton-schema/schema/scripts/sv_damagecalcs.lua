@@ -1,5 +1,8 @@
 	function SCHEMA:ScalePlayerDamage(ply, hitgroup, dmginfo)
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
+		
+		local dmga = dmginfo:GetDamage()
+		local leg = {"LLeg", "RLeg"}
 		--ply:DoCustomAnimEvent(PLAYERANIMEVENT_FLINCH_CHEST, 1)
 		
 		if dmginfo:GetAmmoType() == game.GetAmmoID("Snark") then
@@ -7,39 +10,27 @@
 				dmginfo:ScaleDamage(0.7)
 			end
 		end
+		
+		-- if dmginfo:GetDamageType() == DMG_FALL then
+			-- ply:TakeDamageLimb(table.Random(leg), falldamage * 1.3)
+			-- if ply:IsCrippledLimb("LLeg") and ply:GetNWBool("LLegCrippled") == false then
+				-- ply:SetNWBool("LLegCrippled", true)
+				-- ply:Notify("Your Left Leg feels numb!")
+			-- end
+			-- if ply:IsCrippledLimb("RLeg") and ply:GetNWBool("RLegCrippled") == false then
+				-- ply:SetNWBool("RLegCrippled", true)
+				-- ply:Notify("Your Left Leg feels numb!")
+			-- end
+		-- end
 
 		if hitgroup == HITGROUP_LEFTARM then
-			ply.Hurted_L_Arm_points = ply.Hurted_L_Arm_points + 0.2
-
-			if ply.Hurted_L_Arm_points >= 1 and ply.Hurted_L_Arm != true then
-				ply.Hurted_L_Arm = true
-				ply:SetNW2Bool("Hatchet_Broken_LeftArm", true)
-				ply:Notify("Your Left Arm feels numb!")
-			end
+			ply:TakeDamageLimb("LArm", dmga)
 		elseif hitgroup == HITGROUP_RIGHTARM then
-			ply.Hurted_R_Arm_points = ply.Hurted_R_Arm_points + 0.2
-
-			if ply.Hurted_R_Arm_points >= 1 and ply.Hurted_R_Arm != true then
-				ply.Hurted_R_Arm = true
-				ply:SetNW2Bool("Hatchet_Broken_RightArm", true)
-				ply:Notify("Your Right Arm feels numb!")
-			end
+			ply:TakeDamageLimb("RArm", dmga)
 		elseif hitgroup == HITGROUP_LEFTLEG then
-			ply.Hurted_L_Leg_points = ply.Hurted_L_Leg_points + 0.2
-
-			if ply.Hurted_L_Leg_points >= 1 and ply.Hurted_L_Leg != true then
-				ply.Hurted_L_Leg = true
-				ply:SetNW2Bool("Hatchet_Broken_LeftLeg", true)
-				ply:Notify("Your Left Leg feels numb!")
-			end
+			ply:TakeDamageLimb("LLeg", dmga)
 		elseif hitgroup == HITGROUP_RIGHTLEG then
-			ply.Hurted_R_Leg_points = ply.Hurted_R_Leg_points + 0.2
-
-			if ply.Hurted_R_Leg_points >= 1 and ply.Hurted_R_Leg != true then
-				ply.Hurted_R_Leg = true
-				ply:SetNW2Bool("Hatchet_Broken_RightLeg", true)
-				ply:Notify("Your Right Leg feels numb!")
-			end
+			ply:TakeDamageLimb("RLeg", dmga)
 		end
 
 		-- print("LARMPOINTS " .. ply.Hurted_L_Arm_points)
