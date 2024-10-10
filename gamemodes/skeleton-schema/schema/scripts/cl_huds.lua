@@ -111,7 +111,9 @@ function InitializeHuds()
 		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
 		local pos
-		local boneindex = LocalPlayer():LookupBone("ValveBiped.Bip01_L_Hand") or 1
+		local boneindexlhand = LocalPlayer():LookupBone("ValveBiped.Bip01_L_Hand") or 1
+		local boneindexrhand = LocalPlayer():LookupBone("ValveBiped.Bip01_R_Hand") or 1
+		
 		if IsValid(weapon) then
 			if weapon:Clip1() == 0 then
 				ammocounter = "Empty"
@@ -126,13 +128,20 @@ function InitializeHuds()
 			end
 
 			if LocalPlayer():Team() == TEAM_VORTIGAUNT then
-
-				pos = LocalPlayer():GetPos()
+				pos, pos2 = LocalPlayer():GetPos()
 			else
-				pos = LocalPlayer():GetBonePosition(boneindex):ToScreen()
+				pos = LocalPlayer():GetBonePosition(boneindexlhand):ToScreen()
+				pos2 = LocalPlayer():GetBonePosition(boneindexrhand):ToScreen()
 			end
-
-			if weapon:GetMaxClip1() ~= -1 and not weapon.hidehud then
+		
+			if weapon.Base == "hatchet_medicalbase" then
+				surface.SetTextColor(255, 255, 255, 200)
+				surface.SetFont("HatchetFont34")
+				surface.SetTextPos(pos2.x, pos2.y)
+				surface.DrawText("Remaining: " .. weapon:Clip1())
+			end
+			
+			if weapon:GetMaxClip1() ~= -1 and not weapon.hidehud and not (weapon.Base == "hatchet_medicalbase") then
 				if LocalPlayer():Team() ~= TEAM_VORTIGAUNT then
 					surface.SetTextColor(255, 255, 255, 200)
 					surface.SetFont("HatchetFont34")
