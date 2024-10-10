@@ -4,3 +4,16 @@ meta:RTJLog(msg) //Logs via the RTJ Bot
 
 meta:AlarmNetExploit(reason, actiontype) // Does a net exploit alarm, actiontype : "kick"
 
+------------------------------------------------------
+meta:GiveHealthLimb(limb, num)
+
+meta:UncrippleLimb(limb, num)
+
+meta:CrippleLimb(limb)
+
+meta:TakeDamageLimb(limb, num) 
+
+meta:IsCrippledLimb(limb) // Checks if the limb's health is 0
+
+meta:IsHurtLimb(limb) // Checks if the limb's health is less than 100
+------------------------------------------------------
