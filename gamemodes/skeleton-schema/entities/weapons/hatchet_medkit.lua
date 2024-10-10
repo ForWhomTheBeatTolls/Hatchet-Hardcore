@@ -44,3 +44,10 @@ SWEP.HoldType = "normal"
 SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
+
+function SWEP:Reload()
+		if rdel > CurTime() then return end
+		rdel = CurTime() + 2
+		net.Start("HatchetOpenLimbsMenu")
+		net.Send(self:GetOwner())
+	end
