@@ -49,7 +49,7 @@ TO-DO LIST:
 -Brainstorm ideas for Workforce entities
 -Eating minigame to disencourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
--Clean up code (Comments and old code that we don't need)
+-Clean up code (Commented code that we don't need)
 -Dequavion Ammo Bender
 -Add crafting via the use of fire
 -Brickbat?
