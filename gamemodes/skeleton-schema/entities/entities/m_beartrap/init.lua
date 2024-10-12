@@ -31,12 +31,25 @@ function ENT:Touch( entity )
 	if IsValid(entity) and entity:IsSolid() then
 		if self:GetCollisionGroup() == COLLISION_GROUP_DEBRIS then
 			return false 
-		end 
+		end
+		
+	local leg = {"RLeg", "LLeg"}
 		
 	self:SetModel("models/trap/trap_close.mdl") 
 	self:SetCollisionGroup(COLLISION_GROUP_DEBRIS) 
 	entity:EmitSound( "trap/trap.mp3" ) 
-	timer.Simple(0.01,function() entity:TakeDamage( 40, self, self ) entity:SetNWInt("BleedRate", entity:GetNWInt("BleedRate", 0) + math.random(1,3)) entity.TimesDamaged = 6 entity:Say("/me gets his ankle caught in a bear trap.") self:TakeDamage( 40, self, self ) end)
+	timer.Simple(0.01,function()
+		if entity:IsPlayer() then
+			entity:TakeDamage( 40, self, self )
+			entity:TakeDamageLimb(table.Random(leg), 100)
+			entity:SetNWInt("BleedRate", entity:GetNWInt("BleedRate", 0) + math.random(1,3))
+			entity.TimesDamaged = 6
+			entity:Say("/me gets his ankle caught in a bear trap.")
+			self:TakeDamage( 40, self, self ) 
+		else
+			entity:TakeDamage( 40, self, self )
+			self:TakeDamage( 40, self, self ) 
+		end)
 
 	
 	end 
