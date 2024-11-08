@@ -8,7 +8,7 @@ ITEM.Model = Model("models/trap/trap_close.mdl")
 ITEM.FOV = 10.308022922636
 ITEM.CamPos = Vector(-0.57306587696075, -91.117477416992, 98.567337036133)
 ITEM.NoCenter = true
-ITEM.Weight = 15
+ITEM.Weight = 12
 
 ITEM.Droppable = true
 ITEM.DropOnDeath = false
@@ -54,3 +54,4 @@ function ITEM:OnUse(ply, door)
 	return true
 end
 
+impulse.RegisterItem(ITEM)
