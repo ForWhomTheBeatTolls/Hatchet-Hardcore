@@ -111,6 +111,7 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 				draw.SimpleText("Bleed Rate: "..math.Round(k:GetNWInt("BleedRate", 0), 3), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 4, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				draw.SimpleText("Food Poisoning: "..tostring(k:GetNWInt("FoodPoisoning", false)), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 5, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				draw.SimpleText("TEAM: "..team.GetName(k:Team()), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -2, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("LOADOUT (TEST): "..tostring(k:GetNWString("Loadout", "none")), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -3, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				
 				end
 				
