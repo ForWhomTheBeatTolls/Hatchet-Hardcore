@@ -9,6 +9,7 @@
 		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
 		ply:SetNWInt("CarryWeight", 25)
+		ply:SetNWString("Loadout", "none")
 		ply.IsInASequence = false
 		ply.FoodPoisoning = false
 		ply.Stunned = false
