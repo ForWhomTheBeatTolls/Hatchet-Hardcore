@@ -313,7 +313,27 @@ function PANEL:Paint(w, h)
 		surface.SetMaterial(figure_larm)
 		surface.DrawTexturedRect(500, h / 1.7, 210, 400)
 	end
-
+	
+	surface.SetFont("HatchetFont20")
+	surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("LLeg"), 155 + LocalPlayer():GetNWInt("LLeg")))
+	surface.SetTextPos(430, h/ 1.17)
+	surface.DrawText("L-LEG: "..math.Round(LocalPlayer():GetNWInt("LLeg"), 1).."/100")
+	
+	surface.SetFont("HatchetFont20")
+	surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("RLeg"), 155 + LocalPlayer():GetNWInt("RLeg")))
+	surface.SetTextPos(660, h/ 1.17)
+	surface.DrawText("R-LEG: "..math.Round(LocalPlayer():GetNWInt("RLeg"), 1).."/100")
+	
+	surface.SetFont("HatchetFont20")
+	surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("LArm"), 155 + LocalPlayer():GetNWInt("LArm")))
+	surface.SetTextPos(410, h/ 1.45)
+	surface.DrawText("L-ARM: "..math.Round(LocalPlayer():GetNWInt("LArm"), 1).."/100")
+	
+	surface.SetFont("HatchetFont20")
+	surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("RArm"), 155 + LocalPlayer():GetNWInt("RArm")))
+	surface.SetTextPos(680, h/ 1.45)
+	surface.DrawText("R-ARM: "..math.Round(LocalPlayer():GetNWInt("RArm"), 1).."/100")
+	
 
 	-- surface.SetDrawColor(injured_figure_col)
 	-- surface.SetMaterial(figure_head)
@@ -345,16 +365,16 @@ function PANEL:Paint(w, h)
 		surface.SetTextPos(w / 1.72, 110)
 	
 		if LocalPlayer():Health() < 10 then
-			curhp = "I'm on the verge of death!"
+			curhp = "I'm extremely injured."
 		elseif LocalPlayer():Health() < 25 then
-			curhp = "I'm seriously injured!"
+			curhp = "I'm seriously injured."
 		elseif LocalPlayer():Health() < 45 then
-			curhp = "I'm injured!"
+			curhp = "I'm injured."
 		elseif LocalPlayer():Health() < 60 then
 			curhp = "I'm hurt."
 		elseif LocalPlayer():Health() < 80 then
 			curhp = "I'm bruised."
-		elseif LocalPlayer():Health() < 101 then
+		elseif LocalPlayer():Health() <= 100 then
 			curhp = "I'm healthy."
 		end
 	
@@ -365,7 +385,7 @@ function PANEL:Paint(w, h)
 		if LocalPlayer():Health() < 10 then
 			curhunger = "I'm going to die from starvation soon!"
 		elseif LocalPlayer():Health() < 25 then
-			curhunger = "I'm Seriously starving!"
+			curhunger = "I'm seriously starving!"
 		elseif LocalPlayer():Health() < 45 then
 			curhunger = "i'm starving!"
 		elseif LocalPlayer():Health() < 60 then
