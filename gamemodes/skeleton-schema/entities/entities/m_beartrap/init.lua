@@ -3,8 +3,8 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
  
 function ENT:Initialize()
+	self:SetModel( "models/trap/trap_close.mdl" )
 	self:SetUseType( SIMPLE_USE )
-	self:SetModel( "models/trap/trap_close.mdl" ) 
 	self:PhysicsInit( SOLID_VPHYSICS )
 	self:SetMoveType( (MOVETYPE_VPHYSICS) )
 	self:SetSolid( SOLID_VPHYSICS )
@@ -16,14 +16,19 @@ function ENT:Initialize()
 	"util_scrapmetal",
 	"util_recmetal"
 	}
+	self.Activated = false
+	self:PhysWake()
 end
  
 function ENT:Use( activator, caller )
-	if IsValid( caller ) and caller:IsPlayer() then 
-		if self:GetCollisionGroup() == COLLISION_GROUP_DEBRIS then 
-			self:SetModel( "models/trap/trap.mdl" ) 
-			self:SetCollisionGroup(COLLISION_GROUP_NONE)
-		end 
+	if self:GetCollisionGroup() == COLLISION_GROUP_DEBRIS then 
+		self:SetModel( "models/trap/trap.mdl" ) 
+		self:SetCollisionGroup(COLLISION_GROUP_NONE)
+	elseif self:GetCollisionGroup() == COLLISION_GROUP_NONE then
+		caller:GiveInventoryItem("trap_bear")
+		caller:Notify("You have picked up the bear trap.")
+
+		self:Remove()
 	end
 end
 
@@ -40,15 +45,18 @@ function ENT:Touch( entity )
 	entity:EmitSound( "trap/trap.mp3" ) 
 	timer.Simple(0.01,function()
 		if entity:IsPlayer() then
+			self.Activated = false
 			entity:TakeDamage( 40, self, self )
 			entity:TakeDamageLimb(table.Random(leg), 100)
 			entity:SetNWInt("BleedRate", entity:GetNWInt("BleedRate", 0) + math.random(1,3))
 			entity.TimesDamaged = 6
 			entity:Say("/me gets his ankle caught in a bear trap.")
-			self:TakeDamage( 40, self, self ) 
+			self:TakeDamage( 40, self, self )
 		else
+			self.Activated = false
 			entity:TakeDamage( 40, self, self )
 			self:TakeDamage( 40, self, self ) 
+		end
 		end)
 
 	
