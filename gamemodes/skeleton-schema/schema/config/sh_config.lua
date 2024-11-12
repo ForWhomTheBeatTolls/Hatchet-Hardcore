@@ -15,7 +15,7 @@ impulse.Config.SchemaCredits = [[Developers
 
 impulse.Config.WhitelistedPlayers = {
 "STEAM_0:1:204367223", -- SteveB.
-"STEAM_0:0:627119036", -- Thrumbo
+--"STEAM_0:0:627119036", -- Thrumbo
 "STEAM_0:0:193471001", -- WillMasterr
 "STEAM_0:0:461693288", -- Nuj
 "STEAM_0:0:526890129", -- Blurger
