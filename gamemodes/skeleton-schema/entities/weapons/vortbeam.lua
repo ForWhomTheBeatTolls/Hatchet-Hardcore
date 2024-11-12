@@ -170,17 +170,22 @@ function SWEP:PrimaryAttack()
                 -- local effectdata = EffectData()
                 -- effectdata:SetOrigin( self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 500 )
                 -- util.Effect( "VortDispel", effectdata )
+				
+				local limb = {"RArm", "LArm"}
 
                 if SERVER then
                     if IsValid(victim) then
                         local DMG = DamageInfo()
                         DMG:SetDamageType(DMG_SHOCK)
-                        DMG:SetDamage(self.Primary.Damage)
+                        DMG:SetDamage(self.Primary.Damage * math.random(0.90, 1.10))
                         DMG:SetAttacker(self:GetOwner())
                         DMG:SetInflictor(self:GetOwner():GetActiveWeapon())
                         DMG:SetDamagePosition(self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 500)
                         DMG:SetDamageForce(self:GetOwner():GetAimVector() * self.DamageForce)
                         victim:TakeDamageInfo( DMG )
+						if victim:IsPlayer() then
+							victim:TakeDamageLimb(table.Random(limb), self.Primary.Damage * 1.2)
+						end
                     end
                 end
 
