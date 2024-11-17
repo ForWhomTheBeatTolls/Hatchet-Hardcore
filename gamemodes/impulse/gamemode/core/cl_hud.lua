@@ -115,12 +115,13 @@ local function DrawOverheadInfo(target, alpha)
 	if not recognizecheck[target:SteamID()] and not LocalPlayer():IsCP() then
 		draw.DrawText("Unknown", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif recognizecheck[target:SteamID()] and LocalPlayer():IsCP() then
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText(target:KnownNameTwo(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif LocalPlayer():IsCP() and target:GetNWInt("Applied") == false and not target:IsCP() or target:Team() == TEAM_RESISTANCE then
 		draw.DrawText("", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	else
-		draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
+		draw.DrawText(target:KnownNameTwo(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	end
+	
 
 	if target:GetSyncVar(SYNC_TYPING, false) then 	draw.DrawText("Typing...", "Impulse-Elements24-Shadow", pos.x, pos.y - 50, Color(255, 255, 255), 1) end
 	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1) end
