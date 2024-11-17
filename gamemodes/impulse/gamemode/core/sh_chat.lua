@@ -564,39 +564,22 @@ if CLIENT then
 	impulse.RegisterChatClass(1, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
 
-		local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-		local desc = speaker:GetSyncVar(SYNC_RPDESC, "Unknown Person")
-		local chatdesc = ""
-
-		if string.len(desc) > 38 then
-			chatdesc = string.Left(desc, 38)..".."
-		elseif string.len(desc) < 37 then
-			chatdesc = desc
-		end
-
-		if string.len(desc) == 0 then
-			chatdesc = "An unknown person stands before you."
-		end
-
-
 		impulse.customChatFont = "Impulse-ChatTalk"
 
-		-- print(speaker:KnownName())
-
 		message = "'' " .. message .. " ''"
+		local teamcol = team.GetColor(speaker:Team())
 
-		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(speaker, talkCol, " says: ", message)
-		elseif speaker == LocalPlayer() then
-			chat.AddText(speaker, talkCol, " says: ", message)
-		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " says: ", message)
-		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
-			chat.AddText(speaker, talkCol, " says: ", message)
+
+		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownNameTwo()
+			chat.AddText( teamcol, speaker, talkCol, " says: ", message)
+		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownDesc()
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", talkCol, " says: ", message)
 		else
-			chat.AddText(speaker, talkCol, " says: ", message)
+			speaker = speaker:KnownName()
+
+			chat.AddText( teamcol, speaker, talkCol, " says: ", message)
 		end
 
 	end)
@@ -650,67 +633,42 @@ if CLIENT then
 	impulse.RegisterChatClass(6, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
 
-		local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-		local desc = speaker:GetSyncVar(SYNC_RPDESC, "Unknown Person")
-		local chatdesc = ""
-
-		if string.len(desc) > 38 then
-			chatdesc = string.Left(desc, 38)..".."
-		elseif string.len(desc) < 37 then
-			chatdesc = desc
-		end
-
-		if string.len(desc) == 0 then
-			chatdesc = "An unknown person stands before you."
-		end
-
 		impulse.customChatFont = "Impulse-YellTalk"
 		message = "'' " .. message .. " ''"
-		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(speaker, yellCol, " yells: ", message)
-		elseif speaker == LocalPlayer() then
-			chat.AddText(speaker, yellCol, " yells: ", message)
-		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " yells: ", message)
-		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
-			chat.AddText(speaker, yellCol, " yells: ", message)
+		local teamcol = team.GetColor(speaker:Team())
+
+
+		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownNameTwo()
+			chat.AddText( teamcol, speaker, yellCol, " yells: ", message)
+		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownDesc()
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", yellCol, " yells: ", message)
 		else
-			chat.AddText(speaker, yellCol, " yells: ", message)
+			speaker = speaker:KnownName()
+
+			chat.AddText( teamcol, speaker, yellCol, " yells: ", message)
 		end
+
 	end)
 
 	impulse.RegisterChatClass(7, function(message, speaker)
 		message = hook.Run("ProcessICChatMessage", speaker, message) or message
-		local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-		local desc = speaker:GetSyncVar(SYNC_RPDESC, "Unknown Person")
-		local chatdesc = ""
 
-		if string.len(desc) > 38 then
-			chatdesc = string.Left(desc, 38)..".."
-		elseif string.len(desc) < 37 then
-			chatdesc = desc
-		end
-
-		if string.len(desc) == 0 then
-			chatdesc = "An unknown person stands before you."
-		end
-
-		impulse.customChatFont = "Impulse-WhisperTalk"
 		message = "'' " .. message .. " ''"
-		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(speaker, whisperCol, " whispers: ", message)
-		elseif speaker == LocalPlayer() then
-			chat.AddText(speaker, whisperCol, " whispers: ", message)
-		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", whisperCol, " whispers: ", message)
-		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
-			chat.AddText(speaker, whisperCol, " whispers: ", message)
+		local teamcol = team.GetColor(speaker:Team())
+
+
+		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownNameTwo()
+			chat.AddText( teamcol, speaker, whisperCol, " whispers: ", message)
+		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownDesc()
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", whisperCol, " whispers: ", message)
 		else
-			chat.AddText(speaker, whisperCol, " whispers: ", message)
+			speaker = speaker:KnownName()
+
+			chat.AddText( teamcol, speaker, whisperCol, " whispers: ", message)
 		end
 	end)
 
@@ -720,33 +678,20 @@ if CLIENT then
 	end)
 
 	impulse.RegisterChatClass(9, function(message, speaker)
-		local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-		local desc = speaker:GetSyncVar(SYNC_RPDESC, "Unknown Person")
-		local chatdesc = ""
+		message = "'' " .. message .. " ''"
+		local teamcol = team.GetColor(speaker:Team())
 
-		if string.len(desc) > 38 then
-			chatdesc = string.Left(desc, 38)..".."
-		elseif string.len(desc) < 37 then
-			chatdesc = desc
-		end
 
-		if string.len(desc) == 0 then
-			chatdesc = "An unknown person stands before you."
-		end
-		
-		
-		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", talkCol, " ", message)
-		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(speaker, talkCol, " ", message)
-		elseif speaker == LocalPlayer() then
-			chat.AddText(speaker, talkCol, " ", message)
-		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", talkCol, " ", message)
-		elseif LocalPlayer():Team() == TEAM_RESISTANCE then
-			chat.AddText(speaker, talkCol, " ", message)
+		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownNameTwo()
+			chat.AddText( teamcol, speaker, talkCol, " ", message)
+		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownDesc()
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", talkCol, " ", message)
 		else
-			chat.AddText(speaker, talkCol, " ", message)
+			speaker = speaker:KnownName()
+
+			chat.AddText( teamcol, speaker, talkCol, " ", message)
 		end
 	end)
 
@@ -755,28 +700,20 @@ if CLIENT then
 	end)
 
 	impulse.RegisterChatClass(11, function(message, speaker)
-		local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-		local desc = speaker:GetSyncVar(SYNC_RPDESC, "Unknown Person")
-		local chatdesc = ""
+		message = "'' " .. message .. " ''"
+		local teamcol = team.GetColor(speaker:Team())
 
-		if string.len(desc) > 38 then
-			chatdesc = string.Left(desc, 38)..".."
-		elseif string.len(desc) < 37 then
-			chatdesc = desc
-		end
 
-		if string.len(desc) == 0 then
-			chatdesc = "An unknown person stands before you."
-		end
-
-		if not recognizecheck[speaker:SteamID()] and !LocalPlayer():IsCP() then
-			chat.AddText(team.GetColor(speaker:Team()), "[ ", chatdesc, " ]", yellCol, " rolled ", message)
-		elseif recognizecheck[speaker:SteamID()] and LocalPlayer():IsCP() then
-			chat.AddText(speaker, yellCol, " rolled ", message)
-		elseif LocalPlayer():IsCP() and speaker:GetNWInt("Applied") == false and !speaker:IsCP() or speaker:Team() == TEAM_RESISTANCE then
-			chat.AddText(Color(112, 112, 112), "[ ", chatdesc, " ]", yellCol, " rolled ", message)
+		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownNameTwo()
+			chat.AddText( teamcol, speaker, yellCol, " rolled ", message)
+		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
+			speaker = speaker:KnownDesc()
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", yellCol, " rolled ", message)
 		else
-			chat.AddText(speaker, yellCol, " rolled ", message)
+			speaker = speaker:KnownName()
+
+			chat.AddText( teamcol, speaker, yellCol, " rolled ", message)
 		end
 	end)
 
