@@ -101,30 +101,30 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 
 
 				if k:IsAdmin() and k:GetMoveType() == MOVETYPE_NOCLIP and k:GetNoDraw() then
-					draw.SimpleText("** In Observer Mode **", "Impulse-Elements18-Shadow", pos.x, pos.y, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+					draw.SimpleText("** In Observer Mode **", "AdminESP", pos.x, pos.y, Color(255, 0, 0), TEXT_ALIGN_CENTER)
 				else
-					draw.SimpleText(k:Name(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, TEXT_ALIGN_CENTER)
+					draw.SimpleText(k:Name(), "AdminESP", pos.x, pos.y, col, TEXT_ALIGN_CENTER)
 				end
 				
 				if k:GetNWVarTable() != nil then
 					
-				draw.SimpleText("Bleed Rate: "..math.Round(k:GetNWInt("BleedRate", 0), 3), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 4, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
-				draw.SimpleText("Food Poisoning: "..tostring(k:GetNWInt("FoodPoisoning", false)), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 5, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
-				draw.SimpleText("TEAM: "..team.GetName(k:Team()), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -2, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
-				draw.SimpleText("LOADOUT (TEST): "..tostring(k:GetNWString("Loadout", "none")), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -3, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("Bleed Rate: "..math.Round(k:GetNWInt("BleedRate", 0), 3), "AdminESP", pos.x, pos.y + 12, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("Food Poisoning: "..tostring(k:GetNWInt("FoodPoisoning", false)), "AdminESP", pos.x, pos.y + 24, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("TEAM: "..team.GetName(k:Team()), "AdminESP", pos.x, pos.y + 38, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("LOADOUT (TEST): "..tostring(k:GetNWString("Loadout", "none")), "AdminESP", pos.x, pos.y + 48, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				
 				end
 				
-				draw.SimpleText(k:SteamName(), "Impulse-Elements16-Shadow", pos.x, pos.y - 15, impulse.Config.InteractColour, TEXT_ALIGN_CENTER)
+				draw.SimpleText(k:SteamName(), "AdminESP", pos.x, pos.y +  60, impulse.Config.InteractColour, TEXT_ALIGN_CENTER)
 				
-				draw.SimpleText("HP: "..k:Health(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 2, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("HP: "..k:Health(), "AdminESP", pos.x, pos.y + 72, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 
-				draw.SimpleText("Armor: "..k:Armor(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * 3, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+				draw.SimpleText("Armor: "..k:Armor(), "AdminESP", pos.x, pos.y + 84 , Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				
 				if k:Alive() and k:GetActiveWeapon() != nil then
-					draw.SimpleText(k:GetActiveWeapon(), "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -1, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+					draw.SimpleText(k:GetActiveWeapon(), "AdminESP", pos.x, pos.y + 96, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				else
-					draw.SimpleText("Player has died.", "Impulse-Elements18-Shadow", pos.x, pos.y - 15 * -1, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
+					draw.SimpleText("Player has died.", "AdminESP", pos.x, pos.y + 108, Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b), TEXT_ALIGN_CENTER)
 				end
 				
 			end
