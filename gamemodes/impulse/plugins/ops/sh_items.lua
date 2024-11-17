@@ -1,24 +1,19 @@
 if CLIENT then
     net.Receive("impulseOpsItemSpawner", function()
         local panel = vgui.Create("DFrame")
-        panel:SetSize(600, 500)
+        panel:SetSize(ScrW() / 1.5, ScrH() / 1.25)
         panel:Center()
         panel:SetTitle("Item Spawner")
         panel:MakePopup()
 
-        local lbl = vgui.Create("DLabel", panel)
-        lbl:SetPos(5, 32)
-        lbl:SetText("Target: ")
-        lbl:SizeToContents()
-
         local targetBox = vgui.Create("DComboBox", panel)
-        targetBox:SetPos(50, 30)
+        targetBox:Dock(TOP)
         targetBox:SetWide(400)
 
         targetBox:AddChoice("Me")
         targetBox:AddChoice("Custom SteamID (Offline User)")
 
-        for v,k in pairs(player.GetAll()) do
+        for v, k in player.Iterator() do
             targetBox:AddChoice("PLAYER: "..k:Nick().." ("..k:SteamName()..")", k:SteamID())
         end
 
@@ -41,28 +36,30 @@ if CLIENT then
         end
 
         local scroll = vgui.Create("DScrollPanel", panel)
-        scroll:SetPos(5, 60)
-        scroll:SetSize(595, 440)
+        scroll:Dock(FILL)
 
         local cats = {}
 
-        for v,k in pairs(impulse.Inventory.Items) do
-            if not cats[k.Category or "Unknown"] then 
+        for v, k in pairs(impulse.Inventory.Items) do
+            if not cats[k.Category or "Unknown"] then
                 local cat = scroll:Add("DCollapsibleCategory")
                 cat:Dock(TOP)
                 cat:SetLabel(k.Category or "Unknown")
-                
-                cats[k.Category or "Unknown"] = vgui.Create("DPanelList", panel)
-                local list =  cats[k.Category or "Unknown"]
-                list:Dock(FILL)
-                list:SetSpacing(5)
-                cat:SetContents(list)
+
+                cats[k.Category or "Unknown"] = vgui.Create("DTileLayout", panel)
+                local layout = cats[k.Category or "Unknown"]
+                layout:Dock(FILL)
+                layout:SetBaseSize(128)
+                layout:SetSpaceX(5)
+                layout:SetSpaceY(5)
+                layout:SetBorder(5)
+
+                cat:SetContents(layout)
             end
 
-            local btn = vgui.Create("DButton")
-            btn:SetText("Give "..k.Name.." ("..k.UniqueID..")")
-            btn:Dock(TOP)
-            btn:DockMargin(0, 0, 0, 5)
+            local btn = vgui.Create("DButton", cats[k.Category or "Unknown"])
+            btn:SetText("")
+            btn:SetSize(128, 128)
             btn.ItemClass = k.UniqueID
 
             function btn:DoClick()
@@ -73,7 +70,31 @@ if CLIENT then
                 LocalPlayer():ConCommand("say /giveitem "..panel.Selected.." "..self.ItemClass)
             end
 
-            cats[k.Category or "Unknown"]:AddItem(btn)
+            local label = vgui.Create("DLabel", btn)
+            label:SetText(k.Name)
+            label:SetFont("Impulse-Elements14")
+            label:SizeToContents()
+            label:SetPos(btn:GetWide() / 2 - label:GetWide() / 2, 4)
+
+            local mdl = vgui.Create("DModelPanel", btn)
+            mdl:SetModel(Model(k.Model or "models/props_junk/watermelon01.mdl"))
+
+            function mdl:LayoutEntity(ent)
+                if k.Material then
+                    ent:SetMaterial(k.Material)
+                end
+
+                if k.Skin then
+                    ent:SetSkin(k.Skin)
+                end
+            end
+
+            mdl:SetSize(128 - 16, 128 - 16)
+            mdl:SetPos(btn:GetWide() / 2 - mdl:GetWide() / 2, 16)
+            mdl:SetFOV(15)
+            mdl:SetMouseInputEnabled(false)
+            mdl:SetCamPos(Vector(50, 50, 50))
+            mdl:SetLookAt(vector_origin)
         end
     end)
 else
