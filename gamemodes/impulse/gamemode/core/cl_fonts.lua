@@ -2,6 +2,14 @@
 -- math.max(ScreenScale(6), 17)
 
 
+surface.CreateFont("AdminESP", {
+	font = "Arial",
+	size = 12,
+	weight = 900,
+	antialias = true,
+	shadow = true,
+} )
+
 surface.CreateFont("zoneFont", {
 	font = "Courier New",
 	size = 20,
