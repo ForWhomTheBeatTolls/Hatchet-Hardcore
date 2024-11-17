@@ -103,7 +103,40 @@ function meta:GetCity()
     return self:GetSyncVar(SYNC_RPCITY, self:SteamName())
 end
 
+function meta:KnownDesc()
+	return self:GetSyncVar(SYNC_RPDESC, "Unknown Person")
+end
+
 function meta:KnownName()
+	local custom = hook.Run("PlayerGetKnownName", self)
+	local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
+
+	local desc = self:GetSyncVar(SYNC_RPDESC, "Unknown Person")
+	local chatdesc = ""
+
+	if string.len(desc) > 38 then
+		chatdesc = string.Left(desc, 38)..".."
+	elseif string.len(desc) < 37 then
+		chatdesc = desc
+	end
+
+	if string.len(desc) == 0 then
+		chatdesc = "An unknown person stands before you."
+	end
+
+	chatdesc = "[ " .. chatdesc .. "]"
+	
+	if custom then return custom end
+
+
+	if recognizecheck[self:SteamID()] then
+		return self:GetSyncVar(SYNC_RPNAME, self:SteamName())
+	else
+		return chatdesc
+	end
+end
+
+function meta:KnownNameTwo()
 	local custom = hook.Run("PlayerGetKnownName", self)
 	return custom or self:GetSyncVar(SYNC_RPNAME, self:SteamName())
 end
