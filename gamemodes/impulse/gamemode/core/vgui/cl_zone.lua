@@ -40,6 +40,9 @@ end
 
 
 function PANEL:Paint(w,h)
+	if (string.len(self.Zone) == 0) then
+		self:Remove()
+	end
 	-- surface.SetDrawColor(Color(100, 100, 100, 150))
 	-- surface.DrawRect(0, 0, w, h)
 
