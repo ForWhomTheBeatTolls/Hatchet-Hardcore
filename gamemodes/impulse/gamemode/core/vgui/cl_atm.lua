@@ -11,11 +11,10 @@ function PANEL:Init()
 	local prefix = impulse.Config.CurrencyPrefix
 	local parent = self
 
-	local exit = vgui.Create("DImageButton", self)
+	local exit = vgui.Create("DButton", self)
 	exit:SetSize(16, 16)
     exit:SetPos(215, 8)
-    exit:SetImage("gui/close_32")
-    exit:SetColor(Color(202, 35, 35))
+	exit:SetText("X")
     exit.DoClick = function()
         self:Close()
     end
@@ -106,7 +105,6 @@ end
 function PANEL:Paint(w, h)
     local static = Material("effects/tvscreen_noise002a")
     local black = Color(0, 0, 0)
-    local red = Color(161, 23, 23)
     local white = Color(255, 255, 255)
     local blue = Color(20, 112, 218)
     local gray = Color(37, 37, 37)
@@ -118,7 +116,7 @@ function PANEL:Paint(w, h)
     surface.DrawTexturedRect(0, 0, w, h)
 
 
-    surface.SetDrawColor(red)
+    surface.SetDrawColor(gray)
     surface.DrawRect(0, 0, w, 26)
 
     surface.SetFont("Trebuchet18")
