@@ -24,8 +24,10 @@ end
 
 function ENT:Use(activator, caller)
 	if activator:IsPlayer() and activator:Alive() then
-		net.Start("impulseATMOpen")
-		net.Send(activator)
+
+		net.Start("impulse_CreateVGUI")
+		net.WriteString("impulseATMMenu")
+        net.Send(activator)
 
 		activator.currentATM = self
 	end
