@@ -1,7 +1,8 @@
+util.AddNetworkString("impulse_CreateVGUI")
+
 util.AddNetworkString("impulseJoinData")
 util.AddNetworkString("impulseATMWithdraw")
 util.AddNetworkString("impulseATMDeposit")
-util.AddNetworkString("impulseATMOpen")
 util.AddNetworkString("impulseReadNote")
 util.AddNetworkString("impulseTeamChange")
 util.AddNetworkString("impulseBuyItem")
