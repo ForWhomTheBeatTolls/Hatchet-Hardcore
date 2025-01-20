@@ -656,7 +656,7 @@ do
 			local weapon = self:GetActiveWeapon()
 
 			if IsValid(weapon) then
-				weapon:SetNextPrimaryFire(CurTime() + 1)
+				weapon:SetNextPrimaryFire(CurTime() + 0.25)
 				weapon:SetNextSecondaryFire(CurTime() + 1)
 
 				if weapon.OnLowered then
