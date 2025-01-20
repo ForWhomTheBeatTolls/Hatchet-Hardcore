@@ -39,8 +39,8 @@ end
 	
 		if caller:Team() == TEAM_WORKFORCE or caller:Team() == TEAM_CITIZEN then
 	
-			net.Start("HatchetBecomeRebelStart")
-			net.WritePlayer(caller)
+			net.Start("impulse_CreateVGUI")
+			net.WriteString("hatchetRebelTerminal")
 			net.Send(caller)
 			self:EmitSound("ambient/machines/keyboard_slow_1second.wav", 60, 100, 1, CHAN_AUTO)
 		
