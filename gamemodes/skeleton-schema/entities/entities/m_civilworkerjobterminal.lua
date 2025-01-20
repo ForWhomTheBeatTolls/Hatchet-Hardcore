@@ -38,10 +38,11 @@ end
 	if self.NextUse < CurTime() then
 	
 		if caller:Team() == TEAM_WORKFORCE then
-	
-			net.Start("HatchetSelectWorkerJobStart")
-			net.WritePlayer(caller)
+
+			net.Start("impulse_CreateVGUI")
+			net.WriteString("hatchetCivilWorkerJob")
 			net.Send(caller)
+	
 			self:EmitSound("ambient/machines/keyboard_slow_1second.wav", 60, 100, 1, CHAN_AUTO)
 		
 		else
