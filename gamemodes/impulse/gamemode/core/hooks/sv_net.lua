@@ -91,7 +91,7 @@ util.AddNetworkString("impulseGroupDoSetColor")
 util.AddNetworkString("impulseGroupDoSetInfo")
 util.AddNetworkString("impulseGetButtons")
 util.AddNetworkString("impulseCLChatCommand")
-util.AddNetworkString("HatchetBubbleChatCall")
+-- util.AddNetworkString("HatchetBubbleChatCall")
 -- util.AddNetworkString("HatchetAnimationCall")
 util.AddNetworkString("impulseChangeDescription")
 
