@@ -8,11 +8,10 @@ self:MakePopup()
 self:ShowCloseButton(false)
 surface.PlaySound( "ambient/machines/keyboard" .. math.random(1, 7) .. "_clicks.wav")
 
-    local exit = vgui.Create("DImageButton", self)
+    local exit = vgui.Create("DButton", self)
     exit:SetSize(16, 16)
     exit:SetPos(736, 8)
-    exit:SetImage("gui/close_32")
-    exit:SetColor(Color(202, 35, 35))
+    exit:SetText("X")
     exit.DoClick = function()
         self:Close()
     end
@@ -57,11 +56,10 @@ surface.PlaySound( "ambient/machines/keyboard" .. math.random(1, 7) .. "_clicks.
         dframe:MakePopup()
         dframe:ShowCloseButton(false)
 
-        local exitterminal = vgui.Create("DImageButton", dframe)
+        local exitterminal = vgui.Create("DButton", dframe)
         exitterminal:SetSize(16, 16)
         exitterminal:SetPos(816, 8)
-        exitterminal:SetImage("gui/close_32")
-        exitterminal:SetColor(Color(202, 35, 35))
+        exitterminal:SetText("X")
         exitterminal.DoClick = function()
             dframe:Close()
         end
@@ -83,7 +81,6 @@ surface.PlaySound( "ambient/machines/keyboard" .. math.random(1, 7) .. "_clicks.
         function dframe:Paint(w, h)
             local static = Material("effects/tvscreen_noise002a")
             local black = Color(0, 0, 0)
-            local red = Color(161, 23, 23)
             local white = Color(255, 255, 255)
             local blue = Color(20, 112, 218)
             local gray = Color(37, 37, 37)
@@ -95,7 +92,7 @@ surface.PlaySound( "ambient/machines/keyboard" .. math.random(1, 7) .. "_clicks.
             surface.DrawTexturedRect(0, 0, w, h)
 
 
-            surface.SetDrawColor(red)
+            surface.SetDrawColor(gray)
             surface.DrawRect(0, 0, w, 26)
 
             surface.SetFont("Trebuchet18")
@@ -139,7 +136,6 @@ function PANEL:Paint(w, h)
 
     local static = Material("effects/tvscreen_noise002a")
     local black = Color(0, 0, 0)
-    local red = Color(161, 23, 23)
     local white = Color(255, 255, 255)
     local blue = Color(20, 112, 218)
     local gray = Color(37, 37, 37)
@@ -151,7 +147,7 @@ function PANEL:Paint(w, h)
     surface.DrawTexturedRect(0, 0, w, h)
 
 
-    surface.SetDrawColor(red)
+    surface.SetDrawColor(gray)
     surface.DrawRect(0, 0, w, 26)
 
     surface.SetFont("Trebuchet18")
