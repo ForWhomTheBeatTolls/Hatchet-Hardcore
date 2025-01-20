@@ -44,10 +44,8 @@ function ITEM:OnUse(ply, door)
 		ply:DoCustomAnimEvent( PLAYERANIMEVENT_ATTACK_GRENADE, 279 )
 
 		if door:IsPlayer() and door:GetModel() == "models/vortigaunt_slave.mdl" then
-			door:SetModel("models/vortigaunt.mdl")
-			door:Give("vortbeam")
 			ply:Notify("You freed the vortigaunt from his shackles.")
-			door:Notify("You have been freed from your shackles.")
+			door:Unshackle()
 			return
 		end
 		timer.Simple( 1, function ()
