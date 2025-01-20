@@ -2,6 +2,20 @@ net.Receive("impulseJoinData", function()
 	impulse_isNewPlayer = net.ReadBool() -- this is saved as a normal global variable cuz impulse or localplayer have not loaded yet on the client
 end)
 
+net.Receive("impulse_CreateVGUI", function()
+	local g = net.ReadString()
+	vgui.Create(g)
+end)
+
+net.Receive("impulse_CreateWorkBar", function()
+	local time = net.ReadString()
+	local name = net.ReadString()
+	local isfrozen = net.ReadBool()
+	if (!tonumber(time)) then return end
+    impulse.MakeWorkbar(tonumber(time), name, function() end, isfrozen)
+end)
+
+
 net.Receive("impulseNotify", function(len)
 	local message = net.ReadString()
 	local isangry = net.ReadBool()
@@ -14,10 +28,6 @@ net.Receive("impulseNotify", function(len)
 	else
 		LocalPlayer():Notify(message)
 	end
-end)
-
-net.Receive("impulseATMOpen", function()
-	vgui.Create("impulseATMMenu")
 end)
 
 net.Receive("impulseReadNote", function()
