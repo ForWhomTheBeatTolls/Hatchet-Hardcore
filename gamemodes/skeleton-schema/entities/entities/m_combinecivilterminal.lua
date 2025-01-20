@@ -18,7 +18,8 @@ if SERVER then
     end
 
     function ENT:Use(activator)
-        net.Start("HatchetTerminalCivilOpen")
+        net.Start("impulse_CreateVGUI")
+		net.WriteString("CombineCivilTerminal_Screen")
         net.Send(activator)
     end
 
