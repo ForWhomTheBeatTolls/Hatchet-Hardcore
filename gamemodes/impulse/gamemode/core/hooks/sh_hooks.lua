@@ -1,4 +1,4 @@
-local KEY_BLACKLIST = IN_ATTACK + IN_ATTACK2
+local KEY_BLACKLIST = IN_ATTACK
 local isValid = IsValid
 local mathAbs = math.abs
 
