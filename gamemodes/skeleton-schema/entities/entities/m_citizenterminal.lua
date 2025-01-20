@@ -20,7 +20,8 @@ if SERVER then
     end
 
     function ENT:Use(activator)
-        net.Start("HatchetCitizenTerminalOpen")
+        net.Start("impulse_CreateVGUI")
+		net.WriteString("HatcherCitizenTerminalMenu")
         net.Send(activator)
     end
 
