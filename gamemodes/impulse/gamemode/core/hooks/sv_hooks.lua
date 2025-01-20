@@ -780,6 +780,16 @@ function GM:SetupPlayerVisibility(ply)
 	end
 end
 
+function meta:CalcPlayerWepRaise()
+	timer.Simple(0.25, function()
+		if IsValid(self) and !self:KeyDown(IN_ATTACK2) then
+			self:SetWeaponRaised(false)
+		else
+			self:CalcPlayerWepRaise()
+		end
+	end)
+end
+
 function GM:KeyPress(ply, key)
 	if ply:IsAFK() then
 		ply:UnMakeAFK()	
@@ -787,12 +797,12 @@ function GM:KeyPress(ply, key)
 
 	ply.AFKTimer = CurTime() + impulse.Config.AFKTime
 
-	if key == IN_RELOAD then
-		timer.Create("impulseRaiseWait"..ply:SteamID(), .25, 1, function()
-			if IsValid(ply) then
+	if key == IN_ATTACK2 then
+			if IsValid(ply) and ply.RaiseDelay < CurTime() then
 				ply:ToggleWeaponRaised()
+				ply:CalcPlayerWepRaise()
+				ply.RaiseDelay = CurTime() + 1
 			end
-		end)
 	elseif key == IN_USE and not ply:InVehicle() then
 		local trace = {}
 		trace.start = ply:GetShootPos()
@@ -839,11 +849,11 @@ function GM:PlayerUse(ply, entity)
 	end
 end
 
-function GM:KeyRelease(ply, key)
-	if key == IN_RELOAD then
-		timer.Remove("impulseRaiseWait"..ply:SteamID())
-	end
-end
+-- function GM:KeyRelease(ply, key)
+	-- if key == IN_ATTACK2 then
+		-- timer.Remove("impulseRaiseWait"..ply:SteamID())
+	-- end
+-- end
 
 impulse.ActiveButtons = {}
 local function LoadButtons()
