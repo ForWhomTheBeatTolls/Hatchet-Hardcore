@@ -23,6 +23,8 @@ if SERVER then
         net.Start("impulse_CreateVGUI")
 		net.WriteString("HatcherCitizenTerminalMenu")
         net.Send(activator)
+
+        activator.currentATM = self
     end
 
 end
