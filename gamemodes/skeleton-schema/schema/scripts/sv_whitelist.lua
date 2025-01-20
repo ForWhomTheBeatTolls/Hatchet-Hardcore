@@ -1,4 +1,5 @@
---hatchet.WhitelistedPlayers = hatchet.WhitelistedPlayers or {}
+-- VERY IMPORTANT WARNING BEFORE YOU FUCK WITH WHITELISTS, MAKE SURE TO PUT ANY STEAMIDS YOU'RE GOING TO WHITELIST INSIDE QUOTATION MARKS (EX. "STEAM_0:1:204367223"),
+-- AND DON'T FUCKING USE THE CHAT COMMAND! USE THE CONSOLE!!!!!!!
 
 -- "STEAM_0:1:204367223", -- SteveB.
 -- "STEAM_0:0:627119036", -- Thrumbo
@@ -35,9 +36,11 @@ local GiveServerWhitelist = {
     adminOnly = true,
     onRun = function(ply, arg, rawText)
         local steamid = arg[1]
-
+		local calend1 = os.time()
+		local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
+		
 		-- if file.Exists("hatchet_server_whitelist.json", "LUA") then
-			file.Write("hatchet_server_whitelist.json", steamid)
+			file.Write("hatchet_server_whitelist.json", steamid.." -- ["..calend2.."] (Added VIA Command)")
 			print(file.Write("hatchet_server_whitelist.json", steamid))
 		--else
 			--print("No ''hatchet_server_whitelist.json'' file found. Create it and then try again.")
@@ -48,12 +51,17 @@ impulse.RegisterChatCommand("/givewhitelist", GiveServerWhitelist)
 
 concommand.Add("givewhitelist", function(ply, cmd, args)
 
+	if !ply:IsSuperAdmin() then return end
+
 	local f = file.Open("hatchet_server_whitelist.json", "w", "DATA")
 	local r = file.Read( "impulse/hatchet_server_whitelist.json", "DATA" )
 	local strf = string.find(r, args[1], 1, true)
 	
+	local calend1 = os.time()
+	local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
+	
 	if !strf and strf != args[1] then
-		file.Append("impulse/hatchet_server_whitelist.json", tostring(args[1]))
+		file.Append("impulse/hatchet_server_whitelist.json", tostring(args[1]).." -- ["..calend2.."] (Added VIA Con-Command)")
 		file.Append("impulse/hatchet_server_whitelist.json", "\n")
 	else
 		print("This value is already in the table!")
