@@ -40,8 +40,10 @@ end
 
 function ENT:Use(activator, caller)
 	if caller:Team() == TEAM_CP then
-		net.Start("impulseHL2RPRankUse")
-		net.Send(caller)
+		
+		net.Start("impulse_CreateVGUI")
+		net.WriteString("impulseRankMenu")
+        net.Send(caller)
 
 		caller.currentNPC = self
 	end
