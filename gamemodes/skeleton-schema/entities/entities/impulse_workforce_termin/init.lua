@@ -40,8 +40,9 @@ end
 
 function ENT:Use(activator, caller)
 	if activator:IsPlayer() and activator:Alive() and activator:Team() == TEAM_WORKFORCE then	
-		net.Start("impulseHL2RPWorkforceRankUse")
-		net.Send(activator)
+        net.Start("impulse_CreateVGUI")
+		net.WriteString("impulseWorkforceRankMenu")
+        net.Send(activator)
 
 		activator.currentStorage = self
 	end
