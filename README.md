@@ -10,6 +10,8 @@ Attempting to redistribute, monetize or gain off of HATCHET without the permissi
 Download MySQLOO, follow instructions.
 Make sure you have the following file: GarrysMod/garrysmod/data/impulse/hatchet_server_whitelist.json
 
+The whitelist uses regular SteamID. (ex: STEAM_0:1:204367223)
+
 For best usage, make sure to:
  -have gmod_mcore_test set to 1.
  -use 1920x1080.
