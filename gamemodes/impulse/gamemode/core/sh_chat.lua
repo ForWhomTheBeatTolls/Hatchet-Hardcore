@@ -41,6 +41,7 @@ local yellCol = Color(214, 71, 46)
 local whisperCol = Color(80, 93, 133)
 local infoCol = Color(135, 206, 250)
 local talkCol = Color(223, 223, 223)
+local ActionCol = Color(231, 205, 112)
 local radioCol = Color(55, 146, 21)
 local dispCol = Color(90, 244, 255)
 local pmCol = Color(45, 154, 6)
@@ -568,19 +569,31 @@ if CLIENT then
 
 		message = "'' " .. message .. " ''"
 		local teamcol = team.GetColor(speaker:Team())
-
+		local gray = Color(112, 112, 112)
+		local user = speaker
 
 		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownNameTwo()
+			HatchetBubbleChat(message, teamcol, "BubbleChat-Talk", impulse.Config.TalkDistance, user)
 			chat.AddText( teamcol, speaker, talkCol, " says: ", message)
 		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownDesc()
-			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", talkCol, " says: ", message)
+			HatchetBubbleChat(message, gray, "BubbleChat-Talk", impulse.Config.TalkDistance, user)
+			chat.AddText(gray, "[" .. speaker .. "]", talkCol, " says: ", message)
 		else
 			speaker = speaker:KnownName()
-
 			chat.AddText( teamcol, speaker, talkCol, " says: ", message)
+			HatchetBubbleChat(message, teamcol, "BubbleChat-Talk", impulse.Config.TalkDistance, user)
 		end
+
+		-- net.Start("HatchetBubbleChatCall")
+		-- net.WriteString(message)
+		-- net.WriteColor(col)
+		-- net.WriteString("BubbleChat-Talk")
+		-- net.WriteUInt(impulse.Config.TalkDistance, 10)
+		-- net.WritePlayer(speaker)
+		-- net.Broadcast()
+
 
 	end)
 
@@ -636,6 +649,7 @@ if CLIENT then
 		impulse.customChatFont = "Impulse-YellTalk"
 		message = "'' " .. message .. " ''"
 		local teamcol = team.GetColor(speaker:Team())
+		local user = speaker
 
 
 		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
@@ -650,6 +664,8 @@ if CLIENT then
 			chat.AddText( teamcol, speaker, yellCol, " yells: ", message)
 		end
 
+		HatchetBubbleChat(message, yellCol, "BubbleChat-Yell", impulse.Config.YellDistance, user)
+
 	end)
 
 	impulse.RegisterChatClass(7, function(message, speaker)
@@ -657,7 +673,7 @@ if CLIENT then
 
 		message = "'' " .. message .. " ''"
 		local teamcol = team.GetColor(speaker:Team())
-
+		local user = speaker
 
 		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownNameTwo()
@@ -670,6 +686,9 @@ if CLIENT then
 
 			chat.AddText( teamcol, speaker, whisperCol, " whispers: ", message)
 		end
+
+		HatchetBubbleChat(message, whisperCol, "BubbleChat-Whisper", impulse.Config.WhisperDistance, user)
+
 	end)
 
 	impulse.RegisterChatClass(8, function(message, speaker)
@@ -678,21 +697,25 @@ if CLIENT then
 	end)
 
 	impulse.RegisterChatClass(9, function(message, speaker)
-		message = "'' " .. message .. " ''"
+		local normaltext = message
+		message = "** " .. message .. " **"
 		local teamcol = team.GetColor(speaker:Team())
-
+		local user = speaker
 
 		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownNameTwo()
-			chat.AddText( teamcol, speaker, talkCol, " ", message)
+			chat.AddText( teamcol, speaker, ActionCol, " ", message)
 		elseif ( LocalPlayer():IsCP() and not speaker:IsCP() and not speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownDesc()
-			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", talkCol, " ", message)
+			chat.AddText(Color(112, 112, 112), "[" .. speaker .. "]", ActionCol, " ", message)
 		else
 			speaker = speaker:KnownName()
 
-			chat.AddText( teamcol, speaker, talkCol, " ", message)
+			chat.AddText( teamcol, speaker, ActionCol, " ", message)
 		end
+
+		HatchetBubbleChat("** " .. normaltext .. " **", ActionCol, "BubbleChat-Me", impulse.Config.TalkDistance, user)
+
 	end)
 
 	impulse.RegisterChatClass(10, function(message, speaker)
@@ -702,7 +725,7 @@ if CLIENT then
 	impulse.RegisterChatClass(11, function(message, speaker)
 		message = "'' " .. message .. " ''"
 		local teamcol = team.GetColor(speaker:Team())
-
+		local user = speaker
 
 		if ( LocalPlayer():IsCP() and speaker:IsCP() ) or ( LocalPlayer():IsCP() and speaker:GetNWInt("Applied", false) ) then
 			speaker = speaker:KnownNameTwo()
@@ -715,6 +738,8 @@ if CLIENT then
 
 			chat.AddText( teamcol, speaker, yellCol, " rolled ", message)
 		end
+
+		HatchetBubbleChat("** Rolled a " .. message .. " **", yellCol, "BubbleChat-Me", impulse.Config.TalkDistance, user)
 	end)
 
 	impulse.RegisterChatClass(12, function(message, speaker)
