@@ -1,5 +1,11 @@
 local entityMeta = FindMetaTable("Entity")
 
+function meta:Unshackle()
+	self:SetModel("models/vortigaunt.mdl")
+	self:Give("vortbeam")
+	self:Notify("You have been freed from your shackles.")
+end
+
 function meta:IsRebel() -- if u want a smarter is rebel then make it SEPERATE to this func, this function should just be based off team,class and bodygroups/skins/models.
 	if not self:Team() == TEAM_CITIZEN or TEAM_RESISTANCE then
 		return false
