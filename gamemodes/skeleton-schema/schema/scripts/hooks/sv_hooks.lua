@@ -25,6 +25,7 @@
 		ply.TimesStunned = 0
 		ply.CrouchCount = 0
 		ply.PendingReward = ply.PendingReward or 0
+		ply.RaiseDelay = 
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 
@@ -43,7 +44,18 @@
 		ply:SetNWInt("LLeg", 100)
 		
 	end
-
+	
+	-- local rmb = bit.bor( IN_ATTACK2 )
+	-- hook.Add( "PlayerPostThink", "CheckPlayerRaised", function(ply)
+		-- if ply:KeyDown(rmb) then
+			-- ply:SetWeaponRaised(true)
+		-- else
+			-- ply:SetWeaponRaised(false)
+		-- end
+		-- print(ply:KeyDown(rmb))
+	-- end)
+		
+	
 	hook.Add("PostEntityTakeDamage","hatchetdamagefunctions",function(ent, dmg, took)
 		if ent:IsPlayer() and took and ent.NextHurtSound < CurTime() and dmg:GetDamage() > 10 then
 		
