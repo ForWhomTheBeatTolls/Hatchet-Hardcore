@@ -1,32 +1,4 @@
-net.Receive("HatchetOpenLimbsMenu", function()
-	vgui.Create("HatchetLimbsSystem")
-end)
 
-net.Receive("HatchetBecomeRebelStart", function()
-	local ply = net.ReadPlayer()
-	if ply:Team() == TEAM_WORKFORCE or ply:Team() == TEAM_CITIZEN then
-		vgui.Create("hatchetRebelTerminal")
-	end
-end)
-
-net.Receive("HatchetSelectWorkerJobStart", function()
-	local ply = net.ReadPlayer()
-	if ply:Team() == TEAM_WORKFORCE then
-		vgui.Create("hatchetCivilWorkerJob")
-	end
-end)
-
-net.Receive("HatchetCivilWorkerSignup", function()
-	local ply = net.ReadPlayer()
-	if ply:Team() == TEAM_CITIZEN then
-		vgui.Create("hatchetCivilWorkerSignup")
-	end
-		
-end)
-
-net.Receive("HatchetTerminalCivilOpen", function()
-	vgui.Create("CombineCivilTerminal_Screen")
-end)
 
 net.Receive("HatchetVortRPName", function()
 	Derma_StringRequest("impulse", "it seems like this is your first time playing as a vortigaunt! Enter your vort Name:", nil, function(text)
@@ -35,10 +7,6 @@ net.Receive("HatchetVortRPName", function()
 		net.WriteBool(true)
 		net.SendToServer()
 	end)
-end)
-
-net.Receive("HatchetVendingMachineFillStart", function()
-	vgui.Create("impulseWorkforcePuzzle1")
 end)
 
 netstream.Hook("voicePlay", function(sounds, volume, index)
@@ -68,14 +36,6 @@ net.Receive("impulseHL2RPTerminal", function()
 	end
 	
 	terminal:SetupUI()
-end)
-
-net.Receive("impulseHL2RPWorkforceRankUse", function()
-	vgui.Create("impulseWorkforceRankMenu")
-end)
-
-net.Receive("HatchetCitizenTerminalOpen", function()
-	vgui.Create("HatcherCitizenTerminalMenu")
 end)
 
 net.Receive("impulseHL2RPTerminalConvict", function()
@@ -108,14 +68,6 @@ net.Receive("impulseHL2RPTerminalConvict", function()
 	terminal:SetupUI()
 end)
 
-net.Receive("impulseHL2RPRankUse", function()
-	vgui.Create("impulseRankMenu")
-end)
-
-net.Receive("impulseHL2RPOpenLocker", function()
-	vgui.Create("impulseLockerMenu")
-end)
-
 net.Receive("impulseHL2RPChargesGet", function()
 	local charges = net.ReadTable()
 	local reasons = "CHARGES:\n\n"
@@ -126,10 +78,6 @@ net.Receive("impulseHL2RPChargesGet", function()
 
 	local panel = Derma_Message(reasons, "", "CLOSE")
 	panel:SetSkin("combine")
-end)
-
-net.Receive("impulseHL2RPScavengerWorkbar", function()
-    impulse.MakeWorkbar(impulse.Config.ScavengeTime, "Scavenging...", function() end, true)
 end)
 
 net.Receive("impulseHL2RPTearGasFX", function()
@@ -197,11 +145,6 @@ net.Receive("impulseHL2RPInspectBodyComplete", function()
 
 	Derma_Message(msg, "impulse", "Close")
 	print(msg)
-end)
-
-net.Receive("impulseHL2RPVortessenceStart", function()
-	VORTESSENCE_EXPIRE = CurTime() + impulse.Config.VortessenceTime
-	LocalPlayer():Notify("The effects of the vortessence have taken affect... It will last approximately "..string.NiceTime(impulse.Config.VortessenceTime)..".")
 end)
 
 net.Receive("impulseHL2RPTheatreControls", function()
