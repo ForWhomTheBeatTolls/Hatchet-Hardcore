@@ -29,7 +29,8 @@ SCRAPPED / NEEDS REWORK:
 ---------------------------------------------------------------------
 NEED TWEAKING IN CODING:
 - Add the Resistance faction and classes (Scavenger from Commercial Worker, Fighter from Citizen, Saboteur from Industrial, Medic from Medical)
-- Fix recognize system bugging near connecting players 
+- Fix recognize system bugging near connecting players
+- Medkit flashes screen while healing others? Maybe it's just a loaded memory issue, will have to test
 
 NEED TWEAKING IN DESIGN:
 - CWU Ranks, entities, and VGUI Design
