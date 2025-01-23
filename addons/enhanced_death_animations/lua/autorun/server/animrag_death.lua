@@ -489,13 +489,13 @@ function Animrag_StartDeathAnimation(ONPC, Orgn_Rag)
 			table.insert(ONPC.Weapons, wep:GetClass())
 		end
 		Orgn_Rag:SetNWBool("isPlayer", true)								--用NW标记一下该Ragdoll是Player的Ragdoll
-		Orgn_Rag:SetNWString("isPlayer_Name", ONPC:Nick())					--用NW标记一下该Player的NickName，用于复活该Player，防止复活错人
+		Orgn_Rag:SetNWString("isPlayer_SID", ONPC:SteamID())					--用NW标记一下该Player的NickName，用于复活该Player，防止复活错人
 
 		net.Start("PlayerRag_StartDeathCam")
 			net.WriteInt(Orgn_Rag:EntIndex(), 32)
-		net.Broadcast()
+		net.Send(player.GetBySteamID( Orgn_Rag:GetNWString("isPlayer_SID") ) )
 		
-		if IsValid(Orgn_Rag) and Orgn_Rag:GetNWBool("isPlayer") == true then
+		if IsValid(Orgn_Rag) and Orgn_Rag:GetNWBool("isPlayer") == true and ONPC:SteamID() == Orgn_Rag:GetNWString("isPlayer_SID") then
 			net.Start("impulseRagdollLink")
 			net.WriteEntity(Orgn_Rag)
 			net.Send(ONPC)
