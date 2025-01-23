@@ -25,7 +25,7 @@
 		ply.TimesStunned = 0
 		ply.CrouchCount = 0
 		ply.PendingReward = ply.PendingReward or 0
-		ply.RaiseDelay = 
+		ply.RaiseDelay = CurTime()
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
 
