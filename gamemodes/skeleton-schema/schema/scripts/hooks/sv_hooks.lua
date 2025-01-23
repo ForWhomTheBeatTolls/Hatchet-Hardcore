@@ -28,6 +28,10 @@
 		ply.RaiseDelay = CurTime()
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
+		
+		net.Start("PlayerRag_PlayerSpawn")
+		net.WriteBool(true)
+		net.Send(ply)
 
 		// Limbs n Stuff
 
