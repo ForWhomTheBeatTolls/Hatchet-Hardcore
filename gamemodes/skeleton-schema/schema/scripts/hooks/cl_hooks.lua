@@ -25,4 +25,8 @@ end
 
 hook.Remove("CalcView", "PlayerPreview")
 
+hook.Add("PlayerSpawn", "HatchetClientsidePlayerSpawnHook", function(ply)
+	ply:SetDSP(1)
+end)
+
 -- RunConsoleCommand("disconnect")
