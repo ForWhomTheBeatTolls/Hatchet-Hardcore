@@ -274,7 +274,9 @@ function FPP.plyCanTouchEnt(ply, ent, touchType)
 end
 
 function FPP.entGetOwner(ent)
-    return ent:GetTable().FPPOwner
+	if IsValid(ent) then
+		return ent:GetTable().FPPOwner
+	end
 end
 
 --[[-------------------------------------------------------------------------
