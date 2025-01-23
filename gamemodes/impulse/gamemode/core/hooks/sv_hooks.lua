@@ -808,9 +808,12 @@ function GM:KeyPress(ply, key)
 	elseif key == IN_RELOAD then
 		if IsValid(ply) and ply:GetActiveWeapon().Base != "m_base" then
 			if IsValid(ply) and ply.RaiseDelay < CurTime() then
-				ply:ToggleWeaponRaised()
-				ply:CalcPlayerWepRaise()
-				ply.RaiseDelay = CurTime() + 1
+				timer.Simple(0.4, function() 
+					if IsValid(ply) and ply:KeyDown(IN_RELOAD) then
+						ply:ToggleWeaponRaised()
+						ply.RaiseDelay = CurTime() + 0.55
+					end
+				end)
 			end
 		end
 	elseif key == IN_USE and not ply:InVehicle() then
