@@ -1,4 +1,6 @@
-
+net.Receive("HatchetOpenLimbsMenu", function()
+	vgui.Create("HatchetLimbsSystem")
+end)
 
 net.Receive("HatchetVortRPName", function()
 	Derma_StringRequest("impulse", "it seems like this is your first time playing as a vortigaunt! Enter your vort Name:", nil, function(text)
