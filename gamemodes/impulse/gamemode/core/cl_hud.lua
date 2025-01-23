@@ -236,9 +236,16 @@ function GM:HUDPaint(mvData)
 		surface.DrawRect(-1, -1, ScrW() + 2, ScrH() + 2)
 		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
 		local wait = math.ceil(deathWait - CurTime())
-		if wait > 0 and wait < 10 then
-			lp:ConCommand("stopsound")
+		
+		if wait > 1 and wait < 10 then
+			lp:SetDSP(5)
 		elseif wait > 2 and wait < 10 then
+			lp:SetDSP(6)
+		elseif wait > 3 and wait < 10 then
+			lp:SetDSP(7)
+		elseif wait > 4 and wait < 10 then
+			lp:ConCommand("stopsound")
+		elseif wait >= 2 and wait < 10 then
 			draw.SimpleText("You have died.", "Impulse-Elements18", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
 		end
 
