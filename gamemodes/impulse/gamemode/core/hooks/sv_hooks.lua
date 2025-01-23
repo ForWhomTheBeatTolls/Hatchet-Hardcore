@@ -798,11 +798,21 @@ function GM:KeyPress(ply, key)
 	ply.AFKTimer = CurTime() + impulse.Config.AFKTime
 
 	if key == IN_ATTACK2 then
+		if IsValid(ply) and ply:GetActiveWeapon().Base == "m_base" then
 			if IsValid(ply) and ply.RaiseDelay < CurTime() then
 				ply:ToggleWeaponRaised()
 				ply:CalcPlayerWepRaise()
 				ply.RaiseDelay = CurTime() + 1
 			end
+		end
+	elseif key == IN_RELOAD then
+		if IsValid(ply) and ply:GetActiveWeapon().Base != "m_base" then
+			if IsValid(ply) and ply.RaiseDelay < CurTime() then
+				ply:ToggleWeaponRaised()
+				ply:CalcPlayerWepRaise()
+				ply.RaiseDelay = CurTime() + 1
+			end
+		end
 	elseif key == IN_USE and not ply:InVehicle() then
 		local trace = {}
 		trace.start = ply:GetShootPos()
