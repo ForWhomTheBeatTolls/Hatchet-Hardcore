@@ -19,12 +19,15 @@ local fallconditions = (speed >  maxspeed and not inWater)
 	if fallconditions then
 	local fall = DamageInfo()
 	local leg = {"RLeg", "LLeg"}
+	falldamage = math.Round(falldamage, 0)
 	fall:SetDamage(falldamage)
 	fall:SetAttacker(Entity(0))
 	fall:SetInflictor(Entity(0))
 	fall:SetDamageType(DMG_FALL)
 	
-	ply:TakeDamageLimb(table.Random(leg), falldamage * 2.4)
+	-- ply:TakeDamageLimb(table.Random(leg), falldamage * 2.4)
+	
+	ply:TakeDamageLimb(table.Random(leg), falldamage * 2)
 	-- if ply:GetNWBool("LLegCrippled") == true then
 		-- ply:Notify("Your Left Leg feels numb!")
 	-- end
