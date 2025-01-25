@@ -487,7 +487,7 @@ hook.Add("Tick", "Animrag_MainTick_C", function()
 
 			------------------------------------------------------
 			--主循环
-			Animrag_ComputeShadowControl(ORag)
+			--Animrag_ComputeShadowControl(ORag)
 
 			------------------------------------------------------
 			--血迹效果
@@ -514,7 +514,7 @@ hook.Add("Tick", "Animrag_MainTick_C", function()
 				local MixPos = Vector(0, 0, 0)								--MixPos为：得到所有该NPC的敌人位置，根据这些位置，混合出一个中心位置
 				local ARagPos = ORag.ARag:GetPos() 							--AnimRag当前的位置
 				local ARagAng = ORag.ARag:GetAngles() 						--AnimRag当前的角度
-				local ORagPos = ORag.ARag:GetBonePosition(0) 				--以AnimRag的Pelvis的位置来近似得到ORag的位置
+				local ORagPos = ORag.ARag:GetPos()				--以AnimRag的Pelvis的位置来近似得到ORag的位置
 				--AnimRag的位置(ARagPos) 与 AnimRag的Pelvis的位置(ORagPos) 并不相同
 				--在播放动画时，AnimRag的中心点一直留在原地，只是模型的网格随着动画在移动而已。
 				--因此ARagPos是不会变的，因为它得到的是AnimRag的中心点的位置，而ORagPos会随着动画的位置而变化，因为它得到的是AnimRag的模型网格的位置
