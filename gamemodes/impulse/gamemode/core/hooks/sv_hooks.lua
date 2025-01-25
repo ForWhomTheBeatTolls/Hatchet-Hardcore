@@ -798,7 +798,7 @@ function GM:KeyPress(ply, key)
 	ply.AFKTimer = CurTime() + impulse.Config.AFKTime
 
 	if key == IN_ATTACK2 then
-		if IsValid(ply) and ply:GetActiveWeapon().Base == "m_base" then
+		if IsValid(ply) and ply:GetActiveWeapon().Base == "m_base" or ply:GetActiveWeapon().Base == "ls_base_melee" then
 			if IsValid(ply) and ply.RaiseDelay < CurTime() then
 				ply:ToggleWeaponRaised()
 				ply:CalcPlayerWepRaise()
@@ -806,7 +806,7 @@ function GM:KeyPress(ply, key)
 			end
 		end
 	elseif key == IN_RELOAD then
-		if IsValid(ply) and ply:GetActiveWeapon().Base != "m_base" then
+		if IsValid(ply) and ply:GetActiveWeapon().Base != "m_base" and ply:GetActiveWeapon().Base != "ls_base_melee" then
 			if IsValid(ply) and ply.RaiseDelay < CurTime() then
 				timer.Simple(0.4, function() 
 					if IsValid(ply) and ply:KeyDown(IN_RELOAD) then
