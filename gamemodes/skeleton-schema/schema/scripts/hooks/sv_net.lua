@@ -20,6 +20,66 @@ util.AddNetworkString("HatchetBecomeRebelEnd")
 util.AddNetworkString("HatchetVortRPName")
 util.AddNetworkString("impulseHL2RPClassBecome")
 util.AddNetworkString("HatchetOpenLimbsMenu")
+util.AddNetworkString("PlayerHealSelfLimbBegin")
+util.AddNetworkString("PlayerHealSelfLimbEnd")
+util.AddNetworkString("PlayerHealLimbWorkbar")
+
+net.Receive("PlayerHealSelfLimbBegin", function()
+	local limb = net.ReadString()
+	local ply = net.ReadPlayer()
+	local healinglimb = ply:GetNWBool("HealingLimb")
+	local prelimb = ply:GetNWInt(limb)
+	local postlimb
+	
+	if ply.currentMedkit != nil then
+		if ply:IsHurtLimb(limb) then
+			if healinglimb != true then
+				ply:SetNWBool("HealingLimb", true)
+				net.Start("PlayerHealLimbWorkbar")
+				net.WriteString(limb)
+				--net.WritePlayer(ply)
+				net.Send(ply)
+				timer.Simple(4, function() ply:SetNWBool("HealingLimb", false) end)
+			else
+				ply:Notify("Huh? Wait a bit.")
+				--ply:SetNWBool("HealingLimb", false)
+			end
+		else
+			ply:Notify("This limb isn't hurt.")
+		end
+	else
+		ply:AlarmNetExploit("PlayerHealSelfLimb")
+		print("AAAAAAAAAAAAH")
+	end
+end)
+
+net.Receive("PlayerHealSelfLimbEnd", function()
+	local limb = net.ReadString()
+	local ply = net.ReadPlayer()
+	local healinglimb = ply:GetNWBool("HealingLimb")
+	local prelimb = ply:GetNWInt(limb)
+	local postlimb
+	
+	if ply.currentMedkit != nil then
+		if ply:IsHurtLimb(limb) then
+			if healinglimb != true then
+				ply:SetNWBool("HealingLimb", true)
+				ply:GiveHealthLimb(limb, 15)
+				postlimb = ply:GetNWInt(limb)
+				ply:SetHealth( math.Clamp( ply:Health() + (postlimb - prelimb), 0, ply:GetMaxHealth() ) )
+				ply:SetNWBool("HealingLimb", false)
+				ply:GetActiveWeapon():TakePrimaryAmmo(1)
+			else
+				ply:Notify("Huh? Wait a bit.")
+				--ply:SetNWBool("HealingLimb", false)
+			end
+		else
+			ply:Notify("This limb isn't hurt.")
+		end
+	else
+		ply:AlarmNetExploit("PlayerHealSelfLimb")
+	end
+end)
 
 net.Receive("HatchetBecomeRebelEnd", function()
 	local ply = net.ReadPlayer()
