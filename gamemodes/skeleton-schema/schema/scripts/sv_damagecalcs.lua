@@ -14,13 +14,13 @@
 		end
 
 		if hitgroup == HITGROUP_LEFTARM then
-			ply:TakeDamageLimb("LArm", dmga)
+			ply:TakeDamageLimb("LArm", dmga * 1.25)
 		elseif hitgroup == HITGROUP_RIGHTARM then
-			ply:TakeDamageLimb("RArm", dmga)
+			ply:TakeDamageLimb("RArm", dmga * 1.25)
 		elseif hitgroup == HITGROUP_LEFTLEG then
-			ply:TakeDamageLimb("LLeg", dmga)
+			ply:TakeDamageLimb("LLeg", dmga * 1.25)
 		elseif hitgroup == HITGROUP_RIGHTLEG then
-			ply:TakeDamageLimb("RLeg", dmga)
+			ply:TakeDamageLimb("RLeg", dmga * 1.25)
 		end
 	
 		----------------------------
