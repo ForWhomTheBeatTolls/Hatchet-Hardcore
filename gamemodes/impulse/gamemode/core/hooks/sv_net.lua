@@ -1,4 +1,5 @@
 util.AddNetworkString("impulse_CreateVGUI")
+util.AddNetworkString("impulse_CreateWorkBar")
 
 util.AddNetworkString("impulseJoinData")
 util.AddNetworkString("impulseATMWithdraw")
