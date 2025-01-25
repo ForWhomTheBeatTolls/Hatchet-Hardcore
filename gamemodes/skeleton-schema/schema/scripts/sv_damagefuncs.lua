@@ -248,11 +248,21 @@ function meta:GiveHealthLimb(limb, num)
 				self:SetNWInt(limb, 100)
 			end
 	if self:GetNWBool(limb.."Crippled") == true then
-		self:UncrippleLimb(limb)
+		self:UncrippleLimb(limb, num)
 	end
 		return true
 	else
 		return false
 	end
 
+end
+
+function meta:GetTotalLimbHealth()
+	local LArm = self:GetNWInt("LArm")
+	local LLeg = self:GetNWInt("RArm")
+	local RArm = self:GetNWInt("LLeg")
+	local RLeg = self:GetNWInt("RLeg")
+	local total = LArm + LLeg + RArm + RLeg
+	
+	return total
 end
