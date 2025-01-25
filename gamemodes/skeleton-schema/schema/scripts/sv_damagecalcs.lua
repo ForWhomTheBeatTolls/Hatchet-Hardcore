@@ -117,7 +117,7 @@
 		
 		---BLEED FUNCTIONS---
 		local rtd = math.random(1, 100)
-		if dmginfo:GetDamage() > 4 and dmginfo:GetAttacker() != ply and (dmginfo:GetAmmoType() != game.GetAmmoID("Hornet") or dmginfo:IsDamageType(DMG_SLASH) or dmginfo:IsDamageType(DMG_BLAST)) then
+		if dmginfo:GetDamage() > 4 and dmginfo:GetAttacker() != ply and ply.isCloaked != true and (dmginfo:GetAmmoType() != game.GetAmmoID("Hornet") or dmginfo:IsDamageType(DMG_SLASH) or dmginfo:IsDamageType(DMG_BLAST)) then
 			if rtd > 15 then
 				ply:SetNWInt("BleedRate",  ply:GetNWInt("BleedRate") + (dmginfo:GetDamage() / 20))
 				ply.NextBleed = CurTime() + ( 7 - (0.5 * ply:GetNWInt("BleedRate")) )
