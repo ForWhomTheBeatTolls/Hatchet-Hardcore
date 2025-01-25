@@ -1,6 +1,6 @@
 -- Framework related
 impulse.Config.SchemaName = "HATCHET: HARDCORE"
-impulse.Config.SchemaVersion = 430
+impulse.Config.SchemaVersion = 1000
 
 impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>Project Lead: WillMaster, Steve B.</font>
@@ -12,26 +12,6 @@ impulse.Config.SchemaCredits = [[Developers
 <font=Impulse-Elements23>TehRedd</font>
 <font=Impulse-Elements23>Jokey</font>
 <font=Impulse-Elements23>GhostfacedKillah</font>]]
-
-impulse.Config.WhitelistedPlayers = {
-"STEAM_0:1:204367223", -- SteveB.
---"STEAM_0:0:627119036", -- Thrumbo
-"STEAM_0:0:193471001", -- WillMasterr
-"STEAM_0:0:461693288", -- Nuj
-"STEAM_0:0:526890129", -- Blurger
-"STEAM_0:0:526356848", -- Z0as1
-"STEAM_0:0:80736176", -- Gonk
-"STEAM_0:0:222027191", -- Processed Grain
-"STEAM_0:1:580569159", -- Esrah   
-"STEAM_0:0:556861499", -- Garry  
-"STEAM_0:0:215468222", -- Rubel
-"STEAM_0:0:600025375", -- Joe Jenkins
-"STEAM_0:0:543738924", -- Atan
-"STEAM_1:0:757389970", -- Lil Martini
-"STEAM_1:0:182975876", -- Parkinson peek
-"STEAM_0:0:580927445" -- HL2Lover    
-    
-}
 
 impulse.Config.MainColour = Color(196, 108, 26)
 impulse.Config.InteractColour = Color(251, 197, 49)
@@ -209,27 +189,27 @@ impulse.Config.SaveableAmmo = { -- these ammo types will be saved on player disc
 impulse.Config.Achievements = {
 	["ach_plugincommand"] = {
 		Name = "Plugin Command",
-		Desc = "You entered the test plugin command",
+		Desc = "You entered the test plugin command.",
 		Icon = Material("impulse/icons/warning-36-128.png")
 	},
 	["ach_akill"] = {
-		Name = "Giver of Death",
+		Name = "Killer",
 		Desc = "'In a past life, I killed hundreds. And in the life before that, I played trumpets.'",
 		Icon = Material("impulse/icons/check-mark-128.png")
 	},
 	["ach_adie"] = {
-		Name = "Taker of Death",
-		Desc = "There's a billion ways to die.",
+		Name = "Death",
+		Desc = "Eternal slumber.",
 		Icon = Material("impulse/icons/toxic-256.png")
 	},
 	["ach_6feet"] = {
 		Name = "6 Feet Deep",
-		Desc = "I keep falling, but never falling six feet deep.",
+		Desc = "Spread wise wisdom.",
 		Icon = Material("icon16/keyboard.png")
 	},
 	["ach_combine1"] = {
 		Name = "Killed a Civil Protection officer.",
-		Desc = "For what the combine fear most...",
+		Desc = "For what the Combine fear the most...",
 		Icon = Material("decals/lambdaspray_1a")
 	},
 	["ach_combine2"] = {
@@ -336,28 +316,3 @@ impulse.Config.LootPools = {
 		MinWait = 120
 		}
 	}
-
---- ### OS WHITELISTS ### ---
-
-impulse.Config.ECHOwl = {
-"STEAM_0:1:204367223"
-}
-
--- ########################################################################### --
-
-impulse.Config.MACEwl = {
-"STEAM_0:1:204367223"
-}
-
--- ########################################################################### --
-
-impulse.Config.APEXwl = {
-"STEAM_0:1:204367223"
-}
-
--- ########################################################################### --
-
-impulse.Config.OSwl = {
-	"STEAM_0:1:204367223"
-}
-
