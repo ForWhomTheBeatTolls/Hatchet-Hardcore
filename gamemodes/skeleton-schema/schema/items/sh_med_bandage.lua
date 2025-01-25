@@ -28,9 +28,10 @@ ITEM.UseWorkBarSound = "items/smallmedkit1.wav"
 
 local increment = 1
 function ITEM:OnUse(ply, target)
-	if ply:GetNWInt("BleedRate") > 0 then
+	if ply:GetNWInt("BleedRate") > 0 or ply:GetTotalLimbHealth() < 400 then
 	ply:Say("/me wraps their wounds in a Bandage.")
-	ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 2.5)
+	ply:SetNWInt("BleedRate", ply:GetNWInt("BleedRate") - 2.0)
+	ply:HealAllLimbs(10)
 	timer.Simple(0.1, function() if IsValid(ply) then if ply:GetNWInt("BleedRate") < 0 then ply:SetNWInt("BleedRate", 0) end end end)
 	else
 	ply:Notify("You can't use this, for you are not hurt.")
