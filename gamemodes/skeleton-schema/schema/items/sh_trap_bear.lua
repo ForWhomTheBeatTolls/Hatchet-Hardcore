@@ -40,14 +40,14 @@ function ITEM:OnUse(ply, door)
 		phys:SetMass(20)	
 	end
 
-	function trap:Use(ply)
-		if trap:GetCollisionGroup() == "COLLISION_GROUP_NONE" then
-			ply:GiveInventoryItem("trap_bear")
-			ply:Notify("You have picked up the bear trap.")
+	-- function trap:Use(ply)
+		-- if trap:GetCollisionGroup() == "COLLISION_GROUP_NONE" then
+			-- ply:GiveInventoryItem("trap_bear")
+			-- ply:Notify("You have picked up the bear trap.")
 
-			self:Remove()
-		end
-	end
+			-- self:Remove()
+		-- end
+	-- end
 
 	trap:Spawn()
 
