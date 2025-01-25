@@ -3,6 +3,8 @@ impulse.Ops = impulse.Ops or {}
 function impulse.Ops.Cloak(ply)
 	ply:SetNoDraw(true)
 	ply.isCloaked = true
+	ply:SetCollisionGroup(COLLISION_GROUP_VEHICLE_CLIP)
+	ply:SetModelScale(0.1)
 
 	for v,k in ipairs(ply:GetWeapons()) do
 		k:SetNoDraw(true)
@@ -20,6 +22,8 @@ end
 function impulse.Ops.Uncloak(ply)
 	ply:SetNoDraw(false)
 	ply.isCloaked = nil
+	ply:SetCollisionGroup(COLLISION_GROUP_PLAYER)
+	ply:SetModelScale(1.0)
 
 	for v,k in pairs(ply:GetWeapons()) do
 		k:SetNoDraw(false)
