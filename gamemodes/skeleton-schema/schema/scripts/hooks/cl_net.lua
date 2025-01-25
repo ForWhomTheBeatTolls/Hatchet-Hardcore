@@ -2,6 +2,39 @@ net.Receive("HatchetOpenLimbsMenu", function()
 	vgui.Create("HatchetLimbsSystem")
 end)
 
+net.Receive("PlayerHealLimbWorkbar", function()
+	local limb = net.ReadString()
+	local ply = net.ReadPlayer()
+	local healinglimb = LocalPlayer():GetNWBool("HealingLimb")
+	local prelimb = LocalPlayer():GetNWInt(limb)
+	local postlimb
+	
+	--if LocalPlayer().currentMedkit != nil then
+		--if prelimb < 100 then
+			if healinglimb != true then
+				LocalPlayer():SetNWBool("HealingLimb", true)
+				hatchet_limbhealthmenu:Remove()
+				impulse.MakeWorkbar(4, "Healing...", function() 
+				net.Start("PlayerHealSelfLimbEnd")
+				net.WriteString(limb)
+				net.WritePlayer(LocalPlayer())
+				net.SendToServer()
+				vgui.Create("HatchetLimbsSystem")
+				timer.Simple(0.2, function()
+				LocalPlayer():SetNWBool("HealingLimb", false)
+				end)
+				end, true)
+			end
+			--else
+			--	LocalPlayer():Notify("Huh? Wait a bit.")
+			--	LocalPlayer():SetNWBool("HealingLimb", false)
+			--end
+		--else
+		--	LocalPlayer():Notify("This limb isn't hurt.")
+		--end
+	--end
+end)
+
 net.Receive("HatchetVortRPName", function()
 	Derma_StringRequest("impulse", "it seems like this is your first time playing as a vortigaunt! Enter your vort Name:", nil, function(text)
 		net.Start("impulseChangeRPName")
