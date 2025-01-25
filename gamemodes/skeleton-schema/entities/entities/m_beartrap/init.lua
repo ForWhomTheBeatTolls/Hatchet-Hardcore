@@ -48,14 +48,14 @@ function ENT:Touch( entity )
 			self.Activated = false
 			entity:TakeDamage( 40, self, self )
 			entity:TakeDamageLimb(table.Random(leg), 100)
-			entity:SetNWInt("BleedRate", entity:GetNWInt("BleedRate", 0) + math.random(1,3))
+			entity:SetNWInt("BleedRate", entity:GetNWInt("BleedRate", 0) + math.random(1,5))
 			entity.TimesDamaged = 6
 			entity:Say("/me gets his ankle caught in a bear trap.")
-			self:TakeDamage( 40, self, self )
+			self:TakeDamage( 60, self, self )
 		else
 			self.Activated = false
 			entity:TakeDamage( 40, self, self )
-			self:TakeDamage( 40, self, self ) 
+			self:TakeDamage( 60, self, self ) 
 		end
 		end)
 
