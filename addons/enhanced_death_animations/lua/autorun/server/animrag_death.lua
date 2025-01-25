@@ -492,7 +492,8 @@ function Animrag_StartDeathAnimation(ONPC, Orgn_Rag)
 		Orgn_Rag:SetNWString("isPlayer_SID", ONPC:SteamID())					--用NW标记一下该Player的NickName，用于复活该Player，防止复活错人
 
 		net.Start("PlayerRag_StartDeathCam")
-			net.WriteInt(Orgn_Rag:EntIndex(), 32)
+		net.WriteInt(Orgn_Rag:EntIndex(), 32)
+		net.WriteEntity(Orgn_Rag)
 		net.Send(player.GetBySteamID( Orgn_Rag:GetNWString("isPlayer_SID") ) )
 		
 		if IsValid(Orgn_Rag) and Orgn_Rag:GetNWBool("isPlayer") == true and ONPC:SteamID() == Orgn_Rag:GetNWString("isPlayer_SID") then
@@ -936,7 +937,7 @@ hook.Add("DoPlayerDeath", "Animrag_PlayerDeath_D", function(ply)
 		NewRag:SetAngles(ply:GetAngles())
 		NewRag:Spawn()
 		NewRag:Activate()
-		NewRag:SetCollisionGroup(COLLISION_GROUP_PASSABLE_DOOR)
+		NewRag:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 
 		for i = 0, NewRag:GetPhysicsObjectCount() - 1 do
 			local NewPhyBone = NewRag:GetPhysicsObjectNum( i )
@@ -951,6 +952,8 @@ hook.Add("DoPlayerDeath", "Animrag_PlayerDeath_D", function(ply)
 		Animrag_StartDeathAnimation(ply, NewRag)
 		
 		local ragCount = #ents.FindByClass("prop_ragdoll")
+		
+		NewRag:Fire("FadeAndRemove", nil, impulse.Config.BodyDeSpawnTime)
 
 	if ragCount > 24 then
 		print("[impulse] Avoiding ragdoll body spawn for performance reasons... (rag count: "..ragCount..")")
@@ -978,20 +981,20 @@ end)
 
 ----------------------------------------------------------------------------------------
 --当重生时，告诉client端重设PRag，同时重设玩家的NW
-hook.Add("PlayerSpawn", "Animrag_PlayerSpawn_D", function(ply)
-	//--当玩家复活后，让玩家的Ragdoll不再属于玩家Ragdoll，就变成普通的可以Revive的Ragdoll（有问题，会TPose，不用）
-	//local PRag = Entity(ply:GetNWInt("PlayerORagID"))
-	//PRag:SetNWBool("isPlayer", false)
+-- hook.Add("PlayerSpawn", "Animrag_PlayerSpawn_D", function(ply)
+	-- //--当玩家复活后，让玩家的Ragdoll不再属于玩家Ragdoll，就变成普通的可以Revive的Ragdoll（有问题，会TPose，不用）
+	-- //local PRag = Entity(ply:GetNWInt("PlayerORagID"))
+	-- //PRag:SetNWBool("isPlayer", false)
 
-	--清空玩家的NW
-	ply:SetNWBool("PlayerIsDeadNow", false)
-	ply:SetNWInt("PlayerORagID", nil)
+	-- --清空玩家的NW
+	-- ply:SetNWBool("PlayerIsDeadNow", false)
+	-- ply:SetNWInt("PlayerORagID", nil)
 
-	--告诉client端重设PRag，从而重设死亡视角
-	net.Start("PlayerRag_PlayerSpawn")
-		net.WriteBool(true)
-	net.Broadcast()
-end)
+	-- --告诉client端重设PRag，从而重设死亡视角
+	-- net.Start("PlayerRag_PlayerSpawn")
+	-- net.WriteBool(true)
+	-- net.Send(
+-- end)
 
 
 ----------------------------------------------------------------------------------------
