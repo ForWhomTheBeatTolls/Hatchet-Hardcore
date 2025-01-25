@@ -18,6 +18,8 @@ SWEP.HealDelayOnSecondaryAttack = 2
 SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 15 -- How much bullets are in the mag
 SWEP.Primary.Ammo = "medkit_hatchet_ammo" --The ammo type will it use
+SWEP.NextFire = CurTime()
+SWEP.RDel = CurTime()
 
 -- SWEP.Primary.Sound = Sound("")
 -- SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
@@ -45,11 +47,91 @@ SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
 
+local rdel = CurTime()
+
+function SWEP:PrimaryAttack()
+
+	if SERVER then
+
+	local trace = util.TraceLine({
+
+		start = self:GetOwner():GetShootPos(),
+		endpos = self:GetOwner():GetShootPos() + self:GetOwner():GetAimVector() * 150,
+		filter = self:GetOwner()
+	})
+	
+	local ent = trace.Entity
+	
+	--print(trace.Entity:Nick())
+	
+	if not IsValid(ent) then return end
+
+	if ent and ent:GetClass() != "player" then
+		return
+	end
+	
+	if ent:Health() == ent:GetMaxHealth() then
+			self:GetOwner():Notify("This person isn't hurt.")
+		return
+	end
+
+	self:TakePrimaryAmmo(1)
+	self:EmitSound(self.HealSound)
+	ent:SetHealth(math.Clamp( ent:Health() + self.AmountOfHealth, 0, ent:GetMaxHealth() ))
+	ent:ScreenFade(1, Color(201, 217, 242, 180), 1, 0)
+
+	self.NextFire = CurTime() + self.HealDelay
+	self:SetNextPrimaryFire(CurTime() + self.HealDelay)
+
+	if SERVER then
+		if self:GetOwner():GetActiveWeapon():Clip1() <= 0 then
+			local curwep = self
+			-- print(curwep)
+			self:GetOwner():Notify("You're out!")
+			self:GetOwner():SelectWeapon("impulse_hands")
+			self:GetOwner():StripWeapon(curwep)
+		end
+	end
+	
+	end
+
+end
+
+function SWEP:SecondaryAttack()
+	-- print("t")
+	if SERVER then
+	if self.NextFire < CurTime() then
+		-- print("t2")
+		if self:GetOwner():Health() == self:GetOwner():GetMaxHealth() then
+			self:GetOwner():Notify("You're fully healed.")
+			return
+		end
+
+		self:TakePrimaryAmmo(1)
+
+		self:EmitSound(self.HealSound)
+		self:GetOwner():SetHealth(math.Clamp( self:GetOwner():Health() + self.AmountOfHealth, 0, self:GetOwner():GetMaxHealth() ))
+		self:SetNextPrimaryFire(CurTime() + self.HealDelayOnSecondaryAttack)
+		self:GetOwner():ScreenFade(1, Color(201, 217, 242, 180), 1, 0)
+		if self:GetOwner():GetActiveWeapon():Clip1() <= 0 then
+			local curwep = self:GetOwner():GetActiveWeapon():GetClass()
+			-- print(curwep)
+			self:GetOwner():Notify("You're out!")
+
+			self:GetOwner():SelectWeapon("impulse_hands")
+			self:GetOwner():StripWeapon(curwep)
+		end
+		Delay = CurTime() + self.HealDelayOnSecondaryAttack
+	end
+	end
+end
+
 function SWEP:Reload()
+	if SERVER then
 		if rdel > CurTime() then return end
 		rdel = CurTime() + 2
-
-		net.Start("impulse_CreateVGUI")
-		net.WriteString("HatchetOpenLimbsMenu")
-        net.Send(self:GetOwner())
+		net.Start("HatchetOpenLimbsMenu")
+		net.Send(self:GetOwner())
+		self:GetOwner().currentMedkit = self
 	end
+end
