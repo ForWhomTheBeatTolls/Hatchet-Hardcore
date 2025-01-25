@@ -9,6 +9,7 @@ function PANEL:Init()
 	self:SetBGColor( Color(200,200,255,255) )
 	self:SetFGColor( Color(200,200,255,255) )
 	self:SetAlpha(200)
+	hatchet_limbhealthmenu = self
 	
 	local panel = self
 
@@ -21,16 +22,63 @@ function PANEL:Init()
 	surface.PlaySound("hatchet/buttonclickrelease.wav")
 	
 	self.LeftArm = vgui.Create("DButton", self)
-	self.LeftArm:SetText(LocalPlayer():GetNWInt("LArm").."/100")
+	self.LeftArm:SetText("L_ARM: \n"..LocalPlayer():GetNWInt("LArm").."/100")
     self.LeftArm:SetSize(40,160)
-	self.LeftArm:SetPos(panel:GetWide() / 2.44, panel:GetTall() / 3.3)
+	self.LeftArm:SetPos(panel:GetWide() / 2.47, panel:GetTall() / 3.3)
+	
+	self.RightArm = vgui.Create("DButton", self)
+	self.RightArm:SetText("R_ARM: \n"..LocalPlayer():GetNWInt("RArm").."/100")
+    self.RightArm:SetSize(40,160)
+	self.RightArm:SetPos(panel:GetWide() / 1.81, panel:GetTall() / 3.3)
+	
+	self.LeftLeg = vgui.Create("DButton", self)
+	self.LeftLeg:SetText("L_LEG: \n"..LocalPlayer():GetNWInt("LLeg").."/100")
+    self.LeftLeg:SetSize(40,160)
+	self.LeftLeg:SetPos(panel:GetWide() / 2.2, panel:GetTall() / 1.6)
+	
+	self.RightLeg = vgui.Create("DButton", self)
+	self.RightLeg:SetText("R_LEG: \n"..LocalPlayer():GetNWInt("RLeg").."/100")
+    self.RightLeg:SetSize(40,160)
+	self.RightLeg:SetPos(panel:GetWide() / 1.98, panel:GetTall() / 1.6)
 	
 	self.LeftArm.OnCursorEntered = function()
         surface.PlaySound("ui/buttonrollover.wav")
     end
-   
+	
+	self.RightArm.OnCursorEntered = function()
+        surface.PlaySound("ui/buttonrollover.wav")
+    end
+	
 	self.LeftArm.DoClick = function()
 		surface.PlaySound("hatchet/buttonclickrelease.wav")
+		net.Start("PlayerHealSelfLimbBegin")
+		net.WriteString("LArm")
+		net.WritePlayer(LocalPlayer())
+		net.SendToServer()
+	end
+   
+	self.RightArm.DoClick = function()
+		surface.PlaySound("hatchet/buttonclickrelease.wav")
+		net.Start("PlayerHealSelfLimbBegin")
+		net.WriteString("RArm")
+		net.WritePlayer(LocalPlayer())
+		net.SendToServer()
+	end
+	
+	self.LeftLeg.DoClick = function()
+		surface.PlaySound("hatchet/buttonclickrelease.wav")
+		net.Start("PlayerHealSelfLimbBegin")
+		net.WriteString("LLeg")
+		net.WritePlayer(LocalPlayer())
+		net.SendToServer()
+	end
+   
+	self.RightLeg.DoClick = function()
+		surface.PlaySound("hatchet/buttonclickrelease.wav")
+		net.Start("PlayerHealSelfLimbBegin")
+		net.WriteString("RLeg")
+		net.WritePlayer(LocalPlayer())
+		net.SendToServer()
 	end
 	
 end
@@ -62,26 +110,32 @@ function PANEL:Paint(w, h)
 	surface.SetDrawColor(figure_col)
 	surface.SetMaterial(body)
 	surface.DrawTexturedRect(centerw, centerh, 210, 400)
-
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightLeg") == true then
+	
+	self.LeftArm:SetText("L_ARM: \n"..LocalPlayer():GetNWInt("LArm").."/100")
+	self.RightArm:SetText("R_ARM: \n"..LocalPlayer():GetNWInt("RArm").."/100")
+	self.LeftLeg:SetText("L_LEG: \n"..LocalPlayer():GetNWInt("LLeg").."/100")
+	self.RightLeg:SetText("R_LEG: \n"..LocalPlayer():GetNWInt("RLeg").."/100")
+	
+	
+	if LocalPlayer():GetNWBool("RLegCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_rleg)
 		surface.DrawTexturedRect(centerw, centerh, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftLeg") == true then
+	if LocalPlayer():GetNWBool("LLegCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_lleg)
 		surface.DrawTexturedRect(centerw, centerh, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_RightArm") == true then
+	if LocalPlayer():GetNWBool("RArmCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_rarm)
 		surface.DrawTexturedRect(centerw, centerh, 210, 400)
 	end
 
-	if LocalPlayer():GetNW2Bool("Hatchet_Broken_LeftArm") == true then
+	if LocalPlayer():GetNWBool("LArmCrippled") == true then
 		surface.SetDrawColor(injured_figure_col)
 		surface.SetMaterial(figure_larm)
 		surface.DrawTexturedRect(centerw, centerh, 210, 400)
