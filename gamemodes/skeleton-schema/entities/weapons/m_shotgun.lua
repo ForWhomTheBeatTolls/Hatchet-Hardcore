@@ -35,7 +35,7 @@ SWEP.Secondary.DefaultClip	= -1
 SWEP.Secondary.Automatic	= false
 SWEP.Secondary.Ammo		= "none"
 
-SWEP.Slot = 4
+SWEP.Slot = 3
 SWEP.SlotPos = 1
 SWEP.DrawCrosshair = true --Does it draw the crosshair
 SWEP.DrawAmmo = true
