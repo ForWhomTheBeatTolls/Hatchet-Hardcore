@@ -30,10 +30,10 @@ function ENT:Think()
 		self:EmitSound("weapons/grenade/tick1.wav", 90, 100 + (self.TickCount * 15) )
 		self.NextTick = CurTime() + self.Increment
 	end
-	if self.Increment <= 0 then
+	if self.Increment <= 0 and IsValid(self) then
 		self:Boom()
 	end
-	if (self:Health() <= 0) then
+	if (self:Health() <= 0) and IsValid(self) then
 		self:Boom()
 	end
 end
@@ -101,7 +101,7 @@ function ENT:Boom()
 		
 		-- end
 		
-		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false then
+		if v:GetPhysicsObject():IsValid() and v:IsPlayer() == false and v:GetClass() != "prop_ragdoll" then
 			
 			local vpos = v:LocalToWorld(v:OBBCenter())
 			local spos = self:GetPos()
@@ -124,8 +124,9 @@ function ENT:Boom()
 			
 			v:TakeDamageInfo(dmginfo)
 			
-			
+			if IsValid(phys) then
 			phys:ApplyForceCenter(dir * 1 * push_force)
+			end
 			
 		end
 		
