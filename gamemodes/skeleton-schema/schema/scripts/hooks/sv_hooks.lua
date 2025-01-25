@@ -29,6 +29,7 @@
 		ply.RaiseDelay = CurTime()
 		ply:AddEFlags(EFL_NO_DAMAGE_FORCES)
 		ply:RemoveAllDecals()
+		ply:SetModelScale(1)
 		
 		net.Start("PlayerRag_PlayerSpawn")
 		net.WriteBool(true)
