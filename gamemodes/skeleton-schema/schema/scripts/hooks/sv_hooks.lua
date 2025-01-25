@@ -8,6 +8,7 @@
 		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
 		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
+		ply:SetNWBool("HealingLimb", false)
 		ply:SetNWInt("CarryWeight", 25)
 		ply:SetNWString("Loadout", "none")
 		ply.IsInASequence = false
