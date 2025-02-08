@@ -65,7 +65,7 @@ WILLMASTER CODING SIDE (ON ANOTHER PROJECT):
 - Citizen terminals, will replace ATMs and will be a usefull way to get information of your character. needs a redesign (i have one in my mind already) and needs more info it can tell.
 - Make it so via the menu you're able to change your model (120T), name (60T), skin (30T)
 - Redesign the entire VGUI and make the schema not 1:1 to impulse
-- IC punishments like the following: 2TriggerHappy4U (punishment for RDMing), JohnnyRebelHimself (punishment for racial slurs), DeathsNextDoorNeighbor (punishment for dying too much)
+- IC punishments like the following: 2TriggerHappy4U (punishment for RDMing || decrease damage dealt and eventual schizophrenia), JohnnyRebelHimself (punishment for racial slurs || voice-chat stamina), DeathsNextDoorNeighbor (punishment for dying too much || eventual loss of shit)
 
 -----------------------------------------------------
 
