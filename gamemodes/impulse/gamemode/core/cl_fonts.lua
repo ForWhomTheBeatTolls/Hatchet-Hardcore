@@ -3,7 +3,7 @@
 
 
 surface.CreateFont("AdminESP", {
-	font = "Arial",
+	font = "Verdana",
 	size = 12,
 	weight = 900,
 	antialias = true,
@@ -11,7 +11,7 @@ surface.CreateFont("AdminESP", {
 } )
 
 surface.CreateFont("zoneFont", {
-	font = "Courier New",
+	font = "Verdana",
 	size = 20,
 	weight = 1,
 	antialias = true,
@@ -20,34 +20,30 @@ surface.CreateFont("zoneFont", {
 
 } )
 
+	surface.CreateFont("HatchetFont-Settings", {
+		font = "Verdana",
+		size = ScreenScale( 10 ),
+		weight = 100,
+		antialias = true,
+	} )
+
 	surface.CreateFont("HatchetFont20", {
-		font = "Arial",
+		font = "Verdana",
 		size = 20,
-		weight = 800,
+		weight = 100,
 		antialias = true,
-		outline = true
 	} )
 
-	surface.CreateFont("HatchetFont-Menu48", {
-		font = "Arial",
-		size = 48,
-		weight = 800,
+	surface.CreateFont("HatchetFont-Menu", {
+		font = "Verdana",
+		size = 38,
+		weight = 600,
 		antialias = true,
-		shadow = false,
-		outline = true
-	} )
-
-	surface.CreateFont("HatchetFont-Menu32", {
-		font = "Arial",
-		size = 30,
-		weight = 800,
-		antialias = true,
-		shadow = false,
-		outline = true
+		shadow = true,
 	} )
 
 	surface.CreateFont("HatchetFont-PlayerInfo", {
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
 		weight = 8,
 		antialias = true,
@@ -55,7 +51,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("HatchetFont-ItemName", {
-		font = "Arial",
+		font = "Verdana",
 		size = 17,
 		weight = 600,
 		shadow = true,
@@ -63,7 +59,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("HatchetFont-ItemDesc", {
-		font = "Arial",
+		font = "Verdana",
 		size = 11,
 		weight = 2,
 		antialias = true
@@ -71,7 +67,7 @@ surface.CreateFont("zoneFont", {
 
 
 	surface.CreateFont("HatchetFont34", {
-		font = "Arial",
+		font = "Verdana",
 		size = 34,
 		weight = 100,
 		antialias = true,
@@ -80,7 +76,7 @@ surface.CreateFont("zoneFont", {
 
 
 	surface.CreateFont("Impulse-Elements18", {
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
 		weight = 800,
 		antialias = true,
@@ -88,7 +84,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements19", {
-		font = "Arial",
+		font = "Verdana",
 		size = 19,
 		weight = 1000,
 		antialias = true,
@@ -96,7 +92,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements16", {
-		font = "Arial",
+		font = "Verdana",
 		size = 16,
 		weight = 800,
 		antialias = true,
@@ -104,7 +100,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements17", {
-		font = "Arial",
+		font = "Verdana",
 		size = 17,
 		weight = 800,
 		antialias = true,
@@ -112,7 +108,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements17-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 17,
 		weight = 800,
 		antialias = true,
@@ -120,7 +116,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements14", {
-		font = "Arial",
+		font = "Verdana",
 		size = 14,
 		weight = 800,
 		antialias = true,
@@ -128,7 +124,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements14-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 14,
 		weight = 800,
 		antialias = true,
@@ -136,7 +132,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements18-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
 		weight = 900,
 		antialias = true,
@@ -144,7 +140,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements16-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 16,
 		weight = 900,
 		antialias = true,
@@ -152,7 +148,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements19-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 19,
 		weight = 900,
 		antialias = true,
@@ -160,7 +156,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements20-Shadow", { -- dont change this font to actually be 20 its a dumb mistake
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
 		weight = 900,
 		antialias = true,
@@ -168,7 +164,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements20A-Shadow", { -- dont change this font to actually be 20 its a dumb mistake
-		font = "Arial",
+		font = "Verdana",
 		size = 20,
 		weight = 900,
 		antialias = true,
@@ -176,7 +172,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-CharacterInfo", {
-		font = "Arial",
+		font = "Verdana",
 		size = 34,
 		weight = 900,
 		antialias = true,
@@ -185,40 +181,40 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-CharacterInfo-NO", {
-		font = "Arial",
+		font = "Verdana",
 		size = 34,
-		weight = 900,
+		weight = 500,
 		antialias = true,
 		shadow = true,
 		outline = false
 	} )
 
 	surface.CreateFont("Impulse-Elements13", {
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
-		weight = 800,
+		weight = 200,
 		antialias = true,
 		shadow = false,
 	} )
 
 	surface.CreateFont("Impulse-Elements22-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 22,
-		weight = 700,
+		weight = 100,
 		antialias = true,
 		shadow = true,
 	} )
 
 	surface.CreateFont("Impulse-Elements72-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 72,
-		weight = 700,
+		weight = 100,
 		antialias = true,
 		shadow = true,
 	} )
 
 	surface.CreateFont("Impulse-Elements23", {
-		font = "Arial",
+		font = "Verdana",
 		size = 23,
 		weight = 800,
 		antialias = true,
@@ -226,7 +222,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements23-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 23,
 		weight = 800,
 		antialias = true,
@@ -234,7 +230,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements23-Italic", {
-		font = "Arial",
+		font = "Verdana",
 		size = 23,
 		weight = 800,
 		italic = true,
@@ -243,7 +239,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements24-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 24,
 		weight = 800,
 		antialias = true,
@@ -251,7 +247,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements27-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 27,
 		weight = 800,
 		antialias = true,
@@ -259,7 +255,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements27", {
-		font = "Arial",
+		font = "Verdana",
 		size = 27,
 		weight = 800,
 		antialias = true,
@@ -267,7 +263,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements32", {
-		font = "Arial",
+		font = "Verdana",
 		size = 32,
 		weight = 800,
 		antialias = true,
@@ -275,7 +271,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements32-Shadow", {
-		font = "Arial",
+		font = "Verdana",
 		size = 32,
 		weight = 800,
 		antialias = true,
@@ -283,7 +279,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements36", {
-		font = "Arial",
+		font = "Verdana",
 		size = 36,
 		weight = 800,
 		antialias = true,
@@ -291,7 +287,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements48", {
-		font = "Arial",
+		font = "Verdana",
 		size = 48,
 		weight = 1000,
 		antialias = true,
@@ -299,7 +295,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-Elements78", {
-		font = "Arial",
+		font = "Verdana",
 		size = 78,
 		weight = 1000,
 		antialias = true,
@@ -307,7 +303,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-ChatTalk", {
-		font = "Courier New",
+		font = "Verdana",
 		size = 20,
 		extended = true,
 		shadow = true,
@@ -316,7 +312,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-WhisperTalk", {
-		font = "Courier New",
+		font = "Verdana",
 		size = 16,
 		extended = true,
 		shadow = true,
@@ -325,12 +321,13 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-YellTalk", {
-		font = "Courier New",
+		font = "Verdana",
 		size = 30,
 		extended = true,
 		shadow = true,
 		weight = 600,
-		antialias = true
+		antialias = true,
+		italic = true
 	} )
 
 	surface.CreateFont("Impulse-ChatSmall", {
@@ -372,14 +369,14 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("Impulse-UI-SmallFont", {
-		font = "Arial",
+		font = "Verdana",
 		size = math.max(ScreenScale(6), 17),
 		extended = true,
 		weight = 500
 	})
 
 	surface.CreateFont("Impulse-SpecialFont", {
-		font = "Arial",
+		font = "Verdana",
 		size = 33,
 		weight = 3700,
 		antialias = true,
@@ -387,7 +384,7 @@ surface.CreateFont("zoneFont", {
 	})
 
 	surface.CreateFont("Hatchet-HudFont", {
-		font = "Arial",
+		font = "Verdana",
 		size = 50,
 		weight = 30,
 		scanlines = 3,
@@ -396,14 +393,14 @@ surface.CreateFont("zoneFont", {
 	})
 
 	surface.CreateFont("BubbleChat-Talk", {
-		font = "Arial",
+		font = "Verdana",
 		size = 28,
 		weight = 600,
 		antialias = true
 	} )
 
 	surface.CreateFont("BubbleChat-Yell", {
-		font = "Arial",
+		font = "Verdana",
 		size = 34,
 		weight = 300,
 		antialias = true,
@@ -412,7 +409,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("BubbleChat-Me", {
-		font = "Arial",
+		font = "Verdana",
 		size = 28,
 		weight = 400,
 		antialias = true,
@@ -420,7 +417,7 @@ surface.CreateFont("zoneFont", {
 	} )
 
 	surface.CreateFont("BubbleChat-Whisper", {
-		font = "Arial",
+		font = "Verdana",
 		size = 18,
 		weight = 100,
 		antialias = true,
