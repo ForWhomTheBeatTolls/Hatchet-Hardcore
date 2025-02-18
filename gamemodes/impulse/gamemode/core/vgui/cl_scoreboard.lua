@@ -1,10 +1,10 @@
 local PANEL = {}
 
 function PANEL:Init()
-	self:SetSize(400, ScrH())
+	local w, h = ScrW(), ScrH()
+
+	self:SetSize(w * .4, h * .7)
 	self:Center()
-	self:SetPos(ScrW(), 0)
-	self:MoveTo(ScrW() - 400, 0, .5, 0, .5)
 	self:SetTitle("Scoreboard")
 	self:ShowCloseButton(false)
 	self:SetDraggable(false)
