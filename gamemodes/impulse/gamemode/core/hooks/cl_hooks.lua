@@ -34,15 +34,7 @@ local crashAnalysisAttempts = 0
 function GM:Think()
 	if LocalPlayer():Team() != 0 and not vgui.CursorVisible() and not impulse_ActiveWorkbar then
 		if not IsValid(impulse.MainMenu) or not impulse.MainMenu:IsVisible() then
-			if input.IsKeyDown(KEY_F1) then
-				local mainMenu = impulse.MainMenu or vgui.Create("impulseMainMenu")
-				mainMenu:SetVisible(true)
-				mainMenu:SetAlpha(0)
-				mainMenu:AlphaTo(255, .3)
-				mainMenu.popup = true
-
-				hook.Run("DisplayMenuMessages", mainMenu)
-			elseif input.IsKeyDown(KEY_F4) and not IsValid(impulse.playerMenu) and LocalPlayer():Alive() then
+			if input.IsKeyDown(KEY_F4) and not IsValid(impulse.playerMenu) and LocalPlayer():Alive() then
 				impulse.playerMenu = vgui.Create("impulsePlayerMenu")
 			elseif input.IsKeyDown(KEY_F2) and LocalPlayer():Alive() then
 				local trace = {}
@@ -138,14 +130,24 @@ end
 
 function GM:ScoreboardShow()
 	if LocalPlayer():Team() == 0 then return end -- players who have not been loaded yet
-
-    impulse_scoreboard = vgui.Create("impulseScoreboard")
+    -- impulse_scoreboard = vgui.Create("impulseScoreboard")
+	hatchet_tabmenu = vgui.Create("HatchetTabMenu")
+	hatchet_tabmenu:SetAlpha(0)
+	hatchet_tabmenu:AlphaTo(255, .1)
+	gui.EnableScreenClicker(true)
 end
 
 function GM:ScoreboardHide()
 	if LocalPlayer():Team() == 0 then return end -- players who have not been loaded yet
-	
-    impulse_scoreboard:Remove()
+    -- impulse_scoreboard:Remove()
+	gui.EnableScreenClicker(false)
+	if (IsValid(hatchet_tabmenu)) then
+		hatchet_tabmenu:MoveTo(0 - ScrW() * .2, 0, .3, 0, 2)
+		hatchet_tabmenu:RemoveEarly()
+		hatchet_tabmenu:AlphaTo(0, .3, 0, function()
+			hatchet_tabmenu:Remove()
+		end)
+	end
 end
 
 function GM:DefineSettings()
@@ -234,7 +236,8 @@ end
 function GM:CalcView(player, origin, angles, fov)
 	local view
 
-	if IsValid(impulse.splash) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() and not impulse.MainMenu.popup) then
+	-- if IsValid(impulse.splash) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible() and not impulse.MainMenu.popup) then
+	if IsValid(impulse.splash) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) then
 		view = {
 			origin = impulse.Config.MenuCamPos,
 			angles = impulse.Config.MenuCamAng,
@@ -348,6 +351,8 @@ function GM:FinishChat()
 	net.SendToServer()
 end
 
+IsStatsOpen = false
+
 function GM:OnContextMenuOpen()
 	if LocalPlayer():Team() == 0 or not LocalPlayer():Alive() or impulse_ActiveWorkbar then return end
 	if LocalPlayer():GetSyncVar(SYNC_ARRESTED, false) then return end
@@ -359,8 +364,10 @@ function GM:OnContextMenuOpen()
 	end
 
 	if not input.IsKeyDown(KEY_LALT) then
-		impulse_inventory = vgui.Create("impulseInventory")
 		gui.EnableScreenClicker(true)
+		hatchet_stats = vgui.Create("Hatchet_CharacterStats")
+		hatchet_stats:SetAlpha(0)
+		hatchet_stats:AlphaTo(255, .5)
 	else
 		if IsValid(g_ContextMenu) and not g_ContextMenu:IsVisible() then
 			g_ContextMenu:Open()
@@ -377,9 +384,13 @@ function GM:OnContextMenuClose()
 		hook.Call("ContextMenuClosed", self)
 	end
 
-	if IsValid(impulse_inventory) then
-		impulse_inventory:Remove()
+	if IsValid(hatchet_stats) then
 		gui.EnableScreenClicker(false)
+		surface.PlaySound("ui/buttonrollover.wav")
+		hatchet_stats.model:Remove()
+		hatchet_stats:AlphaTo(0, .5, 0, function()
+			hatchet_stats:Remove()
+		end)
 	end
 end
 
