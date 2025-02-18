@@ -8,10 +8,15 @@ hidden["CHudCrosshair"] = true
 hidden["CHudHistoryResource"] = true
 hidden["CHudDeathNotice"] = true
 hidden["CHudDamageIndicator"] = true
+hidden["CHUDQuickInfo"] = true
 function GM:HUDShouldDraw(element)
 	if hidden[element] then return false end
 	return true
 end
+
+timer.Create("DisableQuickInfoAndHudDrawFix", 2, 0, function()
+	RunConsoleCommand("hud_draw_fixed_reticle", 0)
+end)
 
 local ambience = {
 	["$pp_colour_addr"] = 0,
@@ -112,7 +117,6 @@ local function DrawOverheadInfo(target, alpha)
 	local col = ColorAlpha(team.GetColor(target:Team()), alpha)
 	if myGroup and not LocalPlayer():IsCP() and not target:IsCP() and group and rank and group == myGroup then draw.DrawText(group .. " - " .. rank, "Impulse-Elements16-Shadow", pos.x, pos.y - 15, ColorAlpha(hotPink, alpha), 1) end
 	local recognizecheck = util.JSONToTable(LocalPlayer():GetSyncVar(SYNC_RECOGNIZES, ""))
-	
 	if not recognizecheck[target:SteamID()] and not LocalPlayer():IsCP() then
 		draw.DrawText("Unknown", "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
 	elseif recognizecheck[target:SteamID()] and LocalPlayer():IsCP() then
@@ -126,7 +130,6 @@ local function DrawOverheadInfo(target, alpha)
 
 	if target:GetSyncVar(SYNC_TYPING, false) then 	draw.DrawText("Typing...", "Impulse-Elements24-Shadow", pos.x, pos.y - 50, Color(255, 255, 255), 1) end
 	if target:GetSyncVar(SYNC_ARRESTED, false) and LocalPlayer():CanArrest(target) then draw.DrawText("(F2 to unrestrain | E to drag)", "Impulse-Elements16-Shadow", pos.x, pos.y + 15, ColorAlpha(color_white, alpha), 1) end
-	
 	local desc = target:GetSyncVar(SYNC_RPDESC, "")
 	-- Optimization, maybe? this will not draw the text if the player decided not to have a description
 	if string.len(desc) == 0 then
@@ -197,6 +200,7 @@ end
 
 local deathEndingFade
 local deathEnding
+local previewtext = ""
 
 function GM:HUDPaint(mvData)
 
@@ -296,21 +300,63 @@ function GM:HUDPaint(mvData)
 	--Crosshair
 	local x, y
 	local curWep = lp:GetActiveWeapon()
-	
+	-- if not curWep or not curWep.ShouldDrawCrosshair or (curWep.ShouldDrawCrosshair and curWep.ShouldDrawCrosshair(curWep) != false) then
+	-- if impulse.GetSetting("view_thirdperson") == true then
+	-- local p = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
+	-- x, y = p.x, p.y
+	-- else
+	-- x, y = scrW/2, scrH/2
+	-- end
+	-- DrawCrosshair(x, y)
+	-- end
+	-- HUD
 	if impulse.GetSetting("hud_ambience") then hook.Add("RenderScreenspaceEffects", "HatchetAmbienceColor", function() DrawColorModify(ambience) end) end
 	if not impulse.GetSetting("hud_ambience") then hook.Remove("RenderScreenspaceEffects", "HatchetAmbienceColor") end
 	y = scrH - hudHeight - 8 - 10
-	
+	-- surface.SetMaterial(gradient)
+	-- if impulse.GetSetting("hud_jim") then
+	-- surface.DrawTexturedRect(10, y, hudWidth, hudHeight)   --####COMMENTED OUT BECAUSE I CAN'T FIX THIS SHITTY GRADIENT/CANT BE BOTHERED.####
+	-- else
+	-- surface.DrawTexturedRect(10, y + 10, hudWidth, hudHeight)
+	-- end
+	-- ### HEALTHBAR ###
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 	if isPreview then
+		previewtext = "(".. LocalPlayer():SteamID() ..") Very Kind of playable Beta Build (" .. LocalPlayer():SteamID() .. ")"
 		surface.SetTextColor(255, 255, 255, 30)
 		surface.SetFont("HatchetFont20")
-		surface.SetTextPos(ScrW() - 270, ScrH() - 1000)
-		surface.DrawText("Kind of playable beta build")
+		surface.SetTextPos( ( ScrW() / 2 ) - ( surface.GetTextSize(previewtext) / 2 ), ScrH() / 2 + 40)
+		surface.DrawText(previewtext)
+		--draw.SimpleTextOutlined("Very Kind of playable Beta Build", "Trebuchet18", ScrW()-120, ScrH()-1000, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
 	end
 
+	--surface.SetFont("Impulse-Elements23")
+	--surface.SetTextColor(color_white)
+	--surface.SetDrawColor(color_white)
+	--surface.SetTextPos(30, y+10)
+	--surface.DrawText(LocalPlayer():Name())
+	--surface.SetTextColor(team.GetColor(lpTeam))
+	--surface.SetTextPos(30, y+30)
+	--surface.DrawText(team.GetName(lpTeam))
 	local yAdd = 0
-	
+	-- surface.SetTextColor(color_white)
+	-- surface.SetFont("Impulse-Elements19")
+	-- surface.SetTextPos(136, y+64+yAdd)
+	-- surface.DrawText("Health: "..LocalPlayer():Health())
+	-- if seeColIcons == true then surface.SetDrawColor(healthCol) end
+	-- surface.SetMaterial(healthIcon)
+	-- surface.DrawTexturedRect(110, y+66+yAdd, 18, 16)
+	-- surface.SetTextPos(136, y+86+yAdd)
+	-- surface.DrawText("Hunger: "..LocalPlayer():GetSyncVar(SYNC_HUNGER, 100))
+	-- if seeColIcons == true then surface.SetDrawColor(hungerCol) end
+	-- surface.SetMaterial(hungerIcon)
+	-- surface.DrawTexturedRect(110, y+87+yAdd, 18, 18)
+	-- surface.SetTextPos(136, y+108+yAdd)
+	-- surface.DrawText("Money: "..impulse.Config.CurrencyPrefix..LocalPlayer():GetSyncVar(SYNC_MONEY, 0))
+	-- if seeColIcons == true then surface.SetDrawColor(moneyCol) end
+	-- surface.SetMaterial(moneyIcon)
+	-- surface.DrawTexturedRect(110, y+107+yAdd, 18, 18)
+	-- surface.SetDrawColor(color_white)
 	if lp:GetSyncVar(SYNC_ARRESTED, false) == true and impulse_JailTimeEnd and impulse_JailTimeEnd > CurTime() then
 		local timeLeft = math.ceil(impulse_JailTimeEnd - CurTime())
 		surface.SetMaterial(exitIcon)
@@ -319,6 +365,9 @@ function GM:HUDPaint(mvData)
 		aboveHUDUsed = true
 	end
 
+	-- draw.DrawText(lp:GetSyncVar(SYNC_XP, 0).."XP", "Impulse-Elements19", 55, y+150+(yAdd-8), color_white, TEXT_ALIGN_LEFT)
+	-- surface.SetMaterial(xpIcon)
+	-- surface.DrawTexturedRect(30, y+150+(yAdd-8), 18, 18)
 	local iconsX = 315
 	local bleedIconCol
 	if lp:GetSyncVar(SYNC_BLEEDING, false) then
@@ -351,6 +400,140 @@ function GM:HUDPaint(mvData)
 		zoneLbl:Remove()
 	end
 
+	--  ##### Code below is Jim (The movement indicator guy) #####
+	if not IsValid(PlayerIcon) and (impulse.hudEnabled == true) and impulse.GetSetting("hud_jim") then
+		PlayerIcon = vgui.Create("DModelPanel")
+		PlayerIcon:SetPos(100, y + 30)
+		PlayerIcon:SetSize(120, 90)
+		PlayerIcon:SetModel(LocalPlayer():GetModel())
+		PlayerIcon:SetAnimated(true)
+		function PlayerIcon.Entity:GetSkin()
+			return LocalPlayer():GetSkin()
+		end
+
+		function PlayerIcon:LayoutEntity()
+			return
+		end
+
+		function PlayerIcon:Think()
+			local walkseq = PlayerIcon:GetEntity():SelectWeightedSequence(ACT_HL2MP_WALK)
+			local idleseq = PlayerIcon:GetEntity():SelectWeightedSequence(ACT_IDLE)
+			local run = LocalPlayer():KeyDown(IN_SPEED)
+			local forward = LocalPlayer():KeyDown(IN_FORWARD)
+			local moveright = LocalPlayer():KeyDown(IN_MOVERIGHT)
+			local moveleft = LocalPlayer():KeyDown(IN_MOVELEFT)
+			local backward = LocalPlayer():KeyDown(IN_BACK)
+			local onground = LocalPlayer():GetMoveType() == MOVETYPE_WALK
+			local inair = not LocalPlayer():OnGround()
+			local forwardkey = IN_FORWARD
+			local runkey = IN_SPEED
+			local duck = LocalPlayer():KeyDown(IN_DUCK)
+			local movingforwards = false
+			local sprinting = false
+			local running = false
+			local crouching = LocalPlayer():Crouching()
+			if forward and onground then
+				--print("walk")
+				movingforwards = true
+				sprinting = false
+				running = false
+				-- if movingforwards then
+				-- print("movingforwards = true")
+				-- else
+				-- print("movingforwards = false")
+				-- -- PlayerIcon:GetEntity():SetSequence( "walk_all_moderate" )
+				-- -- PlayerIcon:RunAnimation()
+				-- end
+			end
+
+			if run and onground then
+				--print("sprint")
+				sprinting = true
+				-- if sprinting then
+				-- print("sprinting = true")
+				-- else
+				-- print("sprinting = false")
+				-- end
+			end
+
+			if run and forward then
+				--print("running")
+				running = true
+				sprinting = false
+				movingforwards = false
+				if running then
+					--print("running = true")
+					sprinting = false
+					movingforwards = false
+					-- else
+					-- print("running = false")
+				end
+				-- PlayerIcon:GetEntity():SetSequence( "run_all_panicked" )
+				-- PlayerIcon:RunAnimation()
+			elseif onground and not run and not forward then
+				PlayerIcon:GetEntity():SetSequence("lineidle01")
+				PlayerIcon:RunAnimation()
+				running = false
+				sprinting = false
+				movingforwards = false
+			end
+
+			if running then
+				sprinting = false
+				movingforwards = false
+			end
+
+			if inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			elseif running and inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			elseif sprinting and inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			elseif (forward or moveright or moveleft or backward) and inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			elseif duck and inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			elseif duck and (forward or moveright or moveleft or backward) and inair then
+				PlayerIcon:GetEntity():SetSequence("jump_holding_glide")
+				PlayerIcon:RunAnimation()
+			end
+
+			if running then
+				PlayerIcon:GetEntity():SetSequence("run_all_panicked")
+				PlayerIcon:RunAnimation()
+				-- running = false
+				-- movingforwards = false
+			elseif forward or moveright or moveleft or backward and not crouching then
+				PlayerIcon:GetEntity():SetSequence("walk_all_moderate")
+				PlayerIcon:RunAnimation()
+			elseif sprinting and not running and not crouching then
+				PlayerIcon:GetEntity():SetSequence("lineidle01")
+				PlayerIcon:RunAnimation()
+				-- running = false
+				-- sprinting = false
+			elseif duck then
+				PlayerIcon:GetEntity():SetSequence("crouch_idled")
+				PlayerIcon:RunAnimation()
+			elseif crouching and forward then
+				PlayerIcon:GetEntity():SetSequence("crouch_walk_all")
+				PlayerIcon:RunAnimation()
+			elseif crouching and moveleft then
+				PlayerIcon:GetEntity():SetSequence("crouch_walk_all")
+				PlayerIcon:RunAnimation()
+			elseif crouching and moveright then
+				PlayerIcon:GetEntity():SetSequence("crouch_walk_all")
+				PlayerIcon:RunAnimation()
+			elseif crouching and backward then
+				PlayerIcon:GetEntity():SetSequence("crouch_walk_all")
+				PlayerIcon:RunAnimation()
+			end
+		end
+
 		timer.Simple(0, function()
 			if not IsValid(PlayerIcon) then return end
 			local ent = PlayerIcon.Entity
@@ -374,7 +557,29 @@ function GM:HUDPaint(mvData)
 		end
 
 		nextBodygroupChangeCheck = CurTime() + 0.5
-end
+	end
+
+	if not impulse.GetSetting("hud_jim") then return end
+	if impulse.GetSetting("hud_jim") and (lp:GetModel() ~= lastModel) or (lp:GetSkin() ~= lastSkin) or bodygroupChange == true or (iconLoaded == false and input.IsKeyDown(KEY_W)) then -- input is super hacking fix for SpawnIcon issue
+		PlayerIcon:SetModel(lp:GetModel(), lp:GetSkin())
+		lastModel = lp:GetModel()
+		lastSkin = lp:GetSkin()
+		lastTeam = lp:Team()
+		lastBodygroups = lp:GetBodyGroups()
+		iconLoaded = true
+		bodygroupChange = false
+		timer.Simple(0, function()
+			if not IsValid(PlayerIcon) then return end
+			local ent = PlayerIcon.Entity
+			if IsValid(ent) then
+				for v, k in pairs(LocalPlayer():GetBodyGroups()) do
+					ent:SetBodygroup(k.id, LocalPlayer():GetBodygroup(k.id))
+				end
+			end
+		end)
+	elseif impulse.GetSetting("hud_jim") and impulse.GetSetting("hud_hunger") then
+		PlayerIcon:SetPos(100, y + 10)
+	end
 
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 	if isPreview then
