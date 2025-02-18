@@ -109,24 +109,7 @@ function InitializeHuds()
 		local bleedcol = Color(255,255,255,255)
 		local hungercolor = Color(214, 136, 33)
 		local superstaminacolor = Color(71, 201, 20)
-		surface.SetDrawColor(basecol)
-		surface.DrawRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
-		surface.DrawRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
-		surface.SetDrawColor(hpcolor)
-		surface.SetMaterial(healthIcon)
-		surface.DrawRect(w * .02, h * .9, hudWidth * LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), hudHeight) --hp
-		surface.DrawTexturedRect(w * .006, h * .897, 16, 16)
-		surface.SetDrawColor(hungercolor)
-		surface.SetMaterial(hungerIcon)
-		surface.DrawTexturedRect(w * .006, h * .914, 16, 16)
-		surface.DrawRect(w * .02, h * .918, hudWidth * LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) / 100, hudHeight) --hunger
-		surface.SetDrawColor(basecol2)
-		surface.SetMaterial(gradient)
-		surface.DrawTexturedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
-		surface.DrawTexturedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
-		surface.SetDrawColor(basecol3)
-		surface.DrawOutlinedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight, 1) --hp
-		surface.DrawOutlinedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight, 1) --hunger
+
 		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
 		local pos
