@@ -1,21 +1,19 @@
 local PANEL = {}
 
 function PANEL:Init()
+	local w, h = ScrW(), ScrH()
+
 	local addedCategories = {}
-	self:SetSize(640, 500)
+	self:SetSize(w * .5, h * .7)
 	self:Center()
 	self:SetTitle("Settings")
 	self:MakePopup()
 
-	local panelSelf = self
-
 	local settingsPages = vgui.Create("DPropertySheet", self)
 	settingsPages:Dock(FILL)
-	--settingsPages:InvalidateParent(true) -- this is called to sync the new positions and sizes with the dock
 
-	for v,k in pairs(impulse.Settings) do
+	for v, k in pairs(impulse.Settings) do
 		if k.category == "ops" and not LocalPlayer():IsAdmin() then continue end -- ops settings can only be viewed by admins
-
 		if not addedCategories[k.category] then -- If category does not exist, create it
 			local settingSheetScroll = vgui.Create("DScrollPanel", settingsPages)
 			settingsPages:AddSheet(k.category, settingSheetScroll)
@@ -24,26 +22,26 @@ function PANEL:Init()
 
 		local settingBase = addedCategories[k.category]:Add("DPanel")
 		settingBase:Dock(TOP)
-		settingBase:DockMargin(0,0,0,2)
-		settingBase:SetSize(24, 34)
-		--settingBase:InvalidateParent(true) -- this is called to sync the new positions and sizes with the dock
+		settingBase:SetPos(w * .1, h * 0.04)
+		settingBase:SetHeight(h * 0.035)
+
 		function settingBase:Paint(w, h)
 			surface.DrawRect(0, 0, w, 1.2)
 		end
 
 		local settingLabel = vgui.Create("DLabel", settingBase)
 		settingLabel:SetText(k.name)
-		settingLabel:SetFont("HatchetFont20")
+		settingLabel:SetFont("HatchetFont-Settings")
 		settingLabel:SizeToContents()
 		settingLabel:CenterVertical()
-		settingLabel:SetPos(5, settingLabel.y + 4)
+		settingLabel:SetPos(5, 0)
 
 		local settingType = k.type
 		if settingType == "tickbox" then
 			local tickbox = vgui.Create("DCheckBox", settingBase)
 			tickbox:CenterVertical()
-			tickbox:SetPos(580, tickbox.y + 2)
-			tickbox:SetSize(22, 22)
+			tickbox:SetPos(w * .46, settingLabel.y + 8)
+			tickbox:SetSize(24, 24)
 			tickbox:SetValue(impulse.GetSetting(v))
 
 			function tickbox:OnChange(value)
@@ -56,8 +54,8 @@ function PANEL:Init()
 		elseif settingType == "plainint" then
 			local numberEntry = vgui.Create("DNumberWang", settingBase)
 			numberEntry:CenterVertical()
-			numberEntry:SetPos(580, numberEntry.y)
-			numberEntry:SetSize(21,20)
+			numberEntry:SetPos(w * .46, numberEntry.y + 8)
+			numberEntry:SetSize(30,20)
 			numberEntry:SetValue(impulse.GetSetting(v))
 			numberEntry:SetNumeric(true)
 
@@ -71,17 +69,17 @@ function PANEL:Init()
 			numSlider:SetMax(k.maxValue or 100)
 			numSlider:SetDecimals(0)
 			numSlider:SetValue(impulse.GetSetting(v))
-			numSlider:SetSize(320,30)
-			numSlider:SetPos(310, numSlider.y)
+			numSlider:SetSize(w * 0.17,30)
+			numSlider:SetPos(w * .32, numSlider.y)
 
 			function numSlider:OnValueChanged(value)
 				impulse.SetSetting(v, value)
 			end
 		elseif settingType == "dropdown" then
 			local dropdown = vgui.Create("DComboBox", settingBase)
-			dropdown:SetSize(150, 20)
+			dropdown:SetSize(120, 20)
 			dropdown:CenterVertical()
-			dropdown:SetPos(460, dropdown.y)
+			dropdown:SetPos(w * .3, dropdown.y)
 			dropdown:SetValue(impulse.GetSetting(v))
 			dropdown:SetSortItems(false)
 			for _, option in pairs(k.options) do
@@ -93,18 +91,6 @@ function PANEL:Init()
 			end
 		end
 	end
-
-	local settingSheetScroll = vgui.Create("DScrollPanel", settingsPages)
-	settingsPages:AddSheet("Options", settingSheetScroll)
-
-	local button = settingSheetScroll:Add("DButton")
-	button:SetText("Reset all settings")
-	button:Dock(TOP)
-	function button:DoClick()
-		LocalPlayer():ConCommand("impulse_resetsettings")
-		panelSelf:Remove()
-    end
-
 end
 
 
