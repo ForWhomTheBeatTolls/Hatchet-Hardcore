@@ -1,12 +1,45 @@
 local PANEL = {}
 
+local function CreateButton(panel, title, todoonclick)
+	local button = vgui.Create("DButton", panel)
+	button:Dock(TOP)
+	button:SetFont("HatchetFont-Menu")
+	button:SetText(title)
+	button:SetHeight(30)
+	button:SetContentAlignment(5)
+
+	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
+	function button:Paint()
+		if self:IsHovered() then
+			self:SetColor(highlightCol)
+		else
+			self:SetColor(color_white)
+		end
+	end
+
+	function button:OnCursorEntered()
+		surface.PlaySound("ui/buttonrollover.wav")
+	end
+
+	function button:DoClick()
+		todoonclick()
+	end
+end
+
 function PANEL:Init()
-	local w, h = ScrW(), ScrH()
 	if IsValid(impulse.MainMenu) then
 		impulse.MainMenu:Remove()
 	end
 	impulse.MainMenu = self
 	impulse.hudEnabled = false
+
+	self.menumusic = nil
+	local menumusic = self.menumusic
+
+	menumusic = CreateSound(LocalPlayer(), "music/hl1_song3.mp3")
+	menumusic:Play()
+	menumusic:ChangePitch(90, 0.1)
+	menumusic:ChangeVolume(1)
 
 	self:SetPos(0,0)
 	self:SetSize(ScrW(), ScrH())
@@ -19,64 +52,30 @@ function PANEL:Init()
 	self.core:SetPos(0, 0)
 	self.core:SetSize(ScrW(), ScrH())
 
-	local menumusic = CreateSound(LocalPlayer(), "music/hl1_song3.mp3")
-	menumusic:Play()
-	menumusic:ChangePitch(90, 0.1)
-	menumusic:ChangeVolume(1)
-
-
-	local bodyCol = Color(36, 36, 36)
+	local bodyCol = Color(30, 30, 30, 190)
 	function self.core:Paint(w, h)
-		local gradient = surface.GetTextureID("vgui/gradient-d")
-		local gradientUp = surface.GetTextureID("vgui/gradient-u")
-		local gradientLeft = surface.GetTextureID("vgui/gradient-l")
-		local vignette = Material("impulse/vignette.png")
-		local hatcheticon = Material("impulse/hatchet2.png")
-
-		surface.SetDrawColor(bodyCol) -- menu body
-		surface.SetTexture(gradientLeft)
-		--surface.DrawRect(0,0,300,h)
-		surface.DrawTexturedRect(0,0,900,h)
-		surface.SetMaterial(vignette)
-		surface.SetDrawColor(Color(0, 0, 0))
-		surface.DrawTexturedRect(0,0,w,h)
-
-		surface.SetMaterial(hatcheticon)
-		surface.SetDrawColor(Color(255,255,255))
-		surface.DrawTexturedRect(w/1.34,100, 100,100)
-
 		local isPreview = GetConVar("impulse_ispreview"):GetBool()
-
 		if isPreview then
-			draw.SimpleText("preview build", "Impulse-SpecialFont", w/1.25,150, Color(255, 242, 0))
+			draw.SimpleText("preview build", "Impulse-SpecialFont", 260, 115, Color(255, 242, 0))
 		end
 	end
 
-	self.playbutton = vgui.Create("DButton", self.core)
-	self.playbutton:SetPos(24,11)
-	self.playbutton:SetFont("HatchetFont-Menu48")
-	if impulse_isNewPlayer == true then
-		self.playbutton:SetText("Create your character")
-	else
-		self.playbutton:SetText("Play")
-	end
-	self.playbutton:SizeToContents()
+	self.buttonlist = vgui.Create("DPanel", self)
+	self.buttonlist:SetPos(0, ScrH() * .6)
+	self.buttonlist:SetSize(ScrW(), ScrH() * .65)
 
-	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
-	local selfPanel = self
-	function self.playbutton:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
+	function self.buttonlist:Paint()
 	end
 
-	function self.playbutton:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
+	CreateButton(self.buttonlist, "HATCHET: HARDCORE - (TEMP LOGO :( )", function()
 
-	function self.playbutton:DoClick()
+		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound("common/bugreporter_failed.wav")
+	end)
+
+	CreateButton(self.buttonlist, "Play", function()
+		local selfPanel = self.buttonlist:GetParent()
+
 		surface.PlaySound("ui/buttonclick.wav")
 		if impulse_isNewPlayer == true then
 			vgui.Create("impulseCharacterCreator", selfPanel)
@@ -99,247 +98,63 @@ function PANEL:Init()
 		end
 
 		CRASHSCREEN_ALLOW = true
-	end
+	end)
 
-	local plybutton_width, plybutton_height = self.playbutton:GetTextSize()
+	CreateButton(self.buttonlist, "Settings", function()
 
-	local white_color = Color(255, 255, 255)
-
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(plybutton_width + 740,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Change your species")
-	button:SizeToContents()
-
-
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
-		vgui.Create("HatchetCharacterSelectionScreen")
-	end
-
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(plybutton_width + 30,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Settings")
-	button:SizeToContents()
-
-	local normalCol = button:GetColor()
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
 		surface.PlaySound("ui/buttonclick.wav")
-		vgui.Create("impulseSettings", selfPanel)
-	end
+		vgui.Create("impulseSettings")
+	end)
 
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(plybutton_width + 150,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Achievements")
-	button:SizeToContents()
+	CreateButton(self.buttonlist, "Achievements", function()
 
-	local normalCol = button:GetColor()
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
 		surface.PlaySound("ui/buttonclick.wav")
-		vgui.Create("impulseAchievements", selfPanel)
-	end
+		vgui.Create("impulseAchievements")
+	end)
 
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(plybutton_width + 350,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Community")
-	button:SizeToContents()
-
-	local normalCol = button:GetColor()
-	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
+	CreateButton(self.buttonlist, "Community", function()
 		surface.PlaySound("ui/buttonclick.wav")
-		gui.OpenURL(impulse.Config.CommunityURL or "www.google.com")
-	end
+		gui.OpenURL(impulse.Config.CommunityURL or "https://www.google.com/")
+	end)
 
-	local button = vgui.Create("DButton", self.core)
 
-	button:SetPos(plybutton_width + 524,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Donate")
-	button:SizeToContents()
+	CreateButton(self.buttonlist, "Donate", function()
 
-	local normalCol = button:GetColor()
-	local goldCol = Color(218, 165, 32)
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(goldCol)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
 		surface.PlaySound("ui/buttonclick.wav")
-		gui.OpenURL(impulse.Config.DonateURL or "www.google.com")
-	end
+		gui.OpenURL(impulse.Config.DonateURL or "https://www.google.com/")
+	end)
 
-	local button = vgui.Create("DButton", self.core)
-	button:SetPos(plybutton_width + 634,22)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Credits")
-	button:SizeToContents()
-
-	local normalCol = button:GetColor()
-	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-	local mainmenu = self
-	function button:DoClick()
+	CreateButton(self.buttonlist, "Credits", function()
 		if self.popup then return end
 		if impulseCredits and IsValid(impulseCredits) then return end
-		
+
 		impulseCredits = vgui.Create("impulseCredits")
 		impulseCredits:AlphaTo(255, 2, 1.5)
 		mainmenu:AlphaTo(0, 2, 0)
-	end
+	end)
 
-	-- function button:Think()
-	-- 	if impulse.MainMenu.popup then
-	-- 		self:Hide()
-	-- 	else
-	-- 		self:Show()
-	-- 	end
-	-- end
-
-	local button = vgui.Create("DButton", self)
-	button:SetPos(0, h / 1.05)
-	button:SetFont("HatchetFont-Menu32")
-	button:SetText("Disconnect")
-	button:SizeToContents()
-
-	local normalCol = button:GetColor()
-	local highlightCol = Color(240, 0, 0)
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(color_white)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
+	CreateButton(self.buttonlist, "Disconnect", function()
 		print("Bye. :(")
 		LocalPlayer():ConCommand("disconnect")
-	end
-
-	local button = vgui.Create("DImageButton", self)
-	button:SetPos(180, h / 1.07)
-	button:SetImage("impulse/icons/social/discord.png")
-	button:SetSize(62, 55)
-
-	local normalCol = button:GetColor()
-	local highlightCol = Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)
-	function button:Paint()
-		if self:IsHovered() then
-			self:SetColor(highlightCol)
-		else
-			self:SetColor(normalCol)
-		end
-	end
-
-	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
-	end
-
-	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
-		gui.OpenURL(impulse.Config.DiscordURL or "www.viniscool.com")
-	end
+	end)
 
 	local year = os.date("%Y", os.time())
 	local copyrightLabel = vgui.Create("DLabel", self.core)
 	copyrightLabel:SetFont("Impulse-Elements14")
-	copyrightLabel:SetText("A Project made by SteveB, Inspired by Roots\nProject Lead: WillMaster, SteveB.\nCreative Lead: Steve B.\nMap Design: Jokey\nLead Development: WillMaster, Steve B.\nJunior Development: Thrumbo\nCommunity Contributors: TehRedd, Jokey, GhostfacedKillah\nPowered by impulse\nCopyright 2i.games "..year.."\nimpulse version: "..impulse.Version)
+	copyrightLabel:SetText("Powered by impulse\nCopyright 2i.games "..year.."\nimpulse version: "..impulse.Version)
 	copyrightLabel:SizeToContents()
 	copyrightLabel:SetPos(ScrW()-copyrightLabel:GetWide(), ScrH()-copyrightLabel:GetTall()-5)
 
-	local schemaLabel = vgui.Create("DLabel", self.core)
-	schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b))
-	schemaLabel:SetFont("HatchetFont-Menu32")
-	schemaLabel:SetText("HATCHET: HL2 HARDCORE")
-	schemaLabel:SetTextInset(0, 0)
-	--schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)) not sure if i like this
-	schemaLabel:SizeToContents()
-	schemaLabel:SetPos(w/1.25,124)
+	-- local schemaLabel = vgui.Create("DLabel", self.core)
+	-- schemaLabel:SetFont("Impulse-Elements32")
+	-- schemaLabel:SetText(impulse.Config.SchemaName)
+	-- --schemaLabel:SetTextColor(Color(impulse.Config.MainColour.r, impulse.Config.MainColour.g, impulse.Config.MainColour.b)) not sure if i like this
+	-- schemaLabel:SizeToContents()
+	-- schemaLabel:SetPos(100,140)
 
-	if schemaLabel:GetWide() > 300 then
-		schemaLabel:SetFont("HatchetFont-Menu32")
-	end
-
-	--local newsLabel = vgui.Create("DLabel", self.core)
-	--newsLabel:SetFont("Impulse-Elements32")
-	--newsLabel:SetText("News")
-	--newsLabel:SizeToContents()
-	--newsLabel:SetPos(self:GetWide()-530, 60)
-
-	local newsfeed = vgui.Create("impulseNewsfeed", self.core)
-	newsfeed:SetSize(500,270)
-	newsfeed:SetPos(self:GetWide()-530, 100)
+	-- if schemaLabel:GetWide() > 300 then
+	-- 	schemaLabel:SetFont("Impulse-Elements27")
+	-- end
 
 	local testMessage = function()
 		hook.Run("ShowMenuModalMessage", self)
@@ -397,6 +212,13 @@ function PANEL:OnKeyCodePressed(key)
 	end
 end
 
+function PANEL:MenuShowScreen()
+	self.menumusic = CreateSound(LocalPlayer(), "music/hl1_song3.mp3")
+	self.menumusic:Play()
+	self.menumusic:ChangePitch(90, 0.1)
+	self.menumusic:ChangeVolume(1)
+end
+
 function PANEL:OnChildAdded(child)
 	if self.AddingMsgs then
 		return
@@ -408,18 +230,8 @@ function PANEL:OnChildAdded(child)
 	self.openElement = child
 end
 
-
 function PANEL:Paint(w,h)
-	local gradient = Material("vgui/gradient_up")
-	local bottompart = Color(255, 136, 25)
-	local bodycol = Color(0,0,0)
-
-	surface.SetMaterial(gradient)
-	surface.SetDrawColor(bodycol)
-	surface.DrawTexturedRect(0, 2, w, 80)
-
-	surface.SetDrawColor(bottompart)
-	surface.DrawRect(0, 80, w, 2)
+	-- Derma_DrawBackgroundBlur(self)
 end
 
 vgui.Register("impulseMainMenu", PANEL, "DPanel")
