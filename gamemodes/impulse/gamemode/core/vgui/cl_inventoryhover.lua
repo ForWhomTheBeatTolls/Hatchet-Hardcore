@@ -2,15 +2,17 @@ local PANEL = {}
 
 function PANEL:Init()
 	self:Receiver("impulseInv", self.OnDrop)
-	self:SetMouseInputEnabled(false)
+	-- self:SetMouseInputEnabled(false)
 	self:SetSize(140, 140)
-	self:Hide()
+	self:SetTitle("")
+	self:ShowCloseButton(false)
+	self:SetDraggable(false)
+	-- self:Hide()
 end
 
 function PANEL:SetItem(panel)
 	self.Item = panel
 	self:SetPos(gui.MouseX() + 6, gui.MouseY() - self:GetTall() - 6)
-
 	self.ItemName = panel.Item.Name
 	self.ItemColour = panel.Item.Colour or impulse.Config.MainColour
 	self.ItemDesc = panel.Item.Desc or ""
@@ -18,7 +20,6 @@ function PANEL:SetItem(panel)
 	self.ItemIsIllegal = panel.Item.Illegal or false
 	self.ItemIsEquipped = panel.Item.Equipable or false
 	self.ItemIsRestricted = panel.Item.Restricted or false
-
 	surface.SetFont("Impulse-Elements18-Shadow")
 	local nameSize = surface.GetTextSize(self.ItemName)
 
@@ -43,13 +44,15 @@ function PANEL:SetItem(panel)
 		extraMarkup = "<colour=255, 0, 0, 255>This item is contraband</colour>\n"
 	end
 
-	if self.ItemIsEquipped then
-		extraMarkup = extraMarkup.."<colour=0, 200, 0, 255>This item is equipped</colour>\n"
-	end
+	-- if self.ItemIsEquipped then
+	-- 	extraMarkup = extraMarkup.."<colour=0, 200, 0, 255>This item is equipped</colour>\n"
+	-- end
 
 	if self.ItemIsRestricted then
 		extraMarkup = extraMarkup.."<colour=255, 223, 0, 255>This item is restricted</colour>\n"
 	end
+
+	extraMarkup = extraMarkup.."<colour=235, 231, 41>" .. panel.Item.Weight .. "kg</colour>\n"
 
 	self.ItemDescMarkup = markup.Parse("<font=Impulse-Elements16-Shadow>"..extraMarkup.."<colour=255, 255, 255, 255>"..self.ItemDesc.."</colour></font>", wide)
 
@@ -60,25 +63,20 @@ end
 function PANEL:Think()
 	self:SetPos(gui.MouseX() + 6, gui.MouseY() - self:GetTall() - 2)
 
-	if self.Item and IsValid(self.Item) and self.Item.model:IsHovered() then
-		self:MoveToFront()
-	else
-		self:Remove()
-	end
+	-- if self.Item and IsValid(self.Item) and self.Item.model:IsHovered() then
+	-- 	self:MoveToFront()
+	-- else
+	-- 	self:Remove()
+	-- end
 end
 
 local gradient = Material("vgui/gradient-r")
-local outlineCol = Color(10, 10, 10, 255)
+local outlineCol = Color(0, 0, 0, 180)
 local darkCol = Color(80, 80, 80, 100)
 local fullCol = Color(139, 0, 0, 15)
 
 function PANEL:Paint(w,h)
-	impulse.blur(self, 10, 20, 255)
-	surface.SetDrawColor(darkCol)
-	surface.DrawRect(0, 0, w, h)
-
-	surface.SetDrawColor(outlineCol)
-	surface.DrawOutlinedRect(0, 0, w, h)
+	draw.RoundedBox(16, 0, 0, w, h, outlineCol)
 
 	surface.SetFont("Impulse-Elements18-Shadow")
 	surface.SetTextColor(self.ItemColour)
@@ -88,4 +86,4 @@ function PANEL:Paint(w,h)
 	self.ItemDescMarkup:Draw(10, 30)
 end
 
-vgui.Register("impulseInventoryHover", PANEL, "DPanel")
+vgui.Register("impulseInventoryHover", PANEL, "DFrame")
