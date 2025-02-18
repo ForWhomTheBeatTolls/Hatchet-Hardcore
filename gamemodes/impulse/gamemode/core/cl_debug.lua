@@ -63,7 +63,11 @@ concommand.Add("impulse_debug_iconeditor", function(ply)
 	end
 end)
 
+-- Abusable, Edited to be used 4 admins only
+
 concommand.Add("impulse_debug_wtl", function(ply)
+	if !ply:IsAdmin() then return end
+
 	local traceEnt = LocalPlayer():GetEyeTrace().Entity
 
 	if not traceEnt or not IsValid(traceEnt) then
