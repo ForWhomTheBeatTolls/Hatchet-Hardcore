@@ -542,14 +542,13 @@ impulse.RegisterChatCommand("/group", groupChatCommand)
 impulse.RegisterChatCommand("/g", groupChatCommand)
 
 if CLIENT then
-	local talkCol = Color(100, 100, 100)
+	local talkCol = Color(243, 224, 137)
 	local infoCol = Color(135, 206, 250)
 	local oocCol = color_white
 	local oocTagCol = Color(200, 0, 0)
 	local yellCol = Color(214, 71, 46)
 	local whisperCol = Color(67, 156, 197)
 	local infoCol = Color(135, 206, 250)
-	local talkCol = Color(223, 223, 223)
 	local radioCol = Color(65, 120, 200)
 	local pmCol = Color(45, 154, 6)
 	local advertCol = Color(255, 174, 66)
@@ -698,7 +697,7 @@ if CLIENT then
 
 	impulse.RegisterChatClass(9, function(message, speaker)
 		local normaltext = message
-		message = "** " .. message .. " **"
+		message = "" .. message .. ""
 		local teamcol = team.GetColor(speaker:Team())
 		local user = speaker
 
