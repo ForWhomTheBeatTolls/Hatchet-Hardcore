@@ -21,8 +21,8 @@ impulse.Config.IntroMusic = "music/hl1_song20.mp3" -- song to play when characte
 
 impulse.Config.SignalsUpdateTime = 2
 
-impulse.Config.WalkSpeed = 108
-impulse.Config.JogSpeed = 194
+impulse.Config.WalkSpeed = 100
+impulse.Config.JogSpeed = 220
 impulse.Config.SlowWalkRatio = 0.6
 impulse.Config.SideWalkRatio = 0.6
 
@@ -47,7 +47,7 @@ impulse.Config.StartingBankMoney = 450
 impulse.Config.StartingKills = 0
 impulse.Config.StartingRankPoints = 0
 impulse.Config.CurrencyPrefix = "T"
-impulse.Config.CurrencyName = "tokens"
+impulse.Config.CurrencyName = "Tokens"
 impulse.Config.ATMModel = "models/props_combine/combine_intwallunit.mdl"
 
 impulse.Config.XPTime = 100
@@ -104,10 +104,10 @@ impulse.Config.DiscordLeadModRoleID = ""
 impulse.Config.AutoModCooldown = 130
 impulse.Config.AutoModMaxRisk = 15
 
-impulse.Config.CommunityURL = ""
+impulse.Config.CommunityURL = "https://www.google.com/"
 impulse.Config.IACGuidelinesURL = ""
 impulse.Config.PanelURL = ""
-impulse.Config.DonateURL = ""
+impulse.Config.DonateURL = "https://www.google.com/"
 impulse.Config.DiscordURL = ""
 impulse.Config.SupportURL = "" -- this can just be the forum url
 impulse.Config.DiscordRelayURL = "" -- not required
@@ -221,7 +221,8 @@ impulse.Config.Achievements = {
 }
 
 impulse.Config.ModQuickReplies = {
-	"I am a quick report reply! Add more in sh_config.lua in your schema."
+	-- "I am a quick report reply! Add more in sh_config.lua in your schema."
+	"shut up fat retard"
 }
 
 impulse.Config.AutoModDict = {
