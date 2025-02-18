@@ -132,11 +132,13 @@
 				elseif ply:KeyDown(IN_SPEED) then
 					ply:EmitSound("npc/footsteps/hardboot_generic"..math.random(1,6)..".wav", 70)
 				end
-			end
+			end	
 			
 			if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE and not ply.HasVest then
 				return false
 			end
+
+
 			
 		return true
 			
