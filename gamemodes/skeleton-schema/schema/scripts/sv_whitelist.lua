@@ -22,59 +22,59 @@
 
 --gameevent.Listen( "player_connect" )
 hook.Add("PlayerInitialSpawn", "HatchetWhitelistHook", function( ply )
-		local f = file.Open("hatchet_server_whitelist.json", "w", "DATA")
-		local r = file.Read( "impulse/hatchet_server_whitelist.json", "DATA" )
-		local strf = string.find(r, ply:SteamID(), 1, true)
-        if !strf then
-       		ply:Kick("Not whitelisted. Make an application on the discord to acquire a whitelist." )
-        end
+	local f = file.Open("hatchet_server_whitelist.json", "w", "DATA")
+	local r = file.Read( "impulse/hatchet_server_whitelist.json", "DATA" )
+	local strf = string.find(r, ply:SteamID(), 1, true)
+	if !strf then
+		   ply:Kick("Not whitelisted. Make an application on the discord to acquire a whitelist." )
+	end
 end)
 
 local GiveServerWhitelist = {
-    description = "Gives the entered STEAMID the whitelist to the server.",
-    requiresArg = true,
-    adminOnly = true,
-    onRun = function(ply, arg, rawText)
-        local steamid = arg[1]
-		local calend1 = os.time()
-		local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
-		
-		-- if file.Exists("hatchet_server_whitelist.json", "LUA") then
-			file.Write("hatchet_server_whitelist.json", steamid.." -- ["..calend2.."] (Added VIA Command)")
-			print(file.Write("hatchet_server_whitelist.json", steamid))
-		--else
-			--print("No ''hatchet_server_whitelist.json'' file found. Create it and then try again.")
-		--end
-    end
+description = "Gives the entered STEAMID the whitelist to the server.",
+requiresArg = true,
+adminOnly = true,
+onRun = function(ply, arg, rawText)
+	local steamid = arg[1]
+	local calend1 = os.time()
+	local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
+	
+	-- if file.Exists("hatchet_server_whitelist.json", "LUA") then
+		file.Write("hatchet_server_whitelist.json", steamid.." -- ["..calend2.."] (Added VIA Command)")
+		print(file.Write("hatchet_server_whitelist.json", steamid))
+	--else
+		--print("No ''hatchet_server_whitelist.json'' file found. Create it and then try again.")
+	--end
+end
 }
 impulse.RegisterChatCommand("/givewhitelist", GiveServerWhitelist)
 
 concommand.Add("givewhitelist", function(ply, cmd, args)
 
-	if !ply:IsSuperAdmin() then return end
+if !ply:IsSuperAdmin() then return end
 
-	local f = file.Open("hatchet_server_whitelist.json", "w", "DATA")
-	local r = file.Read( "impulse/hatchet_server_whitelist.json", "DATA" )
-	local strf = string.find(r, args[1], 1, true)
-	
-	local calend1 = os.time()
-	local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
-	
-	if !strf and strf != args[1] then
-		file.Append("impulse/hatchet_server_whitelist.json", tostring(args[1]).." -- ["..calend2.."] (Added VIA Con-Command)")
-		file.Append("impulse/hatchet_server_whitelist.json", "\n")
-	else
-		print("This value is already in the table!")
-	end
-	--print(file.Append("impulse/hatchet_server_whitelist.json", args[1].."\n"))
-	print(tostring(args[1]))
-	print(r)
-	--print(string.len(strf))
-	--print("--------------------")
-	--PrintTable(t)
-	f:Close()
-	-- f:Skip(#args[1])
-	-- print(f:ReadLine())
-	-- print(f:Tell())
-	-- f:Close()
+local f = file.Open("hatchet_server_whitelist.json", "w", "DATA")
+local r = file.Read( "impulse/hatchet_server_whitelist.json", "DATA" )
+local strf = string.find(r, args[1], 1, true)
+
+local calend1 = os.time()
+local calend2 = os.date( "%H:%M:%S - %d/%m/%Y" , calend1 )
+
+if !strf and strf != args[1] then
+	file.Append("impulse/hatchet_server_whitelist.json", tostring(args[1]).." -- ["..calend2.."] (Added VIA Con-Command)")
+	file.Append("impulse/hatchet_server_whitelist.json", "\n")
+else
+	print("This value is already in the table!")
+end
+--print(file.Append("impulse/hatchet_server_whitelist.json", args[1].."\n"))
+print(tostring(args[1]))
+print(r)
+--print(string.len(strf))
+--print("--------------------")
+--PrintTable(t)
+f:Close()
+-- f:Skip(#args[1])
+-- print(f:ReadLine())
+-- print(f:Tell())
+-- f:Close()
 end)
