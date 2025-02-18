@@ -1,22 +1,22 @@
 local PANEL = {}
 
 function PANEL:Init()
+	self.model = vgui.Create("DModelPanel", self)
+	self.model:SetPaintBackground(false)
 	self:SetMouseInputEnabled(true)
-	self:SetTall(84)
-	self:SetWide(280)
+	self:SetTall(64)
+	self.col = Color(36, 36, 36, 100)
+
 	self:SetCursor("hand")
 end
 
 function PANEL:SetItem(netitem, wide)
-    local w, h = self:GetSize()
 	local direct = self.ContainerType
 	local item = impulse.Inventory.Items[(direct and netitem) or netitem.id]
-
 	self.Item = item
 
 	if not direct then
 		self.IsEquipped = netitem.equipped or false
-        self.Illegal = netitem.illegal or false
 		self.IsRestricted = netitem.restricted or false
 	end
 
@@ -24,27 +24,31 @@ function PANEL:SetItem(netitem, wide)
 	self.Count = 1
 
 	local panel = self
-
-	self.model = vgui.Create("impulseSpawnIcon", self)
-	self.model:SetPaintBackground(false)
-	self.model:SetPos(220, 22)
-	self.model:SetSize(48, 48)
+	self.model:SetPos(3, 3)
+	self.model:SetSize(58, 58)
 	self.model:SetMouseInputEnabled(true)
 	self.model:SetModel(item.Model)
+	self.model:SetFOV(item.FOV or 35)
 
 	if self.Item.ItemColour then
 		self.model:SetColor(self.Item.ItemColour)
 	end
-    
-    function self.model:LayoutEntity(ent)
-        if panel.Item.Material then
-            ent:SetMaterial(panel.Item.Material)
-        end
 
-        if panel.Item.Skin then
-            ent:SetSkin(panel.Item.Skin)
-        end
-    end
+	function self.model:LayoutEntity(ent)
+		ent:SetAngles(Angle(0, 90, 0))
+
+		if panel.Item.Material then
+			ent:SetMaterial(panel.Item.Material)
+		end
+
+		if not item.NoCenter then
+			self:SetLookAt(Vector(0, 0, 0))
+		end
+
+		if panel.Item.Skin then
+			ent:SetSkin(panel.Item.Skin)
+		end
+	end
 
 	function self.model:DoClick()
 		panel:OnMousePressed()
@@ -54,13 +58,26 @@ function PANEL:SetItem(netitem, wide)
 		panel:OnMousePressed(MOUSE_RIGHT)
 	end
 
+	local camPos = self.model.Entity:GetPos()
+	camPos:Add(Vector(0, 25, 25))
+
+	local min, max = self.model.Entity:GetRenderBounds()
+
+	if item.CamPos then
+		self.model:SetCamPos(item.CamPos)
+	else
+		self.model:SetCamPos(camPos -  Vector(10, 0, 16))
+	end
+
+	self.model:SetLookAt((max + min) / 2)
+
 	self.desc = vgui.Create("DLabel", self)
-	self.desc:SetPos(0, 15)
+	self.desc:SetPos(65, 30)
 
 	if self.Basic then
-		self.desc:SetSize(200, 60)
+		self.desc:SetSize(270, 30)
 	else
-		self.desc:SetSize(200, 60)
+		self.desc:SetSize(wide - 530, 30)
 	end
 
 	if wide < 800 then -- small resolutions have trouble with 16
@@ -88,7 +105,7 @@ function PANEL:SetItem(netitem, wide)
 
 	function self.count:Think()
 		if panel.Count > 1 and panel.Count != self.lastCount then
-			self:SetText("x"..panel.Count)
+			self:SetText("x" .. panel.Count)
 			self.lastCount = panel.Count
 			panel.Weight = panel.Count * panel.Item.Weight
 
@@ -101,9 +118,9 @@ function PANEL:SetItem(netitem, wide)
 			end
 
 			if panel.IsRestricted or panel.Item.Illegal then
-				self:SetPos(42 + wShift, 28)
+				self:SetPos(40 + wShift, 1)
 			else
-				self:SetPos(42 + wShift, 38)
+				self:SetPos(40 + wShift, 1)
 			end
 		end
 	end
@@ -113,15 +130,18 @@ function PANEL:SetItem(netitem, wide)
 	local illegalMat = "icon16/exclamation.png"
 
 	if self.IsRestricted then
-		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(6, 6)
-		self.tip:SetSize(14, 14)
-		self.tip:SetImage(restrictedMat)
+		-- self.tip = vgui.Create("DImageButton", self)
+		-- self.tip:SetPos(43, 45)
+		-- self.tip:SetSize(16, 16)
+		-- self.tip:SetImage(restrictedMat)
+		self.col = Color(71, 56, 16, 100)
+
 	elseif self.Item.Illegal then
-		self.tip = vgui.Create("DImageButton", self)
-		self.tip:SetPos(232, 5)
-		self.tip:SetSize(14, 14)
-		self.tip:SetImage(illegalMat)
+		-- self.tip = vgui.Create("DImageButton", self)
+		-- self.tip:SetPos(43, 45)
+		-- self.tip:SetSize(16, 16)
+		-- self.tip:SetImage(illegalMat)
+		self.col = Color(71, 16, 16, 100)
 	end
 end
 
@@ -302,65 +322,35 @@ function PANEL:OnMousePressed(keycode)
 	popup:Open()
 end
 
-local bodyCol = Color(77, 77, 77)
-local topCol2 = Color(51, 51, 51)
-local basiccol = Color(255, 136, 0)
-local equipcol = Color(39, 230, 22)
-local restrictedCol = Color(255, 223, 0, 255)
-local illegalCol = Color(255, 0, 0, 255)
-local illegalbodycol = Color(68, 6, 6, 142)
-local equipbodycol = Color(32, 185, 18, 52)
-local equippedCol =  Color(10, 70, 10, 169)
-local restrictedMat =  Material("icon16/error.png")
-local gradient = Material("gui/gradient_up")
-local illegalMat = Material("icon16/exclamation.png")
+local bodyCol = Color(36, 36, 36, 100)
+local equippedCol =  Color(16, 71, 16, 100)
 function PANEL:Paint(w, h)
-
-
-	surface.SetDrawColor(bodyCol)
-	surface.DrawRect(0, 0, w, h)
-
-
 	local item = self.Item
 	if item then
-		surface.SetTextColor(item.Colour or color_white)
-		surface.SetFont("HatchetFont-ItemName")
-		surface.SetTextPos(0, 0)
-		surface.DrawText(item.Name)
-
-		surface.SetDrawColor(topCol2)
-		surface.SetMaterial(gradient)
-		surface.DrawTexturedRect(0, 0, w, h)
-
-		surface.SetDrawColor(basiccol)
-		surface.DrawRect(0, 82, w, h - 82)
-
-		draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", w - 6, 4, color_white, TEXT_ALIGN_RIGHT)
+		-- will delete later
+		-- surface.SetTextColor(item.Colour or color_white)
+		-- surface.SetFont("Impulse-Elements19-Shadow")
+		-- surface.SetTextPos(65, 10)
+		-- surface.DrawText(item.Name)
+		-- draw.SimpleText(self.Weight.."kg", "Impulse-Elements16", w - 10, 10, color_white, TEXT_ALIGN_RIGHT)
 
 		if self.Basic then return end
 
-		if self.Item.Illegal then
-			surface.SetDrawColor(illegalbodycol)
-			surface.SetMaterial(gradient)
-			surface.DrawTexturedRect(0, 0, w, h)
-			surface.SetDrawColor(illegalCol)
-			surface.DrawRect(0, 82, w, h - 82)
-		end
 
 		if self.IsEquipped then -- if equipped
-			surface.SetDrawColor(equipbodycol)
-			surface.SetMaterial(gradient)
-			surface.DrawTexturedRect(0, 0, w, h)
-			surface.SetDrawColor(equipcol)
-			surface.DrawRect(0, 82, w, h - 82)
-		end
-
-		local disabledCol = Color(15, 15, 15, 210)
-		if self.Disabled then
-			surface.SetDrawColor(disabledCol)
-			surface.DrawRect(0, 0, w, h)
+			draw.RoundedBox(8, 0, 0, w, h, equippedCol)
+		else
+			draw.RoundedBox(8, 0, 0, w, h, self.col)
 		end
 	end
+end
+
+local disabledCol = Color(15, 15, 15, 210)
+function PANEL:PaintOver(w, h)
+	-- if self.Disabled then
+	-- 	surface.SetDrawColor(disabledCol)
+	-- 	surface.DrawRect(0, 0, w, h)
+	-- end
 end
 
 
