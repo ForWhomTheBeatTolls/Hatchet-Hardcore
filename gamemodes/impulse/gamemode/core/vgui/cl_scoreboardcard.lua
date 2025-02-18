@@ -94,8 +94,8 @@ function PANEL:Paint(w,h)
 	 surface.DrawText(self.Player:SteamName()..icName)
 
 	 -- Ping
-	 surface.SetTextPos(w-310,30)
-	 surface.DrawText(self.Player:Ping().."ms")
+	 surface.SetTextPos(w / 2,30)
+	 surface.DrawText(self.Player:Ping().."ms Ping")
 
 	 -- Team name
 	 --surface.SetFont(HIGH_RES("Impulse-Elements18-Shadow", "Impulse-Elements19-Shadow"))
