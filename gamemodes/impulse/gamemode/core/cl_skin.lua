@@ -9,6 +9,20 @@ local dark1 = Color(0, 0, 0, 204)
 local bodycol = Color(12, 12, 12, 185)
 local bodycol2 = Color(65, 65, 65, 168)
 
+local vignette = Material("vgui/gradient_down")
+
+function HatchetDrawRect(x, y, w, h)
+	surface.SetDrawColor(bodycol)
+	surface.DrawRect(x, y, w, h)
+
+	surface.SetDrawColor(bodycol2)
+	surface.SetMaterial(vignette)
+	surface.DrawTexturedRect(x, y, w, h)
+
+	surface.SetDrawColor(impulse.Config.MainColour)
+	surface.DrawRect(x, h - 4, w, 4)
+end
+
 
 SKIN = {}
 
