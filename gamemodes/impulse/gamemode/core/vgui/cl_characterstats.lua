@@ -63,9 +63,9 @@ function PANEL:Init()
 	self.skillScroll:SetPos(20, h * .6)
 
 	function self.skillScroll:Paint(w, h)
-		draw.RoundedBox(0, 0, 0, w, h, BodyCol)
-		draw.RoundedBox(0, 0, h - 4, w, 4, BodyCol2)
+		HatchetDrawRect(0, 0, w, h)
 	end
+
 	for v,k in pairs(impulse.Skills.Skills) do
 		local skillBg = self.skillScroll:Add("DPanel")
 		skillBg:SetTall(37)
@@ -117,8 +117,7 @@ function PANEL:Init()
 	self.StatsScroll:SetPos(w * .59, h * .6)
 
 	function self.StatsScroll:Paint(w, h)
-		draw.RoundedBox(0, 0, 0, w, h, BodyCol)
-		draw.RoundedBox(0, 0, h - 4, w, 4, BodyCol2)
+		HatchetDrawRect(0, 0, w, h)
 	end
 
 	self.HpStat = vgui.Create("DPanel", self.StatsScroll)
@@ -163,6 +162,69 @@ function PANEL:Init()
 		surface.DrawTexturedRect(14, 4, 46, 46)
 
 		draw.SimpleText(impulse.Config.CurrencyName .. ": " .. LocalPlayer():GetMoney() .. impulse.Config.CurrencyPrefix, "Impulse-Elements22-Shadow", 80, 16, color_white, TEXT_ALIGN_LEFT)
+	end
+
+	self.BodyStats = vgui.Create("DScrollPanel", self)
+	self.BodyStats:SetSize(w * .15, h * .5)
+	self.BodyStats:SetPos(w * .59, h * .08)
+
+	local figure_col = Color(255, 255, 255, 40)
+	local injured_figure_col = Color(170, 41, 41)
+	local body = Material("hatchet/limbs/body.png")
+	local figure_larm = Material("hatchet/limbs/larm.png")
+	local figure_rarm = Material("hatchet/limbs/rarm.png")
+	local figure_lleg = Material("hatchet/limbs/lleg.png")
+	local figure_rleg = Material("hatchet/limbs/rleg.png")
+	local figure_head = Material("hatchet/limbs/head.png")
+	local figure_chest = Material("hatchet/limbs/chest.png")
+
+	function self.BodyStats:Paint(w, h)
+		HatchetDrawRect(0, 0, w, h)
+
+		surface.SetDrawColor(figure_col)
+		surface.SetMaterial(body)
+		surface.DrawTexturedRect(w * .04, h * 0.04, w * .9, h * .9)
+
+		if LocalPlayer():GetNWBool("RLegCrippled") == true then
+			surface.SetDrawColor(injured_figure_col)
+			surface.SetMaterial(figure_rleg)
+			surface.DrawTexturedRect(w * .04, h * 0.04, w * .9, h * .9)
+		end
+
+		if LocalPlayer():GetNWBool("LLegCrippled") == true then
+			surface.SetDrawColor(injured_figure_col)
+			surface.SetMaterial(figure_lleg)
+			surface.DrawTexturedRect(w * .04, h * 0.04, w * .9, h * .9)
+		end
+
+		if LocalPlayer():GetNWBool("RArmCrippled") == true then
+			surface.SetDrawColor(injured_figure_col)
+			surface.SetMaterial(figure_rarm)
+			surface.DrawTexturedRect(w * .04, h * 0.04, w * .9, h * .9)
+		end
+
+		if LocalPlayer():GetNWBool("LArmCrippled") == true then
+			surface.SetDrawColor(injured_figure_col)
+			surface.SetMaterial(figure_larm)
+			surface.DrawTexturedRect(w * .04, h * 0.04, w * .9, h * .9)
+		end
+
+		surface.SetFont("HatchetFont-BodyParts")
+		surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("LLeg"), 155 + LocalPlayer():GetNWInt("LLeg")))
+		surface.SetTextPos(w * .06, h * .8)
+		surface.DrawText("L-LEG: "..math.Round(LocalPlayer():GetNWInt("LLeg"), 1).."/100")
+
+		surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("RLeg"), 155 + LocalPlayer():GetNWInt("RLeg")))
+		surface.SetTextPos(w * .66, h * .8)
+		surface.DrawText("R-LEG: "..math.Round(LocalPlayer():GetNWInt("RLeg"), 1).."/100")
+
+		surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("LArm"), 155 + LocalPlayer():GetNWInt("LArm")))
+		surface.SetTextPos(w * .02, h * .55)
+		surface.DrawText("L-ARM: "..math.Round(LocalPlayer():GetNWInt("LArm"), 1).."/100")
+
+		surface.SetTextColor(Color(255, 155 + LocalPlayer():GetNWInt("RArm"), 155 + LocalPlayer():GetNWInt("RArm")))
+		surface.SetTextPos(w * .68, h * .55)
+		surface.DrawText("R-ARM: "..math.Round(LocalPlayer():GetNWInt("RArm"), 1).."/100")
 	end
 
 end
