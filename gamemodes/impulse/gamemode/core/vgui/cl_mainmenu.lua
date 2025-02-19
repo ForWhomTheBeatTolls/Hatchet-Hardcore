@@ -64,7 +64,8 @@ function PANEL:Init()
 	self.buttonlist:SetPos(0, ScrH() * .6)
 	self.buttonlist:SetSize(ScrW(), ScrH() * .65)
 
-	function self.buttonlist:Paint()
+	function self.buttonlist:Paint(w, h)
+		HatchetDrawRect(0, 0, w, h / 2)
 	end
 
 	CreateButton(self.buttonlist, "HATCHET: HARDCORE - (TEMP LOGO :( )", function()
@@ -110,6 +111,12 @@ function PANEL:Init()
 
 		surface.PlaySound("ui/buttonclick.wav")
 		vgui.Create("impulseAchievements")
+	end)
+	
+	CreateButton(self.buttonlist, "Select Species", function()
+		surface.PlaySound("ui/buttonclick.wav")
+
+		vgui.Create("HatchetCharacterSelectionScreen")
 	end)
 
 	CreateButton(self.buttonlist, "Community", function()
