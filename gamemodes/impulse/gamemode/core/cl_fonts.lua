@@ -27,6 +27,13 @@ surface.CreateFont("zoneFont", {
 		antialias = true,
 	} )
 
+	surface.CreateFont("HatchetFont-BodyParts", {
+		font = "Impact",
+		size = ScreenScale( 6 ),
+		weight = 100,
+		antialias = true,
+	} )
+
 	surface.CreateFont("HatchetFont20", {
 		font = "Verdana",
 		size = 20,
