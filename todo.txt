@@ -69,7 +69,7 @@ TO-DO LIST:
 -Implement a temporary OS solution (I added whitelistes, so technically it isnt "Temporary" anymore)
 -This one is important, add a documentation text file for certain features and functions.
 -Brainstorm ideas for Workforce entities
--Eating minigame to disencourage eating during combat and other situations where eating makes no sense
+-Eating minigame to discourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Clean up code (Commented code that we don't need)
 -Dequavion Ammo Bender
