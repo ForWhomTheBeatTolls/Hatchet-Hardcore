@@ -72,7 +72,6 @@ TO-DO LIST:
 -Eating minigame to discourage eating during combat and other situations where eating makes no sense
 -Workforce click minigame used in some tedious task, like item belt production - RubelUN
 -Clean up code (Commented code that we don't need)
--Dequavion Ammo Bender
 -Add crafting via the use of fire
 -Brickbat?
 -Figure out a way to incorporate grenades into the server
@@ -152,3 +151,4 @@ DONE LIST:
 -Fix impulse_hands not being able to pick up items that the player can't collide with (Kind of? Couldn't fix impulse hands so I changed item collision groups)
 -CP Rankpoint deductions, awards
 -Saboteurs can make booby traps
+-Dequavion Ammo Bender
