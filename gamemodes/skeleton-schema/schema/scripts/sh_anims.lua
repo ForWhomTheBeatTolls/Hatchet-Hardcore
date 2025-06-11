@@ -859,7 +859,7 @@ function SCHEMA:DoAnimationEvent(ply, event, data)
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, data, 0, true)
 				return ACT_INVALID
-			elseif event == PLAYERANIMEVENT_DOUBLEJUMP then
+			elseif event == PLAYERANIMEVENT_DOUBLEJUMP and data == 1 then
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				--print("RESET!!")
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("g_fist_r"), 0, true)
@@ -894,6 +894,10 @@ function SCHEMA:DoAnimationEvent(ply, event, data)
 			elseif data == 1706 then
 				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, 1706, 0, true)
+				return ACT_INVALID
+			elseif event == PLAYERANIMEVENT_DOUBLEJUMP and data == ply:LookupSequence("Hatchet_g_takepills") then
+				ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
+				ply:AddVCDSequenceToGestureSlot(GESTURE_SLOT_CUSTOM, ply:LookupSequence("Hatchet_g_takepills"), 0, true)
 				return ACT_INVALID
 			end
             end
