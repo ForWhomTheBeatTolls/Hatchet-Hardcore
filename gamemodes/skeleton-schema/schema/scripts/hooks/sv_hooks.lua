@@ -6,10 +6,12 @@
 		ply.TimesStunnedCool = CurTime()
 		ply:SetNWInt("CombatCool", CurTime())
 		ply:SetNWInt("ApplyWearTime", CurTime() + 120)
+		ply:SetNWInt("CarryWeight", 25)
 		ply:SetNWBool("IsInCombat", false)
 		ply:SetNWBool("Applied", true)
 		ply:SetNWBool("HealingLimb", false)
-		ply:SetNWInt("CarryWeight", 25)
+		ply:SetNWVector("HeldWepMGPEPos", Vector(0,0,0))
+		ply:SetNWString("HeldWepKWepClass", "m_usp")
 		ply:SetNWString("Loadout", "none")
 		ply.IsInASequence = false
 		ply.FoodPoisoning = false
@@ -31,9 +33,9 @@
 		ply:RemoveAllDecals()
 		ply:SetModelScale(1)
 		
-		net.Start("PlayerRag_PlayerSpawn")
-		net.WriteBool(true)
-		net.Send(ply)
+		--net.Start("PlayerRag_PlayerSpawn")
+		--net.WriteBool(true)
+		--net.Send(ply)
 
 		// Limbs n Stuff
 
@@ -132,13 +134,11 @@
 				elseif ply:KeyDown(IN_SPEED) then
 					ply:EmitSound("npc/footsteps/hardboot_generic"..math.random(1,6)..".wav", 70)
 				end
-			end	
+			end
 			
 			if ply:Team() == TEAM_CITIZEN or ply:Team() == TEAM_WORKFORCE and not ply.HasVest then
 				return false
 			end
-
-
 			
 		return true
 			
