@@ -85,19 +85,64 @@ hook.Add("HUDPaint", "impulseOpsHUD", function()
 				
 				local pos = (k:GetPos() + k:OBBCenter()):ToScreen()
 				local col = team.GetColor(k:Team())
-
+				local redcol = Color(200, 0, 0)
+				
 				local eyePos = k:EyePos() + k:GetRight()
 				local eyeDir = k:GetAimVector()
+				
+				-- local kwep
+				-- local kwepatpos
+				-- local gunang
+				-- local gunpos
+				-- local mgpstartpos
+				-- local mgpendpos
+				
+				-- local weaponoffsets = {
+	-- ["m_rev"] = Vector(20, 0.5, 0),
+	-- ["m_usp"] = Vector(0, 0, 0),
+	-- ["m_smg"] = Vector(30, 0, 0),
+	-- ["m_ak47"] = Vector(30, 0, 0),
+	-- ["m_shotgun"] = Vector(25, 0, 0),
+	-- ["m_ar2"] = Vector(25, 10, 0),
+	-- ["m_base"] = Vector(25, 10, 0),
+	-- ["m_base_shotgun"] = Vector(25, 10, 0)
+	-- }
+				
+				-- if k:Alive() and k:GetActiveWeapon().Base == "m_base" then
+					-- kwep = k:GetActiveWeapon()
+					-- kwepclass = k:GetActiveWeapon():GetClass()
+					-- kwepat = kwep:GetAttachment(kwep:LookupAttachment( "muzzle" ))--:GetPos()
+					-- gunang = kwepat["Ang"]
+					-- gunpos = kwepat["Pos"]
+					-- mgpstartpos = (gunpos - (gunang:Forward() * weaponoffsets[kwepclass].x) - (gunang:Right() * weaponoffsets[kwepclass].y) - (gunang:Up() * weaponoffsets[kwepclass].z))
+					-- mgpendpos = mgpstartpos + gunang:Forward() * 10000
+					-- --print(kwep)
+					-- --print(kweppos)
+					-- --print(kwepatpos["Pos"])
+					-- --PrintTable(kwepatpos)
+					-- --print(eyeDir)
+					-- --print(gunang)
+				-- else
+					-- mgpstartpos = Vector(0, -2500, 0)
+					-- mgpendpos = Vector(0 , -2501, 0)
+				-- end
 			
 				local tr = util.TraceLine( {
 					start = eyePos,
 					endpos = eyePos + eyeDir * 10000,
 					filter = k
 				} )
-
-				cam.Start3D()
-					render.DrawLine( eyePos, tr.HitPos, col, true )
-				cam.End3D()
+				
+				-- local tr2 = util.TraceLine( {
+					-- start = mgpstartpos,
+					-- endpos = mgpendpos,
+					-- filter = k
+				-- } )
+				
+				--cam.Start3D()
+					--render.DrawLine( eyePos, tr.HitPos, col, true )
+					--render.DrawLine( mgpstartpos, tr2.HitPos, redcol, true )
+				--cam.End3D()
 
 
 				if k:IsAdmin() and k:GetMoveType() == MOVETYPE_NOCLIP and k:GetNoDraw() then
