@@ -22,76 +22,76 @@ hook.Add("Think", "ColorCaller", function()
 end)
 
 function InitializeHuds()
-	hook.Add("HUDPaint", "MinimalCrosshair", function()
-		if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Default" then return end
-		surface.SetDrawColor(crosshaircolor)
-		if LocalPlayer():IsValid() and LocalPlayer():Alive() then
-			local x, y = 0, 0
-			local crosshairGap = 2
-			local crosshairLength = crosshairGap + 2
-			local radius = impulse.GetSetting("crosshair_radius")
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 1, radius, radius)
-		end
-	end)
+	-- hook.Add("HUDPaint", "MinimalCrosshair", function()
+		-- if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Default" then return end
+		-- surface.SetDrawColor(crosshaircolor)
+		-- if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			-- local crosshairGap = 2
+			-- local crosshairLength = crosshairGap + 2
+			-- local radius = impulse.GetSetting("crosshair_radius")
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 1, radius, radius)
+		-- end
+	-- end)
 
-	hook.Add("HUDPaint", "LegacyHatchetCrosshair", function()
-		if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Hatchet Legacy" then return end
-		surface.SetDrawColor(crosshaircolor)
-		if LocalPlayer():IsValid() and LocalPlayer():Alive() then
-			local x, y = 0, 0
-			local crosshairGap = 2
-			local crosshairLength = crosshairGap + 2
-			local radius = impulse.GetSetting("crosshair_radius")
-			surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
-		end
-	end)
+	-- hook.Add("HUDPaint", "LegacyHatchetCrosshair", function()
+		-- if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Hatchet Legacy" then return end
+		-- surface.SetDrawColor(crosshaircolor)
+		-- if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			-- local crosshairGap = 2
+			-- local crosshairLength = crosshairGap + 2
+			-- local radius = impulse.GetSetting("crosshair_radius")
+			-- surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
+		-- end
+	-- end)
 
-	hook.Add("HUDPaint", "HalfLifeTwoCrosshair", function()
-		if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Half-Life 2" then return end
-		surface.SetDrawColor(crosshaircolor)
-		if LocalPlayer():IsValid() and LocalPlayer():Alive() then
-			local x, y = 0, 0
-			local crosshairGap = 2
-			local crosshairLength = crosshairGap + 2
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 6, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 4, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y + 5, 2, 2)
-			surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 5, 2, 2)
-		end
-	end)
+	-- hook.Add("HUDPaint", "HalfLifeTwoCrosshair", function()
+		-- if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Half-Life 2" then return end
+		-- surface.SetDrawColor(crosshaircolor)
+		-- if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			-- local crosshairGap = 2
+			-- local crosshairLength = crosshairGap + 2
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 6, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x - 4, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y + 5, 2, 2)
+			-- surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y - 5, 2, 2)
+		-- end
+	-- end)
 
-	hook.Add("HUDPaint", "CircleDotCrosshair", function()
-		if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Circle + Dot" then return end
-		surface.SetDrawColor(crosshaircolor)
-		if LocalPlayer():IsValid() and LocalPlayer():Alive() then
-			local x, y = 0, 0
-			local crosshairGap = 2
-			local crosshairLength = crosshairGap + 2
-			local radius = impulse.GetSetting("crosshair_radius")
-			surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
-			surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 1, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
-		end
-	end)
+	-- hook.Add("HUDPaint", "CircleDotCrosshair", function()
+		-- if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Circle + Dot" then return end
+		-- surface.SetDrawColor(crosshaircolor)
+		-- if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			-- local crosshairGap = 2
+			-- local crosshairLength = crosshairGap + 2
+			-- local radius = impulse.GetSetting("crosshair_radius")
+			-- surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, radius, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
+			-- surface.DrawCircle(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 1, crosshaircolor.r, crosshaircolor.g, crosshaircolor.b, 255)
+		-- end
+	-- end)
 	
-	hook.Add("HUDPaint", "CSSCrosshair", function()
-		if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Counter-Strike" then return end
-		surface.SetDrawColor(crosshaircolor)
-		if LocalPlayer():IsValid() and LocalPlayer():Alive() then
-			local x, y = 0, 0
-			local crosshairGap = 6
-			local crosshairLength = impulse.GetSetting("crosshair_radius")
+	-- hook.Add("HUDPaint", "CSSCrosshair", function()
+		-- if (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or IsValid(impulse.SplashScreen) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false or impulse.GetSetting("crosshair_selection") ~= "Counter-Strike" then return end
+		-- surface.SetDrawColor(crosshaircolor)
+		-- if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			-- local crosshairGap = 6
+			-- local crosshairLength = impulse.GetSetting("crosshair_radius")
 			
-			local pivotpoint = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
+			-- local pivotpoint = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
 			
 			
-			--surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
-			surface.DrawLine(pivotpoint.x - (crosshairLength + 2), pivotpoint.y, pivotpoint.x - crosshairLength, pivotpoint.y)
-			surface.DrawLine(pivotpoint.x + (crosshairLength + 2), pivotpoint.y, pivotpoint.x + crosshairLength, pivotpoint.y)
-			surface.DrawLine(pivotpoint.x, pivotpoint.y - (crosshairLength + 2), pivotpoint.x, pivotpoint.y - crosshairLength)
-			surface.DrawLine(pivotpoint.x, pivotpoint.y + (crosshairLength + 2), pivotpoint.x, pivotpoint.y + crosshairLength)
-		end
-	end)
+			-- --surface.DrawRect(LocalPlayer():GetEyeTrace().HitPos:ToScreen().x + 1, LocalPlayer():GetEyeTrace().HitPos:ToScreen().y, 2, 2)
+			-- surface.DrawLine(pivotpoint.x - (crosshairLength + 2), pivotpoint.y, pivotpoint.x - crosshairLength, pivotpoint.y)
+			-- surface.DrawLine(pivotpoint.x + (crosshairLength + 2), pivotpoint.y, pivotpoint.x + crosshairLength, pivotpoint.y)
+			-- surface.DrawLine(pivotpoint.x, pivotpoint.y - (crosshairLength + 2), pivotpoint.x, pivotpoint.y - crosshairLength)
+			-- surface.DrawLine(pivotpoint.x, pivotpoint.y + (crosshairLength + 2), pivotpoint.x, pivotpoint.y + crosshairLength)
+		-- end
+	-- end)
 
 	hook.Add("HUDPaint", "HatchetHUD", function()
 		if LocalPlayer():IsValid() and LocalPlayer():Team() == (TEAM_CP or TEAM_OTA) and LocalPlayer():GetTeamRank() ~= nil or IsValid(impulse.SplashScreen) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or impulse.hudEnabled == false or (impulse.CinematicIntro and LocalPlayer():Alive()) or (IsValid(impulse.MainMenu) and impulse.MainMenu:IsVisible()) or hook.Run("ShouldDrawHUDBox") == false then return end
@@ -109,7 +109,24 @@ function InitializeHuds()
 		local bleedcol = Color(255,255,255,255)
 		local hungercolor = Color(214, 136, 33)
 		local superstaminacolor = Color(71, 201, 20)
-
+		surface.SetDrawColor(basecol)
+		surface.DrawRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
+		surface.DrawRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
+		surface.SetDrawColor(hpcolor)
+		surface.SetMaterial(healthIcon)
+		surface.DrawRect(w * .02, h * .9, hudWidth * LocalPlayer():Health() / LocalPlayer():GetMaxHealth(), hudHeight) --hp
+		surface.DrawTexturedRect(w * .006, h * .897, 16, 16)
+		surface.SetDrawColor(hungercolor)
+		surface.SetMaterial(hungerIcon)
+		surface.DrawTexturedRect(w * .006, h * .914, 16, 16)
+		surface.DrawRect(w * .02, h * .918, hudWidth * LocalPlayer():GetSyncVar(SYNC_HUNGER, 100) / 100, hudHeight) --hunger
+		surface.SetDrawColor(basecol2)
+		surface.SetMaterial(gradient)
+		surface.DrawTexturedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight) --hp
+		surface.DrawTexturedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight) --hunger
+		surface.SetDrawColor(basecol3)
+		surface.DrawOutlinedRect(w * .02, h * .9, hudWidth * 100 / 100, hudHeight, 1) --hp
+		surface.DrawOutlinedRect(w * .02, h * .918, hudWidth * 100 / 100, hudHeight, 1) --hunger
 		local ammocounter = ""
 		local weapon = LocalPlayer():GetActiveWeapon()
 		local pos
