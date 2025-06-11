@@ -152,3 +152,4 @@ DONE LIST:
 -CP Rankpoint deductions, awards
 -Saboteurs can make booby traps
 -Dequavion Ammo Bender
+-Big changes to weapons
