@@ -14,7 +14,7 @@ SWEP.Base = "m_base"
 SWEP.Primary.Sound = Sound("Weapon_Shotgun.Single")
 SWEP.Primary.EmptySound = Sound("weapons/clipempty_rifle.wav")
 SWEP.Primary.ReloadSound = Sound("Weapon_Shotgun.Reload")
-SWEP.Primary.Damage = 19 --The amount of damage will the weapon do
+SWEP.Primary.Damage = 14 --The amount of damage will the weapon do
 SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 6  -- How much bullets are in the mag\
 SWEP.Primary.ShitClipSize = 5
@@ -55,101 +55,18 @@ SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
 
--- function SWEP:PrimaryAttack()
- 
--- if ( !self:CanPrimaryAttack() ) then return end
- 
--- local bullet = {} 
--- bullet.Num = self.Primary.NumberofShots 
--- bullet.Src = self.Owner:GetShootPos() 
--- bullet.Dir = self.Owner:GetAimVector() 
--- bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
--- bullet.Tracer = 1
--- bullet.Force = self.Primary.Force 
--- bullet.Damage = self.Primary.Damage 
--- bullet.AmmoType = self.Primary.Ammo 
- 
--- local rnda = self.Primary.Recoil * -.5
--- local rndb = self.Primary.Recoil * math.random(-.5, .5) 
-
--- local rndc = self.Primary.Spread * -.5
--- local rndd = self.Primary.Spread * math.random(-.5, .5)
- 
--- self:ShootEffects()
- 
--- self.Owner:FireBullets( bullet ) 
--- self:EmitSound(self.Primary.Sound, 100, 88)
--- timer.Simple(.5, function() self:EmitSound("Weapon_Shotgun.Special1") end)
--- self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
--- self:ViewPunch()
--- self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
- 
--- self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
--- end 
-
-
--- function SWEP:Reload()
-		-- if self:CanReloadPrimary() then
-		-- --self:EmitSound(self.Primary.ReloadSound) 
-        -- --self.PlayAnim( ACT_VM_RELOAD )
-		-- if (self:Ammo1() > 0) and (self.Weapon:Clip1() < 6) then
-		-- --self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- --self.Owner:GiveAmmo(20, self.Primary.Ammo, true)
-		-- timer.Create("shottyreload"..self.Owner:UniqueID(), .5, (self:GetMaxClip1()) - (self:Clip1()), function() if not IsValid(self) then return end
-		-- self:EmitSound(self.Primary.ReloadSound) end)
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- if timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 1 then
-		-- self:SetNextPrimaryFire(CurTime() + 2.5)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 2 then
-		-- self:SetNextPrimaryFire(CurTime() + 2.7)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 3 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.1)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 4 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.4)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 5 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.9)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 6 then
-		-- self:SetNextPrimaryFire(CurTime() + 4.4)
-		-- elseif !timer.Exists("shottyreload"..self.Owner:UniqueID()) then return
-		-- end
-		-- elseif self.Owner:HasInventoryItem(self.RelAmmo) and (self.Weapon:Clip1() < 6)  then
-		-- -- timer.Create("shottyreload"..self.Owner:UniqueID(), .5, (self:GetMaxClip1()) - (self:Clip1()), function()
-		-- -- self:EmitSound(self.Primary.ReloadSound) end)
-		-- -- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- if timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 1 then
-		-- self:SetNextPrimaryFire(CurTime() + 2.5)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 2 then
-		-- self:SetNextPrimaryFire(CurTime() + 2.7)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 3 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.1)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 4 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.4)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 5 then
-		-- self:SetNextPrimaryFire(CurTime() + 3.9)
-		-- elseif timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) == 6 then
-		-- self:SetNextPrimaryFire(CurTime() + 4.4)
-		-- -- elseif !timer.Exists("shottyreload"..self.Owner:UniqueID()) then return
-		-- end
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD)
-		-- --self:SetNextPrimaryFire(timer.RepsLeft("shottyreload"..self.Owner:UniqueID()) + 2)
-		-- self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- self.Owner:GiveAmmo(self.RelAmmount, self.Primary.Ammo, true)
-		-- --self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- end
--- end
--- end
-
 function SWEP:PrimaryAttack()
 
 --if self.Owner:GetSkillXP() 
+local pos, dir = self:GetShootPos()
  
 if ( !self:CanPrimaryAttack() ) then return end
 local dmginfo = DamageInfo()
 dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
 local bullet = {} 
 bullet.Num = self.Primary.NumberofShots 
-bullet.Src = self.Owner:GetShootPos() 
-bullet.Dir = self.Owner:GetAimVector()
+bullet.Src = pos
+bullet.Dir = dir
 bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - 0 )  , self.Primary.Spread * ( 0.1 - 0 ), 0)
 --print(bullet.Spread)
 
