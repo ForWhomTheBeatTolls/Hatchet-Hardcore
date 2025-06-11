@@ -22,12 +22,12 @@ SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 45  -- How much bullets are in the mag
 SWEP.Primary.Ammo = "smg1" --The ammo type will it use
 SWEP.Primary.DefaultClip = 0 -- How much bullets preloaded when spawned
-SWEP.Primary.Spread = .4 -- The spread when shot
+SWEP.Primary.Spread = 0.001 -- The spread when shot
 SWEP.Primary.NumberofShots = 1 -- Number of bullets when shot
 SWEP.Primary.Automatic = true -- Is it automatic
 SWEP.Primary.Delay = 0.10 -- Delay before the next shot
 SWEP.Primary.RelDelay = 1.97
-SWEP.Primary.Recoil = 2 -- The amount of recoil
+SWEP.Primary.Recoil = 0 -- The amount of recoil
 SWEP.Primary.Force = .5
 SWEP.RelAmmo = "ammo_smg"
 SWEP.RelAmmo2 = "ammo_sparesmg"
@@ -59,15 +59,6 @@ SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
 
--- function SWEP:Reload()
-		-- if self:CanReloadPrimary() then
-		-- self:EmitSound(self.Primary.ReloadSound) 
-        -- --self.PlayAnim( ACT_VM_RELOAD )
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- self:SetNextPrimaryFire(CurTime() + 1.95 )
-		-- end
--- end
-
 function SWEP:TakeSecondaryAmmo( num )
 	
 	-- Doesn't use clips
@@ -82,75 +73,6 @@ function SWEP:TakeSecondaryAmmo( num )
 	self.Weapon:SetClip2( self.Weapon:Clip2() - 1 )	
 	
 end
-
-
--- function SWEP:SecondaryAttack()
-	-- local ply = self:GetOwner()
-	
-	-- if ply:Team() == TEAM_OTA and nadetimer < CurTime() then
-		-- if SERVER then
-		-- local nadetimer = CurTime()
-		-- local ent = ents.Create("npc_grenade_frag")
-
-		-- local ang = ply:GetAimVector():Angle() + ply:GetViewPunchAngles()
-		-- local dir = self.Owner:EyeAngles()
-
-		-- ent:SetPos(ply:GetShootPos())
-		-- ent:SetAngles(ang)
-
-		-- ent:SetOwner(ply)
-
-		-- --ent:SetVelocity(dir * 100)
-
-		-- ent:Spawn()
-		-- ent:SetCollisionGroup(COLLISION_GROUP_WEAPON)
-		-- ent:Activate()
-		-- ent:Fire("settimer", 2)
-		-- local phys = ent:GetPhysicsObject()
-
-		-- phys:SetVelocity( self.Owner:GetAimVector() * 3000 )
-		-- nadetimer = CurTime() + 5
-	-- end
-	-- end
--- end
--- function SWEP:SecondaryAttack()
-	-- local ply = self:GetOwner()
-	-- local secondary = self.Secondary.Ammo
-
-	-- self:TakeSecondaryAmmo(1)
-
-	-- self:EmitSound(self.Secondary.FireSound)
-
-	-- --self:SendTranslatedWeaponAnim(ACT_VM_SECONDARYATTACK)
-	
-	-- self.Weapon:SendWeaponAnim( ACT_VM_SECONDARYATTACK )
-	-- ply:SetAnimation(PLAYER_ATTACK1)
-
-	-- if SERVER then
-		-- local ent = ents.Create("simple_ent_hl2_40mm")
-
-		-- local ang = ply:GetAimVector():Angle() + ply:GetViewPunchAngles()
-		-- local dir = ang:Forward()
-
-		-- ent:SetPos(ply:GetShootPos())
-		-- ent:SetAngles(ang)
-
-		-- ent:SetOwner(ply)
-
-		-- ent:SetVelocity(dir * 1000)
-
-		-- ent:Spawn()
-		-- ent:Activate()
-	-- end
-
-	-- --self:ApplyRecoil()
-
-	-- self.Primary.Automatic = true
-
-	-- --self:SetNextIdle(CurTime() + self:SequenceDuration())
-	-- --self:SetNextFire(CurTime() + 0.5)
-	-- --self:SetNextAltFire(CurTime() + 1)
--- end
 
 function SWEP:Reload()
 	local ply = self.Owner
@@ -208,23 +130,3 @@ function SWEP:Reload()
 		ply:DoCustomAnimEvent(PLAYERANIMEVENT_RELOAD, 1)
 	end
 end
-
--- function SWEP:Reload()
-		-- --if self:CanReloadPrimary() then
-		-- --self:EmitSound(self.Primary.ReloadSound) 
-        -- --self.PlayAnim( ACT_VM_RELOAD )
-		-- if (self:Ammo1() > 0) and (self.Weapon:Clip1() <  self.Primary.ClipSize) then
-		-- --self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- --self.Owner:GiveAmmo(20, self.Primary.Ammo, true)
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- self:SetNextPrimaryFire(CurTime() + self.Primary.RelDelay)
-		-- elseif (self.Owner:HasInventoryItem(self.RelAmmo) and self.Weapon:Clip1() < self.Primary.ClipSize) or (self.Weapon:Clip1() == 0 and self.Owner:HasInventoryItem(self.RelAmmo))  then
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- self.Owner:GiveAmmo(self.RelAmmount, self.Primary.Ammo, true)
-		-- self.Owner:Notify("No reserve ammo left. Loading from inventory...")
-		-- --self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		
-		-- end
--- end
