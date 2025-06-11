@@ -11,9 +11,6 @@ SWEP.AdminOnly = false
 
 SWEP.Base = "m_base"
 
---local FireSound = Sound("weapons/pistol/pistol_fire3.wav")
---local EmptySound = Sound("weapons/pistol/pistol_empty.wav")
---local ReloadSound = Sound("weapons/pistol/pistol_reload1.wav")
 SWEP.Primary.EmptySound = Sound("weapons/pistol/pistol_empty.wav")
 SWEP.Primary.ReloadSound = Sound("weapons/smg1/smg1_reload.wav")
 SWEP.Primary.Sound = Sound("weapons/pistol/pistol_fire3.wav")
@@ -49,11 +46,12 @@ SWEP.AutoSwitchFrom = false
 
 SWEP.ViewModelFlip		= false
 SWEP.ViewModelFOV		= 60
-SWEP.ViewModel			= "models/weapons/c_pistol.mdl"
-SWEP.WorldModel			= "models/weapons/w_pistol.mdl"
+SWEP.ViewModel			= nil
+SWEP.WorldModel			= SWEP.WorldModel or "models/weapons/w_pistol.mdl"
 SWEP.UseHands           = true
 
-SWEP.HoldType = "pistol" 
+SWEP.HoldType = SWEP.HoldType or "pistol"
+SWEP.Active = SWEP.Active or nil
 
 SWEP.FiresUnderwater = false
 
@@ -61,13 +59,25 @@ SWEP.ReloadSound = "sound/epicreload.wav"
 
 SWEP.CSMuzzleFlashes = true
 
-function SWEP:SetupDataTables()
-	self:NetworkVar("Bool", 1, "Reloading")
-	self:NetworkVar("Float", 3, "ReloadTime")
+local barrelAngles = {
+    _default = {Vector(10,.65,3.5),Angle(-2,5,0)},
+   	["m_rev"] = {Vector(-9,-0.9,2.8),Angle(-5,-1,0)},
+    ["m_usp"] = {Vector(-5,0.3,4.3),Angle(-5,1.6,0)},
+    ["m_ar2"] = {Vector(25,-0.8,10),Angle(-10.2,0,0)},
+    ["m_smg"] = {Vector(5,-0.15,6.5),Angle(-10,0.25,0)},
+	["m_ak47"] = {Vector(11,-1,5.25),Angle(-9,0,0)},
+	["m_shotgun"] = {Vector(5,-.85,4.65),Angle(-5.4,-0.9,0)}
+}
 
-	if self.ExtraDataTables then
-		self.ExtraDataTables(self)
-	end
+
+function SWEP:Think()
+	
+--	debugoverlay.Cross(self:GetNWVector('AT_PosSV'), 3, 3, Color(255, 0, 255), true)
+	
+--	if SERVER then
+--	else
+--	end
+		
 end
 
 function SWEP:Initialize()
@@ -86,7 +96,6 @@ end
 
 function SWEP:DrawWorldModel( flags )
 	self:DrawModel( flags )
-	--if self:GetOwner():IsWeaponRaised() == true then
 	
 	end
 
@@ -129,7 +138,7 @@ function SWEP:ShootEffects()
 end
 
 function SWEP:CanPrimaryAttack()
-
+	
 	if ( self.Weapon:Clip1() <= 0 ) then
 	
 		self:EmitSound( self.Primary.EmptySound )
@@ -149,44 +158,124 @@ function SWEP:CanPrimaryAttack()
 
 end
 
-function SWEP:PrimaryAttack()
+function SWEP:DrawHUD()
+	local ply = self:GetOwner()
+	local pos, dir = self:GetShootPos()
+	
+	local tr = util.TraceLine( {
+	start = pos,
+	endpos = pos + (dir * 100000),
+	filter = function(ent)
+        return ent != ply and ent:GetRenderMode() ~= RENDERMODE_TRANSALPHA
+    end
+	} )
+	local pivotpoint = tr.HitPos:ToScreen()
+	
+	local tobedrawn = impulse.GetSetting("crosshair_selection")
+	local tbdcol = impulse.GetSetting("crosshair_color")
+	
+	-- local colorcor = {
+	-- [Purple] = Color(162, 0, 255),
+	-- [Blue] = Color(65, 125, 255),
+	-- [Orange] = Color(255, 145, 0),
+	-- [Red] = Color(255, 0, 0),
+	-- [Yellow] = Color(255, 238, 0),
+	-- [Green] = Color(0, 255, 0),
+	-- [White] = Color(255, 255, 255)
+	-- }
+	
+	--print(pivotpoint)
+	
+	--if tobedrawn == "Hatchet Legacy" then
+		surface.SetDrawColor(255, 0, 0)
+		--if LocalPlayer():IsValid() and LocalPlayer():Alive() then
+			-- local x, y = 0, 0
+			local crosshairGap = 2
+			local crosshairLength = crosshairGap + 2
+			local radius = impulse.GetSetting("crosshair_radius")
+			surface.DrawCircle(pivotpoint.x, pivotpoint.y, radius, 255, 0, 0, 255)
+			
+hook.Add( "PostDrawTranslucentRenderables", "MySuper3DRenderingHook", function()
+			render.DrawLine( pos, tr.HitPos, Color(255,0,0))
+end)
+			
+		--end
+	--end
+	return true
+end
 
---if self.Owner:GetSkillXP() 
+
+
+
+function SWEP:GetShootPos()
+    local ply = self:GetOwner()
+    local lookAtt = ply:LookupAttachment('anim_attachment_rh')
+    if lookAtt and ply:GetMoveType() != MOVETYPE_NOCLIP then
+        local att = ply:GetAttachment(lookAtt)
+        local mPos, mAng = self.MuzzlePos, self.MuzzleAng
+        if not mPos then
+            if barrelAngles[self:GetClass()] then
+                mPos, mAng = unpack(barrelAngles[self:GetClass()])
+            else
+                mPos, mAng = unpack(barrelAngles._default)
+            end
+        end
+        local pos, dir = LocalToWorld(mPos, mAng, att.Pos, att.Ang)
+        return pos, dir:Forward()
+    else
+        return ply:GetShootPos(), (ply.viewAngs or ply:EyeAngles()):Forward()
+    end
+end
+
+
+function SWEP:PrimaryAttack()
  
 if ( !self:CanPrimaryAttack() ) then return end
+
 local dmginfo = DamageInfo()
 dmginfo:SetAmmoType(game.GetAmmoID( self.Primary.Ammo ) )
+
+local pos, dir = self:GetShootPos()
+
 local bullet = {} 
-bullet.Num = self.Primary.NumberofShots 
-bullet.Src = self.Owner:GetShootPos() 
-bullet.Dir = self.Owner:GetAimVector()
+bullet.Num = self.Primary.NumberofShots
+bullet.Src = pos
+bullet.Dir = dir
+
+
 
 --local skillaccuracy = self.Owner:GetSkillXP("shooting") / 80000 SWEP.Primary.Spread
 if self.Owner:GetSkillXP("shooting") <= 20 then
 	skillaccuracyunr = 0
-	else
+else
 	skillaccuracyunr = self.Primary.Spread * (self.Owner:GetSkillXP("shooting") / 20000)
 end
-if self.Owner:Team() == TEAM_RESISTANCE or self.Owner:Team() == TEAM_CP then
-	skillaccuracy = skillaccuracyunr
-	else
-	skillaccuracy = skillaccuracyunr / 2
-end
 
---print(skillaccuracy)
+	if self.Owner:Team() == TEAM_RESISTANCE or self.Owner:Team() == TEAM_CP then
+		skillaccuracy = skillaccuracyunr
+	else
+		skillaccuracy = skillaccuracyunr / 2
+	end
  
-if self.Owner:Crouching() then
-bullet.Spread = Vector( self.Primary.Spread * (0.06 - skillaccuracy)  , self.Primary.Spread * (0.06 - skillaccuracy), 0)
-else
-bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - skillaccuracy )  , self.Primary.Spread * ( 0.1 - skillaccuracy ), 0)
---print(bullet.Spread)
-end
+	if self.Owner:Crouching() then
+		bullet.Spread = Vector( self.Primary.Spread * (0.06 - skillaccuracy)  , self.Primary.Spread * (0.06 - skillaccuracy), 0)
+	else
+		bullet.Spread = Vector( self.Primary.Spread * ( 0.1 - skillaccuracy )  , self.Primary.Spread * ( 0.1 - skillaccuracy ), 0)
+	end
 
 bullet.Tracer = 1
 bullet.Force = self.Primary.Force 
 bullet.Damage = self.Primary.Damage 
 bullet.AmmoType = self.Primary.Ammo 
  
+self:GetOwner():FireBullets( bullet ) 
+
+if SERVER then
+	self.Owner:AddSkillXP("shooting", math.random(1,3))
+end
+
+self:EmitSound(self.Primary.Sound) 
+
 local rnda = self.Primary.Recoil * -.018
 local rndb = self.Primary.Recoil * math.random(-.018, .018) 
 
@@ -194,19 +283,16 @@ local rnda2 = self.Primary.Recoil * -.01
 local rndb2 = self.Primary.Recoil * math.random(-.01, .01) 
  
 self:ShootEffects()
- 
-self.Owner:FireBullets( bullet ) 
-self:EmitSound(self.Primary.Sound)
+
 if self.Owner:Crouching() then
-self.Owner:ViewPunch( Angle( rnda2,rndb2,rnda2 ) ) 
+	self.Owner:ViewPunch( Angle( rnda2,rndb2,rnda2 ) ) 
 else
-self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
+	self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
 end
+
 self:ViewPunch()
 self:TakePrimaryAmmo(self.Primary.TakeAmmo)
-if SERVER then
-self.Owner:AddSkillXP("shooting", math.random(1,3))
-end
+
 self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
 end 
 
@@ -247,27 +333,7 @@ function SWEP:CanReloadPrimary()
 	if (self.Weapon:Clip1() <  self.Primary.ClipSize) && (self:Ammo1() > 0) or self.Owner:HasInventoryItem(self.RelAmmo) then
 	return true
 	end
-	end
-	
--- function SWEP:Reload()
-		-- --if self:CanReloadPrimary() then
-		-- --self:EmitSound(self.Primary.ReloadSound) 
-        -- --self.PlayAnim( ACT_VM_RELOAD )
-		-- if (self:Ammo1() > 0) and (self.Weapon:Clip1() <  self.Primary.ClipSize) then
-		-- --self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- --self.Owner:GiveAmmo(20, self.Primary.Ammo, true)
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- self:SetNextPrimaryFire(self.Primary.RelDelay)
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- elseif (self.Owner:HasInventoryItem(self.RelAmmo) and self.Weapon:Clip1() < self.Primary.ClipSize) or (self.Weapon:Clip1() == 0 and self.Owner:HasInventoryItem(self.RelAmmo))  then
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- self.Owner:GiveAmmo(self.RelAmmount, self.Primary.Ammo, true)
-		-- --self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		
-		-- end
--- end
---SNIPPET ABOVE IS OLD CODE. REVERT IF NEEDED.
+end
 
 function SWEP:Reload()
 		local ply = self.Owner
@@ -285,13 +351,12 @@ function SWEP:Reload()
 		return
 	end
 
-		if(SERVER) then
+	if(SERVER) then
 		if(!has and !hasSpare) then
 			ply:SetAmmo( 0, self.Primary.Ammo)
 			return
 		elseif(!has and hasSpare ) then
 			ply:SetAmmo(amountSpare, self.Primary.Ammo)
-			ply:DoReloadEvent()
 			for i = 1, amountSpare do
 				ply:TakeInventoryItemClass(self.RelAmmo2)
 				amountSpare = amountSpare - 1
@@ -301,6 +366,7 @@ function SWEP:Reload()
 			ply:TakeInventoryItemClass(self.RelAmmo)
 		end
 	end
+	
 	if(SERVER and self:Clip1() + self:Ammo1() > self.Primary.ClipSize) then
 		for i = 1, (self:Clip1() + self:Ammo1())-self.Primary.ClipSize do
 			if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
@@ -310,20 +376,19 @@ function SWEP:Reload()
 			end
 			if(amountSpare == nil) then amountSpare = 1 else amountSpare = amountSpare + 1 end
 		end
-		if(hasSpare and amountSpare >= self.Primary.ClipSize) then
-		ply:DoReloadEvent()
-			for i = 1, self.Primary.ClipSize do
-				ply:TakeInventoryItemClass(self.RelAmmo2)
-				amountSpare = amountSpare - 1
-			end
-			if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
-				ply:GiveInventoryItem(self.RelAmmo, 1, true)
-				ply:DoReloadEvent()
-			else
-				ply:GiveInventoryItem(self.RelAmmo)
-				ply:DoReloadEvent()
-			end
-		end	
+		
+	if(hasSpare and amountSpare >= self.Primary.ClipSize) then
+		for i = 1, self.Primary.ClipSize do
+			ply:TakeInventoryItemClass(self.RelAmmo2)
+			amountSpare = amountSpare - 1
+		end
+		if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
+			ply:GiveInventoryItem(self.RelAmmo, 1, true)
+		else
+			ply:GiveInventoryItem(self.RelAmmo)
+		end
+	end	
+	
 	end
 		if(self:Clip1() < self.Primary.ClipSize and self:Ammo1() > 0) then
 			self:SetHoldType( self.HoldType )
@@ -378,8 +443,8 @@ function SWEP:IdleThink()
 	if self:GetNextIdle() == 0 then return end
 
 	if CurTime() > self:GetNextIdle() then
-		self:SetNextIdle( 0 )
+		self:SetNextIdle( 1 )
 		self:SendWeaponAnim( self:Clip1() > 0 and ACT_VM_IDLE or ACT_VM_IDLE_EMPTY )
 	end
+	
 end
-
