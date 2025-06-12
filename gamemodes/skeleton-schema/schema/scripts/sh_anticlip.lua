@@ -61,7 +61,9 @@ hook.Add("Think", "HatchetAvoidArmClipping", function()
 		
 		if ply:LookupBone("ValveBiped.Bip01_R_Hand") == nil then continue end
 		
-		if !IsValid(ply:GetActiveWeapon()) or (ply:GetPlayerGunHoldType() == "normal") then 
+		if !IsValid(ply:GetActiveWeapon()) or (ply:GetPlayerGunHoldType() == "normal") or holdtypes[ply:GetPlayerGunHoldType()] == nil then
+			ply:ManipulateBoneAngles(rclavm, Angle(math.Approach(ply:GetManipulateBoneAngles(rclavm).x, 0, 15), math.Approach(ply:GetManipulateBoneAngles(rclavm).y, 0, 15),math.Approach(ply:GetManipulateBoneAngles(rclavm).z, 0, 15)), false)	
+			ply:ManipulateBoneAngles(lclavm, Angle(math.Approach(ply:GetManipulateBoneAngles(lclavm).x, 0, 15), math.Approach(ply:GetManipulateBoneAngles(lclavm).y, 0, 15),math.Approach(ply:GetManipulateBoneAngles(lclavm).z, 0, 15)), false)
 			continue
 		end
 		
