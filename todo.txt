@@ -75,6 +75,7 @@ TO-DO LIST:
 -Add crafting via the use of fire
 -Brickbat?
 -Figure out a way to incorporate grenades into the server
+-Voicechat overhaul
 
 
 -----------------------------------------------------
