@@ -151,7 +151,7 @@ function GM:ScoreboardHide()
 end
 
 function GM:DefineSettings()
-	impulse.DefineSetting("hud_vignette", {name="Vignette enabled", category="HUD", type="tickbox", default=true})
+	impulse.DefineSetting("hud_vignette", {name="Vignette enabled", category="HUD", type="tickbox", default=false})
 	impulse.DefineSetting("hud_iconcolours", {name="Icon colours enabled", category="HUD", type="tickbox", default=false})
 	impulse.DefineSetting("view_thirdperson", {name="Thirdperson enabled", category="View", type="tickbox", default=false})
 	impulse.DefineSetting("view_thirdperson_fov", {name="Thirdperson FOV", category="View", type="slider", default=90, minValue=60, maxValue=110})
@@ -364,10 +364,19 @@ function GM:OnContextMenuOpen()
 	end
 
 	if not input.IsKeyDown(KEY_LALT) then
-		gui.EnableScreenClicker(true)
-		hatchet_stats = vgui.Create("Hatchet_CharacterStats")
-		hatchet_stats:SetAlpha(0)
-		hatchet_stats:AlphaTo(255, .5)
+		if not IsValid(hatchet_stats) then
+			hatchet_stats = vgui.Create("Hatchet_CharacterStats")
+			hatchet_stats:SetAlpha(0)
+			hatchet_stats:AlphaTo(255, .5)
+			gui.EnableScreenClicker(true)
+		else
+			hatchet_stats:Remove()
+			hatchet_stats = nil
+			hatchet_stats = vgui.Create("Hatchet_CharacterStats")
+			hatchet_stats:SetAlpha(0)
+			hatchet_stats:AlphaTo(255, .5)
+			gui.EnableScreenClicker(true)
+		end
 	else
 		if IsValid(g_ContextMenu) and not g_ContextMenu:IsVisible() then
 			g_ContextMenu:Open()
