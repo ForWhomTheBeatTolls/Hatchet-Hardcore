@@ -14,7 +14,7 @@ SWEP.Base = "m_base"
 SWEP.Primary.Sound = Sound("weapons/357_fire2.wav")
 SWEP.Primary.EmptySound = Sound("weapons/pistol/pistol_empty.wav")
 SWEP.Primary.ReloadSound = Sound("weapons/357/357_reload1.wav")
-SWEP.Primary.Damage = 70 --The amount of damage will the weapon do
+SWEP.Primary.Damage = 60 --The amount of damage will the weapon do
 SWEP.Primary.TakeAmmo = 1 -- How much ammo will be taken per shot
 SWEP.Primary.ClipSize = 6  -- How much bullets are in the mag
 SWEP.Primary.Ammo = "357" --The ammo type will it use
@@ -53,53 +53,3 @@ SWEP.HoldType = "revolver"
 SWEP.FiresUnderwater = false
 
 SWEP.CSMuzzleFlashes = true
-
-function SWEP:PrimaryAttack()
- 
-if ( !self:CanPrimaryAttack() ) then return end
- 
-local bullet = {} 
-bullet.Num = self.Primary.NumberofShots 
-bullet.Src = self.Owner:GetShootPos() 
-bullet.Dir = self.Owner:GetAimVector() 
-bullet.Spread = Vector( self.Primary.Spread * 0.1 , self.Primary.Spread * 0.1, 0)
-bullet.Tracer = 1
-bullet.Force = self.Primary.Force 
-bullet.Damage = self.Primary.Damage 
-bullet.AmmoType = self.Primary.Ammo 
- 
-local rnda = self.Primary.Recoil * -.5
-local rndb = self.Primary.Recoil * math.random(-.5, .5) 
-
-local rndc = self.Primary.Spread * -.5
-local rndd = self.Primary.Spread * math.random(-.5, .5)
- 
-self:ShootEffects()
- 
-self.Owner:FireBullets( bullet ) 
-self:EmitSound(self.Primary.Sound, 100, 88)
-self.Owner:ViewPunch( Angle( rnda,rndb,rnda ) ) 
-self:ViewPunch()
-self:TakePrimaryAmmo(self.Primary.TakeAmmo) 
- 
-self:SetNextPrimaryFire( CurTime() + self.Primary.Delay ) 
-end 
-
--- function SWEP:Reload()
-		-- --if self:CanReloadPrimary() then
-		-- --self:EmitSound(self.Primary.ReloadSound) 
-        -- --self.PlayAnim( ACT_VM_RELOAD )
-		-- if (self:Ammo1() > 0) and (self.Weapon:Clip1() <  self.Primary.ClipSize) then
-		-- --self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- --self.Owner:GiveAmmo(20, self.Primary.Ammo, true)
-		-- self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		-- self:SetNextPrimaryFire(self.Primary.RelDelay)
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- elseif (self.Owner:HasInventoryItem(self.RelAmmo) and self.Weapon:Clip1() < self.Primary.ClipSize) or (self.Weapon:Clip1() == 0 and self.Owner:HasInventoryItem(self.RelAmmo))  then
-		-- self:EmitSound(self.Primary.ReloadSound)
-		-- self.Owner:TakeInventoryItemClass(self.RelAmmo)
-		-- self.Owner:GiveAmmo(self.RelAmmount, self.Primary.Ammo, true)
-		-- --self.Weapon:DefaultReload( ACT_VM_RELOAD )
-		
-		-- end
--- end
