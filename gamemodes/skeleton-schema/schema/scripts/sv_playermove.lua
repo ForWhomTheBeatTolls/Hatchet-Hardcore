@@ -26,7 +26,7 @@ hook.Add("SetupMove", "HatchetMovementRestrictFunctions", function(ply, mvd, cmd
 			mvd:RemoveKeys(IN_DUCK)
 		end
 		
-		if ply.CrouchCount > 5 then
+		if ply.CrouchCount > 3 then
 			mvd:RemoveKeys(IN_DUCK)
 		end
 		
@@ -88,13 +88,18 @@ hook.Add("SetupMove", "HatchetMovementRestrictFunctions", function(ply, mvd, cmd
 	
 end)
 
+local fatiguednotifdel = CurTime()
 hook.Add( "KeyPress", "CrouchCountThenTwist", function( ply, key )
 	if ( key == IN_DUCK ) then
-		print( ply.CrouchCount )
+		--print( ply.CrouchCount )
 		ply.CrouchCount = ply.CrouchCount + 1
-		if ply.CrouchCount > 4 then
+		if ply.CrouchCount > 3 then
 			ply.CanCrouch = false
-			ply:Notify("You are fatigued. Wait before attempting to crouch again.")
+			if fatiguednotifdel < CurTime() then
+				ply:Notify("You are fatigued. Wait before attempting to crouch again.")
+				fatiguednotifdel = CurTime() + 2
+			end
+		elseif ply.CrouchCount > 15 then ply.CrouchCount = 15
 			--timer.Simple(3, function() if IsValid(ply) then ply.CanCrouch = true ply.CrouchCount = 0 end end)
 		end
 	end
