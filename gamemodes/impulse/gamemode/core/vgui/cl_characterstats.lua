@@ -236,4 +236,22 @@ function PANEL:Paint(w, h)
 	surface.DrawRect(0, 0, w, h)
 end
 
+-- // RemovedEarly Removes the window early to make it look cooler.
+-- function PANEL:RemoveEarly()
+	-- self.RemovedEarly = true
+	-- if (IsValid(self.window)) then
+		-- self.window:Remove()
+		-- self:Remove()
+	-- end
+	-- surface.PlaySound("hatchet/buttonrollback.mp3")
+
+-- end
+
+function PANEL:OnRemove()
+		if (IsValid(self.window)) then
+			self.window:Remove()
+		end
+		surface.PlaySound("hatchet/buttonrollback.mp3")
+end
+
 vgui.Register("Hatchet_CharacterStats", PANEL, "DPanel")
