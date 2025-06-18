@@ -7,17 +7,35 @@ local function CreateWindow(panel, id)
 	end
 
 	timer.Simple(0, function()
-		panel.window = vgui.Create(id)
-		panel.window:SetAlpha(0)
-		panel.window:Center()
-		panel.window:MakePopup()
-		panel.window:ShowCloseButton(false)
-		panel.window:SetDraggable(false)
-		local ww = panel.window:GetSize()
-		panel.window:SetPos(ScrW() - ww - 64, ScrH() * .2)
-		panel.window:AlphaTo(255, .2, 0)
-		if (id == "impulseInventory") then
-			impulse_inventory = panel.window
+		if !IsValid(panel.window) then
+			panel.window = vgui.Create(id)
+			panel.window:SetAlpha(0)
+			panel.window:Center()
+			panel.window:MakePopup()
+			panel.window:ShowCloseButton(false)
+			panel.window:SetDraggable(false)
+			local ww = panel.window:GetSize()
+			panel.window:SetPos(ScrW() - ww - 64, ScrH() * .2)
+			panel.window:AlphaTo(255, .2, 0)
+			if (id == "impulseInventory") then
+				impulse_inventory = panel.window
+			end
+		else
+			panel.window:Remove()
+			impulse_inventory = nil
+			panel.window = nil
+			panel.window = vgui.Create(id)
+			panel.window:SetAlpha(0)
+			panel.window:Center()
+			panel.window:MakePopup()
+			panel.window:ShowCloseButton(false)
+			panel.window:SetDraggable(false)
+			local ww = panel.window:GetSize()
+			panel.window:SetPos(ScrW() - ww - 64, ScrH() * .2)
+			panel.window:AlphaTo(255, .2, 0)
+			if (id == "impulseInventory") then
+				impulse_inventory = panel.window
+			end
 		end
 	end)
 
