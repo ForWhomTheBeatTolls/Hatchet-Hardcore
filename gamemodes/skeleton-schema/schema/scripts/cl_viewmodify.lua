@@ -1,5 +1,5 @@
-local larm = 0
 local rarm = 0
+local larm = 0
 
 local RandomPitchValue = 0
 local RandomTiltValue = 0
@@ -10,8 +10,6 @@ local PitchMax = 20
 local TiltMax = 15
 
 local function GetDamagedArmsCount()
-	local rarm = 0
-	local larm = 0
 
 	if LocalPlayer():GetNWBool("LArmCrippled") == true then 
 		larm = 1
@@ -20,7 +18,7 @@ local function GetDamagedArmsCount()
 	if LocalPlayer():GetNWBool("RArmCrippled") == true then 
 		rarm = 1
 	end
-
+	--print (larm + rarm)
 	return larm + rarm
 end
 
@@ -38,7 +36,7 @@ hook.Add("PlayerTick", "HatchetDamagedArmsView", function(ply, cmd)
 	local TiltMod = 1
 	local ratio = (PitchMax/RotMax)
 
-	local LMod = 1
+	local LMod
 
 	RandomRotationValue = math.Clamp(RandomRotationValue + math.Rand(-1*RotMax*0.05, RotMax*0.05), -1*RotMax,RotMax)
 	RandomPitchValue = math.Clamp(RandomPitchValue + math.Rand(-1*PitchMax*0.2, PitchMax*0.2), -1*PitchMax,PitchMax)
@@ -53,11 +51,7 @@ hook.Add("PlayerTick", "HatchetDamagedArmsView", function(ply, cmd)
 	end
 
 	
-		if GetDamagedArmsCount() == 1 then
-			LMod = 10
-		elseif GetDamagedArmsCount() == 2 then
-			LMod = 5
-		end
+		LMod = GetDamagedArmsCount() * 2.5
 
 		if RandomRotationValue <= LMod*-1 then
 			RotMod = -1
