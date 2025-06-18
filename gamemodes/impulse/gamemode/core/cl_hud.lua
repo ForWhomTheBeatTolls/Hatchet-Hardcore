@@ -200,7 +200,6 @@ end
 
 local deathEndingFade
 local deathEnding
-local previewtext = ""
 
 function GM:HUDPaint(mvData)
 
@@ -319,15 +318,18 @@ function GM:HUDPaint(mvData)
 	-- else
 	-- surface.DrawTexturedRect(10, y + 10, hudWidth, hudHeight)
 	-- end
+	
 	-- ### HEALTHBAR ###
+	
+	local previewtext = ""
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 	if isPreview then
-		previewtext = "(".. LocalPlayer():SteamID() ..") Very Kind of playable Beta Build (" .. LocalPlayer():SteamID() .. ")"
+		previewtext = "Beta Build (" .. LocalPlayer():SteamID() .. ")"
+		local tsw, tsh = surface.GetTextSize(previewtext)
 		surface.SetTextColor(255, 255, 255, 30)
 		surface.SetFont("HatchetFont20")
-		surface.SetTextPos( ( ScrW() / 2 ) - ( surface.GetTextSize(previewtext) / 2 ), ScrH() / 2 + 40)
+		surface.SetTextPos(ScrW() * 0.5 - (tsw / 2), ScrH() * 0.01)
 		surface.DrawText(previewtext)
-		--draw.SimpleTextOutlined("Very Kind of playable Beta Build", "Trebuchet18", ScrW()-120, ScrH()-1000, Color( 255, 255, 255, 40 ), TEXT_ALIGN_CENTER, nil, 1, Color( 0, 0, 0, 40))
 	end
 
 	--surface.SetFont("Impulse-Elements23")
