@@ -1,15 +1,6 @@
-local deathcount = deathcount or 0
-local deathcountclear = CurTime()
+local deathcount = deathcount or 1
+local deathcountclear = deathcountclear or CurTime()
 local citycode = civil
-
-local ajsfx = sound.Add( {
-	name = "aj_suspense",
-	channel = CHAN_STATIC,
-	volume = 0.5,
-	level = 0,
-	pitch = {100, 100},
-	sound = "music/hl2_song26_trainstation1.mp3"
-} )
 
 local rankpointsdelay = CurTime() + 300
 hook.Add("Think", "RankPoints", function()
@@ -30,31 +21,48 @@ hook.Add("Think", "RankPoints", function()
 		end
 	end
 end)
-	
-hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
 
+hook.Add("PostPlayerDeath", "AddToBSLCount", function(ply)
+	local aj_begin_ent = ents.FindByName("JudgementWaiverStartWidget")[1]
+	local aj_end_ent = ents.FindByName("JudgementWaiverEndWidget")[1]
+	print(deathcount)
+	
+	
 	if ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA then
 		deathcount = deathcount + 1
-		deathcountclear = CurTime() + 600
+		if deathcountclear < CurTime() then
+			deathcountclear = CurTime() + 300
+		else
+			deathcountclear = deathcountclear + 300
+		end
 	end
 	
-		if deathcount == 6 and (ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA) then
+	if deathcount > 1 and (ply:Team() == TEAM_CP or ply:Team() == TEAM_OTA) then
+		if GetGlobalInt("CityCode", 1) != 4 then
 			SetGlobalInt("CityCode", 4)
+			if SERVER then
+				aj_begin_ent:Fire("trigger")
+			end
+				
 			for k,v in pairs(player.GetAll()) do
 				if v:IsCP() then
 					v:SendCombineMessage("CODE CHANGED: AUTONOMOUS JUDGEMENT.", Color(255, 0, 0))
-					timer.Simple(5, function()  v:SendChatClassMessage(16, "Attention all Civil Protection members. Conduct searches on all citizens & areas within city-limits, and punish those breaking lockdown.", ply) end)
+					timer.Simple(5, function()  v:SendChatClassMessage(16, "Anti-citizen activity detected. Administer JUDGEMENT.", ply) end)
 					deathcountclear = CurTime() + 900
 				end
 			end
 		end
-	end)
+	end
+end)
 	
 hook.Add("Think", "BSLCountKeepCounting", function()
-	if CurTime() > deathcountclear and deathcount > 0 then
+	if CurTime() > deathcountclear and deathcount > 1 then
 
 		if GetGlobalInt("CityCode", 1) == 4 then
 			SetGlobalInt("CityCode", 1)
+			if SERVER then
+				aj_end_ent:Fire("trigger")
+			end
 				for k,v in pairs(player.GetAll()) do
 					if v:IsCP() then
 						v:SendCombineMessage("CODE CHANGED: CIVIL.", Color(0, 225, 0))
@@ -62,32 +70,13 @@ hook.Add("Think", "BSLCountKeepCounting", function()
 					end
 				end
 		end
-			deathcount = 0
+			deathcount = 1
 			deathcountclear = CurTime()
 	
 	elseif GetGlobalInt("CityCode") == 4 then
-		deathcountclear = deathcountclear + 180
+	
+		deathcountclear = CurTime() + 300
+		
 	end
 	
-end)
-	
-local randomambiencenum = math.random(1,5)
-local mysound = "music/hl2_song26_trainstation1.mp3" 
-local isplaying = false
-NextAJAmbienceThink = CurTime()
-hook.Add("Think", "CCAmbient", function()
-	if GetGlobalInt("CityCode") == 4 then
-		if NextAJAmbienceThink < CurTime() then
-			for k,v in pairs (player.GetAll()) do
-				if isplaying == false then
-					isplaying = true
-					Entity(0):EmitSound(mysound, 0, 100, 0.05, CHAN_STATIC)
-				end
-			end
-		end
-	else
-		isplaying = false
-		Entity(0):StopSound(mysound)
-		NextAJAmbienceThink = CurTime() + 120
-	end
 end)
