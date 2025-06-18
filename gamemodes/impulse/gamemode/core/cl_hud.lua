@@ -318,9 +318,7 @@ function GM:HUDPaint(mvData)
 	-- else
 	-- surface.DrawTexturedRect(10, y + 10, hudWidth, hudHeight)
 	-- end
-	
 	-- ### HEALTHBAR ###
-	
 	local previewtext = ""
 	local isPreview = GetConVar("impulse_ispreview"):GetBool()
 	if isPreview then
@@ -581,20 +579,6 @@ function GM:HUDPaint(mvData)
 		end)
 	elseif impulse.GetSetting("hud_jim") and impulse.GetSetting("hud_hunger") then
 		PlayerIcon:SetPos(100, y + 10)
-	end
-
-	local isPreview = GetConVar("impulse_ispreview"):GetBool()
-	if isPreview then
-		-- watermark
-		surface.SetDrawColor(watermarkCol)
-		surface.SetMaterial(watermark)
-		surface.DrawTexturedRect(390, y, 112, 30)
-		surface.SetTextPos(390, y + 30)
-		surface.SetTextColor(watermarkCol)
-		surface.SetFont("Impulse-Elements18-Shadow")
-		surface.DrawText("PREVIEW BUILD - " .. impulse.Version .. " - " .. LocalPlayer():SteamID64() .. " - " .. os.date("%H:%M:%S - %d/%m/%Y", os.time()))
-		surface.SetTextPos(390, y + 50)
-		surface.DrawText("SCHEMA: " .. SCHEMA_NAME .. " VERSION: " .. impulse.Config.SchemaVersion or "?")
 	end
 
 	-- dev hud
